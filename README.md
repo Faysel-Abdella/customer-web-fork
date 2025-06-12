@@ -344,7 +344,7 @@ Premature optimization is spending a lot of time on something that you may not a
    const UserProfile = () => {
      return (
        <div>
-         <UserIcon className="w-6 h-6" />
+         <UserIcon className='w-6 h-6' />
          <span>Profile</span>
        </div>
      );
@@ -356,7 +356,7 @@ Premature optimization is spending a lot of time on something that you may not a
    const UserProfile = () => {
      return (
        <div>
-         <User className="w-6 h-6" />
+         <User className='w-6 h-6' />
          <span>Profile</span>
        </div>
      );
@@ -591,70 +591,70 @@ Premature optimization is spending a lot of time on something that you may not a
    - Avoid string concatenation or template literals for class names
    - Structure complex class combinations with proper indentation for readability
    - Remember that `cn` will intelligently merge conflicting Tailwind classes (the last one wins)
-  
+
 9. **Use [Navigation APIs](https://next-intl.dev/docs/routing/navigation) from next-intl**
 
-    The `next-intl` package provides several navigation APIs that are lightweight wrappers around Next.js' native navigation functions. These wrappers automatically handle internationalization (i18n) routing based on your configuration:
+   The `next-intl` package provides several navigation APIs that are lightweight wrappers around Next.js' native navigation functions. These wrappers automatically handle internationalization (i18n) routing based on your configuration:
 
-    #### Link Component
+   #### Link Component
 
-    Use the `Link` component for client-side navigation:
+   Use the `Link` component for client-side navigation:
 
-    ```tsx
-    import { Link } from '@/i18n/routing';
-    // Static path
-    <Link href="/account/profile">Go to Profile</Link>
-    // Dynamic path
-    <Link href={`/rental/${rentalId}`}>View Rental</Link>
-    ```
+   ```tsx
+   import { Link } from '@/i18n/routing';
+   // Static path
+   <Link href="/account/profile">Go to Profile</Link>
+   // Dynamic path
+   <Link href={`/rental/${rentalId}`}>View Rental</Link>
+   ```
 
-    #### Programmatic Navigation
+   #### Programmatic Navigation
 
-    ##### Using useRouter
+   ##### Using useRouter
 
-    The `useRouter()` hook allows for programmatic navigation:
+   The `useRouter()` hook allows for programmatic navigation:
 
-    ```tsx
-    import { useRouter } from '@/i18n/routing';
-    function MyComponent() {
-      const router = useRouter();
-      const handleClick = () => {
-        // Static path
-        router.push('/account/subscription');
-        // Dynamic path - IMPORTANT: Use an object with pathname, params, and query. Make sure the pathname here matches the pathnames declaration in @/i18n/routing.
-        router.push({
-          pathname: '/rental/[id]',
-          params: { id: rentalId },
-          query: { showContact: true },
-        });
-      };
-      return <button onClick={handleClick}>Navigate</button>;
-    }
-    ```
+   ```tsx
+   import { useRouter } from "@/i18n/routing";
+   function MyComponent() {
+     const router = useRouter();
+     const handleClick = () => {
+       // Static path
+       router.push("/account/subscription");
+       // Dynamic path - IMPORTANT: Use an object with pathname, params, and query. Make sure the pathname here matches the pathnames declaration in @/i18n/routing.
+       router.push({
+         pathname: "/rental/[id]",
+         params: { id: rentalId },
+         query: { showContact: true },
+       });
+     };
+     return <button onClick={handleClick}>Navigate</button>;
+   }
+   ```
 
-    ##### Using redirect
+   ##### Using redirect
 
-    For server components or server actions, use the `redirect` function:
+   For server components or server actions, use the `redirect` function:
 
-    ```tsx
-    import { redirect } from '@/i18n/routing';
-    // In a server component or server action
-    async function handleFormSubmission(formData) {
-      // Process form data...
-      // Static path
-      redirect('/welcome');
-      // Dynamic path - IMPORTANT: Use an object with pathname, params, and query. Make sure the pathname here matches the pathnames declaration in @/i18n/routing.
-      redirect({
-        pathname: '/rent/[municipality]',
-        params: { municipality: 'amsterdam' },
-        query: { minPrice: '500', maxPrice: '1500' },
-      });
-    }
-    ```
+   ```tsx
+   import { redirect } from "@/i18n/routing";
+   // In a server component or server action
+   async function handleFormSubmission(formData) {
+     // Process form data...
+     // Static path
+     redirect("/welcome");
+     // Dynamic path - IMPORTANT: Use an object with pathname, params, and query. Make sure the pathname here matches the pathnames declaration in @/i18n/routing.
+     redirect({
+       pathname: "/rent/[municipality]",
+       params: { municipality: "amsterdam" },
+       query: { minPrice: "500", maxPrice: "1500" },
+     });
+   }
+   ```
 
-    **Important rules:**
+   **Important rules:**
 
-    1. **For dynamic routes**: Always use an object with `pathname`, `params`, and `query` properties to ensure proper routing.
-    2. **Adding new pages**: When adding new page(route) to the project, make sure to also define it inside `@/i18n/routing` and `@/app/src/middleware`'s config.matcher.
-    3. **Locale handling**: The navigation APIs automatically handle the current locale, so you don't need to specify it unless you're switching locales.
-    4. **Consistency**: Import navigation APIs from your routing configuration file (e.g., `@/i18n/routing`) rather than directly from `next-intl`.
+   1. **For dynamic routes**: Always use an object with `pathname`, `params`, and `query` properties to ensure proper routing.
+   2. **Adding new pages**: When adding new page(route) to the project, make sure to also define it inside `@/i18n/routing` and `@/app/src/middleware`'s config.matcher.
+   3. **Locale handling**: The navigation APIs automatically handle the current locale, so you don't need to specify it unless you're switching locales.
+   4. **Consistency**: Import navigation APIs from your routing configuration file (e.g., `@/i18n/routing`) rather than directly from `next-intl`.
