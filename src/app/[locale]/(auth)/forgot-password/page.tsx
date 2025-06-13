@@ -1,7 +1,9 @@
 import React from "react";
-import { ForgotPasswordForm } from "./_components/ForgotPasswordForm";
+
 import { ArrowLeft } from "lucide-react";
+
 import { Link } from "@/i18n/navigation";
+import { ForgotPasswordForm } from "./_components/ForgotPasswordForm";
 
 const ForgotPasswordPage = () => {
   return (
