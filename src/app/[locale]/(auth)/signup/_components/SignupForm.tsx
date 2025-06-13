@@ -9,11 +9,9 @@ import { cn } from "@/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -28,11 +26,28 @@ export function LoginForm({
               </div>
               <span className='sr-only'>Time Delivery Inc.</span>
             </a>
-            <h1 className='text-xl font-bold '>
-              Welcome to Time Delivery Inc.
-            </h1>
+            <h1 className='text-xl font-bold '>Register</h1>
+            <h3 className='text-muted-foreground font-bold '>
+              Create Your Account
+            </h3>
           </div>
           <div className='flex flex-col gap-6'>
+            <div className='grid gap-3'>
+              <Label htmlFor='firstName'>First Name</Label>
+              <Input
+                id='firstName'
+                placeholder='Enter your first name'
+                required
+              />
+            </div>{" "}
+            <div className='grid gap-3'>
+              <Label htmlFor='lastName'>Last Name</Label>
+              <Input
+                id='lastName'
+                placeholder='Enter your last name'
+                required
+              />
+            </div>
             <div className='grid gap-3'>
               <Label htmlFor='phone-number'>Mobile Number</Label>
               <PhoneInput id='phone-number' defaultCountry='ET' />
@@ -54,28 +69,46 @@ export function LoginForm({
                 </button>
               </div>
             </div>
-            <div className='flex justify-between items-center '>
-              <div className='flex gap-2 items-center'>
-                <Checkbox id='remember-me' />
-                <Label htmlFor='remember-me'>Remember me</Label>
+            <div className='grid gap-3'>
+              <Label htmlFor='confirmPassword'>Confirm Password</Label>
+              <div className='flex'>
+                <Input
+                  id='password'
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder='********'
+                />
+                <button
+                  className=' -m-6 cursor-pointer'
+                  type='button'
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                  {showConfirmPassword ? (
+                    <Eye size={16} />
+                  ) : (
+                    <EyeOff size={16} />
+                  )}
+                </button>
               </div>
-              <Link
-                href={"#"}
-                className='text-sm font-semibold text-primary hover:underline'
-              >
-                Forgot Password?
-              </Link>
+            </div>
+            <div className='flex gap-2 items-center text-sm'>
+              <Checkbox />
+              <div>
+                I agree with all{" "}
+                <Link href={"#"} className='underline hover:text-primary'>
+                  Terms & Conditions
+                </Link>
+              </div>
             </div>
             <Button type='submit' className='w-full'>
-              Login
+              Sign Up
             </Button>
             <div className='text-center text-sm'>
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <a
                 href='#'
                 className='hover:underline underline-offset-4 text-primary font-semibold'
               >
-                Sign up
+                Login
               </a>
             </div>
           </div>
@@ -113,10 +146,8 @@ export function LoginForm({
           </div>
         </div>
       </form>
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-        By clicking continue, you agree to our <a href='#'>Terms of Service</a>{" "}
-        and <a href='#'>Privacy Policy</a>.
-      </div>
     </div>
   );
-}
+};
+
+export default SignupForm;
