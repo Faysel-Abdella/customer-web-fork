@@ -60,7 +60,7 @@ export function LoginForm({
                 <Label htmlFor='remember-me'>Remember me</Label>
               </div>
               <Link
-                href={"#"}
+                href={"/forgot-password"}
                 className='text-sm font-semibold text-primary hover:underline'
               >
                 Forgot Password?
