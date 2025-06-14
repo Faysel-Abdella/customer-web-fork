@@ -86,6 +86,12 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
               <Button type='submit' className='w-full'>
                 Verify
               </Button>
+              <div>
+                Didnt receive the code?
+                <Button type='button' variant={"link"}>
+                  Resend
+                </Button>
+              </div>
             </div>
           </div>
         </form>

@@ -28,6 +28,7 @@ import {
   getCountryCallingCode,
   CountryCode,
 } from "libphonenumber-js";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -51,7 +52,13 @@ export function LoginForm({
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
     const data = { contact_no, country_code, password: values.password };
-    console.log(data);
+    toast("You submitted the following values", {
+      description: (
+        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
+          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
 
   return (

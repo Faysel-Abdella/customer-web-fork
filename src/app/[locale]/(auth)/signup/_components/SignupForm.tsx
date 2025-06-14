@@ -14,22 +14,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
 import { signupSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -48,8 +51,21 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const data = { contact_no, country_code, password: values.password };
-    console.log(data);
+    const data = {
+      contact_no,
+      country_code,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      password: values.password,
+      confirm_password: values.confirm_password,
+    };
+    toast("You submitted the following values", {
+      description: (
+        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
+          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -186,15 +202,21 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 )}
               />
               <div className='flex gap-2 items-center text-sm'>
-                <Checkbox />
-                <div>
-                  I agree with all{" "}
+                <Checkbox
+                  id='agreeTerms'
+                  checked={agreeToTerms}
+                  onCheckedChange={(checked) =>
+                    setAgreeToTerms(checked === true)
+                  }
+                />
+                <div className='flex gap-2'>
+                  <Label htmlFor='agreeTerms'>I agree with all</Label>
                   <Link href={"#"} className='underline hover:text-primary'>
                     Terms & Conditions
                   </Link>
                 </div>
               </div>
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full' disabled={!agreeToTerms}>
                 Sign Up
               </Button>
               <div className='text-center text-sm'>
