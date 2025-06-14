@@ -1,13 +1,9 @@
-import React from "react";
-
 import { LoginForm } from "./_components/LoginForm";
 
 const LoginPage = () => {
   return (
-    <div className='bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10'>
-      <div className='w-full max-w-sm'>
-        <LoginForm />
-      </div>
+    <div className=' w-fit   max-sm:min-h-dvh max-sm:w-full max-sm:rounded-none bg-background rounded-xl p-10 flex justify-center '>
+      <LoginForm className='max-w-sm' />
     </div>
   );
 };

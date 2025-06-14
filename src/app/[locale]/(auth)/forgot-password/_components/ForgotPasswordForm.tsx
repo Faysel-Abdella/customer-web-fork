@@ -2,6 +2,7 @@ import { PhoneInput } from "@/components/phone-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { Utensils } from "lucide-react";
 
 export function ForgotPasswordForm({
   className,
@@ -16,8 +17,8 @@ export function ForgotPasswordForm({
               href='#'
               className='flex flex-col items-center gap-2 font-medium'
             >
-              <div className='flex size-8 items-center justify-center rounded-md'>
-                <p className='text-3xl font-bold font-mono'>LOGO</p>
+              <div className='w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg'>
+                <Utensils className='text-background' />
               </div>
               <span className='sr-only'>Acme Inc.</span>
             </a>
