@@ -34,11 +34,16 @@ export const signupSchema = z
     message: "Passwords do not match",
   });
 
+export const forgotPasswordSchema = z.object({
+  contact_no: z
+    .string()
+    .nonempty({ message: "Phone number is required" })
+    .refine(isValidPhoneNumber, {
+      message: "Invalid phone number",
+    }),
+});
 export const oTPSchema = z.object({
   code: z.string().min(4, {
     message: "Your one-time password must be 4 characters.",
   }),
-});
-export const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: "Enter a valid email" }),
 });
