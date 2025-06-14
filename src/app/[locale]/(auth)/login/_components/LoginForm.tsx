@@ -44,15 +44,12 @@ export function LoginForm({
     },
   });
 
-  const phoneNumberObj = parsePhoneNumberFromString(
-    form.getValues("contact_no")
-  );
-  const contact_no = phoneNumberObj?.nationalNumber || "";
-  const country_code = country ? getCountryCallingCode(country) : "";
-
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    const phoneNumberObj = parsePhoneNumberFromString(
+      form.getValues("contact_no")
+    );
+    const contact_no = phoneNumberObj?.nationalNumber || "";
+    const country_code = country ? getCountryCallingCode(country) : "";
     const data = { contact_no, country_code, password: values.password };
     console.log(data);
   }
