@@ -33,6 +33,12 @@ export const signupSchema = z
     path: ["confirm_password"],
     message: "Passwords do not match",
   });
+
+export const oTPSchema = z.object({
+  code: z.string().min(4, {
+    message: "Your one-time password must be 4 characters.",
+  }),
+});
 export const forgotPasswordSchema = z.object({
   email: z.string().email({ message: "Enter a valid email" }),
 });
