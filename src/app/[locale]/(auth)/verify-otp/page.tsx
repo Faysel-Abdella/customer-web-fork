@@ -6,7 +6,7 @@ import OTPForm from "./_components/OTPForm";
 const VerifyOTPPage = () => {
   return (
     <div className='relative max-md:h-dvh max-md:rounded-none w-fit bg-background rounded-xl  flex justify-center '>
-      <Link href={"/login"}>
+      <Link href={"/signup"}>
         <ArrowLeft className='absolute m-5  text-primary' />
       </Link>
 

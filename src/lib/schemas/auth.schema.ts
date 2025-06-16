@@ -47,3 +47,18 @@ export const oTPSchema = z.object({
     message: "Your one-time password must be 4 characters.",
   }),
 });
+
+export const profileSetupSchema = z.object({
+  first_name: z.string().min(1, { message: "First name is required" }),
+  last_name: z.string().min(1, { message: "Last name is required" }),
+  contact_no: z
+    .string()
+    .nonempty({ message: "Phone number is required" })
+    .refine(isValidPhoneNumber, {
+      message: "Invalid phone number",
+    }),
+  gender: z.enum(["male", "female", "other"]),
+  dob: z.date({
+    required_error: "A date of birth is required.",
+  }),
+});
