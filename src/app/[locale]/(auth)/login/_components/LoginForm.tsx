@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Utensils } from "lucide-react";
+import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,15 +19,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLogin } from "@/hooks/authHooks/useLogin";
 import { Link } from "@/i18n/navigation";
 import { loginSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import {
-  parsePhoneNumberFromString,
-  getCountryCallingCode,
   CountryCode,
+  getCountryCallingCode,
+  parsePhoneNumberFromString,
 } from "libphonenumber-js";
+import Image from "next/image";
 import { toast } from "sonner";
 
 export function LoginForm({
@@ -36,6 +37,8 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
+
+  const { error, isLoading, isSuccess, login, user } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -51,15 +54,26 @@ export function LoginForm({
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const data = { contact_no, country_code, password: values.password };
-    toast("You submitted the following values", {
-      description: (
-        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+    const uuid = "3df82109-11be-4efa-8da2-1c96af2621b4";
+    login({
+      "LoginForm[username]": contact_no,
+      "LoginForm[country_code]": "+" + country_code,
+      "LoginForm[password]": values.password,
+      "LoginForm[role]": 2,
+      "LoginForm[device_type]": 2,
+      "LoginForm[device_token]": uuid,
+      "LoginForm[device_udid]": uuid,
     });
   }
+
+  useEffect(() => {
+    if (error) {
+      toast("Error", error);
+    }
+    if (isSuccess) {
+      toast.success(`Welcome ${user?.full_name}`);
+    }
+  }, [error, isSuccess, user]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -147,7 +161,7 @@ export function LoginForm({
                 </Link>
               </div>
               <Button type='submit' className='w-full'>
-                Login
+                {isLoading ? <Loader className='animate-spin' /> : "Login"}
               </Button>
               <div className='text-center text-sm'>
                 Don&apos;t have an account?{" "}
