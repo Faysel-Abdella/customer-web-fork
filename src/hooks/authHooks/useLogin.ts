@@ -1,3 +1,5 @@
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 import { objectToUrlEncoded } from "@/lib/utils";
 import {
   LoginFormPayload,
@@ -11,6 +13,8 @@ export const useLogin = () => {
   const [error, setError] = useState<null | unknown>();
   const [isSuccess, setIsSuccess] = useState(false);
   const [user, setUser] = useState<UserDetail>();
+  const router = useRouter();
+  const { login: contextLogin } = useAuth();
 
   const login = async (data: LoginFormPayload) => {
     setIsLoading(true);
@@ -30,12 +34,16 @@ export const useLogin = () => {
       }
 
       const responseData: LoginResponse = await response.json();
-      console.log("✅ Login successful, server response:", responseData.detail);
+
+      console.log("✅ Login successful");
+      contextLogin(responseData.detail, responseData["access-token"]);
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);
+      router.push("/dashboard");
     } catch (error) {
       // This catches network failures or the error we threw above
+      setIsLoading(false);
       setError(error);
       console.error("🚨 A critical error occurred:", error);
     }

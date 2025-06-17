@@ -1,7 +1,12 @@
+import { AuthProvider } from "@/contexts/AuthContext";
 import React, { PropsWithChildren } from "react";
 
 const UserPagesLayout = ({ children }: PropsWithChildren) => {
-  return <div>{children}</div>;
+  return (
+    <AuthProvider>
+      <div>{children}</div>
+    </AuthProvider>
+  );
 };
 
 export default UserPagesLayout;
