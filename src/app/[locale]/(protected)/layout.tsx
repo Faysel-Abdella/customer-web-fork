@@ -20,6 +20,10 @@ export default function ProtectedLayout({
     if (!user) {
       router.push("/login");
     }
+
+    if (user?.is_profile_setup === 0) {
+      router.push("/profile-setup");
+    }
   }, [user, isLoading, router]);
 
   if (isLoading || !user) {

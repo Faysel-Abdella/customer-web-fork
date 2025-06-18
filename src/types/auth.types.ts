@@ -1,4 +1,4 @@
-export type LoginFormPayload = {
+export type LoginPayload = {
   "LoginForm[username]": string;
   "LoginForm[country_code]": string;
   "LoginForm[password]": string;
@@ -6,6 +6,21 @@ export type LoginFormPayload = {
   "LoginForm[device_type]": number;
   "LoginForm[device_token]": string;
   "LoginForm[device_udid]": string;
+};
+
+export type SignupPayload = {
+  "User[first_name]": string;
+  "User[last_name]": string;
+  "User[password]": string;
+  "User[country_code]": string;
+  "User[contact_no]": string;
+  "User[role_id]": string;
+  confirm_password: string;
+};
+export type VerifyOtpPayload = {
+  "User[otp]": string;
+  "User[contact_no]": string;
+  "User[country_code]": string;
 };
 
 type numericBool = 0 | 1;

@@ -1,25 +1,21 @@
-import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
-import { LoginPayload, LoginResponse, UserDetail } from "@/types/auth.types";
+import { LoginResponse, SignupPayload } from "@/types/auth.types";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export const useLogin = () => {
+export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<null | string>();
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [user, setUser] = useState<UserDetail>();
   const router = useRouter();
-  const { login: contextLogin } = useAuth();
 
-  const login = async (data: LoginPayload) => {
+  const signup = async (data: SignupPayload) => {
     setIsLoading(true);
-    setIsSuccess(false);
     setError(null);
     const body = objectToUrlEncoded(data);
     try {
-      const response = await fetch("/api/user/login", {
+      const response = await fetch("/api/user/signup", {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST",
         body,
@@ -30,18 +26,29 @@ export const useLogin = () => {
 
       const responseData: LoginResponse = await response.json();
 
-      console.log("✅ Login successful");
-      contextLogin(responseData.detail, responseData["access-token"]);
-      setUser(responseData.detail);
+      console.log("✅ Login successful", responseData);
+
+      const unVerifiedUser = {
+        country_code: responseData.detail.country_code,
+        contact_no: responseData.detail.contact_no,
+      };
+
+      localStorage.setItem("unVerifiedUser", JSON.stringify(unVerifiedUser));
+      toast.message("Here is your OTP", {
+        description: responseData.detail.otp,
+      });
       setIsLoading(false);
-      setIsSuccess(true);
-      router.push("/dashboard");
-    } catch (error: unknown) {
+      router.push("/verify-otp");
+    } catch (error) {
       const errorMessage = await processError(error);
       setError(errorMessage);
       setIsLoading(false);
     }
   };
 
-  return { isLoading, error, login, isSuccess, user };
+  return {
+    isLoading,
+    signup,
+    error,
+  };
 };

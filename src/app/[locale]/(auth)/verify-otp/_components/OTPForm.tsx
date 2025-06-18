@@ -13,32 +13,59 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useVerifyOtp } from "@/hooks/authHooks/useVerifyOtp";
+import { useRouter } from "@/i18n/navigation";
 import { oTPSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Utensils } from "lucide-react";
-import React from "react";
+import { Loader, Utensils } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
+  const [contact_no, setContact_no] = useState("");
+  const [country_code, setCountry_code] = useState("");
+  const router = useRouter();
   const form = useForm<z.infer<typeof oTPSchema>>({
     resolver: zodResolver(oTPSchema),
     defaultValues: {
       code: "",
     },
   });
+  const { error, isLoading, isSuccess, verifyOtp, user } = useVerifyOtp();
 
   function onSubmit(data: z.infer<typeof oTPSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+    verifyOtp({
+      "User[contact_no]": contact_no,
+      "User[country_code]": country_code,
+      "User[otp]": data.code,
     });
   }
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Error", { description: error });
+    }
+    if (isSuccess) {
+      toast.success(`Welcome ${user?.full_name}`);
+    }
+  }, [error, isSuccess, user]);
+
+  useEffect(() => {
+    const unVerifiedUserItem = localStorage.getItem("unVerifiedUser");
+
+    if (!unVerifiedUserItem) {
+      router.push("/signup");
+    } else {
+      const unVerifiedUserData: { country_code: string; contact_no: string } =
+        JSON.parse(unVerifiedUserItem);
+
+      setContact_no(unVerifiedUserData.contact_no);
+      setCountry_code(unVerifiedUserData.country_code);
+    }
+  }, [router]);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Form {...form}>
@@ -84,7 +111,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
                 )}
               />
               <Button type='submit' className='w-full'>
-                Verify
+                {isLoading ? <Loader className='animate-spin' /> : "Verify"}
               </Button>
               <div className='flex items-center text-sm text-muted-foreground'>
                 Didnt receive the code?

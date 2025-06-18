@@ -68,10 +68,10 @@ export function LoginForm({
 
   useEffect(() => {
     if (error) {
-      toast("Error", error);
+      toast.error("Error", { description: error });
     }
     if (isSuccess) {
-      toast.success(`Welcome ${user?.full_name}`);
+      toast.success(`Welcome back ${user?.full_name}`);
     }
   }, [error, isSuccess, user]);
 

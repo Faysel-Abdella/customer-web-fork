@@ -2,10 +2,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
-import { LoginPayload, LoginResponse, UserDetail } from "@/types/auth.types";
+import {
+  LoginResponse,
+  UserDetail,
+  VerifyOtpPayload,
+} from "@/types/auth.types";
 import { useState } from "react";
 
-export const useLogin = () => {
+export const useVerifyOtp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<null | string>();
   const [isSuccess, setIsSuccess] = useState(false);
@@ -13,13 +17,12 @@ export const useLogin = () => {
   const router = useRouter();
   const { login: contextLogin } = useAuth();
 
-  const login = async (data: LoginPayload) => {
+  const verifyOtp = async (data: VerifyOtpPayload) => {
     setIsLoading(true);
-    setIsSuccess(false);
     setError(null);
     const body = objectToUrlEncoded(data);
     try {
-      const response = await fetch("/api/user/login", {
+      const response = await fetch("/api/user/verify-otp", {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST",
         body,
@@ -27,21 +30,25 @@ export const useLogin = () => {
       if (!response.ok) {
         throw new HttpError(response);
       }
-
       const responseData: LoginResponse = await response.json();
-
-      console.log("✅ Login successful");
       contextLogin(responseData.detail, responseData["access-token"]);
+      localStorage.removeItem("unVerifiedUser");
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);
       router.push("/dashboard");
-    } catch (error: unknown) {
+    } catch (error) {
       const errorMessage = await processError(error);
       setError(errorMessage);
       setIsLoading(false);
     }
   };
 
-  return { isLoading, error, login, isSuccess, user };
+  return {
+    isLoading,
+    verifyOtp,
+    error,
+    isSuccess,
+    user,
+  };
 };

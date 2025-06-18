@@ -1,6 +1,6 @@
 "use client";
-import { Eye, EyeOff, Utensils } from "lucide-react";
-import { useState } from "react";
+import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { PhoneInput } from "@/components/phone-input";
 import { Button } from "@/components/ui/button";
@@ -27,12 +27,15 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useSignup } from "@/hooks/authHooks/useSignup";
 
 const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+
+  const { error, isLoading, signup } = useSignup();
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -51,22 +54,23 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const data = {
-      contact_no,
-      country_code,
-      first_name: values.first_name,
-      last_name: values.last_name,
-      password: values.password,
+
+    signup({
+      "User[contact_no]": contact_no,
+      "User[country_code]": "+" + country_code,
+      "User[first_name]": values.first_name,
+      "User[last_name]": values.first_name,
+      "User[password]": values.password,
+      "User[role_id]": "2",
       confirm_password: values.confirm_password,
-    };
-    toast("You submitted the following values", {
-      description: (
-        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
     });
   }
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Error", { description: error });
+    }
+  }, [error]);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Form {...form}>
@@ -217,7 +221,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 </div>
               </div>
               <Button type='submit' className='w-full' disabled={!agreeToTerms}>
-                Sign Up
+                {isLoading ? <Loader className='animate-spin' /> : "Signup"}
               </Button>
               <div className='text-center text-sm'>
                 Already have an account?{" "}
