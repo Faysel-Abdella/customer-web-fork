@@ -160,7 +160,7 @@ export function LoginForm({
                   Forgot Password?
                 </Link>
               </div>
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full' disabled={isLoading}>
                 {isLoading ? <Loader className='animate-spin' /> : "Login"}
               </Button>
               <div className='text-center text-sm'>

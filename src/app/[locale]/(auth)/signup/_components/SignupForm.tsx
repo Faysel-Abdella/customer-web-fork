@@ -221,7 +221,11 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                   </Link>
                 </div>
               </div>
-              <Button type='submit' className='w-full' disabled={!agreeToTerms}>
+              <Button
+                type='submit'
+                className='w-full'
+                disabled={!agreeToTerms || isLoading}
+              >
                 {isLoading ? <Loader className='animate-spin' /> : "Signup"}
               </Button>
               <div className='text-center text-sm'>

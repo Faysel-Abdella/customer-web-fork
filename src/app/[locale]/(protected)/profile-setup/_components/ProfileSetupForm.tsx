@@ -1,6 +1,6 @@
 "use client";
-import { Utensils } from "lucide-react";
-import { useState } from "react";
+import { Loader, Utensils } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { PhoneInput } from "@/components/phone-input";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { profileSetupSchema } from "@/lib/schemas/auth.schema";
-import { cn } from "@/lib/utils";
+import { cn, formatYYYYMMDD } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import parsePhoneNumberFromString, {
   CountryCode,
@@ -31,21 +31,26 @@ import parsePhoneNumberFromString, {
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useUpdateProfile } from "@/hooks/authHooks/useUpdateProfile";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProfileSetupForm = ({
   className,
   ...props
 }: React.ComponentProps<"div">) => {
+  const { user } = useAuth();
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
+
+  const { error, isLoading, updateProfile } = useUpdateProfile();
 
   const form = useForm<z.infer<typeof profileSetupSchema>>({
     resolver: zodResolver(profileSetupSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      contact_no: "",
-
-      gender: "other",
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      contact_no: user ? user.country_code + user.contact_no : "",
+      gender: user ? user.gender.toString() : "",
+      dob: new Date(),
     },
   });
 
@@ -55,20 +60,23 @@ const ProfileSetupForm = ({
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const data = {
-      contact_no,
-      country_code,
-      first_name: values.first_name,
-      last_name: values.last_name,
-    };
-    toast("You submitted the following values", {
-      description: (
-        <pre className='mt-2 w-[320px] rounded-md bg-neutral-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+
+    updateProfile({
+      "User[contact_no]": contact_no,
+      "User[country_code]": country_code,
+      "User[date_of_birth]": formatYYYYMMDD(values.dob),
+      "User[gender]": values.gender,
+      "User[first_name]": values.first_name,
+      "User[last_name]": values.last_name,
     });
   }
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Error", { description: error });
+    }
+  }, [error]);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Form {...form}>
@@ -84,10 +92,7 @@ const ProfileSetupForm = ({
                 </div>
                 <span className='sr-only'>Time Delivery Inc.</span>
               </a>
-              <h1 className='text-xl font-bold '>Join FoodExpress</h1>
-              <h3 className='text-muted-foreground font-bold '>
-                Create Your Account
-              </h3>
+              <h1 className='text-xl font-bold '>Setup Your Account</h1>
             </div>
             <div className='flex flex-col gap-6'>
               <FormField
@@ -125,14 +130,17 @@ const ProfileSetupForm = ({
                   <FormItem>
                     <FormLabel>Gender</FormLabel>
                     <FormControl>
-                      <Select {...field}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <SelectTrigger className='w-full'>
-                          <SelectValue placeholder='Theme' />
+                          <SelectValue placeholder='Gender' />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value='male'>Male</SelectItem>
-                          <SelectItem value='female'>Female</SelectItem>
-                          <SelectItem value='other'>Other</SelectItem>
+                          <SelectItem value='0'>Male</SelectItem>
+                          <SelectItem value='1'>Female</SelectItem>
+                          <SelectItem value='2'>Other</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -175,8 +183,8 @@ const ProfileSetupForm = ({
                 )}
               />
 
-              <Button type='submit' className='w-full'>
-                Save
+              <Button type='submit' className='w-full' disabled={isLoading}>
+                {isLoading ? <Loader className='animate-spin' /> : "Save"}
               </Button>
             </div>
           </div>

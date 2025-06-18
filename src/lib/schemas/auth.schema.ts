@@ -57,7 +57,7 @@ export const profileSetupSchema = z.object({
     .refine(isValidPhoneNumber, {
       message: "Invalid phone number",
     }),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.string(),
   dob: z.date({
     required_error: "A date of birth is required.",
   }),

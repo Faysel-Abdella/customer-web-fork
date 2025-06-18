@@ -111,7 +111,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
                   </FormItem>
                 )}
               />
-              <Button type='submit' className='w-full'>
+              <Button type='submit' className='w-full' disabled={isLoading}>
                 {isLoading ? <Loader className='animate-spin' /> : "Verify"}
               </Button>
               <div className='flex items-center text-sm text-muted-foreground'>

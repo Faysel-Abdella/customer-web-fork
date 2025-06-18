@@ -17,6 +17,14 @@ export type SignupPayload = {
   "User[role_id]": string;
   confirm_password: string;
 };
+export type UpdateProfilePayload = {
+  "User[first_name]"?: string;
+  "User[last_name]"?: string;
+  "User[country_code]"?: string;
+  "User[contact_no]"?: string;
+  "User[date_of_birth]"?: string;
+  "User[gender]"?: string;
+};
 export type VerifyOtpPayload = {
   "User[otp]": string;
   "User[contact_no]": string;

@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { HttpError } from "./api/HttpError";
 
@@ -21,13 +22,13 @@ export async function processError(error: unknown) {
     if (error instanceof HttpError) {
       const errorResponse: { message: string } = await error.response
         .json()
-        .catch(() => ({ message: "Failed to parse error response" }));
+        .catch(() => ({ message: "Something went wrong" }));
       return errorResponse.message;
     } else if (error instanceof Response) {
       // Fallback for direct Response errors (less common with HttpError)
       const errorResponse: { message: string } = await error
         .json()
-        .catch(() => ({ message: "Failed to parse error response" }));
+        .catch(() => ({ message: "Something went wrong" }));
       return errorResponse.message;
     } else if (error instanceof Error) {
       // Catch standard JavaScript errors (e.g., network issues)
@@ -40,4 +41,8 @@ export async function processError(error: unknown) {
     console.error("Error processing error:", innerError); // Log the inner error
     return "An internal error occurred.";
   }
+}
+
+export function formatYYYYMMDD(date: Date) {
+  return format(date, "yyyy-MM-dd");
 }

@@ -6,7 +6,9 @@ const ProfileSetupPage = () => {
   return (
     <div className=' flex  min-h-svh  items-center justify-start  '>
       <div className=' lg:w-2/5 justify-center  flex w-full '>
-        {<ProfileSetupForm className='sm:w-sm' />}
+        <div className=' w-fit   max-sm:min-h-dvh max-sm:w-full max-sm:rounded-none bg-background rounded-xl p-10 flex justify-center '>
+          {<ProfileSetupForm className='sm:w-sm' />}
+        </div>
       </div>
       <div className='fixed top-0 overflow-hidden right-0 w-full lg:w-3/5 -z-10   h-svh  '>
         <div className='relative w-full h-full'>
