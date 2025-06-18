@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSignup } from "@/hooks/authHooks/useSignup";
 import { Link } from "@/i18n/navigation";
 import { signupSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
@@ -23,11 +24,12 @@ import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useSignup } from "@/hooks/authHooks/useSignup";
+import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
+import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
+import TermsAndConditions from "../../_components/TermsAndConditions";
 
 const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -216,9 +218,9 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 />
                 <div className='flex gap-2'>
                   <Label htmlFor='agreeTerms'>I agree with all</Label>
-                  <Link href={"#"} className='underline hover:text-primary'>
+                  <TermsAndConditions className='underline hover:text-primary'>
                     Terms & Conditions
-                  </Link>
+                  </TermsAndConditions>
                 </div>
               </div>
               <Button
@@ -244,22 +246,8 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
               </span>
             </div>
             <div className='grid gap-4 sm:grid-cols-2'>
-              <Button variant='outline' type='button' className='w-full'>
-                <Image
-                  src={"/assets/images/brand-icons/facebook.svg"}
-                  alt='facebook icon'
-                  width={25}
-                  height={25}
-                />
-              </Button>
-              <Button variant='outline' type='button' className='w-full'>
-                <Image
-                  src={"/assets/images/brand-icons/google.svg"}
-                  alt='google icon'
-                  width={20}
-                  height={20}
-                />
-              </Button>
+              <FacebookLoginButton />
+              <GoogleLoginButton />
             </div>
           </div>
         </form>

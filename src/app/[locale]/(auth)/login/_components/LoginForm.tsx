@@ -31,6 +31,7 @@ import {
 import { toast } from "sonner";
 import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
+import TermsAndConditions from "../../_components/TermsAndConditions";
 
 export function LoginForm({
   className,
@@ -187,8 +188,12 @@ export function LoginForm({
           </div>
         </form>
       </Form>
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-        By clicking continue, you agree to our <a href='#'>Terms of Service</a>{" "}
+      <div className='text-muted-foreground *:[a]:hover:text-primary text-center gap-1 flex flex-wrap text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
+        By clicking continue, you agree to our
+        <TermsAndConditions className='underline hover:text-primary cursor-pointer'>
+          {" "}
+          Terms of Service{" "}
+        </TermsAndConditions>
         and <a href='#'>Privacy Policy</a>.
       </div>
     </div>
