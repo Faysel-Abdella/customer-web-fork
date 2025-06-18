@@ -22,6 +22,10 @@ export type VerifyOtpPayload = {
   "User[contact_no]": string;
   "User[country_code]": string;
 };
+export type ResendOtpPayload = {
+  "User[contact_no]": string;
+  "User[country_code]": string;
+};
 
 type numericBool = 0 | 1;
 export interface UserDetail {
@@ -66,10 +70,17 @@ export interface UserDetail {
   document_file: unknown[];
 }
 
-export interface LoginResponse {
+export interface ApiResponse {
   message: string;
-  "access-token": string;
-  detail: UserDetail;
   datecheck: string;
   copyrights: string;
+}
+
+export interface LoginResponse extends ApiResponse {
+  "access-token": string;
+  detail: UserDetail;
+}
+
+export interface ResendOtpResponse extends ApiResponse {
+  detail: UserDetail;
 }

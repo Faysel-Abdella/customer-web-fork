@@ -23,6 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import ResendOtp from "./ResendOtp";
 
 export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
   const [contact_no, setContact_no] = useState("");
@@ -115,9 +116,10 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
               </Button>
               <div className='flex items-center text-sm text-muted-foreground'>
                 Didnt receive the code?
-                <Button type='button' variant={"link"}>
-                  Resend
-                </Button>
+                <ResendOtp
+                  contact_no={contact_no}
+                  country_code={country_code}
+                />
               </div>
             </div>
           </div>

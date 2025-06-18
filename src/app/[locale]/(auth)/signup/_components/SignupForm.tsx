@@ -209,6 +209,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 <Checkbox
                   id='agreeTerms'
                   checked={agreeToTerms}
+                  disabled={isLoading}
                   onCheckedChange={(checked) =>
                     setAgreeToTerms(checked === true)
                   }
