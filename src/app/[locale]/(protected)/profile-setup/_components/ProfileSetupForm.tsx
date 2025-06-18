@@ -33,6 +33,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useUpdateProfile } from "@/hooks/authHooks/useUpdateProfile";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 
 const ProfileSetupForm = ({
   className,
@@ -40,6 +41,11 @@ const ProfileSetupForm = ({
 }: React.ComponentProps<"div">) => {
   const { user } = useAuth();
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
+  const router = useRouter();
+
+  if (!user?.contact_no) {
+    router.push("/dashboard");
+  }
 
   const { error, isLoading, updateProfile } = useUpdateProfile();
 

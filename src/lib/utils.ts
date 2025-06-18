@@ -23,6 +23,7 @@ export async function processError(error: unknown) {
       const errorResponse: { message: string } = await error.response
         .json()
         .catch(() => ({ message: "Something went wrong" }));
+      console.log("Error details: ", errorResponse);
       return errorResponse.message;
     } else if (error instanceof Response) {
       // Fallback for direct Response errors (less common with HttpError)

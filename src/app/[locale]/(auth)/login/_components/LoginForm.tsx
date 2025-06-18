@@ -28,8 +28,9 @@ import {
   getCountryCallingCode,
   parsePhoneNumberFromString,
 } from "libphonenumber-js";
-import Image from "next/image";
 import { toast } from "sonner";
+import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
+import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 
 export function LoginForm({
   className,
@@ -54,7 +55,8 @@ export function LoginForm({
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const uuid = "3df82109-11be-4efa-8da2-1c96af2621b4";
+    const uuid = crypto.randomUUID();
+
     login({
       "LoginForm[username]": contact_no,
       "LoginForm[country_code]": "+" + country_code,
@@ -179,22 +181,8 @@ export function LoginForm({
               </span>
             </div>
             <div className='grid gap-4 sm:grid-cols-2'>
-              <Button variant='outline' type='button' className='w-full'>
-                <Image
-                  src={"/assets/images/brand-icons/facebook.svg"}
-                  alt='facebook icon'
-                  width={25}
-                  height={25}
-                />
-              </Button>
-              <Button variant='outline' type='button' className='w-full'>
-                <Image
-                  src={"/assets/images/brand-icons/google.svg"}
-                  alt='google icon'
-                  width={20}
-                  height={20}
-                />
-              </Button>
+              <FacebookLoginButton />
+              <GoogleLoginButton />
             </div>
           </div>
         </form>
