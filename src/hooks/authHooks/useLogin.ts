@@ -36,7 +36,7 @@ export const useLogin = () => {
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);
-      router.push("/dashboard");
+      router.push("/home");
     } catch (error: unknown) {
       const errorMessage = await processError(error);
 

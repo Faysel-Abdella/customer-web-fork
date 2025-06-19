@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext"; // Import our custom hook
+import { Loader2 } from "lucide-react";
 
 export default function ProtectedLayout({
   children,
@@ -28,7 +28,11 @@ export default function ProtectedLayout({
   }, [user, isLoading, router]);
 
   if (isLoading || !user) {
-    return <div>Loading...</div>; // Or a dedicated loader component
+    return (
+      <div className="flex h-dvh w-screen flex-col items-center justify-center">
+        <Loader2 size={50} className="animate-spin" />
+      </div>
+    ); // Or a dedicated loader component
   }
 
   return <>{children}</>;
