@@ -8,23 +8,14 @@ import {
   getCountryCallingCode,
   parsePhoneNumberFromString,
 } from "libphonenumber-js";
-import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
+import { Loader, Utensils } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { PhoneInput } from "@/components/phone-input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useLogin } from "@/hooks/authHooks/useLogin";
 import { Link } from "@/i18n/navigation";
@@ -35,13 +26,14 @@ import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
 
+import LoginFormFields from "./LoginFormFields";
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const toastTrans = useTranslations("toast");
   const t = useTranslations("auth.login");
-  const [showPassword, setShowPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
 
   const { error, isLoading, isSuccess, login, user } = useLogin();
@@ -101,59 +93,7 @@ export function LoginForm({
               <h1 className="text-xl font-bold">{t("welcome")}</h1>
             </div>
             <div className="flex flex-col gap-6">
-              <FormField
-                control={form.control}
-                name="contact_no"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("mobile_number")}</FormLabel>
-                    <FormControl>
-                      <PhoneInput
-                        id="phone-number"
-                        defaultCountry="ET"
-                        {...field}
-                        onCountryChange={setCountry}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("password")}</FormLabel>
-                    <FormControl>
-                      <div className="flex">
-                        <Input
-                          id="password"
-                          type={showPassword ? "text" : "password"}
-                          placeholder="********"
-                          {...field}
-                        />
-                        <button
-                          className="-m-6 cursor-pointer"
-                          type="button"
-                          onClick={() => setShowPassword((prev) => !prev)}
-                        >
-                          {showPassword ? (
-                            <Eye size={16} />
-                          ) : (
-                            <EyeOff size={16} />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+              <LoginFormFields form={form} setCountry={setCountry} />
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Checkbox id="remember-me" />

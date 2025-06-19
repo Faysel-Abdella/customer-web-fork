@@ -3,7 +3,7 @@
     "welcome": "Welcome",
     "welcome_back": "Welcome back",
     "here_otp": "Here is your otp",
-    "Error": "Error"
+    "error": "Error"
   },
   "auth": {
     "login": {

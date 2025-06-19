@@ -7,23 +7,14 @@ import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
-import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
+import { Loader, Utensils } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { PhoneInput } from "@/components/phone-input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useSignup } from "@/hooks/authHooks/useSignup";
 import { Link } from "@/i18n/navigation";
@@ -34,11 +25,12 @@ import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
 
+import SignupFormFields from "./SignupFormFields";
+
 const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const toastTrans = useTranslations("toast");
   const t = useTranslations("auth.signup");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
 
@@ -102,119 +94,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
               </h3>
             </div>
             <div className="flex flex-col gap-6">
-              <div className="flex w-full gap-2">
-                <FormField
-                  control={form.control}
-                  name="first_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("first_name")}</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John" {...field} />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="last_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t("last_name")}</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="contact_no"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("mobile_number")}</FormLabel>
-                    <FormControl>
-                      <PhoneInput
-                        id="phone-number"
-                        defaultCountry="ET"
-                        onCountryChange={setCountry}
-                        {...field}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("password")}</FormLabel>
-                    <FormControl>
-                      <div className="flex">
-                        <Input
-                          id="password"
-                          type={showPassword ? "text" : "password"}
-                          placeholder="********"
-                          {...field}
-                        />
-                        <button
-                          className="-m-6 cursor-pointer"
-                          type="button"
-                          onClick={() => setShowPassword((prev) => !prev)}
-                        >
-                          {showPassword ? (
-                            <Eye size={16} />
-                          ) : (
-                            <EyeOff size={16} />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirm_password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("confirm_password")}</FormLabel>
-                    <FormControl>
-                      <div className="flex">
-                        <Input
-                          id="confirm-password"
-                          type={showConfirmPassword ? "text" : "password"}
-                          placeholder="********"
-                          {...field}
-                        />
-                        <button
-                          className="-m-6 cursor-pointer"
-                          type="button"
-                          onClick={() =>
-                            setShowConfirmPassword((prev) => !prev)
-                          }
-                        >
-                          {showConfirmPassword ? (
-                            <Eye size={16} />
-                          ) : (
-                            <EyeOff size={16} />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <SignupFormFields form={form} setCountry={setCountry} />
               <div className="flex items-center gap-2 text-sm">
                 <Checkbox
                   id="agreeTerms"
