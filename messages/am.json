@@ -1,0 +1,75 @@
+{
+  "toast": {
+    "welcome": "እንኳን በደህና መጡ",
+    "welcome_back": "እንኳን በደህና ተመለሱ",
+    "here_otp": "የአንድ ጊዜ የይለፍ ቃልዎ ይኸውና",
+    "error": "ስህተት ተፈጥሯል"
+  },
+  "auth": {
+    "login": {
+      "welcome": "ወደ ታይም ዴሊቨሪ እንኳን በደህና መጡ",
+      "mobile_number": "ስልክ ቁጥር",
+      "password": "የይለፍ ቃል",
+      "remember_me": "አስታውሰኝ",
+      "forgot_password": "የይለፍ ቃል ረስተዋል?",
+      "login_button": "ግባ",
+      "no_account": "አካውንት የለዎትም?",
+      "sign_up_link": "ይመዝገቡ",
+      "or_divider": "ወይም",
+      "terms_guide": "በመቀጠል ለነዚ ይስማማሉ፣ ",
+      "terms_of_service": "የአገልግሎት ውል",
+      "and": "እና",
+      "privacy_policy": "የግላዊነት ፖሊሲ",
+      "google_login": "በGoogle ይቀጥሉ",
+      "facebook_login": "በFacebook ይቀጥሉ"
+    },
+    "signup": {
+      "title": "ታይም ዴሊቨሪን ይቀላቀሉ",
+      "create_account": "የእርስዎን አካውንት ይፍጠሩ",
+      "first_name": "የመጀመሪያ ስም",
+      "last_name": "የአባት ስም",
+      "mobile_number": "ስልክ ቁጥር",
+      "password": "የይለፍ ቃል",
+      "confirm_password": "የይለፍ ቃል ያረጋግጡ",
+      "agree": "በሚቀጥሉት እስማማለሁ፣",
+      "terms_of_service": "የአገልግሎት ውል",
+      "signup_button": "ይመዝገቡ",
+      "already_have_account": "አካውንት አለዎት?",
+      "login_link": "ግባ",
+      "or_divider": "ወይም"
+    },
+    "verification": {
+      "title": "ማረጋገጫ",
+      "enter_code_prompt": "ስልክ ቁጥርዎን ለማረጋገጥ ባለ 4 አሃዝ ኮድ ያስገቡ",
+      "verify_button": "አረጋግጥ",
+      "no_code_received": "ኮዱን አልተቀበሉም?",
+      "resend_link": "እንደገና ላክ",
+      "otp_message": "የአንድ ጊዜ የይለፍ ቃልዎ ይኸውና"
+    },
+    "forgot_password": {
+      "title": "የይለፍ ቃል ረስተዋል",
+      "instruction": "ከአካውንትዎ ጋር የተገናኘውን ስልክ ቁጥር ያስገቡ እና የይለፍ ቃልዎን እንደገና ለማስጀመር መመሪያ ያለው ሊንክ እንልክልዎታለን።",
+      "mobile_number": "ስልክ ቁጥር",
+      "send_button": "ላክ"
+    },
+    "account_setup": {
+      "title": "አካውንትዎን ያዋቅሩ",
+      "first_name": "የመጀመሪያ ስም",
+      "last_name": "የአባት ስም",
+      "mobile_number": "ስልክ ቁጥር",
+      "gender": "ጾታ",
+      "male": "ወንድ",
+      "female": "ሴት",
+      "other": "ሌላ",
+      "date_of_birth": "የትውልድ ቀን",
+      "save_button": "አስቀምጥ"
+    },
+    "marketing": {
+      "headline": "ጣፋጭ ምግብ እስከ በርዎ ድረስ",
+      "subheadline": "ከሚወዷቸው ምግብ ቤቶች ይዘዙ እና ትኩስ ምግቦችን በደቂቃዎች ውስጥ ያግኙ።",
+      "feature1": "ፈጣን መላኪያ",
+      "feature2": "ትኩስ ምግብ",
+      "feature3": "ምርጥ ዋጋዎች"
+    }
+  }
+}

@@ -1,0 +1,127 @@
+import React from "react";
+import { UseFormReturn } from "react-hook-form";
+
+import { CountryCode } from "libphonenumber-js";
+import { useTranslations } from "next-intl";
+import { z } from "zod";
+
+import { PhoneInput } from "@/components/phone-input";
+import { DatePicker } from "@/components/ui/date-picker";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { profileSetupSchema } from "@/lib/schemas/auth.schema";
+
+interface ProfileSetupFormFieldsProps {
+  form: UseFormReturn<z.infer<typeof profileSetupSchema>>;
+  setCountry: React.Dispatch<React.SetStateAction<CountryCode | undefined>>;
+}
+const ProfileSetupFormFields = ({
+  form,
+  setCountry,
+}: ProfileSetupFormFieldsProps) => {
+  const t = useTranslations("auth.account_setup");
+
+  return (
+    <div>
+      <FormField
+        control={form.control}
+        name="first_name"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("first_name")}</FormLabel>
+            <FormControl>
+              <Input placeholder="John" {...field} />
+            </FormControl>
+
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="last_name"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("last_name")}</FormLabel>
+            <FormControl>
+              <Input placeholder="Doe" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="gender"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("gender")}</FormLabel>
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">{t("male")}</SelectItem>
+                  <SelectItem value="1">{t("female")}</SelectItem>
+                  <SelectItem value="2">{t("other")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="dob"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("date_of_birth")}</FormLabel>
+            <FormControl>
+              <DatePicker {...field} className="w-full" />
+            </FormControl>
+
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="contact_no"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t("mobile_number")}</FormLabel>
+            <FormControl>
+              <PhoneInput
+                id="phone-number"
+                defaultCountry="ET"
+                onCountryChange={setCountry}
+                {...field}
+              />
+            </FormControl>
+
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  );
+};
+
+export default ProfileSetupFormFields;
