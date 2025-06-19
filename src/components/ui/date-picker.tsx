@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
+
 import { format, getMonth, getYear, setMonth, setYear } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -12,6 +12,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+
 import {
   Select,
   SelectContent,
@@ -53,7 +55,7 @@ export function DatePicker({
   ];
   const years = Array.from(
     { length: endYear - startYear + 1 },
-    (_, i) => startYear + i
+    (_, i) => startYear + i,
   );
 
   const handleMonthChange = (month: string) => {
@@ -80,21 +82,21 @@ export function DatePicker({
           className={cn(
             "w-[250px] justify-start text-left font-normal",
             className,
-            !value && "text-muted-foreground"
+            !value && "text-muted-foreground",
           )}
         >
-          <CalendarIcon className='mr-2 h-4 w-4' />
+          <CalendarIcon className="mr-2 h-4 w-4" />
           {value ? format(value, "PPP") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-auto p-0'>
-        <div className='flex justify-between p-2'>
+      <PopoverContent className="w-auto p-0">
+        <div className="flex justify-between p-2">
           <Select
             onValueChange={handleMonthChange}
             value={months[getMonth(value)]}
           >
-            <SelectTrigger className='w-[110px]'>
-              <SelectValue placeholder='Month' />
+            <SelectTrigger className="w-[110px]">
+              <SelectValue placeholder="Month" />
             </SelectTrigger>
             <SelectContent>
               {months.map((month) => (
@@ -108,8 +110,8 @@ export function DatePicker({
             onValueChange={handleYearChange}
             value={getYear(value).toString()}
           >
-            <SelectTrigger className='w-[110px]'>
-              <SelectValue placeholder='Year' />
+            <SelectTrigger className="w-[110px]">
+              <SelectValue placeholder="Year" />
             </SelectTrigger>
             <SelectContent>
               {years.map((year) => (
@@ -122,7 +124,7 @@ export function DatePicker({
         </div>
 
         <Calendar
-          mode='single'
+          mode="single"
           selected={value}
           onSelect={handleSelect}
           initialFocus

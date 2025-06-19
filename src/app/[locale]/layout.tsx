@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from "next/navigation";
 
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import type { Metadata } from "next";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { routing } from "@/i18n/routing";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { routing } from "@/i18n/routing";
 
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,7 +46,7 @@ export default async function RootLayout({
           <AuthProvider>
             <ThemeProvider
               attribute={"class"}
-              defaultTheme='system'
+              defaultTheme="system"
               enableSystem
               disableTransitionOnChange
             >

@@ -1,13 +1,20 @@
+import React, { useEffect } from "react";
+
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { useResendOtp } from "@/hooks/authHooks/useResendOtp";
-import React, { useEffect } from "react";
-import { toast } from "sonner";
 
 interface ResendOtpProps {
   contact_no: string;
   country_code: string;
 }
 const ResendOtp = ({ contact_no, country_code }: ResendOtpProps) => {
+  const toastTrans = useTranslations("toast");
+  const t = useTranslations("auth.verification");
+
   const { Otp, error, isLoading, resendOtp } = useResendOtp();
 
   const handleResendOtp = () => {
@@ -19,22 +26,22 @@ const ResendOtp = ({ contact_no, country_code }: ResendOtpProps) => {
 
   useEffect(() => {
     if (error) {
-      toast.error("Error", { description: error });
+      toast.error(toastTrans("error"), { description: error });
     }
     if (Otp) {
-      toast.message("Here is your OTP", {
+      toast.message(toastTrans("here_otp"), {
         description: Otp,
       });
     }
-  }, [error, Otp]);
+  }, [error, Otp, toastTrans]);
   return (
     <Button
-      type='button'
+      type="button"
       variant={"link"}
       onClick={handleResendOtp}
       disabled={isLoading}
     >
-      {isLoading ? "Sending otp" : "Resend"}
+      {isLoading ? <Loader2 className="animate-spin" /> : t("resend_link")}
     </Button>
   );
 };

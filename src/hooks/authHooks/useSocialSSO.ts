@@ -1,16 +1,18 @@
+import { useState } from "react";
+
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
   User,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase"; // Import your initialized auth service
-import { HttpError } from "@/lib/api/HttpError";
-import { useState } from "react";
-import { LoginResponse, UserDetail } from "@/types/auth.types";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
+import { HttpError } from "@/lib/api/HttpError";
+import { auth } from "@/lib/firebase"; // Import your initialized auth service
 import { processError } from "@/lib/utils";
+import { LoginResponse, UserDetail } from "@/types/auth.types";
 
 export function useSocialSSO({
   providerName,
@@ -51,7 +53,6 @@ export function useSocialSSO({
       backendPayload.append("HaLogin[user_id]", userId);
       backendPayload.append("HaLogin[login_provider]", providerName);
       backendPayload.append("HaLogin[role_id]", "2");
-      backendPayload.append("HaLogin[merchant_id]", "2");
       backendPayload.append("HaLogin[email]", user.email || "");
       backendPayload.append("HaLogin[full_name]", user.displayName || "");
       backendPayload.append("HaLogin[image_url]", user.photoURL || "");

@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { ResendOtpPayload, ResendOtpResponse } from "@/types/auth.types";
-import { useState } from "react";
 
 export const useResendOtp = () => {
   const [isLoading, setIsLoading] = useState(false);

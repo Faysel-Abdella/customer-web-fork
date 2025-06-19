@@ -1,11 +1,13 @@
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { auth } from "@/lib/firebase"; // Import your initialized auth service
-import { HttpError } from "@/lib/api/HttpError";
 import { useState } from "react";
-import { LoginResponse, UserDetail } from "@/types/auth.types";
+
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
+import { HttpError } from "@/lib/api/HttpError";
+import { auth } from "@/lib/firebase"; // Import your initialized auth service
 import { processError } from "@/lib/utils";
+import { LoginResponse, UserDetail } from "@/types/auth.types";
 
 export function useGoogleSSO() {
   const [isLoading, setIsLoading] = useState(false);

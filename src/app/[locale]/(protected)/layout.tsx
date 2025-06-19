@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext"; // Import our custom hook
+
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProtectedLayout({
   children,

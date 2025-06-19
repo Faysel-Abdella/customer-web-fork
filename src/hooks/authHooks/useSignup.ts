@@ -1,14 +1,15 @@
+import { useState } from "react";
+
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginResponse, SignupPayload } from "@/types/auth.types";
-import { useState } from "react";
-import { toast } from "sonner";
 
 export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<null | string>();
   const router = useRouter();
+  const [Otp, setOtp] = useState<string | null>();
 
   const signup = async (data: SignupPayload) => {
     setIsLoading(true);
@@ -34,9 +35,8 @@ export const useSignup = () => {
       };
 
       localStorage.setItem("unVerifiedUser", JSON.stringify(unVerifiedUser));
-      toast.message("Here is your OTP", {
-        description: responseData.detail.otp,
-      });
+      setOtp(responseData.detail.otp.toString());
+
       setIsLoading(false);
       router.push("/verify-otp");
     } catch (error) {
@@ -50,5 +50,6 @@ export const useSignup = () => {
     isLoading,
     signup,
     error,
+    Otp,
   };
 };

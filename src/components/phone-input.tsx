@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import {
   Country,
   FlagProps,
@@ -8,10 +7,10 @@ import {
   Props,
   Value,
 } from "react-phone-number-input";
-
 import PhoneInput from "react-phone-number-input";
-
 import flags from "react-phone-number-input/flags";
+
+import { CheckIcon, ChevronsUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -64,7 +63,7 @@ const PhoneNumberInput: React.ForwardRefExoticComponent<PhoneNumberInputProps> =
           {...props}
         />
       );
-    }
+    },
   );
 PhoneNumberInput.displayName = "PhoneNumberInput";
 
@@ -73,7 +72,7 @@ const InputComponent = React.forwardRef<
   React.ComponentProps<"input">
 >(({ className, ...props }, ref) => (
   <Input
-    className={cn("rounded-e-md rounded-s-none", className)}
+    className={cn("rounded-s-none rounded-e-md", className)}
     {...props}
     ref={ref}
   />
@@ -103,9 +102,9 @@ const CountrySelect = ({
     <Popover open={isOpen} onOpenChange={setIsOpen} modal>
       <PopoverTrigger asChild>
         <Button
-          type='button'
-          variant='outline'
-          className='flex gap-1 rounded-e-none rounded-s-md border-r-0 px-3 focus:z-10'
+          type="button"
+          variant="outline"
+          className="flex gap-1 rounded-s-md rounded-e-none border-r-0 px-3 focus:z-10"
           disabled={disabled}
         >
           <FlagComponent
@@ -115,12 +114,12 @@ const CountrySelect = ({
           <ChevronsUpDown
             className={cn(
               "-mr-2 size-4 opacity-50",
-              disabled ? "hidden" : "opacity-100"
+              disabled ? "hidden" : "opacity-100",
             )}
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-[300px] p-0'>
+      <PopoverContent className="w-[300px] p-0">
         <Command>
           <CommandInput
             value={searchValue}
@@ -129,7 +128,7 @@ const CountrySelect = ({
               setTimeout(() => {
                 if (scrollAreaRef.current) {
                   const viewportElement = scrollAreaRef.current.querySelector(
-                    "[data-radix-scroll-area-viewport]"
+                    "[data-radix-scroll-area-viewport]",
                   );
                   if (viewportElement) {
                     viewportElement.scrollTop = 0;
@@ -137,10 +136,10 @@ const CountrySelect = ({
                 }
               }, 0);
             }}
-            placeholder='Search country...'
+            placeholder="Search country..."
           />
           <CommandList>
-            <ScrollArea ref={scrollAreaRef} className='h-72'>
+            <ScrollArea ref={scrollAreaRef} className="h-72">
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>
                 {countryList.map(({ value, label }) =>
@@ -153,7 +152,7 @@ const CountrySelect = ({
                       onChange={onChange}
                       onSelectComplete={() => setIsOpen(false)}
                     />
-                  ) : null
+                  ) : null,
                 )}
               </CommandGroup>
             </ScrollArea>
@@ -183,11 +182,11 @@ const CountrySelectOption = ({
   };
 
   return (
-    <CommandItem className='gap-2' onSelect={handleSelect}>
+    <CommandItem className="gap-2" onSelect={handleSelect}>
       <FlagComponent country={country} countryName={countryName} />
-      <span className='flex-1 text-sm'>{countryName}</span>
-      <span className='text-sm text-foreground/50'>{`+${getCountryCallingCode(
-        country
+      <span className="flex-1 text-sm">{countryName}</span>
+      <span className="text-foreground/50 text-sm">{`+${getCountryCallingCode(
+        country,
       )}`}</span>
       <CheckIcon
         className={`ml-auto size-4 ${
@@ -202,7 +201,7 @@ const FlagComponent = ({ country, countryName }: FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="flex h-4 w-6 overflow-hidden rounded-xs bg-foreground/20 [&_svg:not([class*='size-'])]:size-full">
+    <span className="bg-foreground/20 flex h-4 w-6 overflow-hidden rounded-xs [&_svg:not([class*='size-'])]:size-full">
       {Flag && <Flag title={countryName} />}
     </span>
   );
