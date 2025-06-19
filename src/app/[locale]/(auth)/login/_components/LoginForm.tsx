@@ -9,6 +9,7 @@ import {
   parsePhoneNumberFromString,
 } from "libphonenumber-js";
 import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -38,6 +39,8 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const toastTrans = useTranslations("toast");
+  const t = useTranslations("auth.login");
   const [showPassword, setShowPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
 
@@ -73,12 +76,12 @@ export function LoginForm({
 
   useEffect(() => {
     if (error) {
-      toast.error("Error", { description: error });
+      toast.error(toastTrans("error"), { description: error });
     }
     if (isSuccess) {
-      toast.success(`Welcome back ${user?.full_name}`);
+      toast.success(`${toastTrans("welcome_back")} ${user?.full_name}`);
     }
-  }, [error, isSuccess, user]);
+  }, [error, isSuccess, user, toastTrans]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -95,9 +98,7 @@ export function LoginForm({
                 </div>
                 <span className="sr-only">Time Delivery Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">
-                Welcome to Time Delivery Inc.
-              </h1>
+              <h1 className="text-xl font-bold">{t("welcome")}</h1>
             </div>
             <div className="flex flex-col gap-6">
               <FormField
@@ -105,7 +106,7 @@ export function LoginForm({
                 name="contact_no"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>{t("mobile_number")}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         id="phone-number"
@@ -125,7 +126,7 @@ export function LoginForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <FormControl>
                       <div className="flex">
                         <Input
@@ -156,31 +157,35 @@ export function LoginForm({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Checkbox id="remember-me" />
-                  <Label htmlFor="remember-me">Remember me</Label>
+                  <Label htmlFor="remember-me">{t("remember_me")}</Label>
                 </div>
                 <Link
                   href={"/forgot-password"}
                   className="text-primary text-sm font-semibold hover:underline"
                 >
-                  Forgot Password?
+                  {t("forgot_password")}
                 </Link>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? <Loader className="animate-spin" /> : "Login"}
+                {isLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  t("login_button")
+                )}
               </Button>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                {t("no_account")}{" "}
                 <Link
                   href="/signup"
                   className="text-primary font-semibold underline-offset-4 hover:underline"
                 >
-                  Sign up
+                  {t("sign_up_link")}
                 </Link>
               </div>
             </div>
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span className="bg-background text-muted-foreground relative z-10 px-2">
-                Or
+                {t("or_divider")}
               </span>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -191,12 +196,12 @@ export function LoginForm({
         </form>
       </Form>
       <div className="text-muted-foreground *:[a]:hover:text-primary flex flex-wrap gap-1 text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our
+        {t("terms_guide")}
         <TermsAndConditions className="hover:text-primary cursor-pointer underline">
           {" "}
-          Terms of Service{" "}
+          {t("terms_of_service")}{" "}
         </TermsAndConditions>
-        and <a href="#">Privacy Policy</a>.
+        {t("and")} <a href="#">{t("privacy_policy")}</a>.
       </div>
     </div>
   );

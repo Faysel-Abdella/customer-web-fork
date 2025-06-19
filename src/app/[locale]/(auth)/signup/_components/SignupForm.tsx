@@ -8,6 +8,7 @@ import parsePhoneNumberFromString, {
   getCountryCallingCode,
 } from "libphonenumber-js";
 import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -34,12 +35,14 @@ import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
 
 const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
+  const toastTrans = useTranslations("toast");
+  const t = useTranslations("auth.signup");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
 
-  const { error, isLoading, signup } = useSignup();
+  const { error, isLoading, signup, Otp } = useSignup();
 
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -72,9 +75,12 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
 
   useEffect(() => {
     if (error) {
-      toast.error("Error", { description: error });
+      toast.error(toastTrans("error"), { description: error });
     }
-  }, [error]);
+    if (Otp) {
+      toast.message(toastTrans("here_otp"), { description: Otp });
+    }
+  }, [error, Otp, toastTrans]);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Form {...form}>
@@ -90,9 +96,9 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 </div>
                 <span className="sr-only">Time Delivery Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Join FoodExpress</h1>
+              <h1 className="text-xl font-bold">{t("title")}</h1>
               <h3 className="text-muted-foreground font-bold">
-                Create Your Account
+                {t("create_account")}
               </h3>
             </div>
             <div className="flex flex-col gap-6">
@@ -102,7 +108,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                   name="first_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First Name</FormLabel>
+                      <FormLabel>{t("first_name")}</FormLabel>
                       <FormControl>
                         <Input placeholder="John" {...field} />
                       </FormControl>
@@ -116,7 +122,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                   name="last_name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Last Name</FormLabel>
+                      <FormLabel>{t("last_name")}</FormLabel>
                       <FormControl>
                         <Input placeholder="Doe" {...field} />
                       </FormControl>
@@ -130,7 +136,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 name="contact_no"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>{t("mobile_number")}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         id="phone-number"
@@ -149,7 +155,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <FormControl>
                       <div className="flex">
                         <Input
@@ -181,7 +187,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 name="confirm_password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
+                    <FormLabel>{t("confirm_password")}</FormLabel>
                     <FormControl>
                       <div className="flex">
                         <Input
@@ -219,9 +225,9 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                   }
                 />
                 <div className="flex gap-2">
-                  <Label htmlFor="agreeTerms">I agree with all</Label>
+                  <Label htmlFor="agreeTerms">{t("agree")}</Label>
                   <TermsAndConditions className="hover:text-primary underline">
-                    Terms & Conditions
+                    {t("terms_of_service")}
                   </TermsAndConditions>
                 </div>
               </div>
@@ -230,21 +236,25 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 className="w-full"
                 disabled={!agreeToTerms || isLoading}
               >
-                {isLoading ? <Loader className="animate-spin" /> : "Signup"}
+                {isLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  t("signup_button")
+                )}
               </Button>
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                {t("already_have_account")}{" "}
                 <Link
                   href="/login"
                   className="text-primary font-semibold underline-offset-4 hover:underline"
                 >
-                  Login
+                  {t("login_link")}
                 </Link>
               </div>
             </div>
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span className="bg-background text-muted-foreground relative z-10 px-2">
-                Or
+                {t("or_divider")}
               </span>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">

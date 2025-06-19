@@ -8,6 +8,7 @@ import parsePhoneNumberFromString, {
   getCountryCallingCode,
 } from "libphonenumber-js";
 import { Loader, Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -40,6 +41,7 @@ const ProfileSetupForm = ({
   className,
   ...props
 }: React.ComponentProps<"div">) => {
+  const t = useTranslations("auth.account_setup");
   const { user } = useAuth();
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
   const router = useRouter();
@@ -99,7 +101,7 @@ const ProfileSetupForm = ({
                 </div>
                 <span className="sr-only">Time Delivery Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Setup Your Account</h1>
+              <h1 className="text-xl font-bold">{t("title")}</h1>
             </div>
             <div className="flex flex-col gap-6">
               <FormField
@@ -107,7 +109,7 @@ const ProfileSetupForm = ({
                 name="first_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>{t("first_name")}</FormLabel>
                     <FormControl>
                       <Input placeholder="John" {...field} />
                     </FormControl>
@@ -121,7 +123,7 @@ const ProfileSetupForm = ({
                 name="last_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>{t("last_name")}</FormLabel>
                     <FormControl>
                       <Input placeholder="Doe" {...field} />
                     </FormControl>
@@ -135,7 +137,7 @@ const ProfileSetupForm = ({
                 name="gender"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Gender</FormLabel>
+                    <FormLabel>{t("gender")}</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
@@ -145,9 +147,9 @@ const ProfileSetupForm = ({
                           <SelectValue placeholder="Gender" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="0">Male</SelectItem>
-                          <SelectItem value="1">Female</SelectItem>
-                          <SelectItem value="2">Other</SelectItem>
+                          <SelectItem value="0">{t("male")}</SelectItem>
+                          <SelectItem value="1">{t("female")}</SelectItem>
+                          <SelectItem value="2">{t("other")}</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -161,7 +163,7 @@ const ProfileSetupForm = ({
                 name="dob"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Date of Birth</FormLabel>
+                    <FormLabel>{t("date_of_birth")}</FormLabel>
                     <FormControl>
                       <DatePicker {...field} className="w-full" />
                     </FormControl>
@@ -175,7 +177,7 @@ const ProfileSetupForm = ({
                 name="contact_no"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>{t("mobile_number")}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         id="phone-number"
@@ -191,7 +193,11 @@ const ProfileSetupForm = ({
               />
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? <Loader className="animate-spin" /> : "Save"}
+                {isLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  t("save_button")
+                )}
               </Button>
             </div>
           </div>

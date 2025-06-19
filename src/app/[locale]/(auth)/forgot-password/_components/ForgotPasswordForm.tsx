@@ -8,6 +8,7 @@ import parsePhoneNumberFromString, {
   getCountryCallingCode,
 } from "libphonenumber-js";
 import { Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -28,6 +29,7 @@ export function ForgotPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const t = useTranslations("auth.forgot_password");
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
 
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
@@ -67,10 +69,9 @@ export function ForgotPasswordForm({
                 </div>
                 <span className="sr-only">Acme Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Forgot Password</h1>
+              <h1 className="text-xl font-bold">{t("title")}</h1>
               <div className="text-muted-foreground text-center text-sm">
-                Enter the phone number associated with your account and we will
-                send you a link with instruction to reset your password.
+                {t("instruction")}
               </div>
             </div>
             <div className="flex flex-col gap-6">
@@ -79,7 +80,7 @@ export function ForgotPasswordForm({
                 name="contact_no"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Mobile Number</FormLabel>
+                    <FormLabel>{t("mobile_number")}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         id="phone-number"
@@ -94,7 +95,7 @@ export function ForgotPasswordForm({
                 )}
               />
               <Button type="submit" className="w-full">
-                Send
+                {t("send_button")}
               </Button>
             </div>
           </div>

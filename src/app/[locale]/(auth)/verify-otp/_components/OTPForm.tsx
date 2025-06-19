@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader, Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -29,6 +30,8 @@ import { cn } from "@/lib/utils";
 import ResendOtp from "./ResendOtp";
 
 export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
+  const toastTrans = useTranslations("toast");
+  const t = useTranslations("auth.verification");
   const [contact_no, setContact_no] = useState("");
   const [country_code, setCountry_code] = useState("");
   const router = useRouter();
@@ -50,12 +53,12 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
   useEffect(() => {
     if (error) {
-      toast.error("Error", { description: error });
+      toast.error(toastTrans("error"), { description: error });
     }
     if (isSuccess) {
-      toast.success(`Welcome ${user?.full_name}`);
+      toast.success(`${toastTrans("welcome")} ${user?.full_name}`);
     }
-  }, [error, isSuccess, user]);
+  }, [error, isSuccess, user, toastTrans]);
 
   useEffect(() => {
     const unVerifiedUserItem = localStorage.getItem("unVerifiedUser");
@@ -85,9 +88,9 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
                 </div>
                 <span className="sr-only">Acme Inc.</span>
               </a>
-              <h1 className="text-xl font-bold">Verification</h1>
+              <h1 className="text-xl font-bold">{t("title")}</h1>
               <div className="text-muted-foreground text-center text-sm">
-                Enter the 4 digit code to verify your phone number
+                {t("enter_code_prompt")}{" "}
               </div>
             </div>
             <div className="flex flex-col items-center gap-6">
@@ -115,10 +118,14 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
                 )}
               />
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? <Loader className="animate-spin" /> : "Verify"}
+                {isLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  t("verify_button")
+                )}
               </Button>
               <div className="text-muted-foreground flex items-center text-sm">
-                Didnt receive the code?
+                {t("no_code_received")}
                 <ResendOtp
                   contact_no={contact_no}
                   country_code={country_code}
