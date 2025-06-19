@@ -14,9 +14,10 @@ const ProfileSetupPage = () => {
         <div className='relative w-full h-full'>
           <Image
             fill
-            src='/assets/images/Auth_page_image.jpeg'
+            src='/assets/images/auth/Auth_page_image.jpeg'
             alt='Auth page background image'
             className='object-cover'
+            priority
           />
           <div className='absolute h-1/2 w-full    -bottom-10 bg-black/70  blur-3xl' />
           <div className='text-white hidden lg:flex justify-end w-full bottom-0 text-3xl absolute'>
