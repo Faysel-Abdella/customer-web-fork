@@ -1,9 +1,10 @@
+import { useState } from "react";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginResponse, UpdateProfilePayload } from "@/types/auth.types";
-import { useState } from "react";
 
 export const useUpdateProfile = () => {
   const [isLoading, setIsLoading] = useState(false);

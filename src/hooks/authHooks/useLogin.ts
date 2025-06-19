@@ -1,9 +1,10 @@
+import { useState } from "react";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginPayload, LoginResponse, UserDetail } from "@/types/auth.types";
-import { useState } from "react";
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +39,7 @@ export const useLogin = () => {
       router.push("/dashboard");
     } catch (error: unknown) {
       const errorMessage = await processError(error);
+
       setError(errorMessage);
       setIsLoading(false);
     }

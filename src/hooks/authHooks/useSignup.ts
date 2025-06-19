@@ -1,9 +1,11 @@
+import { useState } from "react";
+
+import { toast } from "sonner";
+
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginResponse, SignupPayload } from "@/types/auth.types";
-import { useState } from "react";
-import { toast } from "sonner";
 
 export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);

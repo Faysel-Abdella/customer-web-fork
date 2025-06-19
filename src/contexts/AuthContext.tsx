@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "@/i18n/navigation";
-import { UserDetail } from "@/types/auth.types";
 import {
   createContext,
   ReactNode,
@@ -10,6 +8,9 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import { useRouter } from "@/i18n/navigation";
+import { UserDetail } from "@/types/auth.types";
 
 interface AuthContextType {
   user: UserDetail | null;
@@ -22,7 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserDetail | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // To check initial auth status
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
 
   const login = (userData: UserDetail, token: string) => {
@@ -30,7 +31,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("accessToken", token);
 
-    // Redirect to the dashboard after a successful login
     router.push("/dashboard");
   };
 

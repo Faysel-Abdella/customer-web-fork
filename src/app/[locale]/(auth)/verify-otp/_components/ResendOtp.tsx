@@ -1,7 +1,9 @@
+import React, { useEffect } from "react";
+
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { useResendOtp } from "@/hooks/authHooks/useResendOtp";
-import React, { useEffect } from "react";
-import { toast } from "sonner";
 
 interface ResendOtpProps {
   contact_no: string;
@@ -29,7 +31,7 @@ const ResendOtp = ({ contact_no, country_code }: ResendOtpProps) => {
   }, [error, Otp]);
   return (
     <Button
-      type='button'
+      type="button"
       variant={"link"}
       onClick={handleResendOtp}
       disabled={isLoading}

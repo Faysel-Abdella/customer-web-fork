@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/api/HttpError";
@@ -7,7 +9,6 @@ import {
   UserDetail,
   VerifyOtpPayload,
 } from "@/types/auth.types";
-import { useState } from "react";
 
 export const useVerifyOtp = () => {
   const [isLoading, setIsLoading] = useState(false);

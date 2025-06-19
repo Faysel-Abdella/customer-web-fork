@@ -1,9 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  CountryCode,
+  getCountryCallingCode,
+  parsePhoneNumberFromString,
+} from "libphonenumber-js";
 import { Eye, EyeOff, Loader, Utensils } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { PhoneInput } from "@/components/phone-input";
@@ -23,12 +29,7 @@ import { useLogin } from "@/hooks/authHooks/useLogin";
 import { Link } from "@/i18n/navigation";
 import { loginSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
-import {
-  CountryCode,
-  getCountryCallingCode,
-  parsePhoneNumberFromString,
-} from "libphonenumber-js";
-import { toast } from "sonner";
+
 import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
@@ -52,10 +53,11 @@ export function LoginForm({
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
     const phoneNumberObj = parsePhoneNumberFromString(
-      form.getValues("contact_no")
+      form.getValues("contact_no"),
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
+
     const uuid = crypto.randomUUID();
 
     login({
@@ -82,32 +84,32 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='flex flex-col gap-6'>
-            <div className='flex flex-col items-center gap-2'>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col items-center gap-2">
               <a
-                href='#'
-                className='flex flex-col items-center gap-2 font-medium'
+                href="#"
+                className="flex flex-col items-center gap-2 font-medium"
               >
-                <div className='w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-lg'>
-                  <Utensils className='text-background' />
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 shadow-lg">
+                  <Utensils className="text-background" />
                 </div>
-                <span className='sr-only'>Time Delivery Inc.</span>
+                <span className="sr-only">Time Delivery Inc.</span>
               </a>
-              <h1 className='text-xl font-bold '>
+              <h1 className="text-xl font-bold">
                 Welcome to Time Delivery Inc.
               </h1>
             </div>
-            <div className='flex flex-col gap-6'>
+            <div className="flex flex-col gap-6">
               <FormField
                 control={form.control}
-                name='contact_no'
+                name="contact_no"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Mobile Number</FormLabel>
                     <FormControl>
                       <PhoneInput
-                        id='phone-number'
-                        defaultCountry='ET'
+                        id="phone-number"
+                        defaultCountry="ET"
                         {...field}
                         onCountryChange={setCountry}
                       />
@@ -120,21 +122,21 @@ export function LoginForm({
 
               <FormField
                 control={form.control}
-                name='password'
+                name="password"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <div className='flex'>
+                      <div className="flex">
                         <Input
-                          id='password'
+                          id="password"
                           type={showPassword ? "text" : "password"}
-                          placeholder='********'
+                          placeholder="********"
                           {...field}
                         />
                         <button
-                          className=' -m-6 cursor-pointer'
-                          type='button'
+                          className="-m-6 cursor-pointer"
+                          type="button"
                           onClick={() => setShowPassword((prev) => !prev)}
                         >
                           {showPassword ? (
@@ -151,50 +153,50 @@ export function LoginForm({
                 )}
               />
 
-              <div className='flex justify-between items-center '>
-                <div className='flex gap-2 items-center'>
-                  <Checkbox id='remember-me' />
-                  <Label htmlFor='remember-me'>Remember me</Label>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Checkbox id="remember-me" />
+                  <Label htmlFor="remember-me">Remember me</Label>
                 </div>
                 <Link
                   href={"/forgot-password"}
-                  className='text-sm font-semibold text-primary hover:underline'
+                  className="text-primary text-sm font-semibold hover:underline"
                 >
                   Forgot Password?
                 </Link>
               </div>
-              <Button type='submit' className='w-full' disabled={isLoading}>
-                {isLoading ? <Loader className='animate-spin' /> : "Login"}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? <Loader className="animate-spin" /> : "Login"}
               </Button>
-              <div className='text-center text-sm'>
+              <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <Link
-                  href='/signup'
-                  className='hover:underline underline-offset-4 text-primary font-semibold'
+                  href="/signup"
+                  className="text-primary font-semibold underline-offset-4 hover:underline"
                 >
                   Sign up
                 </Link>
               </div>
             </div>
-            <div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
-              <span className='bg-background text-muted-foreground relative z-10 px-2'>
+            <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+              <span className="bg-background text-muted-foreground relative z-10 px-2">
                 Or
               </span>
             </div>
-            <div className='grid gap-4 sm:grid-cols-2'>
+            <div className="grid gap-4 sm:grid-cols-2">
               <FacebookLoginButton />
               <GoogleLoginButton />
             </div>
           </div>
         </form>
       </Form>
-      <div className='text-muted-foreground *:[a]:hover:text-primary text-center gap-1 flex flex-wrap text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
+      <div className="text-muted-foreground *:[a]:hover:text-primary flex flex-wrap gap-1 text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to our
-        <TermsAndConditions className='underline hover:text-primary cursor-pointer'>
+        <TermsAndConditions className="hover:text-primary cursor-pointer underline">
           {" "}
           Terms of Service{" "}
         </TermsAndConditions>
-        and <a href='#'>Privacy Policy</a>.
+        and <a href="#">Privacy Policy</a>.
       </div>
     </div>
   );
