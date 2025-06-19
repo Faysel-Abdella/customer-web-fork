@@ -53,7 +53,6 @@ export function useSocialSSO({
       backendPayload.append("HaLogin[user_id]", userId);
       backendPayload.append("HaLogin[login_provider]", providerName);
       backendPayload.append("HaLogin[role_id]", "2");
-      backendPayload.append("HaLogin[merchant_id]", "2");
       backendPayload.append("HaLogin[email]", user.email || "");
       backendPayload.append("HaLogin[full_name]", user.displayName || "");
       backendPayload.append("HaLogin[image_url]", user.photoURL || "");
