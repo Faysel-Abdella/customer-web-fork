@@ -1,5 +1,10 @@
 // src/components/layout/cart-sheet.tsx
 
+import { useMemo } from "react";
+import Link from "next/link";
+
+import { Minus, Plus, ShoppingCart, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -10,9 +15,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Minus, Plus, ShoppingCart, X } from "lucide-react";
-import Link from "next/link";
-import { useMemo } from "react";
+
+import HeaderIcon from "./HeaderIcon";
 
 // Define the type for a cart item for type safety
 type CartItem = {
@@ -48,27 +52,23 @@ export function CartSheet() {
   const subtotal = useMemo(() => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
-      0
+      0,
     );
-  }, [cartItems]);
+  }, []);
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          variant='ghost'
-          size='icon'
-          className=' relative size-10 rounded-lg border cursor-pointer hover:bg-secondary flex transition-colors justify-center items-center '
-        >
+        <HeaderIcon>
           <ShoppingCart size={18} />
           {itemCount > 0 && (
-            <span className='absolute top-0 right-0 h-4 w-4 bg-primary text-primary-foreground rounded-full text-xs flex items-center justify-center'>
+            <span className="bg-primary text-primary-foreground absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full text-xs">
               {itemCount}
             </span>
           )}
-        </Button>
+        </HeaderIcon>
       </SheetTrigger>
-      <SheetContent className='flex flex-col w-full sm:max-w-md'>
+      <SheetContent className="flex w-full flex-col sm:max-w-md">
         <SheetHeader>
           <SheetTitle>My Cart</SheetTitle>
         </SheetHeader>
@@ -78,35 +78,35 @@ export function CartSheet() {
         {itemCount > 0 ? (
           <>
             {/* Cart Items List */}
-            <div className='flex-1 overflow-y-auto  px-6 '>
-              <div className='space-y-4 py-4'>
+            <div className="flex-1 overflow-y-auto px-6">
+              <div className="space-y-4 py-4">
                 {cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className='flex items-center gap-4 border-b pb-3'
+                    className="flex items-center gap-4 border-b pb-3"
                   >
-                    <div className=' h-16 w-16 bg-secondary animate-pulse rounded-md'></div>
-                    <div className='flex-1'>
-                      <p className='font-medium'>{item.name}</p>
-                      <p className='text-sm text-muted-foreground'>
+                    <div className="bg-secondary h-16 w-16 animate-pulse rounded-md"></div>
+                    <div className="flex-1">
+                      <p className="font-medium">{item.name}</p>
+                      <p className="text-muted-foreground text-sm">
                         ${item.price.toFixed(2)}
                       </p>
                     </div>
-                    <div className='flex items-center gap-2'>
-                      <Button variant='outline' size='icon' className='h-8 w-8'>
-                        <Minus className='h-4 w-4' />
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" size="icon" className="h-8 w-8">
+                        <Minus className="h-4 w-4" />
                       </Button>
                       <span>{item.quantity}</span>
-                      <Button variant='outline' size='icon' className='h-8 w-8'>
-                        <Plus className='h-4 w-4' />
+                      <Button variant="outline" size="icon" className="h-8 w-8">
+                        <Plus className="h-4 w-4" />
                       </Button>
                     </div>
                     <Button
-                      variant='ghost'
-                      size='icon'
-                      className='h-8 w-8 text-muted-foreground'
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground h-8 w-8"
                     >
-                      <X className='h-4 w-4' />
+                      <X className="h-4 w-4" />
                     </Button>
                   </div>
                 ))}
@@ -115,14 +115,14 @@ export function CartSheet() {
 
             {/* Footer with Subtotal and Checkout Button */}
             <Separator />
-            <SheetFooter className=' pt-0'>
-              <div className='w-full space-y-4'>
-                <div className='flex justify-between items-center font-semibold'>
+            <SheetFooter className="pt-0">
+              <div className="w-full space-y-4">
+                <div className="flex items-center justify-between font-semibold">
                   <span>Subtotal</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
-                <Link href='/checkout' passHref>
-                  <Button size='lg' className='w-full'>
+                <Link href="/checkout" passHref>
+                  <Button size="lg" className="w-full">
                     Proceed to Checkout
                   </Button>
                 </Link>
@@ -131,10 +131,10 @@ export function CartSheet() {
           </>
         ) : (
           // Empty Cart State
-          <div className='flex flex-col items-center justify-center h-full text-center'>
-            <ShoppingCart className='h-16 w-16 text-muted-foreground' />
-            <p className='mt-4 text-lg font-semibold'>Your cart is empty</p>
-            <p className='text-sm text-muted-foreground'>
+          <div className="flex h-full flex-col items-center justify-center text-center">
+            <ShoppingCart className="text-muted-foreground h-16 w-16" />
+            <p className="mt-4 text-lg font-semibold">Your cart is empty</p>
+            <p className="text-muted-foreground text-sm">
               Add some delicious food to get started!
             </p>
           </div>
