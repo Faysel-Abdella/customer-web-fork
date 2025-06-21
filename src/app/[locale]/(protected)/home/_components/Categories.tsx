@@ -31,15 +31,7 @@ const categories = [
     icon: "🍜",
     img: "/assets/images/homepage/asian.png",
     color: "from-green-400 to-teal-500",
-
     count: "90+",
-  },
-  {
-    name: "Healthy",
-    icon: "🥗",
-    img: "/assets/images/homepage/healthy.jpg",
-    color: "from-emerald-400 to-green-500",
-    count: "70+",
   },
 ];
 
@@ -48,10 +40,10 @@ export function Categories() {
     <section className="mb-16">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-lg font-bold text-gray-900 md:mb-2 md:text-3xl dark:text-white">
             Browse Categories
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600 max-md:text-sm dark:text-gray-400">
             Discover your favorite cuisines
           </p>
         </div>
@@ -59,7 +51,7 @@ export function Categories() {
           View all
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-4 xl:gap-6">
         {categories.map((category, index) => (
           <Card
             key={index}

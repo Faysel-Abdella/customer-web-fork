@@ -58,7 +58,7 @@ export function TrendingDishes() {
         </div>
         <Fire className="h-8 w-8 text-red-500" />
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {bestSellingDishes.map((dish, index) => (
           <Card
             key={index}

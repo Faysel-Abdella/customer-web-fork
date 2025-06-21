@@ -80,10 +80,10 @@ export function TopRestaurants() {
     <section className="mb-16">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-lg font-bold text-gray-900 md:mb-2 md:text-3xl dark:text-white">
             Featured Restaurants
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600 max-md:text-sm dark:text-gray-400">
             Handpicked by our food experts
           </p>
         </div>
@@ -127,7 +127,7 @@ export function TopRestaurants() {
                     </Button>
                   </div>
                 </div>
-                <div className="flex flex-col pl-2 md:col-span-2">
+                <div className="flex w-full flex-col justify-between pl-2 md:col-span-2">
                   <div className="mb-4 flex items-start justify-between">
                     <div>
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -160,7 +160,7 @@ export function TopRestaurants() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex w-full items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center space-x-2 rounded-full bg-green-50 px-3 py-1 text-sm text-green-600 dark:bg-green-900/20 dark:text-green-400">
                         <Truck className="h-4 w-4" />

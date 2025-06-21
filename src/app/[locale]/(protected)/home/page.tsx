@@ -9,14 +9,16 @@ const HomePage = () => {
   return (
     <div className="min-h-dvh">
       <Header />
-      <div className="flex flex-col items-center p-10 pt-32">
-        <div className="container flex w-full justify-center gap-10">
-          <div className="flex w-2/3 flex-col gap-4">
+      <div className="flex flex-col items-center pt-32 md:p-10 md:pt-32">
+        <div className="container flex w-full justify-center gap-10 max-xl:flex-col">
+          <div className="flex w-2/3 flex-col gap-4 max-xl:w-full">
             <Banner />
-            <Categories />
-            <TrendingDishes />
+            <div className="flex flex-col gap-4 p-5">
+              <Categories />
+              <TrendingDishes />
+            </div>
           </div>
-          <div className="h-dvh w-1/3">
+          <div className="h-dvh w-1/3 pb-10 max-xl:w-full max-xl:px-5">
             <TopRestaurants />
           </div>
         </div>

@@ -18,7 +18,6 @@ import { useBanner } from "@/hooks/useBanner";
 
 const Banner = () => {
   const { data, error, isLoading } = useBanner();
-  console.log(data);
 
   if (isLoading) {
     return (
@@ -37,15 +36,18 @@ const Banner = () => {
       plugins={[Autoplay({ delay: 3000, stopOnInteraction: true })]}
       opts={{ loop: true }}
     >
-      <CarouselContent className="h-80">
+      <CarouselContent className="-ml-0 h-80">
         {data?.list.map((item) => (
-          <CarouselItem key={item.id}>
-            <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-600 dark:to-orange-700">
-              <CardContent className="flex h-full w-full pr-0 text-white">
-                <div className="flex h-full w-1/2 flex-col justify-between p-8">
+          <CarouselItem key={item.id} className="pl-0">
+            <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 max-md:rounded-none dark:from-orange-600 dark:to-orange-700">
+              <CardContent className="flex h-full w-full pr-0 text-white max-md:flex-col-reverse max-md:px-2">
+                <div className="flex h-full justify-between md:w-1/2 md:flex-col md:p-8">
                   <div className="flex flex-1 flex-col gap-2">
-                    <h2 className="mb-2 text-5xl font-bold">Lydia boone</h2>
-                    <div className="mb-4 flex w-fit items-center justify-center space-x-2 rounded-full bg-white/30 p-2 py-1 pr-3 text-xs">
+                    <div></div>
+                    <h2 className="mb-2 text-xl font-bold md:text-5xl">
+                      Lydia boone
+                    </h2>
+                    <div className="mb-4 flex w-fit items-center justify-center space-x-2 rounded-full bg-white/30 py-1 pr-3 text-xs md:p-2">
                       <MapPin className="h-4 w-4" />
                       <span className="text-sm">Addiss Abeba</span>
                     </div>
@@ -60,7 +62,7 @@ const Banner = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 text-sm">
+                  <div className="flex items-center space-x-4 text-sm max-md:items-end">
                     <Button
                       variant={"outline"}
                       className="hover:bg-primary rounded-full bg-white/20 p-4 hover:text-white"
@@ -69,7 +71,7 @@ const Banner = () => {
                     </Button>
                   </div>
                 </div>
-                <div className="relative h-full w-1/2 overflow-hidden rounded-l-xl bg-white from-transparent">
+                <div className="md:rounded-r-0 relative h-full overflow-hidden rounded-xl bg-white md:w-1/2">
                   <Image
                     src={item.url}
                     alt="banner image"
@@ -82,8 +84,8 @@ const Banner = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="text-background ml-14 h-20 bg-white/20 dark:bg-white/20" />
-      <CarouselNext className="text-background mr-14 h-20 bg-white/20 dark:bg-white/20" />
+      <CarouselPrevious className="text-background ml-14 bg-white/20 md:h-20 dark:bg-white/20" />
+      <CarouselNext className="text-background mr-14 bg-white/20 md:h-20 dark:bg-white/20" />
     </Carousel>
   );
 };
