@@ -35,7 +35,7 @@ const ProfileSetupFormFields = ({
   const t = useTranslations("auth.account_setup");
 
   return (
-    <div>
+    <>
       <FormField
         control={form.control}
         name="first_name"
@@ -120,7 +120,7 @@ const ProfileSetupFormFields = ({
           </FormItem>
         )}
       />
-    </div>
+    </>
   );
 };
 

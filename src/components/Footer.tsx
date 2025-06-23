@@ -15,10 +15,9 @@ import { Input } from "@/components/ui/input";
 
 export default function Footer() {
   return (
-    <footer className="bg-black px-32 text-white">
+    <footer className="parent-container bg-black text-white">
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
-          {/* Brand Section */}
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white">TIME</h2>
             <p className="text-sm leading-relaxed text-gray-300">
@@ -46,8 +45,6 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-
-          {/* Explore Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Explore</h3>
             <nav className="space-y-3">
@@ -83,8 +80,6 @@ export default function Footer() {
               </Link>
             </nav>
           </div>
-
-          {/* Contact Info Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Contact Info</h3>
             <div className="space-y-4">
@@ -105,8 +100,6 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
-          {/* Newsletter Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Newsletter</h3>
             <p className="text-sm leading-relaxed text-gray-300">
@@ -127,8 +120,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
-        {/* Bottom Section */}
         <div className="mt-12 border-t border-gray-800 pt-6">
           <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
             <p className="text-center text-sm text-gray-400 md:text-left">

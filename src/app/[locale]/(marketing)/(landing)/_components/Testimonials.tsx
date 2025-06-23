@@ -53,20 +53,25 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-background flex min-h-96 flex-col items-center gap-20 px-32 py-20">
-      <p className="text-foreground text-4xl font-bold">
-        What Our Customers Say
-      </p>
-      <div>
-        <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 3000 })]}>
+    <section className="bg-background parent-container flex w-full flex-col items-center gap-20 py-20">
+      <div className="container flex w-full flex-col items-center gap-10">
+        <p className="text-foreground text-center text-2xl font-bold md:text-3xl lg:text-4xl xl:text-5xl">
+          What Our Customers Say
+        </p>
+
+        <Carousel
+          opts={{ loop: true }}
+          className="h-full w-full"
+          plugins={[Autoplay({ delay: 2000 })]}
+        >
           <CarouselContent>
             {testimonials.map((testimonial) => (
-              <CarouselItem key={testimonial.id} className="h-80 basis-1/2">
+              <CarouselItem key={testimonial.id} className="w-20 lg:basis-1/2">
                 <div className="dark:bg-secondary flex h-full w-full gap-2 rounded bg-gray-300">
                   <data className="flex h-full w-10 justify-center">
                     <div className="bg-primary h-full w-px" />
                   </data>
-                  <div className="flex w-full flex-col justify-between p-10">
+                  <div className="flex w-full flex-col justify-between gap-5 p-5 md:p-10">
                     <div className="space-y-4">
                       <Quote size={30} className="text-pink-400" />
                       <p className="dark:text-muted-foreground text-lg text-gray-700">

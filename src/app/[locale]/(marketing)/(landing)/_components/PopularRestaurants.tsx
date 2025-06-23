@@ -88,61 +88,59 @@ const popularRestaurants = [
 ];
 const PopularRestaurants = () => {
   return (
-    <section className="relative min-h-dvh w-full">
-      <Image
-        fill
-        src={"/assets/images/landing/popular-resturent-bg.jpg"}
-        alt={"hero section banner"}
-        className="object-cover"
-      />
-      <div className="absolute top-0 flex h-full w-full flex-col justify-center gap-10 bg-black/60 px-32 py-10">
-        <div className="flex w-full justify-center">
-          <p className="text-5xl font-bold text-white"> Popular Restaurants</p>
-        </div>
-        <div className="grid h-full grid-cols-3 gap-5">
-          {popularRestaurants.map((restaurant, index) => (
-            <Card
-              key={index}
-              className="h-full gap-2 overflow-hidden border-gray-800 bg-gray-900 py-0"
-            >
-              <div className="relative h-3/5 w-full">
-                <Image
-                  src={restaurant.image || "/placeholder.svg"}
-                  alt={restaurant.name}
-                  fill
-                  className="w-full object-cover"
-                />
-              </div>
-              <CardContent className="h-2/5 px-4">
-                <h3 className="mb-1 text-lg font-bold text-white">
-                  {restaurant.name}
-                </h3>
-                <p className="mb-2 text-sm text-gray-400">
-                  {restaurant.cuisine}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < Math.floor(restaurant.rating)
-                            ? "fill-current text-yellow-400"
-                            : "text-gray-600"
-                        }`}
-                      />
-                    ))}
-                    <span className="ml-2 text-sm text-white">
-                      {restaurant.rating}
-                    </span>
-                  </div>
+    <section className="relative w-full bg-[url('/assets/images/landing/popular-resturent-bg.jpg')] bg-cover bg-center">
+      <div className="parent-container flex w-full justify-center bg-black/60 py-20">
+        <div className="container flex h-full w-full flex-col justify-center gap-16">
+          <div className="flex w-full justify-center">
+            <p className="text-center text-2xl font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl">
+              Popular Restaurants
+            </p>
+          </div>
+          <div className="grid h-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {popularRestaurants.map((restaurant, index) => (
+              <Card
+                key={index}
+                className="dark:bg-secondary dark:border-border h-64 gap-2 overflow-hidden border-stone-800 bg-stone-700 py-0 pb-1"
+              >
+                <div className="relative h-3/5 w-full">
+                  <Image
+                    src={restaurant.image || "/placeholder.svg"}
+                    alt={restaurant.name}
+                    fill
+                    className="w-full object-cover"
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <div className="flex w-full justify-center">
-          <Button className="w-fit">View All Restaurants</Button>
+                <CardContent className="h-2/5 px-4">
+                  <h3 className="mb-1 text-lg font-bold text-white">
+                    {restaurant.name}
+                  </h3>
+                  <p className="mb-2 text-sm text-gray-400">
+                    {restaurant.cuisine}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < Math.floor(restaurant.rating)
+                              ? "fill-current text-yellow-400"
+                              : "fill-current text-gray-600"
+                          }`}
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-white">
+                        {restaurant.rating}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="flex w-full justify-center">
+            <Button className="w-fit">View All Restaurants</Button>
+          </div>
         </div>
       </div>
     </section>
