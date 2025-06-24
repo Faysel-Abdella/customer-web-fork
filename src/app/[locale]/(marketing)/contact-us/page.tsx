@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Pin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import TitleBanner from "../_components/TitleBanner";
 
