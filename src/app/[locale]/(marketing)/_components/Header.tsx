@@ -56,7 +56,7 @@ const Header = () => {
       </div>
       <div className="flex items-center justify-center pr-5 lg:w-1/3 lg:gap-8">
         <LanguageSelector className="max-lg:hidden" />
-        <ThemeToggle className="border-0 bg-transparent shadow-none max-lg:hidden" />
+        <ThemeToggle className="dark:hover:bg-secondary/50 hover:bg-secondary/30 border-0 bg-transparent shadow-none max-lg:hidden dark:bg-transparent" />
         <UnAuthUserPopover />
       </div>
     </div>

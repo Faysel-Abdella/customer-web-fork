@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from "react";
 
+import Footer from "@/components/Footer";
+
 import Header from "./_components/Header";
 
 const MarketingPageLayout = ({ children }: PropsWithChildren) => {
@@ -7,6 +9,7 @@ const MarketingPageLayout = ({ children }: PropsWithChildren) => {
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 };

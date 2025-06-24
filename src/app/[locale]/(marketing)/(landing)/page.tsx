@@ -16,7 +16,6 @@ export default function HomePage() {
       <Features />
       <SpecialFood />
       <Testimonials />
-      <Footer />
     </div>
   );
 }

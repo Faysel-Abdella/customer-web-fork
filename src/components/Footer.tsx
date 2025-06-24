@@ -13,13 +13,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import Logo from "./Logo";
+
 export default function Footer() {
   return (
     <footer className="parent-container bg-black text-white">
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-white">TIME</h2>
+            <div className="flex items-center gap-2">
+              <Logo className="size-10 border-0 lg:size-12" />
+              <p className="hover:text-primary text-1xl font-bold md:text-2xl lg:text-3xl">
+                TIME
+              </p>
+            </div>
             <p className="text-sm leading-relaxed text-gray-300">
               Get your favorite foods delivered, hot and fresh. No need to leave
               the house - we bring the meal to you.
