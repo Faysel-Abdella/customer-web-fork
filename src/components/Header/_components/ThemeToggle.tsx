@@ -10,8 +10,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
-export function HeaderThemeToggle() {
+export function HeaderThemeToggle({
+  className,
+}: React.ComponentProps<"button">) {
   const { setTheme } = useTheme();
 
   return (
@@ -20,7 +23,10 @@ export function HeaderThemeToggle() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative flex size-10 cursor-pointer items-center justify-center text-white transition-all after:absolute after:-bottom-1 after:left-1/2 after:h-[0.5px] after:w-1/2 after:-translate-x-1/2 after:bg-white after:content-[''] hover:rounded-lg hover:bg-white/20 hover:text-white dark:border-white dark:text-white dark:hover:bg-white/20"
+          className={cn(
+            "text-foreground hover:bg-secondary hover:text-secondary-foreground relative flex size-10 cursor-pointer items-center justify-center transition-all hover:rounded-lg",
+            className,
+          )}
         >
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />

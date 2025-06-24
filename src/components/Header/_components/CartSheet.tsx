@@ -18,7 +18,6 @@ import {
 
 import HeaderIcon from "./HeaderIcon";
 
-// Define the type for a cart item for type safety
 type CartItem = {
   id: string;
   name: string;
@@ -27,26 +26,24 @@ type CartItem = {
   quantity: number;
 };
 
-// Mock data - in a real app, this would come from a state manager (like Zustand or Redux)
 const cartItems: CartItem[] = [
   {
     id: "1",
     name: "Spicy Kitfo",
-    image: "/images/kitfo.jpg", // Replace with your actual image path
+    image: "/images/kitfo.jpg",
     price: 15.0,
     quantity: 1,
   },
   {
     id: "2",
     name: "Doro Wot Platter",
-    image: "/images/doro-wot.jpg", // Replace with your actual image path
+    image: "/images/doro-wot.jpg",
     price: 22.5,
     quantity: 2,
   },
 ];
 
 export function CartSheet() {
-  // In a real app, you would have functions to handle these actions
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const subtotal = useMemo(() => {
@@ -77,7 +74,6 @@ export function CartSheet() {
 
         {itemCount > 0 ? (
           <>
-            {/* Cart Items List */}
             <div className="flex-1 overflow-y-auto px-6">
               <div className="space-y-4 py-4">
                 {cartItems.map((item) => (
@@ -113,7 +109,6 @@ export function CartSheet() {
               </div>
             </div>
 
-            {/* Footer with Subtotal and Checkout Button */}
             <Separator />
             <SheetFooter className="pt-0">
               <div className="w-full space-y-4">
@@ -130,7 +125,6 @@ export function CartSheet() {
             </SheetFooter>
           </>
         ) : (
-          // Empty Cart State
           <div className="flex h-full flex-col items-center justify-center text-center">
             <ShoppingCart className="text-muted-foreground h-16 w-16" />
             <p className="mt-4 text-lg font-semibold">Your cart is empty</p>

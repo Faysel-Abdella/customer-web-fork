@@ -48,10 +48,8 @@ export function NotificationPopover() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        {/* The bell icon that triggers the popover */}
         <HeaderIcon>
           <BellIcon size={20} />
-          {/* Optional: Add a badge for unread notifications */}
           {notifications.length > 0 && (
             <span className="absolute top-0 right-0 flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
@@ -68,7 +66,6 @@ export function NotificationPopover() {
           </div>
           <Separator />
 
-          {/* List of Notifications */}
           <div className="max-h-80 space-y-4 overflow-y-auto p-4">
             {notifications.length > 0 ? (
               notifications.map((notification) => (
@@ -89,7 +86,6 @@ export function NotificationPopover() {
             )}
           </div>
 
-          {/* Footer Button */}
           <Separator />
           <div className="p-2">
             <Link href="#" passHref>

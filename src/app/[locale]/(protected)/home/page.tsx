@@ -1,4 +1,4 @@
-import Header from "../_components/Header";
+import Header from "@/components/Header";
 
 import Banner from "./_components/Banner";
 import { Categories } from "./_components/Categories";

@@ -1,3 +1,5 @@
+import { PropsWithChildren } from "react";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,8 +11,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/contexts/AuthContext";
-
-import { PropsWithChildren } from "react";
 
 const LogoutButton = ({ children }: PropsWithChildren) => {
   const { logout } = useAuth();
