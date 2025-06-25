@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "time.solviatechnology.com",
         port: "",
-        pathname: "/file/image/**",
+        pathname: "/**",
       },
     ],
   },
