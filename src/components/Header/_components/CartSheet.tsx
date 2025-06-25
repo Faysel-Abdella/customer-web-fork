@@ -16,8 +16,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import HeaderIcon from "./HeaderIcon";
-
 type CartItem = {
   id: string;
   name: string;
@@ -56,14 +54,19 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <HeaderIcon>
+        <Button
+          variant={"ghost"}
+          className={
+            "text-foreground hover:bg-secondary hover:text-secondary-foreground relative flex size-10 cursor-pointer items-center justify-center transition-all hover:rounded-lg"
+          }
+        >
           <ShoppingCart size={18} />
           {itemCount > 0 && (
             <span className="bg-primary text-primary-foreground absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full text-xs">
               {itemCount}
             </span>
           )}
-        </HeaderIcon>
+        </Button>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col sm:max-w-md">
         <SheetHeader>

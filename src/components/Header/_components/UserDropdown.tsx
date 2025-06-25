@@ -59,19 +59,19 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
 
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/dashboard/settings" passHref>
+          <Link href="/settings" passHref>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="/dashboard/wallet" passHref>
+          <Link href="/wallet" passHref>
             <DropdownMenuItem>
               <Wallet className="mr-2 h-4 w-4" />
               <span>Wallet</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="/dashboard/favorites" passHref>
+          <Link href="/favorites" passHref>
             <DropdownMenuItem>
               <Heart className="mr-2 h-4 w-4" />
               <span>Favorites</span>

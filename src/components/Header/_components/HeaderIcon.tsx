@@ -1,14 +1,15 @@
 import React from "react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const HeaderIcon = ({ children }: React.ComponentProps<"button">) => {
+interface HeaderIconProps {
+  children: React.ReactNode;
+  className?: string;
+}
+const HeaderIcon = ({ children, className }: HeaderIconProps) => {
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="text-foreground hover:bg-secondary hover:text-secondary-foreground relative flex size-10 cursor-pointer items-center justify-center transition-all hover:rounded-lg"
-    >
+    <Button variant="default" size="icon" className={cn(className)}>
       {children}
     </Button>
   );

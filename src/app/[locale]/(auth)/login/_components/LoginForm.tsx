@@ -8,11 +8,12 @@ import {
   getCountryCallingCode,
   parsePhoneNumberFromString,
 } from "libphonenumber-js";
-import { Loader, Utensils } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
@@ -81,15 +82,13 @@ export function LoginForm({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-2">
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="flex flex-col items-center gap-2 font-medium"
               >
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 shadow-lg">
-                  <Utensils className="text-background" />
-                </div>
-                <span className="sr-only">Time Delivery Inc.</span>
-              </a>
+                <Logo className="border-0" />
+                <span className="sr-only">Time Inc.</span>
+              </Link>
               <h1 className="text-xl font-bold">{t("welcome")}</h1>
             </div>
             <div className="flex flex-col gap-6">

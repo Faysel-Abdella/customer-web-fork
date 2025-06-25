@@ -41,19 +41,21 @@ const MobileSheet = () => {
         </SheetHeader>
         {!user && (
           <div className="flex flex-col gap-5 px-5 font-medium">
-            <Link href={"#"} className="hover:text-primary">
+            <Link href={"/restaurants"} className="hover:text-primary">
               Restaurants
             </Link>
-            <Link href={"#"} className="hover:text-primary">
+            <Link href={"/about-us"} className="hover:text-primary">
               Abouts us
             </Link>
-            <Link href={"#"} className="hover:text-primary">
+            <Link href={"/contact-us"} className="hover:text-primary">
               Contact us
             </Link>
             <div className="flex w-full flex-col space-y-2">
-              <Button>Login</Button>
-              <Button variant={"outline"} className="border-primary">
-                Sign up
+              <Button asChild>
+                <Link href={"/login"}>Login</Link>
+              </Button>
+              <Button variant={"outline"} className="border-primary" asChild>
+                <Link href={"/signup"}>Sign up</Link>
               </Button>
             </div>
           </div>
@@ -61,7 +63,7 @@ const MobileSheet = () => {
         {user && (
           <>
             <div className="flex flex-col gap-5 px-5 font-medium">
-              <Link href={"#"} className="hover:text-primary">
+              <Link href={"/restaurants"} className="hover:text-primary">
                 Restaurants
               </Link>
               <Link href={"#"} className="hover:text-primary">
@@ -75,7 +77,9 @@ const MobileSheet = () => {
               </Link>
             </div>
             <SheetFooter>
-              <LogoutButton />
+              <LogoutButton>
+                <Button>Logout</Button>
+              </LogoutButton>
             </SheetFooter>
           </>
         )}

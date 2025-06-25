@@ -36,7 +36,7 @@ export const useUpdateProfile = () => {
       const responseData: LoginResponse = await response.json();
       contextLogin(responseData.detail, responseData["access-token"]);
       setIsLoading(false);
-      router.push("/dashboard");
+      router.push("/home");
     } catch (error) {
       const errorMessage = await processError(error);
       setError(errorMessage);

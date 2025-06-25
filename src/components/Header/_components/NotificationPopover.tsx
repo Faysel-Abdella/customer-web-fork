@@ -1,5 +1,6 @@
 // src/components/layout/notification-popover.tsx
 
+import React from "react";
 import Link from "next/link";
 
 import { BellIcon, Car, CheckCircle2, Star } from "lucide-react";
@@ -11,8 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-
-import HeaderIcon from "./HeaderIcon";
+import { cn } from "@/lib/utils";
 
 // You can define a type for your notifications for type safety
 type Notification = {
@@ -44,11 +44,19 @@ const notifications: Notification[] = [
   },
 ];
 
-export function NotificationPopover() {
+export function NotificationPopover({
+  className,
+}: React.ComponentProps<"button">) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <HeaderIcon>
+        <Button
+          variant={"ghost"}
+          className={cn(
+            "text-foreground hover:bg-secondary hover:text-secondary-foreground relative flex size-10 cursor-pointer items-center justify-center transition-all hover:rounded-lg",
+            className,
+          )}
+        >
           <BellIcon size={20} />
           {notifications.length > 0 && (
             <span className="absolute top-0 right-0 flex h-2 w-2">
@@ -56,7 +64,7 @@ export function NotificationPopover() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
             </span>
           )}
-        </HeaderIcon>
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0 md:w-96">
         <div className="flex flex-col">

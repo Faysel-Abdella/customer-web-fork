@@ -36,21 +36,21 @@ const Header = () => {
     >
       <div className="flex w-1/3 items-center gap-2 pl-5 md:pl-10 lg:pl-32">
         <MobileSheet />
-        <div className="flex items-center gap-2">
+        <Link href={"/"} className="flex items-center gap-2">
           <Logo className="size-10 border-0 lg:size-12" />
           <p className="hover:text-primary text-2xl font-bold md:text-3xl lg:text-4xl">
             TIME
           </p>
-        </div>
+        </Link>
       </div>
       <div className="flex w-1/3 items-center justify-evenly font-medium max-lg:hidden">
-        <Link href={"#"} className="hover:text-primary">
+        <Link href={"/restaurants"} className="hover:text-primary">
           Restaurants
         </Link>
-        <Link href={"#"} className="hover:text-primary">
+        <Link href={"/about-us"} className="hover:text-primary">
           Abouts us
         </Link>
-        <Link href={"#"} className="hover:text-primary">
+        <Link href={"/contact-us"} className="hover:text-primary">
           Contact us
         </Link>
       </div>

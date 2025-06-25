@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer";
-
 import Features from "./_components/Features";
 import Hero from "./_components/Hero";
 import PopularItems from "./_components/PopularItems";

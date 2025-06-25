@@ -27,7 +27,7 @@ export default function Footer() {
                 TIME
               </p>
             </div>
-            <p className="text-sm leading-relaxed text-gray-300">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Get your favorite foods delivered, hot and fresh. No need to leave
               the house - we bring the meal to you.
             </p>
@@ -56,32 +56,32 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white">Explore</h3>
             <nav className="space-y-3">
               <Link
-                href="#"
-                className="hover:text-primary block text-sm text-gray-300 transition-colors"
+                href="/about-us"
+                className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 About Us
               </Link>
               <Link
-                href="#"
-                className="hover:text-primary block text-sm text-gray-300 transition-colors"
+                href="/contact-us"
+                className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 Contact Us
               </Link>
               <Link
-                href="#"
-                className="hover:text-primary block text-sm text-gray-300 transition-colors"
+                href="/restaurants"
+                className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 Restaurant
               </Link>
               <Link
                 href="#"
-                className="hover:text-primary block text-sm text-gray-300 transition-colors"
+                className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 Food Category
               </Link>
               <Link
                 href="#"
-                className="hover:text-primary block text-sm text-gray-300 transition-colors"
+                className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 Help Centre
               </Link>
@@ -92,24 +92,24 @@ export default function Footer() {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-600">
-                  <MapPin className="h-4 w-4 text-gray-300" />
+                  <MapPin className="text-muted-foreground h-4 w-4" />
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-600">
-                  <Phone className="h-4 w-4 text-gray-300" />
+                  <Phone className="text-muted-foreground h-4 w-4" />
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-600">
-                  <Mail className="h-4 w-4 text-gray-300" />
+                  <Mail className="text-muted-foreground h-4 w-4" />
                 </div>
               </div>
             </div>
           </div>
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Newsletter</h3>
-            <p className="text-sm leading-relaxed text-gray-300">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Join our subscribers list to get the latest news and offers.
             </p>
             <div className="flex">
@@ -138,13 +138,13 @@ export default function Footer() {
             </p>
             <div className="flex items-center space-x-6">
               <Link
-                href="#"
+                href="/privacy"
                 className="hover:text-primary text-sm text-gray-400 transition-colors"
               >
                 Privacy
               </Link>
               <Link
-                href="#"
+                href="/terms-and-conditions"
                 className="text-sm text-blue-500 transition-colors hover:text-blue-400"
               >
                 Terms & Conditions
