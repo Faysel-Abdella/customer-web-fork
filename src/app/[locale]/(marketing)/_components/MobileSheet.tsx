@@ -1,8 +1,8 @@
 import { Menu } from "lucide-react";
 
-import LanguageSelector from "@/components/language-selector";
+import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,

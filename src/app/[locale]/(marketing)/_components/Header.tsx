@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import LanguageSelector from "@/components/language-selector";
+import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import UnAuthUserPopover from "@/components/UnAuthUserPopover";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";

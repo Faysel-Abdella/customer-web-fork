@@ -22,7 +22,10 @@ const Header = () => {
             </p>
           </Link>
         </div>
-        <Link href="#" className="hover:text-primary font-medium max-lg:hidden">
+        <Link
+          href="/restaurants"
+          className="hover:text-primary font-medium max-lg:hidden"
+        >
           Restaurants
         </Link>
         <SearchBar className="max-lg:hidden" />

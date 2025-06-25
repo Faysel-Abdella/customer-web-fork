@@ -5,7 +5,7 @@ import { CountryCode } from "libphonenumber-js";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
-import { PhoneInput } from "@/components/phone-input";
+import { PhoneInput } from "@/components/PhoneNumberInput";
 import { DatePicker } from "@/components/ui/date-picker";
 import {
   FormControl,

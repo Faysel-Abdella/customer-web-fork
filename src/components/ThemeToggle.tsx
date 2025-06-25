@@ -8,9 +8,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function HeaderThemeToggle({
-  className,
-}: React.ComponentProps<"button">) {
+export function ThemeToggle({ className }: React.ComponentProps<"button">) {
   const [mounted, setMounted] = useState(false);
 
   const { setTheme, resolvedTheme } = useTheme();
@@ -27,10 +25,7 @@ export function HeaderThemeToggle({
     <Button
       variant="ghost"
       size="icon"
-      className={cn(
-        "text-foreground hover:bg-secondary hover:text-secondary-foreground relative flex size-10 cursor-pointer items-center justify-center transition-all hover:rounded-lg",
-        className,
-      )}
+      className={cn(className)}
       onClick={() => {
         if (resolvedTheme == "light") {
           setTheme("dark");

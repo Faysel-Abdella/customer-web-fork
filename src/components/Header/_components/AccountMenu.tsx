@@ -1,5 +1,5 @@
 "use client";
-import LanguageSelector from "@/components/language-selector";
+import LanguageSelector from "@/components/LanguageSelector";
 import UnAuthUserPopover from "@/components/UnAuthUserPopover";
 import { UserDetail } from "@/types/auth.types";
 

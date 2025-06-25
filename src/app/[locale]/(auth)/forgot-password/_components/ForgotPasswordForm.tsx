@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import Logo from "@/components/Logo";
-import { PhoneInput } from "@/components/phone-input";
+import { PhoneInput } from "@/components/PhoneNumberInput";
 import { Button } from "@/components/ui/button";
 import {
   Form,
