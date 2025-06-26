@@ -1,6 +1,7 @@
 "use client";
 import Autoplay from "embla-carousel-autoplay";
 import { Quote, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import {
   Carousel,
@@ -52,11 +53,12 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const t = useTranslations("landing.testimonials");
   return (
     <section className="bg-background parent-container flex w-full flex-col items-center gap-20 py-20">
       <div className="container flex w-full flex-col items-center gap-10">
         <p className="text-foreground text-center text-2xl font-bold md:text-3xl lg:text-4xl xl:text-5xl">
-          What Our Customers Say
+          {t("title")}
         </p>
 
         <Carousel

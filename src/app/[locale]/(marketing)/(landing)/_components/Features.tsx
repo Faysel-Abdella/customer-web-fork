@@ -1,35 +1,42 @@
 import React from "react";
 import Image from "next/image";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/lib/utils";
 
 export const features = [
   {
     img: "/assets/images/landing/burger.png",
+    nextIntlKey: "feature1",
     title: "Best Quality Food",
     description:
       "Our food is made from fresh ingredients and prepared by experienced chefs.",
   },
   {
     img: "/assets/images/landing/delivery.png",
+    nextIntlKey: "feature2",
     title: "Faster Delivery",
     description:
       "We deliver your food within 30 minutes to ensure it reaches you hot and fresh.",
   },
   {
     img: "/assets/images/landing/cake.png",
+    nextIntlKey: "feature3",
     title: "Real Taste",
     description:
       "Experience authentic flavors that will make you crave for more.",
   },
   {
     img: "/assets/images/landing/support.png",
+    nextIntlKey: "feature4",
     title: "Support 24/7",
     description: "Our customer support team is available 24/7 to assist you.",
   },
 ];
 
 const Features = () => {
+  const t = useTranslations("landing.features");
   return (
     <div className="parent-container flex w-full flex-col items-center justify-center py-28 pb-32">
       <div className="0 container flex flex-col items-center justify-center gap-48">
@@ -50,9 +57,11 @@ const Features = () => {
                 height={100}
               />
               <div className="dark:text-foreground flex flex-col items-center justify-center gap-2 px-3 text-center text-gray-800 xl:px-10">
-                <p className="text-xl font-bold">{feature.title}</p>
+                <p className="text-xl font-bold">
+                  {t(`${feature.nextIntlKey}.title`)}
+                </p>
                 <p className="dark:text-muted-foreground">
-                  {feature.description}
+                  {t(`${feature.nextIntlKey}.description`)}
                 </p>
               </div>
               <div className="absolute -top-4 flex w-full justify-center">
@@ -64,8 +73,7 @@ const Features = () => {
         <div className="mad-md:flex-col-reverse flex h-96 w-full rounded-tr-4xl rounded-bl-4xl bg-gradient-to-r from-orange-500 to-orange-600">
           <div className="flex h-full w-full flex-col justify-center gap-10 pl-10 md:w-1/2">
             <div className="text-5xl font-bold text-white">
-              <p>Get Your Favourite Food</p>
-              <p>Fast with the App</p>
+              {t("app_promo")}
             </div>
             <div className="flex gap-5">
               <Image

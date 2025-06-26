@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -57,6 +59,7 @@ const popularOrder = [
 ];
 
 const PopularItems = () => {
+  const t = useTranslations("landing.popular_food_items");
   return (
     <div className="parent-container flex w-full flex-col items-center gap-20 py-20">
       <div className="container flex flex-col gap-20">
@@ -68,9 +71,7 @@ const PopularItems = () => {
           className="overflow-visible"
         >
           <div className="flex items-center justify-center gap-5 max-md:flex-col md:justify-between">
-            <h2 className="text-foreground text-4xl font-bold">
-              Popular Food Items
-            </h2>
+            <h2 className="text-foreground text-4xl font-bold">{t("title")}</h2>
             <div className="flex gap-4">
               <CarouselPrevious className="bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
               <CarouselNext className="bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
@@ -95,7 +96,9 @@ const PopularItems = () => {
                       <span className="text-center text-xl font-bold">
                         {item.title}
                       </span>
-                      <span className="text-muted-foreground">Start from</span>
+                      <span className="text-muted-foreground">
+                        {t("start_from")}
+                      </span>
                       <span className="text-primary text-lg font-semibold">
                         ${item.prices}
                       </span>
@@ -122,7 +125,9 @@ const PopularItems = () => {
                       <span className="text-center text-xl font-bold">
                         {item.title}
                       </span>
-                      <span className="text-muted-foreground">Start from</span>
+                      <span className="text-muted-foreground">
+                        {t("start_from")}
+                      </span>
                       <span className="text-primary text-lg font-semibold">
                         ${item.prices}
                       </span>
@@ -147,14 +152,16 @@ const PopularItems = () => {
 
               <div className="absolute top-0 flex h-full w-full max-md:flex-col max-md:items-center">
                 <div className="flex w-1/2 flex-col gap-1 pt-5 max-md:items-center md:pt-12 md:pl-8">
-                  <p className="text-primary font-semibold">ON THIS WEEK</p>
+                  <p className="text-primary font-semibold">{t("this_week")}</p>
                   <p className="text-center font-bold text-white md:text-start">
                     {order.title}
                   </p>
                   <p className="text-primary font-semibold">
-                    Limited Time Offer
+                    {t("limited_offer")}
                   </p>
-                  <Button className="mt-3 w-fit text-base">Order Now</Button>
+                  <Button className="mt-3 w-fit text-base">
+                    {t("order_button")}
+                  </Button>
                 </div>
                 <div className="relative flex h-full w-1/2 flex-col gap-1 py-5 pt-12 md:py-10 md:pl-8">
                   <Image

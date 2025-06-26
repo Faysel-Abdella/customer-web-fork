@@ -117,6 +117,7 @@
       "app_promo": "Get Your Favourite Food Fast with the App"
     },
     "special_food": {
+      "off": "OFF",
       "title": "TODAY SPECIAL FOOD",
       "limited_offer": "Limits Time Offer",
       "order_now": "Order Now"

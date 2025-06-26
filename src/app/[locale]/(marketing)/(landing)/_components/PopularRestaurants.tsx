@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -87,13 +88,14 @@ const popularRestaurants = [
   },
 ];
 const PopularRestaurants = () => {
+  const t = useTranslations("landing.popular_restaurants");
   return (
     <section className="relative w-full bg-[url('/assets/images/landing/popular-resturent-bg.jpg')] bg-cover bg-center">
       <div className="parent-container flex w-full justify-center bg-black/60 py-20">
         <div className="container flex h-full w-full flex-col justify-center gap-16">
           <div className="flex w-full justify-center">
             <p className="text-center text-2xl font-bold text-white md:text-3xl lg:text-4xl xl:text-5xl">
-              Popular Restaurants
+              {t("title")}
             </p>
           </div>
           <div className="grid h-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -139,7 +141,7 @@ const PopularRestaurants = () => {
             ))}
           </div>
           <div className="flex w-full justify-center">
-            <Button className="w-fit">View All Restaurants</Button>
+            <Button className="w-fit">{t("view_all")}</Button>
           </div>
         </div>
       </div>
