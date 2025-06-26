@@ -1,11 +1,14 @@
 import React from "react";
 
+import { useTranslations } from "next-intl";
+
 import TitleBanner from "../_components/TitleBanner";
 
 const TermsPage = () => {
+  const t = useTranslations("terms_and_conditions");
   return (
     <div>
-      <TitleBanner title="Terms" />
+      <TitleBanner title={t("header.title")} />
       <div className="parent-container flex flex-col gap-12 py-20">
         <section>
           <h2 className="mb-6 text-2xl font-bold">Our Performance</h2>

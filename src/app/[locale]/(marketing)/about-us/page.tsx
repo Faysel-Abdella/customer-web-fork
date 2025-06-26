@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { Calendar, Clock, ShoppingBag, Truck, Utensils } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -10,31 +11,37 @@ import TitleBanner from "../_components/TitleBanner";
 const services = [
   {
     icon: ShoppingBag,
+    nextIntlKey: "online_order",
     title: "Online Order",
     description: "Easy online ordering system",
   },
   {
     icon: Calendar,
+    nextIntlKey: "pre_reservation",
     title: "Pre-Reservation",
     description: "Book your table in advance",
   },
   {
     icon: Clock,
+    nextIntlKey: "24/7_service",
     title: "24/7 Service",
     description: "Available round the clock",
   },
   {
     icon: Utensils,
+    nextIntlKey: "organized",
     title: "Organized Foodie Place",
     description: "Well-organized dining experience",
   },
   {
     icon: Utensils,
+    nextIntlKey: "clean",
     title: "Clean Kitchen",
     description: "Hygienic food preparation",
   },
   {
     icon: Truck,
+    nextIntlKey: "fast",
     title: "Fast Delivery",
     description: "Quick and reliable delivery",
   },
@@ -42,25 +49,29 @@ const services = [
 
 const features = [
   {
+    nextIntlKey: "easy",
     imgUrl: "/assets/images/about_us/easy-order.png",
     title: "Easy to Order",
     description: "You only need a few steps in ordering food.",
   },
   {
+    nextIntlKey: "fastest",
     imgUrl: "/assets/images/about_us/delivery.png",
     title: "Fastest Delivery",
     description: "Delivery that is always on time even faster",
   },
   {
+    nextIntlKey: "best",
     imgUrl: "/assets/images/about_us/high-quality.png",
     title: "Best Quality",
     description: "Not only fast for us quality is also number one",
   },
 ];
 const AboutUsPage = () => {
+  const t = useTranslations("about_us");
   return (
     <div>
-      <TitleBanner title="About us" />
+      <TitleBanner title={t("header.title")} />
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
@@ -77,13 +88,14 @@ const AboutUsPage = () => {
 
             <div className="space-y-6">
               <div>
-                <span className="text-primary font-medium">— About Us —</span>
+                <span className="text-primary font-medium">
+                  — {t("services_section.subtitle")} —
+                </span>
                 <h2 className="mt-2 mb-4 text-3xl font-bold md:text-4xl">
-                  We Are More Than Multiple Services
+                  {t("services_section.title")}
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Order food from your nearby restaurant and also reserve a
-                  table for dinner in choice of your restaurant.
+                  {t("services_section.description")}
                 </p>
               </div>
 
@@ -94,7 +106,9 @@ const AboutUsPage = () => {
                       <service.icon className="text-primary h-6 w-6" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold">{service.title}</h4>
+                      <h4 className="text-sm font-semibold">
+                        {t(`services_section.services.${service.nextIntlKey}`)}
+                      </h4>
                     </div>
                   </div>
                 ))}
@@ -107,9 +121,11 @@ const AboutUsPage = () => {
       <section className="dark:bg-secondary bg-secondary py-16">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
-            <span className="text-primary font-medium">— Features —</span>
+            <span className="text-primary font-medium">
+              — {t("features.subtitle")} —
+            </span>
             <h2 className="mt-2 text-3xl font-bold md:text-4xl">
-              How Does it Works
+              {t("features.title")}
             </h2>
           </div>
 
@@ -127,9 +143,11 @@ const AboutUsPage = () => {
                       alt={`${feature.title} image`}
                     />
                   </div>
-                  <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
+                  <h3 className="mb-3 text-xl font-bold">
+                    {t(`features.features.${feature.nextIntlKey}.title`)}
+                  </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    {feature.description}
+                    {t(`features.features.${feature.nextIntlKey}.description`)}
                   </p>
                 </CardContent>
               </Card>

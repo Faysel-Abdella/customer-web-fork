@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import TitleBanner from "../_components/TitleBanner";
 
@@ -7,23 +8,27 @@ const contactDetails = [
   {
     icon: Phone,
     title: "Phone",
+    nextIntlKey: "phone",
     value: "+1 234 567 8900",
   },
   {
     icon: Mail,
     title: "Email",
+    nextIntlKey: "email",
     value: "support@time.com",
   },
   {
     icon: MapPin,
     title: "Location",
+    nextIntlKey: "location",
     value: "123 Food Street, City",
   },
 ];
 const ContactUsPage = () => {
+  const t = useTranslations("contact_us");
   return (
     <div>
-      <TitleBanner title="Contact us" />
+      <TitleBanner title={t("header.title")} />
       <div className="parent-container flex w-full justify-center gap-10 py-20 max-lg:flex-col">
         <div className="flex h-full w-full flex-col justify-between gap-8 lg:w-1/3">
           {contactDetails.map((contact, index) => (
@@ -38,8 +43,12 @@ const ContactUsPage = () => {
                   <contact.icon className="text-white" />
                 </div>
               </div>
-              <p className="text-lg font-bold">{contact.title}</p>
-              <p className="text-muted-foreground">{contact.value}</p>
+              <p className="text-lg font-bold">
+                {t(`contact_details.${contact.nextIntlKey}.name`)}
+              </p>
+              <p className="text-muted-foreground">
+                {t(`contact_details.${contact.nextIntlKey}.value`)}
+              </p>
             </div>
           ))}
         </div>

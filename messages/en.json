@@ -190,47 +190,61 @@
     "features": {
       "subtitle": "Features",
       "title": "How Does it Works",
-      "features": [
-        {
+      "features": {
+        "easy": {
           "title": "Easy to Order",
           "description": "You only need a few steps in ordering food."
         },
-        {
+        "fastest": {
           "title": "Fastest Delivery",
           "description": "Delivery that is always on time even faster."
         },
-        {
+        "best": {
           "title": "Best Quality",
           "description": "Not only fast for us quality is also number one."
         }
-      ]
+      }
     }
   },
   "contact_us": {
     "header": {
       "title": "Contact us"
     },
-    "contact_details": [
-      {
-        "type": "Phone",
+    "contact_details": {
+      "phone": {
+        "name": "Phone",
         "value": "+1 234 567 8900"
       },
-      {
-        "type": "Email",
+      "email": {
+        "name": "Email",
         "value": "support@time.com"
       },
-      {
-        "type": "Location",
+      "location": {
+        "name": "Location",
         "value": "123 Food Street, City"
       }
-    ],
+    },
+
     "contact_form": {
-      "placeholders": {
+      "labels": {
         "full_name": "Full Name",
         "email": "Email",
         "message": "Message"
       },
+      "placeholders": {
+        "name": "John doe"
+      },
       "submit_button": "Send Message"
+    }
+  },
+  "privacy": {
+    "header": {
+      "title": "Privacy"
+    }
+  },
+  "terms_and_conditions": {
+    "header": {
+      "title": "Terms and Conditions"
     }
   }
 }

@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -21,6 +22,7 @@ import { contactSchema } from "@/lib/schemas/marketing.schema";
 import { cn } from "@/lib/utils";
 
 const ContactForm = ({ className }: React.ComponentProps<"div">) => {
+  const t = useTranslations("contact_us.contact_form");
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -52,9 +54,9 @@ const ContactForm = ({ className }: React.ComponentProps<"div">) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel>{t("labels.full_name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="John doe" {...field} />
+                  <Input placeholder={t("placeholders.name")} {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -66,7 +68,7 @@ const ContactForm = ({ className }: React.ComponentProps<"div">) => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("labels.email")}</FormLabel>
                 <FormControl>
                   <Input placeholder="Johndoe@email.com" {...field} />
                 </FormControl>
@@ -81,7 +83,7 @@ const ContactForm = ({ className }: React.ComponentProps<"div">) => {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Message</FormLabel>
+                <FormLabel>{t("labels.message")}</FormLabel>
                 <FormControl>
                   <Textarea className="min-h-96 resize-none" {...field} />
                 </FormControl>
@@ -90,7 +92,7 @@ const ContactForm = ({ className }: React.ComponentProps<"div">) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Send Message</Button>
+          <Button type="submit">{t("submit_button")}</Button>
         </form>
       </Form>
     </div>
