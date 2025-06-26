@@ -32,7 +32,7 @@ const ProfileSetupForm = ({
   const router = useRouter();
 
   if (!user?.contact_no) {
-    router.push("/dashboard");
+    router.push("/home");
   }
 
   const { error, isLoading, updateProfile } = useUpdateProfile();

@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("accessToken", token);
 
-    router.push("/dashboard");
+    router.push("/home");
   };
 
   const logout = useCallback(() => {

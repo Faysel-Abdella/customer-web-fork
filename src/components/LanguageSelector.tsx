@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 interface Language {
   code: string;
@@ -34,7 +35,9 @@ const languages: Language[] = [
   },
 ];
 
-export default function LanguageSelector() {
+export default function LanguageSelector({
+  className,
+}: React.ComponentProps<"div">) {
   const currentLocale = useLocale();
   const router = useRouter();
   const [language] = useState<string>(currentLocale);
@@ -56,7 +59,7 @@ export default function LanguageSelector() {
   }
 
   return (
-    <div className={"relative"}>
+    <div className="relative">
       <Select
         value={language}
         onValueChange={(value) => {
@@ -65,7 +68,10 @@ export default function LanguageSelector() {
       >
         <SelectTrigger
           id={"language_selector"}
-          className={"border-border w-[100px] border pl-9 shadow-none"}
+          className={cn(
+            "border-border w-[100px] border pl-9 shadow-none",
+            className,
+          )}
           title={"Language selector"}
         >
           <Globe

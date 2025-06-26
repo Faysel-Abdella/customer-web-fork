@@ -6,7 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
-import { PhoneInput } from "@/components/phone-input";
+import { PhoneInput } from "@/components/PhoneNumberInput";
 import {
   FormControl,
   FormField,
