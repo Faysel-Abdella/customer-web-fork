@@ -72,5 +72,149 @@
       "feature2": "Fresh Food",
       "feature3": "Best Prices"
     }
+  },
+  "header": {
+    "home": "Home",
+    "restaurants": "Restaurants",
+    "about_us": "About us",
+    "how_it_works": "How it works",
+    "contact_us": "Contact us"
+  },
+  "landing": {
+    "hero": {
+      "title": "Your Favourite <span>Food Delivered</span> Hot & Fresh",
+      "description": "Experience the taste of home, anywhere you go. Our platform connects you with local restaurants that deliver hot, fresh food. Order online today!"
+    },
+    "popular_food_items": {
+      "title": "Popular Food Items",
+      "start_from": "Start from",
+      "order_button": "Order Now",
+      "this_week": "ON THIS WEEK",
+      "limited_offer": "Limited Time Offer"
+    },
+    "popular_restaurants": {
+      "title": "Popular Restaurants",
+      "view_all": "View All Restaurants"
+    },
+    "features": {
+      "feature1": {
+        "title": "Best Quality Food",
+        "description": "Our food is made from fresh ingredients and prepared by experienced chefs"
+      },
+      "feature2": {
+        "title": "Faster Delivery",
+        "description": "We deliver your food within 30 minutes to ensure it reaches you hot and fresh."
+      },
+      "feature3": {
+        "title": "Real Taste",
+        "description": "Experience authentic flavors that will make you crave for more."
+      },
+      "feature4": {
+        "title": "Support 24/7",
+        "description": "Our customer support team is available 24/7 to assist you."
+      },
+
+      "app_promo": "Get Your Favourite Food Fast with the App"
+    },
+    "special_food": {
+      "title": "TODAY SPECIAL FOOD",
+      "limited_offer": "Limits Time Offer",
+      "order_now": "Order Now"
+    },
+    "testimonials": {
+      "title": "What Our Customers Say"
+    }
+  },
+  "footer": {
+    "about": {
+      "brand_name": "TIME",
+      "description": "Get your favorite foods delivered, hot and fresh. No need to leave the house - we bring the meal to you."
+    },
+    "explore": {
+      "title": "Explore",
+      "links": {
+        "about_us": "About Us",
+        "contact_us": "Contact Us",
+        "restaurant": "Restaurant",
+        "food_category": "Food Category",
+        "help_centre": "Help Centre"
+      }
+    },
+    "contact": {
+      "title": "Contact Info"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "description": "Join our subscribers list to get the latest news and offers.",
+      "placeholder": "Enter"
+    },
+    "bottom_bar": {
+      "copyright": "© 2025 TIME | All Rights Reserved. Powered By ToXSL Technologies",
+      "privacy_policy": "Privacy",
+      "terms_and_conditions": "Terms & Conditions"
+    }
+  },
+  "about_us": {
+    "header": {
+      "title": "About us"
+    },
+    "services_section": {
+      "subtitle": "About Us",
+      "title": "We Are More Than Multiple Services",
+      "description": "Order food from your nearby restaurant and also reserve a table for dinner in choice of your restaurant.",
+      "services": {
+        "online_order": "Online Order",
+        "pre_reservation": "Pre-Reservation",
+        "24/7_service": "24/7 Service",
+        "organized": "Organized foodie Place",
+        "clean": "Clean Kitchen",
+        "fast": "Fast Delivery"
+      }
+    },
+    "features": {
+      "subtitle": "Features",
+      "title": "How Does it Works",
+      "features": [
+        {
+          "title": "Easy to Order",
+          "description": "You only need a few steps in ordering food."
+        },
+        {
+          "title": "Fastest Delivery",
+          "description": "Delivery that is always on time even faster."
+        },
+        {
+          "title": "Best Quality",
+          "description": "Not only fast for us quality is also number one."
+        }
+      ]
+    }
+  },
+  "contact_us": {
+    "header": {
+      "title": "Contact us"
+    },
+    "contact_details": [
+      {
+        "type": "Phone",
+        "value": "+1 234 567 8900"
+      },
+      {
+        "type": "Email",
+        "value": "support@time.com"
+      },
+      {
+        "type": "Location",
+        "value": "123 Food Street, City"
+      }
+    ],
+    "contact_form": {
+      "placeholders": {
+        "full_name": "Full Name",
+        "email": "Email",
+        "message": "Message"
+      },
+      "submit_button": "Send Message"
+    }
   }
 }
