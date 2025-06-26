@@ -1,4 +1,5 @@
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
@@ -14,6 +15,7 @@ import {
 import { Link } from "@/i18n/navigation";
 
 const MobileSheet = () => {
+  const t = useTranslations("header");
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden">
@@ -36,20 +38,20 @@ const MobileSheet = () => {
 
         <div className="flex flex-col gap-5 px-5 font-medium">
           <Link href={"/restaurants"} className="hover:text-primary">
-            Restaurants
+            {t("restaurants")}
           </Link>
           <Link href={"/about-us"} className="hover:text-primary">
-            Abouts us
+            {t("about_us")}
           </Link>
           <Link href={"/contact-us"} className="hover:text-primary">
-            Contact us
+            {t("contact_us")}
           </Link>
           <div className="flex w-full flex-col space-y-2">
             <Button asChild>
-              <Link href={"/login"}>Login</Link>
+              <Link href={"/login"}>{t("login")}</Link>
             </Button>
             <Button variant={"outline"} className="border-primary" asChild>
-              <Link href={"/signup"}>Sign up</Link>
+              <Link href={"/signup"}>{t("signup")}</Link>
             </Button>
           </div>
         </div>

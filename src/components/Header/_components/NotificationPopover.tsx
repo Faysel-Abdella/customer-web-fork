@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 
 import { BellIcon, Car, CheckCircle2, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -47,6 +48,7 @@ const notifications: Notification[] = [
 export function NotificationPopover({
   className,
 }: React.ComponentProps<"button">) {
+  const t = useTranslations("header.notifications");
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -70,7 +72,7 @@ export function NotificationPopover({
         <div className="flex flex-col">
           {/* Header */}
           <div className="p-4">
-            <h4 className="text-lg font-semibold">Notifications</h4>
+            <h4 className="text-lg font-semibold">{t("title")}</h4>
           </div>
           <Separator />
 
@@ -89,7 +91,7 @@ export function NotificationPopover({
               ))
             ) : (
               <div className="text-muted-foreground py-8 text-center">
-                <p>You have no new notifications.</p>
+                <p>{t("no_notifications")}</p>
               </div>
             )}
           </div>
@@ -98,7 +100,7 @@ export function NotificationPopover({
           <div className="p-2">
             <Link href="#" passHref>
               <Button variant="ghost" className="hover:bg-primary w-full">
-                View All Notifications
+                {t("view_all")}
               </Button>
             </Link>
           </div>

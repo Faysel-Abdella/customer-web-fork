@@ -77,8 +77,23 @@
     "home": "Home",
     "restaurants": "Restaurants",
     "about_us": "About us",
-    "how_it_works": "How it works",
-    "contact_us": "Contact us"
+    "contact_us": "Contact us",
+    "offers": "Offers",
+    "orders": "Orders",
+    "profile": "Profile",
+    "login": "Login",
+    "signup": "Sign up",
+    "create_an_account": "Login or Create an account",
+    "logout": "Logout",
+    "logout_warning": "Are you sure you want to logout?",
+    "continue": "Continue",
+    "cancel": "cancel",
+    "notifications": {
+      "title": "Notifications",
+      "no_notifications": "You have no new notifications",
+      "view_all": "View All Notifications"
+    },
+    "search_placeholder": "Search food, restaurants and more ..."
   },
   "landing": {
     "hero": {
@@ -138,7 +153,7 @@
         "contact_us": "Contact Us",
         "restaurant": "Restaurant",
         "food_category": "Food Category",
-        "help_centre": "Help Centre"
+        "help_center": "Help Center"
       }
     },
     "contact": {
@@ -147,10 +162,10 @@
     "newsletter": {
       "title": "Newsletter",
       "description": "Join our subscribers list to get the latest news and offers.",
-      "placeholder": "Enter"
+      "placeholder": "Email"
     },
     "bottom_bar": {
-      "copyright": "© 2025 TIME | All Rights Reserved. Powered By ToXSL Technologies",
+      "copyright": "© 2025 <span>TIME</span> | All Rights Reserved. Powered By ToXSL Technologies",
       "privacy_policy": "Privacy",
       "terms_and_conditions": "Terms & Conditions"
     }

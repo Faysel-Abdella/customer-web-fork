@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { Heart, LogOut, Settings, Wallet } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import LogoutButton from "./LogoutButton";
 
 export function UserDropdown({ className }: React.ComponentProps<"button">) {
   const { user } = useAuth();
+  const t = useTranslations("header");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -84,7 +86,7 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
         <LogoutButton>
           <Button className="hover:bg-secondary hover:text-secondary-foreground bg-background text-foreground w-full shadow-none">
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <span>{t("logout")}</span>
           </Button>
         </LogoutButton>
       </DropdownMenuContent>

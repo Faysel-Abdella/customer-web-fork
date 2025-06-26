@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+import { useTranslations } from "next-intl";
+
 import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -12,6 +14,7 @@ import MobileSheet from "./MobileSheet";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const t = useTranslations("header");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,13 +48,13 @@ const Header = () => {
       </div>
       <div className="flex w-1/3 items-center justify-evenly font-medium max-lg:hidden">
         <Link href={"/restaurants"} className="hover:text-primary">
-          Restaurants
+          {t("restaurants")}
         </Link>
         <Link href={"/about-us"} className="hover:text-primary">
-          Abouts us
+          {t("about_us")}
         </Link>
         <Link href={"/contact-us"} className="hover:text-primary">
-          Contact us
+          {t("contact_us")}
         </Link>
       </div>
       <div className="flex items-center justify-center pr-5 lg:w-1/3 lg:gap-8">
