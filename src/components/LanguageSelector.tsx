@@ -29,9 +29,14 @@ const languages: Language[] = [
     nativeName: "English",
   },
   {
-    code: "am",
-    name: "Amharic",
-    nativeName: "አማርኛ",
+    code: "ps",
+    name: "Pashto",
+    nativeName: "پښتو",
+  },
+  {
+    code: "prs",
+    name: "Dari",
+    nativeName: "دری",
   },
 ];
 
@@ -63,7 +68,7 @@ export default function LanguageSelector({
       <Select
         value={language}
         onValueChange={(value) => {
-          if (value == "am" || value == "en") onLocaleChange(value);
+          onLocaleChange(value);
         }}
       >
         <SelectTrigger
