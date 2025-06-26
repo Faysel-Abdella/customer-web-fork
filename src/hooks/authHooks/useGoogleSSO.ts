@@ -27,17 +27,12 @@ export function useGoogleSSO() {
       const result = await signInWithPopup(auth, provider);
       const user: User = result.user;
 
-      console.log("Got user info from Firebase:", user);
-
-      // 2. We now have the user's info directly. Let's build the payload for YOUR backend.
       const backendPayload = new URLSearchParams();
 
-      // The original Google User ID is stored in the providerData
       const googleUserId = user.providerData[0]?.uid || user.uid;
 
       const uuid = crypto.randomUUID();
 
-      // ---- HaLogin Fields ----
       backendPayload.append("HaLogin[user_id]", googleUserId);
       backendPayload.append("HaLogin[login_provider]", "google");
       backendPayload.append("HaLogin[role_id]", "2");
@@ -45,12 +40,11 @@ export function useGoogleSSO() {
       backendPayload.append("HaLogin[email]", user.email || "");
       backendPayload.append("HaLogin[full_name]", user.displayName || "");
       backendPayload.append("HaLogin[image_url]", user.photoURL || "");
-      backendPayload.append("HaLogin[device_type]", "1");
+      backendPayload.append("HaLogin[device_type]", "WEB");
       backendPayload.append("HaLogin[device_token]", uuid);
       backendPayload.append("HaLogin[device_udid]", uuid);
 
-      // 3. Send the formatted data to your backend API
-      const yourApiUrl = "/api/user/social-login"; // Your proxied endpoint
+      const yourApiUrl = "/api/user/social-login";
 
       const response = await fetch(yourApiUrl, {
         method: "POST",
@@ -65,7 +59,7 @@ export function useGoogleSSO() {
       const responseData: LoginResponse = await response.json();
 
       console.log("✅ Login successful");
-      contextLogin(responseData.detail, responseData["access-token"]);
+      contextLogin(responseData.detail);
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);

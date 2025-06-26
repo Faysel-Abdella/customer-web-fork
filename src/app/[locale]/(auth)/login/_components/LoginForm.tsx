@@ -61,7 +61,7 @@ export function LoginForm({
       "LoginForm[country_code]": "+" + country_code,
       "LoginForm[password]": values.password,
       "LoginForm[role]": 2,
-      "LoginForm[device_type]": 2,
+      "LoginForm[device_type]": "WEB",
       "LoginForm[device_token]": uuid,
       "LoginForm[device_udid]": uuid,
     });

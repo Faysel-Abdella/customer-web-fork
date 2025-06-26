@@ -32,7 +32,7 @@ export const useLogin = () => {
       const responseData: LoginResponse = await response.json();
 
       console.log("✅ Login successful");
-      contextLogin(responseData.detail, responseData["access-token"]);
+      contextLogin(responseData.detail);
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);
