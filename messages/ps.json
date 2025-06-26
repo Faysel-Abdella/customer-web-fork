@@ -1,0 +1,247 @@
+{
+  "toast": {
+    "welcome": "ښه راغلاست",
+    "welcome_back": "بیا ښه راغلاست",
+    "here_otp": "دا ستاسو یو ځل کاریدونکی پټ نوم دی",
+    "error": "تېروتنه"
+  },
+  "auth": {
+    "login": {
+      "welcome": "د وخت رسولو شرکت ته ښه راغلاست",
+      "mobile_number": "د موبایل شمیره",
+      "password": "پټ نوم",
+      "remember_me": "ما په یاد وساته",
+      "forgot_password": "پټ نوم مو هیر شوی؟",
+      "login_button": "ننوتل",
+      "no_account": "حساب نه لرئ؟",
+      "sign_up_link": "نوم لیکنه",
+      "or_divider": "یا",
+      "terms_guide": "د دوام په کلیک کولو سره، تاسو زموږ سره موافق یاست",
+      "terms_of_service": "د خدمت شرطونه",
+      "and": "او",
+      "privacy_policy": "د محرمیت تګلاره",
+      "google_login": "د ګوګل سره دوام ورکړئ",
+      "facebook_login": "د فیسبوک سره دوام ورکړئ"
+    },
+    "signup": {
+      "title": "د وخت رسولو سره یوځای شئ",
+      "create_account": "خپل حساب جوړ کړئ",
+      "first_name": "لومړی نوم",
+      "last_name": "وروستی نوم",
+      "mobile_number": "د موبایل شمیره",
+      "password": "پټ نوم",
+      "confirm_password": "پټ نوم تایید کړئ",
+      "agree": "زه د ټولو سره موافق یم",
+      "terms_of_service": "شرایط او مقررات",
+      "signup_button": "نوم لیکنه",
+      "already_have_account": "مخکې له مخکې حساب لرئ؟",
+      "login_link": "ننوتل",
+      "or_divider": "یا"
+    },
+    "verification": {
+      "title": "تایید",
+      "enter_code_prompt": "د خپل تلیفون شمیرې د تایید لپاره ۴ عددي کوډ دننه کړئ",
+      "verify_button": "تایید",
+      "no_code_received": "کوډ مو ترلاسه نه کړ؟",
+      "resend_link": "بیا واستوئ",
+      "otp_message": "دا ستاسو یو ځل کاریدونکی پټ نوم دی"
+    },
+    "forgot_password": {
+      "title": "پټ نوم مو هیر شوی",
+      "instruction": "هغه تلیفون شمیره دننه کړئ چې ستاسو د حساب سره تړاو لري او موږ به تاسو ته یو لینک واستوو چې ستاسو د پټ نوم د بیا تنظیمولو لپاره لارښوونې ولري.",
+      "mobile_number": "د موبایل شمیره",
+      "send_button": "واستوئ"
+    },
+    "account_setup": {
+      "title": "خپل حساب تنظیم کړئ",
+      "first_name": "لومړی نوم",
+      "last_name": "وروستی نوم",
+      "mobile_number": "د موبایل شمیره",
+      "gender": "جنسیت",
+      "male": "نارینه",
+      "female": "ښځينه",
+      "other": "نور",
+      "date_of_birth": "د زیږیدنې نیټه",
+      "save_button": "خوندي کړئ"
+    },
+    "marketing": {
+      "headline": "خوندور خواړه، ستاسو دروازې ته رسول کیږي",
+      "subheadline": "له خپلو غوره رستورانتونو څخه غوښتنه وکړئ او په څو دقیقو کې تازه، ګرم خواړه ترلاسه کړئ.",
+      "feature1": "ګړندی رسول",
+      "feature2": "تازه خواړه",
+      "feature3": "غوره بیې"
+    }
+  },
+  "header": {
+    "home": "کور",
+    "restaurants": "رستورانتونه",
+    "about_us": "زموږ په اړه",
+    "contact_us": "له موږ سره اړیکه",
+    "offers": "وړاندیزونه",
+    "orders": "غوښتنې",
+    "profile": "پروفایل",
+    "login": "ننوتل",
+    "signup": "نوم لیکنه",
+    "create_an_account": "ننوتل یا حساب جوړ کړئ",
+    "logout": "وتل",
+    "logout_warning": "ایا تاسو ډاډه یاست چې وتل غواړئ؟",
+    "continue": "دوام",
+    "cancel": "لغوه کول",
+    "notifications": {
+      "title": "خبرتیاوې",
+      "no_notifications": "تاسو کومه نوې خبرتیا نه لرئ",
+      "view_all": "ټولې خبرتیاوې وګورئ"
+    },
+    "search_placeholder": "خواړه، رستورانتونه او نور وپلټئ ..."
+  },
+  "landing": {
+    "hero": {
+      "title": "ستاسو د خوښې <span>خواړه ګرم او تازه</span> رسول کیږي",
+      "description": "هرچیرې چې ځئ، د کور د خوند تجربه وکړئ. زموږ پلیټ فارم تاسو د ځایی رستورانتونو سره نښلوي چې ګرم، تازه خواړه وړاندې کوي. نن آنلاین غوښتنه وکړئ!"
+    },
+    "popular_food_items": {
+      "title": "مشهور خواړه",
+      "start_from": "پیل له",
+      "order_button": "اوس غوښتنه وکړئ",
+      "this_week": "په دې اونۍ کې",
+      "limited_offer": "د محدود وخت لپاره وړاندیز"
+    },
+    "popular_restaurants": {
+      "title": "مشهور رستورانتونه",
+      "view_all": "ټول رستورانتونه وګورئ"
+    },
+    "features": {
+      "feature1": {
+        "title": "غوره کیفیت خواړه",
+        "description": "زموږ خواړه له تازه موادو څخه جوړیږي او د تجربه لرونکو پخونکو لخوا چمتو کیږي"
+      },
+      "feature2": {
+        "title": "ګړندی رسول",
+        "description": "موږ ستاسو خواړه په ۳۰ دقیقو کې رسوو ترڅو ډاډ ترلاسه کړو چې تاسو ته ګرم او تازه رسیږي."
+      },
+      "feature3": {
+        "title": "اصلي خوند",
+        "description": "داسې مستند خوندونه تجربه کړئ چې تاسو به یې بیا وغواړئ."
+      },
+      "feature4": {
+        "title": "۲۴/۷ ملاتړ",
+        "description": "زموږ د پیرودونکو د ملاتړ ټیم ستاسو د مرستې لپاره ۲۴/۷ شتون لري."
+      },
+      "app_promo": "د اپلیکیشن سره خپل د خوښې خواړه ژر ترلاسه کړئ"
+    },
+    "special_food": {
+      "off": "تخفیف",
+      "title": "د نن ورځې ځانګړي خواړه",
+      "limited_offer": "د محدود وخت لپاره وړاندیز",
+      "order_now": "اوس غوښتنه وکړئ"
+    },
+    "testimonials": {
+      "title": "زموږ پیرودونکي څه وايي"
+    }
+  },
+  "footer": {
+    "about": {
+      "brand_name": "وخت",
+      "description": "خپل د خوښې خواړه ګرم او تازه ترلاسه کړئ. له کوره د وتلو اړتیا نشته - موږ خواړه تاسو ته راوړو."
+    },
+    "explore": {
+      "title": "پلټنه",
+      "links": {
+        "about_us": "زموږ په اړه",
+        "contact_us": "له موږ سره اړیکه",
+        "restaurant": "رستورانت",
+        "food_category": "د خوړو کټګوري",
+        "help_center": "د مرستې مرکز"
+      }
+    },
+    "contact": {
+      "title": "د اړیکو معلومات"
+    },
+    "newsletter": {
+      "title": "خبر پاڼه",
+      "description": "زموږ د ګډون کوونکو لیست سره یوځای شئ ترڅو وروستي خبرونه او وړاندیزونه ترلاسه کړئ.",
+      "placeholder": "بریښنالیک"
+    },
+    "bottom_bar": {
+      "copyright": "© ۲۰۲۵ <span>وخت</span> | ټول حقونه خوندي دي. د ToXSL ټیکنالوژیو لخوا پرمخ وړل کیږي",
+      "privacy_policy": "محرمیت",
+      "terms_and_conditions": "شرایط او مقررات"
+    }
+  },
+  "about_us": {
+    "header": {
+      "title": "زموږ په اړه"
+    },
+    "services_section": {
+      "subtitle": "زموږ په اړه",
+      "title": "موږ له څو خدمتونو څخه ډیر یو",
+      "description": "له خپل نږدې رستورانت څخه خواړه وغواړئ او همداشان د خپلې خوښې په رستورانت کې د ماښام ډوډۍ لپاره میز خوندي کړئ.",
+      "services": {
+        "online_order": "آنلاین غوښتنه",
+        "pre_reservation": "مخکینۍ خوندي کول",
+        "24/7_service": "۲۴/۷ خدمت",
+        "organized": "منظم خواړه ځای",
+        "clean": "پاکه پخلنځی",
+        "fast": "ګړندی رسول"
+      }
+    },
+    "features": {
+      "subtitle": "ځانګړتیاوې",
+      "title": "دا څنګه کار کوي",
+      "features": {
+        "easy": {
+          "title": "د غوښتنې اسانتیا",
+          "description": "تاسو یوازې د خوړو په غوښتنه کې څو ګامونو ته اړتیا لرئ."
+        },
+        "fastest": {
+          "title": "ګړندی رسول",
+          "description": "هغه رسول چې تل په وخت او حتی ګړندی وي."
+        },
+        "best": {
+          "title": "غوره کیفیت",
+          "description": "زموږ لپاره یوازې ګړندیتوب نه، بلکې کیفیت هم لومړیتوب دی."
+        }
+      }
+    }
+  },
+  "contact_us": {
+    "header": {
+      "title": "له موږ سره اړیکه"
+    },
+    "contact_details": {
+      "phone": {
+        "name": "تلیفون",
+        "value": "+۱ ۲۳۴ ۵۶۷ ۸۹۰۰"
+      },
+      "email": {
+        "name": "بریښنالیک",
+        "value": "support@time.com"
+      },
+      "location": {
+        "name": "ځای",
+        "value": "۱۲۳ د خوړو کوڅه، ښار"
+      }
+    },
+    "contact_form": {
+      "labels": {
+        "full_name": "بشپړ نوم",
+        "email": "بریښنالیک",
+        "message": "پیغام"
+      },
+      "placeholders": {
+        "name": "جان دو"
+      },
+      "submit_button": "پیغام واستوئ"
+    }
+  },
+  "privacy": {
+    "header": {
+      "title": "محرمیت"
+    }
+  },
+  "terms_and_conditions": {
+    "header": {
+      "title": "شرایط او مقررات"
+    }
+  }
+}
