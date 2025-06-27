@@ -44,7 +44,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
     setImgSrc(restaurant.image_file || placeholderImage);
   }, [restaurant.image_file]);
   return (
-    <Card className="group gap-0 overflow-hidden py-0 shadow-none transition-all duration-300">
+    <Card className="group h-fit gap-0 overflow-hidden py-0 shadow-none transition-all duration-300">
       <div className="relative">
         <Link href={`/restaurants/${restaurant.id}`}>
           <Image
