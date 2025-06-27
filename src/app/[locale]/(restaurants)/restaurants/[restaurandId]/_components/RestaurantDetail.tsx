@@ -40,7 +40,7 @@ const RestaurantDetail = ({ restaurantId }: RestaurantDetailProps) => {
             </TabsList>
 
             <TabsContent value="menu" className="min- space-y-6">
-              <MenuList />
+              <MenuList restaurantId={restaurantId} />
             </TabsContent>
 
             <TabsContent value="reviews" className="space-y-6"></TabsContent>
