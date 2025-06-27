@@ -12,7 +12,7 @@ import CategoryFilter from "./CategoryFilter";
 import PriceFilter from "./PriceFilter";
 
 export interface RestaurantFilters {
-  categories: string[];
+  category: string[];
   min: string;
   max: string;
   freeDelivery: boolean;
@@ -33,7 +33,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
   const searchParams = useSearchParams();
 
   const initialValue: RestaurantFilters = {
-    categories: searchParams.getAll("category"),
+    category: searchParams.getAll("category"),
     freeDelivery: searchParams.get("freeDelivery") ? true : false,
     min: searchParams.get("min") || "0",
     max: searchParams.get("max") || "500",
@@ -44,11 +44,9 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
   const [filters, setFilter] = useState<RestaurantFilters>(initialValue);
 
   const applyFilters = () => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams);
 
-    filters.categories.forEach((category) =>
-      params.append("category", category),
-    );
+    filters.category.forEach((category) => params.append("category", category));
     if (filters.min == "0") {
       params.delete("min");
     } else {
@@ -95,7 +93,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
 
   const clearFilters = () => {
     setFilter({
-      categories: [],
+      category: [],
       freeDelivery: false,
       max: "500",
       min: "0",
@@ -103,7 +101,9 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
       highRating: false,
       offer: "",
     });
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams);
+
+    Object.keys(filters).forEach((key) => params.delete(key));
 
     router.replace({
       pathname: "/restaurants",

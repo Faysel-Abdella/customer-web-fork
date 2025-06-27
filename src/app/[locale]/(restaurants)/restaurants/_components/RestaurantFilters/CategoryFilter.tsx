@@ -33,8 +33,8 @@ const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
         onValueChange={(e) =>
           setFilters((prev) => ({ ...prev, categories: e }))
         }
-        defaultValue={filters.categories}
-        value={filters.categories}
+        defaultValue={filters.category}
+        value={filters.category}
         placeholder="Select categories"
         variant="inverted"
         maxCount={3}

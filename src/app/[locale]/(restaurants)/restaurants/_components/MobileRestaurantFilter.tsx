@@ -19,7 +19,7 @@ const MobileRestaurantFilter = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"secondary"} className="border">
+        <Button variant={"secondary"} className="border lg:hidden">
           <SlidersHorizontal /> Filters
         </Button>
       </DialogTrigger>
