@@ -19,6 +19,7 @@ export function useFetchRestaurants() {
   const [data, setData] = useState<Restaurant[] | null>(null);
 
   useEffect(() => {
+    setIsLoading(true);
     const controller = new AbortController();
 
     const fetchRestaurants = async () => {
@@ -28,7 +29,6 @@ export function useFetchRestaurants() {
           ? "/api/restaurant/restaurant-list"
           : `/api/state/search-restaurant?${queryString}`;
 
-      setIsLoading(true);
       setError(null);
 
       try {
@@ -38,7 +38,6 @@ export function useFetchRestaurants() {
         }
 
         const res = await fetch(url, {
-          cache: "no-store",
           method: "GET",
           headers: { Authorization: `Bearer ${accessToken}` },
           signal: controller.signal,
@@ -50,6 +49,7 @@ export function useFetchRestaurants() {
 
         const responseData: RestaurantResponce = await res.json();
         setData(responseData.list);
+        setIsLoading(false);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
           console.log("Fetch aborted");
@@ -57,8 +57,8 @@ export function useFetchRestaurants() {
         }
         const errorMessage = await processError(err);
         setError(errorMessage);
-      } finally {
         setIsLoading(false);
+      } finally {
       }
     };
 

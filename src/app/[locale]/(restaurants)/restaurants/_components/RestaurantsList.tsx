@@ -25,7 +25,7 @@ const RestaurantsList = () => {
   }, [error]);
 
   const renderRestaurants = (restaurants: Restaurant[] | null) => {
-    if (!restaurants || restaurants.length == 0) {
+    if (restaurants && restaurants.length == 0) {
       return (
         <div className="col-span-1 flex h-dvh w-full flex-col items-center justify-center gap-5 sm:col-span-2 lg:col-span-3 xl:col-span-4">
           <SearchX size={50} />

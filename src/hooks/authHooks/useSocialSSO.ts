@@ -40,11 +40,8 @@ export function useSocialSSO({
       const result = await signInWithPopup(auth, provider);
       const user: User = result.user;
 
-      console.log("Got user info from Firebase:", user);
-
       const backendPayload = new URLSearchParams();
 
-      // The original Google User ID is stored in the providerData
       const userId = user.providerData[0]?.uid || user.uid;
 
       const uuid = crypto.randomUUID();

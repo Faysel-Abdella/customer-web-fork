@@ -7,6 +7,7 @@ import { useFetchRestaurantDetail } from "@/hooks/restaurantsHooks/useFetchResta
 
 import MenuList from "./MenuList";
 import RestaurantBanner from "./RestaurantBanner";
+import RestaurantPhotos from "./RestaurantPhotos";
 
 interface RestaurantDetailProps {
   restaurantId: string;
@@ -45,7 +46,9 @@ const RestaurantDetail = ({ restaurantId }: RestaurantDetailProps) => {
 
             <TabsContent value="reviews" className="space-y-6"></TabsContent>
 
-            <TabsContent value="photos" className="space-y-6"></TabsContent>
+            <TabsContent value="photos" className="space-y-6">
+              <RestaurantPhotos restaurant={restaurant} />
+            </TabsContent>
 
             <TabsContent value="info" className="space-y-6"></TabsContent>
           </Tabs>
