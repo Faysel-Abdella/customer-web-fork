@@ -10,6 +10,7 @@ import { useRouter } from "@/i18n/navigation";
 
 import CategoryFilter from "./CategoryFilter";
 import PriceFilter from "./PriceFilter";
+import SortRestaurants from "./SortRestaurants";
 
 export interface RestaurantFilters {
   category: string[];
@@ -19,6 +20,7 @@ export interface RestaurantFilters {
   rating: number;
   highRating: boolean;
   offer: string;
+  sort_by: string;
 }
 
 const offers = [20, 45, 50, 60];
@@ -40,6 +42,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
     rating: parseInt(searchParams.get("rating") || "0"),
     highRating: searchParams.get("highRating") ? true : false,
     offer: searchParams.get("offer") || "",
+    sort_by: searchParams.get("sort_by") || "none",
   };
   const [filters, setFilter] = useState<RestaurantFilters>(initialValue);
 
@@ -81,6 +84,11 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
     } else {
       params.set("offer", filters.offer);
     }
+    if (filters.sort_by == "none") {
+      params.delete("sort_by");
+    } else {
+      params.set("sort_by", filters.sort_by);
+    }
     router.replace({
       pathname: "/restaurants",
       query: Object.fromEntries(params),
@@ -100,6 +108,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
       rating: 0,
       highRating: false,
       offer: "",
+      sort_by: "none",
     });
     const params = new URLSearchParams(searchParams);
 
@@ -113,6 +122,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
 
   return (
     <div className={className}>
+      <SortRestaurants setFilters={setFilter} filters={filters} />
       <CategoryFilter setFilters={setFilter} filters={filters} />
       <PriceFilter filters={filters} setFilters={setFilter} />
       <div className="flex gap-4">
