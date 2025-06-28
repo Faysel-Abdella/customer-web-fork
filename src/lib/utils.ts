@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
-import { HttpError } from "./api/HttpError";
+import { HttpError } from "./HttpError";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,6 +16,15 @@ export const objectToUrlEncoded = (data: object): URLSearchParams => {
   }
 
   return params;
+};
+export const objectToFormData = (data: object): FormData => {
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    formData.append(key, String(value));
+  }
+
+  return formData;
 };
 
 export async function processError(error: unknown) {

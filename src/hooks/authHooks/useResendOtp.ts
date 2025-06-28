@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { ResendOtpPayload, ResendOtpResponse } from "@/types/auth.types";
 

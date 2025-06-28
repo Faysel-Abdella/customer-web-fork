@@ -2,21 +2,18 @@ import { useCallback, useEffect, useState } from "react";
 
 import { HttpError } from "@/lib/HttpError";
 import { processError } from "@/lib/utils";
+import { MenuItem } from "@/types/restaurant.types";
 
-interface BannerData {
-  list: {
-    id: number;
-    name: string;
-    url: string;
-  }[];
+interface RestaurantMenuListResponse {
+  list: MenuItem[];
 }
 
-export function useBanner() {
+export function useFetchRestaurantMenuList(id: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<BannerData | null>(null);
+  const [data, setData] = useState<MenuItem[] | null>(null);
 
-  const fetchBannerData = useCallback(async () => {
+  const fetchRestaurantMenuList = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
@@ -27,8 +24,7 @@ export function useBanner() {
       if (!accessToken) {
         throw new Error("Unauthorized: No access token found.");
       }
-
-      const res = await fetch("/api/item-detail/banner-images", {
+      const res = await fetch(`/api/restaurant/menu-list?id=${id}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
         signal: controller.signal,
@@ -38,8 +34,8 @@ export function useBanner() {
         throw new HttpError(res);
       }
 
-      const responseData: BannerData = await res.json();
-      setData(responseData);
+      const responseData: RestaurantMenuListResponse = await res.json();
+      setData(responseData.list);
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") {
         return;
@@ -53,11 +49,11 @@ export function useBanner() {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [id]);
 
   useEffect(() => {
-    fetchBannerData();
-  }, [fetchBannerData]);
+    fetchRestaurantMenuList();
+  }, [fetchRestaurantMenuList]);
 
   return {
     data,
