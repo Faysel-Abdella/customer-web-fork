@@ -8,11 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MenuItem } from "@/types/restaurant.types";
 
+import MenuItemDetail from "./MenuItemDetail";
+
 interface MenuListItemProps {
   menuItem: MenuItem;
+  restaurantId: string;
 }
 
-const MenuListItem = ({ menuItem }: MenuListItemProps) => {
+const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
   const placeholderImage = "/assets/images/foodPlaceholder.jpg";
   const [imgSrc, setImgSrc] = useState(menuItem.image_file || placeholderImage);
   const renderStars = (rating: number) => {
@@ -102,9 +105,10 @@ const MenuListItem = ({ menuItem }: MenuListItemProps) => {
                 <Clock size={15} /> <span>{menuItem.cook_time} minutes</span>
               </div>
               <div className="flex items-center gap-2">
-                <Button className="flex items-center justify-center bg-orange-500 transition-all duration-200 hover:scale-105 hover:bg-orange-600">
-                  View item
-                </Button>
+                <MenuItemDetail
+                  menuItem={menuItem}
+                  restaurantId={restaurantId}
+                />
               </div>
             </div>
           </div>

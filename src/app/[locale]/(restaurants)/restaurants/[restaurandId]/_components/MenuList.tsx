@@ -35,7 +35,11 @@ const MenuList = ({ restaurantId }: MenuListProps) => {
       );
     } else if (menuList) {
       return menuList.map((menuItem) => (
-        <MenuListItem key={menuItem.id} menuItem={menuItem} />
+        <MenuListItem
+          key={menuItem.id}
+          menuItem={menuItem}
+          restaurantId={restaurantId}
+        />
       ));
     }
   };

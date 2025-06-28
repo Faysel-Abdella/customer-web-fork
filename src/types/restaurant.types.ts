@@ -110,3 +110,63 @@ export type MenuItem = {
   menuImages: MenuImage[];
   itemPrice: ItemPrice[];
 };
+
+export type AddToCartRequest = {
+  "Cart[store_id]": string;
+  "Cart[type_id]": string;
+  "CartItem[product_id]": string;
+  "CartItem[price_id]": string;
+  "CartItem[quantity]": string;
+};
+
+export type RestaurantItem = {
+  id: number;
+  title: string;
+  cuisine_type: number;
+  quantity: number | null;
+  cuisine_type_name: string;
+  item_type: number;
+  restaurant_id: number;
+  image_file: string;
+  category_id: number;
+  price: string;
+  customized_price: number | null;
+  description: string;
+  is_available: number;
+  cook_time: string;
+  start_time: string;
+  end_time: string;
+  preparation_time: string;
+  out_of_stock: number;
+  state_id: number;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+  item_count: number;
+  is_favourite: number;
+  is_added_in_cart: number | null;
+  avg_rating: number;
+  is_ordered: boolean;
+  menuImages: MenuImage[];
+  itemPrice: ItemPrice[];
+};
+
+export type CartItem = {
+  id: number;
+  store_id: number;
+  cart_id: number;
+  product_id: number;
+  store_type: number;
+  price_id: number;
+  selected_store_price: string;
+  selected_rest_price: ItemPrice;
+  quantity: number;
+  total_price: number;
+  state_id: number;
+  type_id: number;
+  created_on: string; // Date-time string, e.g., "2025-06-27 16:53:50"
+  created_by_id: number;
+  cart_type: number;
+  restaurant_items: RestaurantItem[];
+  // Type is unknown as it's an empty array
+};

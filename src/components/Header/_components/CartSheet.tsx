@@ -1,9 +1,8 @@
 // src/components/layout/cart-sheet.tsx
 
-import { useMemo } from "react";
 import Link from "next/link";
 
-import { Minus, Plus, ShoppingCart, X } from "lucide-react";
+import { Loader, ShoppingCart } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -15,41 +14,21 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useCart } from "@/contexts/CartContext";
 
-type CartItem = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  quantity: number;
-};
-
-const cartItems: CartItem[] = [
-  {
-    id: "1",
-    name: "Spicy Kitfo",
-    image: "/images/kitfo.jpg",
-    price: 15.0,
-    quantity: 1,
-  },
-  {
-    id: "2",
-    name: "Doro Wot Platter",
-    image: "/images/doro-wot.jpg",
-    price: 22.5,
-    quantity: 2,
-  },
-];
+import CartListItem from "./CartListItem";
 
 export function CartSheet() {
-  const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const { cartItems, isLoading, totalItems } = useCart();
 
-  const subtotal = useMemo(() => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0,
-    );
-  }, []);
+  const calculateTotal = () => {
+    if (cartItems && cartItems.length > 0) {
+      let totalPrice = 0;
+      cartItems.forEach((item) => (totalPrice = totalPrice + item.total_price));
+      return totalPrice;
+    }
+    return 0;
+  };
 
   return (
     <Sheet>
@@ -61,9 +40,9 @@ export function CartSheet() {
           }
         >
           <ShoppingCart size={18} />
-          {itemCount > 0 && (
+          {totalItems > 0 && (
             <span className="bg-primary text-primary-foreground absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full text-xs">
-              {itemCount}
+              {totalItems}
             </span>
           )}
         </Button>
@@ -75,40 +54,18 @@ export function CartSheet() {
 
         <Separator />
 
-        {itemCount > 0 ? (
+        {isLoading ? (
+          <div className="flex h-96 w-full items-center justify-center">
+            <Loader className="animate-spin" />
+          </div>
+        ) : totalItems > 0 ? (
           <>
-            <div className="flex-1 overflow-y-auto px-6">
+            <div className="flex-1 overflow-y-auto px-2 md:px-6">
               <div className="space-y-4 py-4">
-                {cartItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-4 border-b pb-3"
-                  >
-                    <div className="bg-secondary h-16 w-16 animate-pulse rounded-md"></div>
-                    <div className="flex-1">
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-muted-foreground text-sm">
-                        ${item.price.toFixed(2)}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="icon" className="h-8 w-8">
-                        <Minus className="h-4 w-4" />
-                      </Button>
-                      <span>{item.quantity}</span>
-                      <Button variant="outline" size="icon" className="h-8 w-8">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-muted-foreground h-8 w-8"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
+                {cartItems &&
+                  cartItems.map((item) => (
+                    <CartListItem key={item.id} cartItem={item} />
+                  ))}
               </div>
             </div>
 
@@ -117,13 +74,13 @@ export function CartSheet() {
               <div className="w-full space-y-4">
                 <div className="flex items-center justify-between font-semibold">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span className="text-primary text-xl">
+                    ${calculateTotal()}
+                  </span>
                 </div>
-                <Link href="/checkout" passHref>
-                  <Button size="lg" className="w-full">
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+                <Button size="lg" className="w-full" asChild>
+                  <Link href="/checkout">Checkout</Link>
+                </Button>
               </div>
             </SheetFooter>
           </>
