@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 
 const gender = ["male", "female", "other"];
@@ -17,7 +16,7 @@ const PersonalInfo = () => {
       <div className="w-full max-w-2xl space-y-5 px-10 py-5">
         <div>
           <h2 className="text-3xl font-bold">Personal Information</h2>
-          <p className="mt-2 text-gray-600">
+          <p className="text-muted-foreground mt-2">
             Manage your personal details and preferences.
           </p>
         </div>

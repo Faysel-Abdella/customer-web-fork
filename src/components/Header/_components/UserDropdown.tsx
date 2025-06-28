@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 
-import { Heart, LogOut, Settings, Wallet } from "lucide-react";
+import { Heart, LogOut, User2, Wallet } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -61,10 +61,10 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
 
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/settings" passHref>
+          <Link href="/profile" passHref>
             <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <User2 className="mr-2 h-4 w-4" />
+              <span>Profile</span>
             </DropdownMenuItem>
           </Link>
           <Link href="/wallet" passHref>
