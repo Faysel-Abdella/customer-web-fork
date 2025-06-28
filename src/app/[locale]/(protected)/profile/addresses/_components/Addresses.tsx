@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+import AddAddressModel from "./AddAddressModel";
+
 const Addresses = () => {
   return (
     <div className="w-full max-w-2xl space-y-6">
@@ -16,7 +18,7 @@ const Addresses = () => {
             Manage your shipping and billing addresses.
           </p>
         </div>
-        <Button>Add New Address</Button>
+        <AddAddressModel />
       </div>
 
       <div className="grid gap-6">
