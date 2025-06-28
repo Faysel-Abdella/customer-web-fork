@@ -75,7 +75,16 @@ const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
           <div className="flex w-full flex-col justify-between p-3 md:px-4 md:py-2">
             <div className="mb-3 flex items-start justify-between">
               <div className="w-full max-w-full">
-                <h3 className="mb-2 text-xl font-semibold">{menuItem.title}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="mb-2 text-xl font-semibold">
+                    {menuItem.title}
+                  </h3>
+                  {menuItem.is_added_in_cart && (
+                    <Badge className="bg-primary/50 h-5 rounded-full">
+                      In Cart
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-muted-foreground line-clamp-1 text-sm leading-relaxed">
                   {menuItem.description}
                 </p>
