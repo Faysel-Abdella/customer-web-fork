@@ -15,7 +15,6 @@ export function useAddToCart() {
     setIsSuccess(false);
 
     const controller = new AbortController();
-    console.log(data);
     const body = objectToFormData(data);
 
     try {

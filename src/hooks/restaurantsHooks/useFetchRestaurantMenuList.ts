@@ -24,7 +24,6 @@ export function useFetchRestaurantMenuList(id: string) {
       if (!accessToken) {
         throw new Error("Unauthorized: No access token found.");
       }
-      console.log(id);
       const res = await fetch(`/api/restaurant/menu-list?id=${id}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -36,7 +35,6 @@ export function useFetchRestaurantMenuList(id: string) {
       }
 
       const responseData: RestaurantMenuListResponse = await res.json();
-      console.log(responseData);
       setData(responseData.list);
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") {

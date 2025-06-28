@@ -31,8 +31,6 @@ const useUpdateCart = () => {
       if (!res.ok) {
         throw new HttpError(res);
       }
-      const result = await res.json();
-      console.log(result);
 
       setIsSuccess(true);
       setIsLoading(false);
