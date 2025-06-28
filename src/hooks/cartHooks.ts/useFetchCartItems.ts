@@ -1,11 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useCallback, useState } from "react";
 
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { processError } from "@/lib/utils";
-import { CartItem, Restaurant } from "@/types/restaurant.types";
+import { CartItem } from "@/types/restaurant.types";
 
 interface CartItemResponse {
   list: CartItem[];

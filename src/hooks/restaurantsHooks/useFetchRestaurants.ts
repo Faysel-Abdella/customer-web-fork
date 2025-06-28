@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { processError } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 

@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
-import { HttpError } from "./api/HttpError";
+import { HttpError } from "./HttpError";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

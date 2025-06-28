@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useRouter } from "@/i18n/navigation";
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginResponse, SignupPayload } from "@/types/auth.types";
 

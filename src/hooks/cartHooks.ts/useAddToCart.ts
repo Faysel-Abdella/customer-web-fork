@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { objectToFormData, processError } from "@/lib/utils";
 import { AddToCartRequest } from "@/types/restaurant.types";
 

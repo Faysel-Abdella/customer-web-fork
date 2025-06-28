@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { HttpError } from "@/lib/api/HttpError";
+import { HttpError } from "@/lib/HttpError";
 import { processError } from "@/lib/utils";
 
 interface BannerData {
