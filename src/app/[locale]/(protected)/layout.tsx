@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 import { Loader2 } from "lucide-react";
 
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProtectedLayout({
@@ -37,5 +39,11 @@ export default function ProtectedLayout({
     ); // Or a dedicated loader component
   }
 
-  return <>{children}</>;
+  return (
+    <div>
+      <Header />
+      {children}
+      <Footer />
+    </div>
+  );
 }

@@ -1,0 +1,14 @@
+import React, { PropsWithChildren } from "react";
+
+import ProfileSidebar from "./_components/ProfileSidebar";
+
+const ProfileLayout = ({ children }: PropsWithChildren) => {
+  return (
+    <div className="parent-container flex min-h-dvh pt-32 lg:pt-24">
+      <ProfileSidebar />
+      {children}
+    </div>
+  );
+};
+
+export default ProfileLayout;
