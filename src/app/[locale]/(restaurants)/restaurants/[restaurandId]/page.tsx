@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import RestaurantDetail from "./_components/RestaurantDetail";
+import RestaurantDetailSkeleton from "./_components/RestaurantDetailSkeleton";
 
 interface RestaurantDetailPageProps {
   params: Promise<{ restaurandId: string }>;
@@ -10,7 +11,9 @@ const RestaurantDetailPage = async ({ params }: RestaurantDetailPageProps) => {
 
   return (
     <div className="min-h-dvh py-16">
-      <RestaurantDetail restaurantId={restaurandId} />
+      <Suspense fallback={<RestaurantDetailSkeleton />}>
+        <RestaurantDetail restaurantId={restaurandId} />
+      </Suspense>
     </div>
   );
 };

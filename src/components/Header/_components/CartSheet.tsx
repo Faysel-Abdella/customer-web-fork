@@ -1,5 +1,4 @@
-// src/components/layout/cart-sheet.tsx
-
+"use client";
 import Link from "next/link";
 
 import { Loader, ShoppingCart } from "lucide-react";

@@ -1,11 +1,10 @@
-"use client";
+import { Suspense } from "react";
 
-import { Loader } from "lucide-react";
-
+import { getRestaurantDetails } from "@/actions/restaurants.actions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useFetchRestaurantDetail } from "@/hooks/restaurantsHooks/useFetchRestaurantDetail";
 
 import MenuList from "./MenuList";
+import { MenuListSkeleton } from "./MenuListItemSkeleton";
 import RestaurantBanner from "./RestaurantBanner";
 import RestaurantInfo from "./RestaurantInfo";
 import RestaurantPhotos from "./RestaurantPhotos";
@@ -13,21 +12,15 @@ import RestaurantPhotos from "./RestaurantPhotos";
 interface RestaurantDetailProps {
   restaurantId: string;
 }
-const RestaurantDetail = ({ restaurantId }: RestaurantDetailProps) => {
-  const {
-    data: restaurant,
-    error,
-    isLoading,
-  } = useFetchRestaurantDetail(restaurantId);
+const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
+  const { data: restaurant, error } = await getRestaurantDetails(restaurantId);
 
-  if (isLoading)
+  if (error)
     return (
-      <div className="flex w-full items-center justify-center pt-20">
-        <Loader size={30} className="animate-spin" />
+      <div className="flex h-dvh w-full items-center justify-center">
+        <p>Something went wrong</p>
       </div>
     );
-
-  if (error) return <div>Something went wrong</div>;
   if (restaurant)
     return (
       <div>
@@ -42,7 +35,9 @@ const RestaurantDetail = ({ restaurantId }: RestaurantDetailProps) => {
             </TabsList>
 
             <TabsContent value="menu" className="min- space-y-6">
-              <MenuList restaurantId={restaurantId} />
+              <Suspense fallback={<MenuListSkeleton />}>
+                <MenuList restaurantId={restaurantId} />
+              </Suspense>
             </TabsContent>
 
             <TabsContent value="reviews" className="space-y-6"></TabsContent>

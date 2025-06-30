@@ -2,9 +2,12 @@ import React from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-export const MenuListItemSkeleton = () => {
-  return (
-    <Card className="animate-pulse overflow-hidden border py-0 shadow-none">
+export const MenuListSkeleton = () => {
+  return Array.from({ length: 5 }).map((_, index) => (
+    <Card
+      key={index}
+      className="animate-pulse overflow-hidden border py-0 shadow-none"
+    >
       <CardContent className="p-0">
         <div className="flex max-md:flex-col">
           <div className="relative h-48 w-full md:w-52">
@@ -33,5 +36,5 @@ export const MenuListItemSkeleton = () => {
         </div>
       </CardContent>
     </Card>
-  );
+  ));
 };
