@@ -29,6 +29,8 @@ import { useCart } from "@/contexts/CartContext";
 import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
+import AddOnList from "./AddOnList";
+
 interface MenuItemDetailProps {
   menuItem: MenuItem;
   restaurantId: string;
@@ -36,6 +38,7 @@ interface MenuItemDetailProps {
 const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
   const [isPending, startTransition] = useTransition();
   const [itemQuantity, setItemQuantity] = useState(1);
+  const [selectedAddonIds, setSelectedAddonIds] = useState<number[]>([]);
   const { refreshCart } = useCart();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -76,6 +79,16 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
         }`}
       />
     ));
+  };
+
+  const calculateAddOnPrice = (): number => {
+    let addonPrice = 0;
+    menuItem.addOnsList.forEach((item) => {
+      if (selectedAddonIds.includes(item.id))
+        addonPrice = addonPrice + parseInt(item.price);
+    });
+
+    return addonPrice;
   };
 
   return (
@@ -129,56 +142,86 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
               <Badge variant={"secondary"} className="border-border mb-2">
                 {menuItem.cuisine_type_name}
               </Badge>
-              <div className="flex gap-5">
-                <div className="flex items-center gap-2">
-                  {renderStars(menuItem.avg_rating)} {menuItem.avg_rating}
+              <div className="flex items-center justify-between">
+                <div className="flex gap-5">
+                  <div className="flex items-center gap-2">
+                    {renderStars(menuItem.avg_rating)} {menuItem.avg_rating}
+                  </div>
+                  <div className="text-muted-foreground flex items-center gap-1">
+                    <Clock size={16} />
+                    {menuItem.cook_time} <p>minutes</p>
+                  </div>
                 </div>
-                <div className="text-muted-foreground flex items-center gap-1">
-                  <Clock size={16} />
-                  {menuItem.cook_time} <p>minutes</p>
-                </div>
+                <p className="text-primary text-lg font-semibold">
+                  {menuItem.itemPrice[0].price}$
+                </p>
               </div>
             </div>
             <div className="space-y-2 border-b pb-4">
               <p className="font-bold">Description</p>
               <p className="text-muted-foreground">{menuItem.description}</p>
             </div>
+            <AddOnList
+              addOns={menuItem.addOnsList}
+              selectedAddonIds={selectedAddonIds}
+              setSelectedAddonIds={setSelectedAddonIds}
+            />
           </div>
         </div>
-        <DialogFooter>
-          <form
-            onSubmit={handleSubmit}
-            className="flex w-full items-center justify-between"
-          >
-            <div className="flex items-center gap-2">
-              <Button
-                variant={"outline"}
-                onClick={() =>
-                  setItemQuantity((prev) => (prev > 0 ? prev - 1 : prev))
-                }
-                type="button"
-              >
-                <Minus />
-              </Button>
-              <Input
-                className="w-28"
-                type="number"
-                min={1}
-                max={10}
-                value={itemQuantity}
-                onChange={(e) => setItemQuantity(parseInt(e.target.value))}
-              />
-              <Button
-                variant={"outline"}
-                onClick={() =>
-                  setItemQuantity((prev) => (prev < 10 ? prev + 1 : prev))
-                }
-                type="button"
-              >
-                <Plus />
-              </Button>
+        <DialogFooter className="px-2">
+          <form onSubmit={handleSubmit} className="w-full space-y-4">
+            <div className="space-y-4">
+              <p>Quantity:</p>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant={"outline"}
+                  onClick={() =>
+                    setItemQuantity((prev) => (prev > 0 ? prev - 1 : prev))
+                  }
+                  type="button"
+                >
+                  <Minus />
+                </Button>
+                <Input
+                  className="w-28"
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={itemQuantity}
+                  onChange={(e) => setItemQuantity(parseInt(e.target.value))}
+                />
+                <Button
+                  variant={"outline"}
+                  onClick={() =>
+                    setItemQuantity((prev) => (prev < 10 ? prev + 1 : prev))
+                  }
+                  type="button"
+                >
+                  <Plus />
+                </Button>
+              </div>
             </div>
-            <Button disabled={isPending}>
+            <div className="border-primary flex justify-between rounded-lg border p-2">
+              <div>
+                <p>Item price</p>
+                <p>Add-on price</p>
+                <p>Total price</p>
+              </div>
+              <div>
+                <p>{menuItem.itemPrice[0].price} $</p>
+                <p>{calculateAddOnPrice()}$</p>
+                <p className="text-primary">
+                  {(parseInt(menuItem.itemPrice[0].price) +
+                    calculateAddOnPrice()) *
+                    itemQuantity}
+                  $
+                </p>
+              </div>
+            </div>
+            <Button
+              disabled={isPending || itemQuantity <= 0}
+              className="w-full"
+            >
               {isPending ? <Loader2 className="animate-spin" /> : "Add to cart"}
             </Button>
           </form>

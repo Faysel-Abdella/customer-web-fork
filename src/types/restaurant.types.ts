@@ -63,7 +63,7 @@ export type ItemPrice = {
   created_by_id: number;
 };
 
-export type MenuImage = {
+interface MenuImage {
   id: number;
   name: string;
   size: number;
@@ -73,43 +73,71 @@ export type MenuImage = {
   model_id: number;
   project_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-16 11:25:15"
+  created_on: string; // ISO date string
   created_by_id: number;
-};
+}
 
-export type MenuItem = {
+// Type for the nested add_on_category_id object
+interface AddOnCategory {
+  id: number;
+  title: string;
+  image: string;
+  state_id: number;
+  type_id: number;
+  created_on: string; // ISO date string
+  created_by_id: number;
+}
+
+// Type for a single add-on in the addOnsList array
+export interface AddOn {
+  id: number;
+  title: string;
+  price: string;
+  limit: number;
+  item_id: number;
+  state_id: number;
+  add_on_category_id: AddOnCategory;
+  type_id: number;
+  created_on: string; // ISO date string
+  created_by_id: number;
+}
+
+// The main type for the entire menu item response
+export interface MenuItem {
   id: number;
   cart_item_id: string;
   title: string;
   cuisine_type: number;
-  quantity: number | null;
+  quantity: number;
   cuisine_type_name: string;
   item_type: number;
   restaurant_id: number;
-  image_file: string;
+  image_file: string; // URL
   category_id: number;
   price: string;
-  customized_price: number | null;
+  customized_price: string;
   description: string;
-  is_available: number;
+  is_available: number; // 0 or 1, can be treated as boolean
   cook_time: string;
-  start_time: string;
-  end_time: string;
+  start_time: string; // ISO date string
+  end_time: string; // ISO date string
   preparation_time: string;
-  out_of_stock: number; // Assuming 1 for true, 0 for false.
+  out_of_stock: number; // 0 or 1, can be treated as boolean
   state_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-16 11:25:15"
+  created_on: string; // ISO date string
   created_by_id: number;
   item_count: number;
-  is_favourite: number; // Assuming 1 for true, 0 for false.
-  is_added_in_cart: boolean | null;
+  is_favourite: number; // 0 or 1, can be treated as boolean
+  is_added_in_cart: number; // Type can be refined if non-null examples are available
   avg_rating: number;
   is_ordered: boolean;
-  count: number | null;
+  count: null | number;
   menuImages: MenuImage[];
+  addOnsList: AddOn[];
   itemPrice: ItemPrice[];
-};
+  availability: Availability[];
+}
 
 export type AddToCartRequest = {
   "Cart[store_id]": string;
