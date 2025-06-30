@@ -7,96 +7,58 @@ import {
   useContext,
   useEffect,
   useState,
+  useTransition,
 } from "react";
 
+import { getCartItems } from "@/actions/cart.actions";
 import { CartItem } from "@/types/restaurant.types";
 
 interface CartContextType {
   cartItems: CartItem[] | null;
   totalItems: number;
-  isLoading: boolean;
+  isPending: boolean;
   refreshCart: () => Promise<void>;
   silentRefreshCart: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-interface CartItemResponse {
-  list: CartItem[];
-}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
   const [totalItems, setTotalItems] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
 
   const refreshCart = useCallback(async () => {
-    setIsLoading(true);
-    const token = localStorage.getItem("accessToken");
+    startTransition(async () => {
+      const result = await getCartItems();
 
-    if (!token) {
-      setCartItems([]);
-      setTotalItems(0);
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/cart/my-cart-list", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          console.error("Unauthorized: Token might be expired.");
-        }
-        throw new Error(`Failed to fetch cart: ${response.statusText}`);
+      if (result.data) {
+        setCartItems(result.data);
+        setTotalItems(result.data.length);
       }
-
-      const result: CartItemResponse = await response.json();
-
-      setCartItems(result.list);
-      setTotalItems(result.list.length);
-    } catch (error) {
-      console.error("An error occurred while refreshing the cart:", error);
-      setCartItems([]);
-      setTotalItems(0);
-    } finally {
-      setIsLoading(false);
-    }
+      if (result.error) {
+        console.error(
+          "An error occurred while refreshing the cart:",
+          result.error,
+        );
+        setCartItems([]);
+        setTotalItems(0);
+      }
+    });
   }, []);
+
   const silentRefreshCart = useCallback(async () => {
-    const token = localStorage.getItem("accessToken");
+    const result = await getCartItems();
 
-    if (!token) {
-      setCartItems([]);
-      setTotalItems(0);
-      return;
+    if (result.data) {
+      setCartItems(result.data);
+      setTotalItems(result.data.length);
     }
-
-    try {
-      const response = await fetch("/api/cart/my-cart-list", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          console.error("Unauthorized: Token might be expired.");
-        }
-        throw new Error(`Failed to fetch cart: ${response.statusText}`);
-      }
-
-      const result: CartItemResponse = await response.json();
-
-      setCartItems(result.list);
-      setTotalItems(result.list.length);
-    } catch (error) {
-      console.error("An error occurred while refreshing the cart:", error);
+    if (result.error) {
+      console.error(
+        "An error occurred while refreshing the cart:",
+        result.error,
+      );
       setCartItems([]);
       setTotalItems(0);
     }
@@ -109,7 +71,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const value = {
     cartItems,
     totalItems,
-    isLoading,
+    isPending,
     refreshCart,
     silentRefreshCart,
   };

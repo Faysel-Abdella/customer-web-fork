@@ -14,7 +14,7 @@ import { UserDetail } from "@/types/auth.types";
 
 interface AuthContextType {
   user: UserDetail | null;
-  login: (userData: UserDetail, token: string) => void;
+  login: (userData: UserDetail) => void;
   logout: () => void;
   isLoading: boolean;
 }
@@ -26,10 +26,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  const login = (userData: UserDetail, token: string) => {
+  const login = (userData: UserDetail) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("accessToken", token);
 
     router.push("/home");
   };
@@ -49,10 +48,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
   useEffect(() => {
     const initializeAuth = () => {
-      const storedToken = localStorage.getItem("accessToken");
       const storedUserJSON = localStorage.getItem("user");
 
-      if (storedToken && storedUserJSON) {
+      if (storedUserJSON) {
         try {
           const userFromStorage = JSON.parse(storedUserJSON);
           setUser(userFromStorage);

@@ -3,7 +3,7 @@ export type LoginPayload = {
   "LoginForm[country_code]": string;
   "LoginForm[password]": string;
   "LoginForm[role]": number;
-  "LoginForm[device_type]": number;
+  "LoginForm[device_type]": string;
   "LoginForm[device_token]": string;
   "LoginForm[device_udid]": string;
 };

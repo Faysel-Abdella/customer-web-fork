@@ -46,19 +46,17 @@ export function useSocialSSO({
 
       const uuid = crypto.randomUUID();
 
-      // ---- HaLogin Fields ----
       backendPayload.append("HaLogin[user_id]", userId);
       backendPayload.append("HaLogin[login_provider]", providerName);
       backendPayload.append("HaLogin[role_id]", "2");
       backendPayload.append("HaLogin[email]", user.email || "");
       backendPayload.append("HaLogin[full_name]", user.displayName || "");
       backendPayload.append("HaLogin[image_url]", user.photoURL || "");
-      backendPayload.append("HaLogin[device_type]", "1");
+      backendPayload.append("HaLogin[device_type]", "WEB");
       backendPayload.append("HaLogin[device_token]", uuid);
       backendPayload.append("HaLogin[device_udid]", uuid);
 
-      // 3. Send the formatted data to your backend API
-      const yourApiUrl = "/api/user/social-login"; // Your proxied endpoint
+      const yourApiUrl = "/api/user/social-login";
 
       const response = await fetch(yourApiUrl, {
         method: "POST",
@@ -73,7 +71,7 @@ export function useSocialSSO({
       const responseData: LoginResponse = await response.json();
 
       console.log("✅ Login successful");
-      contextLogin(responseData.detail, responseData["access-token"]);
+      contextLogin(responseData.detail);
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);

@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,6 +44,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   useEffect(() => {
     setImgSrc(restaurant.image_file || placeholderImage);
   }, [restaurant.image_file]);
+
   return (
     <Card className="group h-fit gap-0 overflow-hidden py-0 shadow-none transition-all duration-300">
       <div className="relative">

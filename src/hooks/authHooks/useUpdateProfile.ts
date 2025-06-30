@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import { updateProfileAction } from "@/actions/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
-import { LoginResponse, UpdateProfilePayload } from "@/types/auth.types";
+import { objectToFormData } from "@/lib/utils";
+import { UpdateProfilePayload } from "@/types/auth.types";
 
 export const useUpdateProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,32 +15,16 @@ export const useUpdateProfile = () => {
   const updateProfile = async (data: UpdateProfilePayload) => {
     setIsLoading(true);
     setError(null);
-    const body = objectToUrlEncoded(data);
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw Error("Unauthorized");
-      }
+    const body = objectToFormData(data);
+    const result = await updateProfileAction(body);
 
-      const response = await fetch("/api/user/profile-update", {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        method: "POST",
-        body,
-      });
-      if (!response.ok) {
-        throw new HttpError(response);
-      }
-      const responseData: LoginResponse = await response.json();
-      contextLogin(responseData.detail, responseData["access-token"]);
+    if (result.error) {
+      setError(result.error);
       setIsLoading(false);
+    } else if (result.data) {
+      setIsLoading(false);
+      contextLogin(result.data.detail);
       router.push("/home");
-    } catch (error) {
-      const errorMessage = await processError(error);
-      setError(errorMessage);
-      setIsLoading(false);
     }
   };
 

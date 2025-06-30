@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 
 import { Loader2, Minus, Plus, Trash } from "lucide-react";
 import { toast } from "sonner";
 
+import { deleteCartItem, updateCartItem } from "@/actions/cart.actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,8 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
-import useDeleteCartItem from "@/hooks/cartHooks.ts/useDeleteCartItem";
-import useUpdateCart from "@/hooks/cartHooks.ts/useUpdateCart";
 import useDebounce from "@/hooks/useDebounce";
 import { CartItem } from "@/types/restaurant.types";
 
@@ -28,45 +27,37 @@ interface CartListItemProps {
 }
 const CartListItem = ({ cartItem }: CartListItemProps) => {
   const [itemQuantity, setItemQuantity] = useState(cartItem.quantity);
-  const {
-    deleteCartItem,
-    error: deleteError,
-    isLoading,
-    isSuccess: isDeleteSuccess,
-  } = useDeleteCartItem();
 
-  const {
-    error: updateError,
-    isSuccess: updateSuccess,
-    updateCart,
-    isLoading: updateLoading,
-  } = useUpdateCart();
+  const [isUpdating, startUpdateTransition] = useTransition();
+  const [isDeleting, startDeleteTransition] = useTransition();
+
   const { refreshCart, silentRefreshCart } = useCart();
 
   const debouncedQuantity = useDebounce(itemQuantity, 500);
 
   useEffect(() => {
     if (debouncedQuantity !== cartItem.quantity) {
-      updateCart(cartItem.id.toString(), debouncedQuantity.toString());
+      startUpdateTransition(async () => {
+        const result = await updateCartItem(
+          cartItem.id.toString(),
+          debouncedQuantity.toString(),
+        );
+        if (result.success) silentRefreshCart();
+        if (result.error) {
+          toast.error("Error", { description: result.error });
+        }
+      });
     }
-  }, [debouncedQuantity, cartItem.id, cartItem.quantity, updateCart]);
+  }, [debouncedQuantity, cartItem.id, cartItem.quantity, silentRefreshCart]);
 
-  useEffect(() => {
-    if (deleteError) toast.error("Error", { description: deleteError });
-    if (updateError) toast.error("Error", { description: updateError });
-    if (isDeleteSuccess) refreshCart();
-    if (updateSuccess) silentRefreshCart();
-  }, [
-    updateSuccess,
-    updateError,
-    deleteError,
-    isDeleteSuccess,
-    refreshCart,
-    silentRefreshCart,
-  ]);
-
-  const handleDelete = () => {
-    deleteCartItem(cartItem.id.toString());
+  const handleDelete = async () => {
+    startDeleteTransition(async () => {
+      const result = await deleteCartItem(cartItem.id.toString());
+      if (result.error) {
+        toast.error("Error", { description: result.error });
+      }
+      if (result.success) refreshCart();
+    });
   };
 
   return (
@@ -83,7 +74,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
           <p className="line-clamp-2 font-medium">
             {cartItem.restaurant_items[0].title}
           </p>
-          {updateLoading ? (
+          {isUpdating ? (
             <Loader2 className="text-muted-foreground h-5 w-6 animate-spin" />
           ) : (
             <p className="text-muted-foreground text-sm">
@@ -99,9 +90,9 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               variant="ghost"
               size="icon"
               className="hover:bg-background h-8 w-8 border-red-500 text-red-400 hover:border hover:text-red-500"
-              disabled={isLoading}
+              disabled={isDeleting}
             >
-              {isLoading ? (
+              {isDeleting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <Trash className="h-4 w-4" />
