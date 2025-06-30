@@ -17,9 +17,9 @@ import {
 import { useBanner } from "@/hooks/useBanner";
 
 const Banner = () => {
-  const { data, error, isLoading } = useBanner();
+  const { data, error, isPending } = useBanner();
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="h-80 w-full p-4">
         {" "}
@@ -37,7 +37,7 @@ const Banner = () => {
       opts={{ loop: true }}
     >
       <CarouselContent className="-ml-0 h-80">
-        {data?.list.map((item) => (
+        {data?.map((item) => (
           <CarouselItem key={item.id} className="pl-0">
             <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 max-md:rounded-none dark:from-orange-600 dark:to-orange-700">
               <CardContent className="flex h-full w-full pr-0 text-white max-md:flex-col-reverse max-md:px-2">

@@ -20,3 +20,43 @@ export async function updateProfileAction(data: FormData) {
     return { data: null, error: "Failed to update profile." };
   }
 }
+
+export interface BannerItem {
+  id: number;
+  name: string;
+  url: string;
+}
+interface BannerDataResponse {
+  list: BannerItem[];
+}
+
+interface GetBannerItemsResult {
+  data?: BannerItem[];
+  error?: string;
+}
+
+export async function getBannerItems(): Promise<GetBannerItemsResult> {
+  try {
+    const responseData: BannerDataResponse =
+      await fetchWithAuth<BannerDataResponse>(`/api/item-detail/banner-images`);
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch banner items" };
+  }
+}
+
+export async function getCategiesList(): Promise<GetBannerItemsResult> {
+  try {
+    const responseData: BannerDataResponse =
+      await fetchWithAuth<BannerDataResponse>(`/api/item-detail/banner-images`);
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch banner items" };
+  }
+}
