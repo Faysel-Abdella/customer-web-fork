@@ -1,10 +1,11 @@
 "use client";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import Image from "next/image";
 
-import { Clock, Heart, Minus, Plus, Star } from "lucide-react";
+import { Clock, Heart, Loader2, Minus, Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 
+import { addToCartAction } from "@/actions/cart.actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
-import { useAddToCart } from "@/hooks/cartHooks.ts/useAddToCart";
+import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 interface MenuItemDetailProps {
@@ -33,19 +34,32 @@ interface MenuItemDetailProps {
   restaurantId: string;
 }
 const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
-  const { addToCart, error, isLoading, isSuccess } = useAddToCart();
+  const [isPending, startTransition] = useTransition();
   const [itemQuantity, setItemQuantity] = useState(1);
   const { refreshCart } = useCart();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    addToCart({
+    const data = objectToFormData({
       "Cart[store_id]": restaurantId,
       "Cart[type_id]": menuItem.type_id.toString(),
       "CartItem[price_id]": menuItem.itemPrice[0].id.toString(),
       "CartItem[product_id]": menuItem.id.toString(),
       "CartItem[quantity]": itemQuantity.toString(),
+    });
+
+    startTransition(async () => {
+      const results = await addToCartAction(data);
+      if (results.error) {
+        toast.error("Failed at adding item to cart", {
+          description: results.error,
+        });
+      }
+      if (results.success) {
+        toast.success("Successfully added item to cart");
+        refreshCart();
+      }
     });
   };
 
@@ -63,16 +77,6 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
       />
     ));
   };
-
-  useEffect(() => {
-    if (error) {
-      toast.error("Failed at adding item to cart", { description: error });
-    }
-    if (isSuccess) {
-      toast.success("Successfully added item to cart");
-      refreshCart();
-    }
-  }, [error, isSuccess, refreshCart]);
 
   return (
     <Dialog>
@@ -174,7 +178,9 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
                 <Plus />
               </Button>
             </div>
-            <Button disabled={isLoading}>Add to cart</Button>
+            <Button disabled={isPending}>
+              {isPending ? <Loader2 className="animate-spin" /> : "Add to cart"}
+            </Button>
           </form>
         </DialogFooter>
       </DialogContent>

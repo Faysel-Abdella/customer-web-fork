@@ -18,7 +18,7 @@ import { useCart } from "@/contexts/CartContext";
 import CartListItem from "./CartListItem";
 
 export function CartSheet() {
-  const { cartItems, isLoading, totalItems } = useCart();
+  const { cartItems, isPending, totalItems } = useCart();
 
   const calculateTotal = () => {
     if (cartItems && cartItems.length > 0) {
@@ -53,7 +53,7 @@ export function CartSheet() {
 
         <Separator />
 
-        {isLoading ? (
+        {isPending ? (
           <div className="flex h-96 w-full items-center justify-center">
             <Loader className="animate-spin" />
           </div>

@@ -27,7 +27,7 @@ export async function getRestaurants(
     return { data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to update profile." };
+    return { error: "Failed to fetch restaurants." };
   }
 }
 
