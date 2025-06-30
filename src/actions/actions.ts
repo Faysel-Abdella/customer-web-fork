@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { LoginResponse } from "@/types/auth.types";
 
 export async function updateProfileAction(data: FormData) {

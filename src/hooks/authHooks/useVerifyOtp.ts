@@ -32,7 +32,7 @@ export const useVerifyOtp = () => {
         throw new HttpError(response);
       }
       const responseData: LoginResponse = await response.json();
-      contextLogin(responseData.detail, responseData["access-token"]);
+      contextLogin(responseData.detail);
       localStorage.removeItem("unVerifiedUser");
       setUser(responseData.detail);
       setIsLoading(false);

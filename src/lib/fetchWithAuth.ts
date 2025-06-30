@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { processError } from "../utils";
+import { processError } from "./utils";
 
 function parseYii2Token(cookieValue: string): string | null {
   try {
@@ -44,7 +44,6 @@ export async function fetchWithAuth<T>(
     Authorization: `Bearer ${cleanToken}`,
     ...options.headers,
   };
-
   const response = await fetch(fullUrl, {
     ...options,
     headers,
@@ -52,6 +51,8 @@ export async function fetchWithAuth<T>(
 
   if (!response.ok) {
     const error = processError(response);
+    const responseData = await response.json();
+    console.log(responseData);
     throw new Error(
       `API request failed with status ${response.status} and error: ${error}`,
     );

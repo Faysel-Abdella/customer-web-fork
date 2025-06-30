@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -49,7 +50,14 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams);
 
-    filters.category.forEach((category) => params.append("category", category));
+    if (filters.category.length == 0) {
+      params.delete("category");
+    } else {
+      filters.category.forEach((category) =>
+        params.append("category", category),
+      );
+    }
+
     if (filters.min == "0") {
       params.delete("min");
     } else {

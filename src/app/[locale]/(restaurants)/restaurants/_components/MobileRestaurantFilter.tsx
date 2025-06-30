@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 import { DialogDescription } from "@radix-ui/react-dialog";
@@ -12,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import RestaurantFilters from "./RestaurantFilters";
+import RestaurantFilters from "./RestaurantFilter";
 
 const MobileRestaurantFilter = () => {
   const [open, setOpen] = useState(false);

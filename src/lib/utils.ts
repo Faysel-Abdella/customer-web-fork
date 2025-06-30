@@ -27,14 +27,6 @@ export const objectToFormData = (data: object): FormData => {
   return formData;
 };
 
-export const objectToFormData = (data: object): FormData => {
-  const formData = new FormData();
-  for (const [key, value] of Object.entries(data)) {
-    formData.append(key, String(value));
-  }
-  return formData;
-};
-
 export async function processError(error: unknown) {
   try {
     if (error instanceof HttpError) {
@@ -64,4 +56,28 @@ export async function processError(error: unknown) {
 
 export function formatYYYYMMDD(date: Date) {
   return format(date, "yyyy-MM-dd");
+}
+
+export function buildUrlSearchParams(searchParams: {
+  [key: string]: string | string[] | undefined;
+}): URLSearchParams {
+  const params = new URLSearchParams();
+
+  // Iterate over each key in the searchParams object
+  for (const [key, value] of Object.entries(searchParams)) {
+    // 1. If the value is a string, append it.
+    if (typeof value === "string") {
+      params.append(key, value);
+    }
+    // 2. If the value is an array, iterate and append each item.
+    // This correctly handles cases like ?category=a&category=b
+    else if (Array.isArray(value)) {
+      for (const item of value) {
+        params.append(key, item);
+      }
+    }
+    // 3. If the value is undefined, it will be skipped, which is the desired behavior.
+  }
+
+  return params;
 }
