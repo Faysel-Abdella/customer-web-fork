@@ -3,16 +3,20 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { z } from "zod";
 
 export const addressSchema = z.object({
-  addressType: z.enum(["Home", "Office", "Hotel", "Other"], {
+  addressType: z.enum(["1", "2", "3", "4"], {
     required_error: "You must select an address type.",
   }),
-  houseAddress: z.string().min(10, {
+  title: z
+    .string()
+    .min(3, { message: "Title too short" })
+    .max(50, { message: "Title too long" }),
+  address: z.string().min(10, {
     message: "Please enter a more detailed address.",
   }),
   floor: z.string().optional(),
   landmark: z.string().optional(),
   pinCode: z.string().optional(),
-  mobileNumber: z.string().refine(isValidPhoneNumber, {
+  contact_no: z.string().refine(isValidPhoneNumber, {
     message: "Invalid phone number",
   }),
 });
