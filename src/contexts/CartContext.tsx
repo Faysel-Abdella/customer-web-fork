@@ -10,13 +10,15 @@ import {
   useTransition,
 } from "react";
 
-import { getCartItems } from "@/actions/cart.actions";
+import { getCartItems, getTotalCartPrice } from "@/actions/cart.actions";
 import { CartItem } from "@/types/restaurant.types";
 
 interface CartContextType {
   cartItems: CartItem[] | null;
   totalItems: number;
   isPending: boolean;
+  isLoadingTotalPrice: boolean;
+  totalPrice: number;
   refreshCart: () => Promise<void>;
   silentRefreshCart: () => Promise<void>;
 }
@@ -27,6 +29,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [isPending, startTransition] = useTransition();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoadingTotalPrice, startTotalPrice] = useTransition();
 
   const refreshCart = useCallback(async () => {
     startTransition(async () => {
@@ -68,10 +72,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
     refreshCart();
   }, [refreshCart]);
 
+  useEffect(() => {
+    startTotalPrice(async () => {
+      const result = await getTotalCartPrice();
+
+      if (result.data) {
+        setTotalPrice(result.data);
+      }
+      if (result.error) {
+        refreshCart();
+      }
+    });
+  }, [cartItems, refreshCart]);
+
   const value = {
     cartItems,
     totalItems,
     isPending,
+    isLoadingTotalPrice,
+    totalPrice,
     refreshCart,
     silentRefreshCart,
   };

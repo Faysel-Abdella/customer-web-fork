@@ -59,11 +59,11 @@ export type ItemPrice = {
   item_id: number;
   state_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-16 11:25:15"
+  created_on: string;
   created_by_id: number;
 };
 
-export type MenuImage = {
+interface MenuImage {
   id: number;
   name: string;
   size: number;
@@ -73,43 +73,68 @@ export type MenuImage = {
   model_id: number;
   project_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-16 11:25:15"
+  created_on: string;
   created_by_id: number;
-};
+}
 
-export type MenuItem = {
+interface AddOnCategory {
+  id: number;
+  title: string;
+  image: string;
+  state_id: number;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+}
+
+export interface AddOn {
+  id: number;
+  title: string;
+  price: string;
+  limit: number;
+  item_id: number;
+  state_id: number;
+  add_on_category_id: AddOnCategory;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+}
+
+export interface MenuItem {
   id: number;
   cart_item_id: string;
   title: string;
   cuisine_type: number;
-  quantity: number | null;
+  quantity: number;
   cuisine_type_name: string;
   item_type: number;
   restaurant_id: number;
-  image_file: string;
+  image_file: string; // URL
   category_id: number;
   price: string;
-  customized_price: number | null;
+  customized_price: string;
   description: string;
   is_available: number;
   cook_time: string;
   start_time: string;
   end_time: string;
   preparation_time: string;
-  out_of_stock: number; // Assuming 1 for true, 0 for false.
+  out_of_stock: number;
   state_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-16 11:25:15"
+  created_on: string;
   created_by_id: number;
   item_count: number;
-  is_favourite: number; // Assuming 1 for true, 0 for false.
-  is_added_in_cart: boolean | null;
+  is_favourite: number;
+  is_added_in_cart: number;
   avg_rating: number;
   is_ordered: boolean;
-  count: number | null;
+  count: null | number;
   menuImages: MenuImage[];
+  addOnsList: AddOn[];
   itemPrice: ItemPrice[];
-};
+  availability: Availability[];
+}
 
 export type AddToCartRequest = {
   "Cart[store_id]": string;
@@ -151,6 +176,56 @@ export type RestaurantItem = {
   itemPrice: ItemPrice[];
 };
 
+export type SelectedRestPrice = {
+  id: number;
+  title: string;
+  price: string;
+  quantity: string;
+  item_id: number;
+  state_id: number;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+};
+
+export type MenuItemImage = {
+  id: number;
+  name: string;
+  size: number;
+  key: string;
+  url: string;
+  model_type: string;
+  model_id: number;
+  project_id: number;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+};
+
+export type AddOnItem = {
+  id: number;
+  title: string;
+  price: string;
+  limit: number;
+  item_id: number;
+  state_id: number;
+  add_on_category_id: AddOnCategory;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+};
+
+export type AdditionalItem = {
+  id: number;
+  cart_item_id: number;
+  price: string;
+  add_on_id: number;
+  type_id: number;
+  state_id: number;
+  created_on: string;
+  created_by_id: number;
+};
+
 export type CartItem = {
   id: number;
   store_id: number;
@@ -164,9 +239,9 @@ export type CartItem = {
   total_price: number;
   state_id: number;
   type_id: number;
-  created_on: string; // Date-time string, e.g., "2025-06-27 16:53:50"
+  created_on: string;
   created_by_id: number;
   cart_type: number;
   restaurant_items: RestaurantItem[];
-  // Type is unknown as it's an empty array
+  additional_items: AdditionalItem[];
 };

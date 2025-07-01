@@ -50,9 +50,10 @@ export async function fetchWithAuth<T>(
   });
 
   if (!response.ok) {
-    const error = processError(response);
     const responseData = await response.json();
     console.log(responseData);
+    const error = await processError(response);
+
     throw new Error(
       `API request failed with status ${response.status} and error: ${error}`,
     );

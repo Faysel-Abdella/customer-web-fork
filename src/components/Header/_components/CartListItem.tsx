@@ -59,6 +59,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
       if (result.success) refreshCart();
     });
   };
+  console.log(cartItem.additional_items);
 
   return (
     <div key={cartItem.id} className="flex items-center gap-4 border-b pb-3">
@@ -77,8 +78,12 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
           {isUpdating ? (
             <Loader2 className="text-muted-foreground h-5 w-6 animate-spin" />
           ) : (
-            <p className="text-muted-foreground text-sm">
-              ${cartItem.total_price}
+            <p className="text-muted-foreground text-sm max-md:text-xs">
+              ${cartItem.total_price}(
+              {cartItem.additional_items.map(
+                (item) => " +" + " $" + item.price,
+              )}
+              )
             </p>
           )}
         </div>
