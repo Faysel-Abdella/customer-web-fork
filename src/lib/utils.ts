@@ -17,16 +17,20 @@ export const objectToUrlEncoded = (data: object): URLSearchParams => {
 
   return params;
 };
+
 export const objectToFormData = (data: object): FormData => {
   const formData = new FormData();
 
   for (const [key, value] of Object.entries(data)) {
-    formData.append(key, String(value));
+    if (Array.isArray(value) || (typeof value === "object" && value !== null)) {
+      formData.append(key, JSON.stringify(value));
+    } else {
+      formData.append(key, String(value));
+    }
   }
 
   return formData;
 };
-
 export async function processError(error: unknown) {
   try {
     if (error instanceof HttpError) {

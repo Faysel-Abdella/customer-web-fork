@@ -18,16 +18,8 @@ import { useCart } from "@/contexts/CartContext";
 import CartListItem from "./CartListItem";
 
 export function CartSheet() {
-  const { cartItems, isPending, totalItems } = useCart();
-
-  const calculateTotal = () => {
-    if (cartItems && cartItems.length > 0) {
-      let totalPrice = 0;
-      cartItems.forEach((item) => (totalPrice = totalPrice + item.total_price));
-      return totalPrice;
-    }
-    return 0;
-  };
+  const { cartItems, isPending, totalItems, isLoadingTotalPrice, totalPrice } =
+    useCart();
 
   return (
     <Sheet>
@@ -74,7 +66,11 @@ export function CartSheet() {
                 <div className="flex items-center justify-between font-semibold">
                   <span>Subtotal</span>
                   <span className="text-primary text-xl">
-                    ${calculateTotal()}
+                    {isLoadingTotalPrice ? (
+                      <Loader className="size-3.5 animate-spin" />
+                    ) : (
+                      totalPrice
+                    )}
                   </span>
                 </div>
                 <Button size="lg" className="w-full" asChild>

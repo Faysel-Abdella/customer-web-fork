@@ -11,9 +11,9 @@ export async function addToCartAction(
   data: FormData,
 ): Promise<CartActionResults> {
   try {
+    data.forEach((key, value) => console.log(key.toString(), value));
     await fetchWithAuth(`/api/cart/add-to-cart`, {
       method: "POST",
-
       body: data,
     });
 
@@ -67,5 +67,27 @@ export async function getCartItems(): Promise<GetCartItemsResult> {
     console.error(error);
     if (typeof error === "string") return { error };
     else return { error: "Failed to fetch cart items." };
+  }
+}
+
+interface GetTotalCartPriceResult {
+  data?: number;
+  error?: string;
+}
+
+interface TotalCartPriceResponse {
+  total_price: number;
+}
+
+export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
+  try {
+    const responseData: TotalCartPriceResponse =
+      await fetchWithAuth<TotalCartPriceResponse>(`/api/cart/total-price`);
+
+    return { data: responseData.total_price };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch total price" };
   }
 }

@@ -50,6 +50,7 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
       "CartItem[price_id]": menuItem.itemPrice[0].id.toString(),
       "CartItem[product_id]": menuItem.id.toString(),
       "CartItem[quantity]": itemQuantity.toString(),
+      "Cart[addones]": getSelectedAddons(),
     });
 
     startTransition(async () => {
@@ -91,6 +92,19 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
     return addonPrice;
   };
 
+  const getSelectedAddons = () => {
+    let selectedAddons: { add_on_id: string; price: string }[] = [];
+    menuItem.addOnsList.forEach((item) => {
+      if (selectedAddonIds.includes(item.id)) {
+        selectedAddons = [
+          { add_on_id: item.id.toString(), price: item.price.toString() },
+          ...selectedAddons,
+        ];
+      }
+    });
+
+    return selectedAddons;
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
