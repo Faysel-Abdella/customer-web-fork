@@ -1,11 +1,16 @@
 "use client";
-import React from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import parsePhoneNumberFromString, {
+  CountryCode,
+  getCountryCallingCode,
+} from "libphonenumber-js";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { addAddress } from "@/actions/profile.actions";
 import { PhoneInput } from "@/components/PhoneNumberInput";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,34 +32,80 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { addressSchema } from "@/lib/schemas/address.schema";
+import { objectToFormData } from "@/lib/utils";
 
 import { LocationPicker } from "./LocationPicker";
+
+const addressTypes = [
+  {
+    title: "Home",
+    value: "1",
+  },
+  {
+    title: "Office",
+    value: "2",
+  },
+  {
+    title: "Hotel",
+    value: "3",
+  },
+  {
+    title: "Other",
+    value: "4",
+  },
+];
 const AddAddressModel = () => {
+  const [country, setCountry] = useState<CountryCode | undefined>("ET");
+  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof addressSchema>>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
-      addressType: "Home",
-      houseAddress: "",
-      floor: "",
+      title: "",
+      addressType: "1",
+      address: "",
       landmark: "",
       pinCode: "",
-      mobileNumber: "",
+      contact_no: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof addressSchema>) {
-    console.log(values);
+    const phoneNumberObj = parsePhoneNumberFromString(
+      form.getValues("contact_no"),
+    );
+    const contact_no = phoneNumberObj?.nationalNumber || "";
+    const country_code = country ? getCountryCallingCode(country) : "";
 
-    toast("Address Saved!", {
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
+    const data = objectToFormData({
+      "AddressManagement[title]": values.title,
+      "AddressManagement[address]": values.address,
+      "AddressManagement[country_code]": "+" + country_code,
+      "AddressManagement[contact_no]": contact_no,
+      "AddressManagement[latitude]": 8.5413,
+      "AddressManagement[longitude]": 39.2689,
+      "AddressManagement[type_id]": parseInt(values.addressType),
+      "AddressManagement[description]": values.landmark,
+      "AddressManagement[floor]": values.floor,
+      "AddressManagement[pincode]": values.pinCode,
+    });
+
+    startTransition(async () => {
+      const results = await addAddress(data);
+
+      if (results.success) {
+        toast.success("Address Saved!");
+        setOpen(false);
+      }
+
+      if (results.error) {
+        toast.error("Failed at adding address,please try again.");
+      }
     });
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Add New Address</Button>
       </DialogTrigger>
@@ -87,16 +138,16 @@ const AddAddressModel = () => {
                         defaultValue={field.value}
                         className="flex space-x-4"
                       >
-                        {["Home", "Office", "Hotel", "Other"].map((type) => (
+                        {addressTypes.map((addressType) => (
                           <FormItem
-                            key={type}
+                            key={addressType.value}
                             className="flex items-center space-y-0 space-x-2"
                           >
                             <FormControl>
-                              <RadioGroupItem value={type} />
+                              <RadioGroupItem value={addressType.value} />
                             </FormControl>
                             <FormLabel className="font-normal">
-                              {type}
+                              {addressType.title}
                             </FormLabel>
                           </FormItem>
                         ))}
@@ -109,10 +160,23 @@ const AddAddressModel = () => {
 
               <FormField
                 control={form.control}
-                name="houseAddress"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>House / Street Address</FormLabel>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. Home" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="e.g. Near St. George's Church"
@@ -158,7 +222,7 @@ const AddAddressModel = () => {
 
               <FormField
                 control={form.control}
-                name="mobileNumber"
+                name="contact_no"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Mobile Number</FormLabel>
@@ -166,6 +230,7 @@ const AddAddressModel = () => {
                       id="phone-number"
                       defaultCountry="ET"
                       {...field}
+                      onCountryChange={setCountry}
                     />
                     <FormMessage />
                   </FormItem>
@@ -189,7 +254,11 @@ const AddAddressModel = () => {
                 )}
               />
 
-              <Button type="submit" className="!mt-8 w-full">
+              <Button
+                type="submit"
+                className="!mt-8 w-full"
+                disabled={isPending}
+              >
                 Save Address
               </Button>
             </form>
