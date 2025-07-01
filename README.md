@@ -2,6 +2,8 @@
 
 # Dev tools
 
+## Test
+
 IDE: VsCode (Recommended Cursor)
 
 ### VS code Extensions (Mandatory)
@@ -101,7 +103,7 @@ IDE: VsCode (Recommended Cursor)
    const calculateDiscount = (
      orderTotal,
      isPremiumCustomer,
-     isHolidayPromo
+     isHolidayPromo,
    ) => {
      if ((orderTotal > 100 && isPremiumCustomer) || isHolidayPromo) {
        return orderTotal * 0.15;
@@ -344,7 +346,7 @@ Premature optimization is spending a lot of time on something that you may not a
    const UserProfile = () => {
      return (
        <div>
-         <UserIcon className='w-6 h-6' />
+         <UserIcon className="h-6 w-6" />
          <span>Profile</span>
        </div>
      );
@@ -356,7 +358,7 @@ Premature optimization is spending a lot of time on something that you may not a
    const UserProfile = () => {
      return (
        <div>
-         <User className='w-6 h-6' />
+         <User className="h-6 w-6" />
          <span>Profile</span>
        </div>
      );
@@ -553,11 +555,11 @@ Premature optimization is spending a lot of time on something that you may not a
    const Button = ({ variant, disabled }) => {
      return (
        <button
-         className={`px-4 py-2 rounded-md ${
+         className={`rounded-md px-4 py-2 ${
            variant === "primary"
              ? "bg-blue-500 text-white"
              : "bg-gray-200 text-gray-800"
-         } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+         } ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
        >
          Click me
        </button>
@@ -571,11 +573,11 @@ Premature optimization is spending a lot of time on something that you may not a
      return (
        <button
          className={cn(
-           "px-4 py-2 rounded-md",
+           "rounded-md px-4 py-2",
            variant === "primary"
              ? "bg-primary-foreground"
              : "bg-background-secondary",
-           disabled && "opacity-50 cursor-not-allowed"
+           disabled && "cursor-not-allowed opacity-50",
          )}
        >
          Click me
