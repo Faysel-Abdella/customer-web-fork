@@ -82,11 +82,10 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
             <div className="mb-2 flex items-start justify-between">
               <div>
                 <h3 className="text-lg font-semibold">
-                  {" "}
                   {cartItem.restaurant_items[0].title}
                 </h3>
                 {isUpdating ? (
-                  <Loader2 className="text-muted-foreground h-5 w-6 animate-spin" />
+                  <Loader2 className="text-muted-foreground h-7 w-6 animate-spin" />
                 ) : (
                   <p className="text-lg font-bold text-orange-500">
                     ${cartItem.total_price}
