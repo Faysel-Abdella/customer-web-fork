@@ -40,7 +40,7 @@ const SelectAddress = ({
     } else {
       setSelectedAddress(defaultAddress);
     }
-  }, [addressList]);
+  }, [addressList, setSelectedAddress]);
 
   useEffect(() => {
     if (!addressList && !isPending) {
