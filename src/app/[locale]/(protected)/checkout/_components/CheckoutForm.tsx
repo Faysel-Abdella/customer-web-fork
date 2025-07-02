@@ -4,16 +4,19 @@ import React, { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { Address } from "@/types/profile.types";
 
-import BillDetail from "./BillDetail";
 import CartItems from "./CartItems";
 import Instructions from "./Instructions";
 import Offers from "./Offers";
+import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
   const { cartItems } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    string | null
+  >(null);
 
   return (
     <div className="parent-container pb-10">
@@ -36,7 +39,10 @@ const CheckoutForm = () => {
             />
           </div>
           <div className="lg:col-span-1">
-            <BillDetail />
+            <PaymentDetail
+              selectedPaymentMethod={selectedPaymentMethod}
+              setSelectedPaymentMethod={setSelectedPaymentMethod}
+            />
           </div>
         </div>
       )}
