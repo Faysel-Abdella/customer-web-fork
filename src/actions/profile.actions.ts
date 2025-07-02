@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
-import { Address } from "@/types/profile.types";
+import { Address, Order } from "@/types/profile.types";
 
 interface AddressActionResults {
   success: boolean;
@@ -80,5 +80,27 @@ export async function setDefaultAddress(
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to delete address" };
+  }
+}
+
+interface GetOrdersListResults {
+  data?: Order[];
+  error?: string;
+}
+
+interface OrdersListResponse {
+  list: Order[];
+}
+
+export async function getOrdersList(): Promise<GetOrdersListResults> {
+  try {
+    const responseData: OrdersListResponse =
+      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`);
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch address list" };
   }
 }
