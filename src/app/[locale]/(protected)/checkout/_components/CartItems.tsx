@@ -55,7 +55,13 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
         }
       });
     }
-  }, [debouncedQuantity, cartItem.id, cartItem.quantity, silentRefreshCart]);
+  }, [
+    debouncedQuantity,
+    cartItem.id,
+    cartItem.quantity,
+    silentRefreshCart,
+    router,
+  ]);
 
   const handleDelete = async () => {
     startDeleteTransition(async () => {
@@ -68,7 +74,7 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
   };
 
   return (
-    <Card className="py-0">
+    <Card className="py-0 shadow-none">
       <CardContent className="p-4">
         <div className="flex gap-4">
           <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg">

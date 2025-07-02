@@ -40,7 +40,7 @@ const PaymentDetail = ({
 
   return (
     <div className="sticky top-28 mt-4 space-y-10">
-      <Card className="py-0">
+      <Card className="py-0 shadow-none">
         <CardContent className="p-4">
           <h3 className="mb-4 text-lg font-semibold">Bill Details</h3>
           <div className="space-y-3">

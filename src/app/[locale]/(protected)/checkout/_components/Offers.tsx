@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const Offers = () => {
   return (
-    <Card className="py-0">
+    <Card className="py-0 shadow-none">
       <CardContent className="p-4">
         <h3 className="mb-3 text-lg font-semibold">Offers & Benefits</h3>
         <Button variant="ghost" className="h-auto w-full justify-between p-0">

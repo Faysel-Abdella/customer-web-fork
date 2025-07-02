@@ -12,7 +12,7 @@ const Instructions = ({
   setAdditionalInstructions,
 }: InstructionProps) => {
   return (
-    <Card className="py-0">
+    <Card className="py-0 shadow-none">
       <CardContent className="p-4">
         <h3 className="mb-3 text-lg font-semibold">
           Add Instruction to Restaurant

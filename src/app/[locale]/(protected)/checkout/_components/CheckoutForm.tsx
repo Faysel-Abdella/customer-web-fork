@@ -10,13 +10,14 @@ import { objectToFormData } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 
 import CartItems from "./CartItems";
+import CheckoutFormSkeleton from "./CheckoutFormSkeleton.tsx";
 import Instructions from "./Instructions";
 import Offers from "./Offers";
 import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
-  const { cartItems, totalPrice } = useCart();
+  const { cartItems, totalPrice, isPending } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -62,6 +63,7 @@ const CheckoutForm = () => {
     });
   };
 
+  if (isPending) return <CheckoutFormSkeleton />;
   return (
     <div className="parent-container pb-10">
       {cartItems && (
