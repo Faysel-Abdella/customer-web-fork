@@ -16,7 +16,7 @@ import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
-  const { cartItems } = useCart();
+  const { cartItems, totalPrice } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -31,12 +31,16 @@ const CheckoutForm = () => {
       toast.info("Please select an address");
       return;
     }
+    if (!cartItems) {
+      toast.info("Empty cart");
+      return;
+    }
     startOrdering(async () => {
       const data = objectToFormData({
-        "Detail[store_id]": 5,
+        "Detail[store_id]": cartItems[0].store_id,
         "Detail[address]": selectedAddress.id,
-        "Detail[total_price]": 5,
-        "Detail[payable_amount]": 10,
+        "Detail[total_price]": totalPrice,
+        "Detail[payable_amount]": totalPrice,
         "Detail[type_id]": selectedPaymentMethod,
         payment_status: 1,
         "Detail[item]": JSON.stringify(cartItems),
@@ -52,11 +56,12 @@ const CheckoutForm = () => {
         console.log(results.hesabPayLink);
       }
       if (results.success) {
-        router.push("/home");
+        router.push("/profile/orders");
         toast.success("Order placed successfully");
       }
     });
   };
+
   return (
     <div className="parent-container pb-10">
       {cartItems && (
