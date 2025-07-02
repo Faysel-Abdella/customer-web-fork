@@ -9,7 +9,9 @@ interface AddressActionResults {
   error?: string;
 }
 
-export async function addAddress(data: FormData): Promise<AddressActionResults> {
+export async function addAddress(
+  data: FormData,
+): Promise<AddressActionResults> {
   try {
     await fetchWithAuth(`/api/address-management/add-address`, {
       method: "POST",
@@ -51,11 +53,27 @@ export async function getAddressList(): Promise<GetAddressListResult> {
   }
 }
 
-
 export async function deleteAddress(id: string): Promise<AddressActionResults> {
   try {
     await fetchWithAuth(`/api/address-management/delete-address?id=${id}`);
-        revalidatePath("/profile/addresses");
+    revalidatePath("/profile/addresses");
+
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error: error };
+    else return { success: false, error: "Failed to delete address" };
+  }
+}
+
+export async function setDefaultAddress(
+  id: string,
+): Promise<AddressActionResults> {
+  try {
+    await fetchWithAuth(
+      `/api/address-management/default-address?address_id=${id}`,
+    );
+    revalidatePath("/profile/addresses");
 
     return { success: true };
   } catch (error) {

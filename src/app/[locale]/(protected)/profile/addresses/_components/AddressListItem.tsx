@@ -1,9 +1,10 @@
 "use client";
 import { useTransition } from "react";
 
-import { Edit, Loader2, Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
+import { toast } from "sonner";
 
-import { deleteAddress } from "@/actions/profile.actions";
+import { deleteAddress, setDefaultAddress } from "@/actions/profile.actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,17 +19,17 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Address } from "@/types/profile.types";
-import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
+import { Address } from "@/types/profile.types";
 interface AddressListItemProps {
   address: Address;
 }
 const AddressListItem = ({ address }: AddressListItemProps) => {
   const [isDeleting, startDelete] = useTransition();
+  const [isUpdating, startUpdate] = useTransition();
   const router = useRouter();
 
-  const handleDeleteAddreses = () => {
+  const handleDeleteAddress = () => {
     startDelete(async () => {
       const results = await deleteAddress(address.id.toString());
       if (results.success) {
@@ -36,12 +37,24 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
         router.push("/profile/addresses");
       }
       if (results.error) {
-        toast.success("Failed at deleting address");
+        toast.error("Failed at deleting address");
+      }
+    });
+  };
+
+  const handleSetDefaultAddress = () => {
+    startUpdate(async () => {
+      const results = await setDefaultAddress(address.id.toString());
+      if (results.success) {
+        router.push("/profile/addresses");
+      }
+      if (results.error) {
+        toast.error("Failed at setting default address");
       }
     });
   };
   return (
-    <Card className="shadow-none">
+    <Card className="shadow-none gap-0">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-2">
@@ -51,9 +64,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
             )}
           </div>
           <div>
-            <Button variant="ghost" size="sm">
-              <Edit className="h-4 w-4" />
-            </Button>
+           
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -75,7 +86,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteAddreses}>
+                  <AlertDialogAction onClick={handleDeleteAddress}>
                     Continue
                   </AlertDialogAction>
                 </AlertDialogFooter>
@@ -91,8 +102,12 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
           <p>{address.pincode}</p>
         </div>
         <div>
-          <Button size={"sm"} disabled>
-            Set Default
+          <Button
+            size={"sm"}
+            disabled={isUpdating || address.is_default == 1}
+            onClick={handleSetDefaultAddress}
+            className="w-24"
+          >{isUpdating?<Loader2 className="animate-spin"/>:"Set Default"}
           </Button>
         </div>
       </CardContent>

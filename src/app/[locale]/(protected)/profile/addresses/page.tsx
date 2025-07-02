@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-import AddAddressModel from "./_components/AddAddressModel";
+import AddAddressModal from "./_components/AddAddressModal";
 import AddressList from "./_components/AddressList";
 import AddressListSkeleton from "./_components/AddressListSkeleton";
 
@@ -15,7 +15,7 @@ const AddressesPage = () => {
               Manage your shipping and billing addresses.
             </p>
           </div>
-          <AddAddressModel />
+          <AddAddressModal />
         </div>
 
         <Suspense fallback={<AddressListSkeleton />}>
