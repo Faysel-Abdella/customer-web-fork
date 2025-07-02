@@ -57,7 +57,6 @@ const navigationItems = [
 
 const ProfileSidebar = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <nav className="max-w-72 min-w-72 flex-1 space-y-5 border-r p-4">
       <ul className="space-y-2">

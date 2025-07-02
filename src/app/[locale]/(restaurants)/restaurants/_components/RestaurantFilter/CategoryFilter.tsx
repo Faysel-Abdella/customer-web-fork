@@ -25,14 +25,12 @@ interface CategoryFilterProps {
   setFilters: React.Dispatch<React.SetStateAction<RestaurantFilters>>;
 }
 const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
-  console.log(filters);
   return (
     <div>
       <Label className="mb-2">Category</Label>
       <MultiSelect
         options={restaurantCategories}
         onValueChange={(e) => {
-          console.log(e);
           setFilters((prev) => ({ ...prev, category: e }));
         }}
         defaultValue={filters.category}

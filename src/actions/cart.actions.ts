@@ -11,7 +11,6 @@ export async function addToCartAction(
   data: FormData,
 ): Promise<CartActionResults> {
   try {
-    data.forEach((key, value) => console.log(key.toString(), value));
     await fetchWithAuth(`/api/cart/add-to-cart`, {
       method: "POST",
       body: data,

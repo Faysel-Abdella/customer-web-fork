@@ -59,7 +59,6 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
       if (result.success) refreshCart();
     });
   };
-  console.log(cartItem.additional_items);
 
   return (
     <div key={cartItem.id} className="flex items-center gap-4 border-b pb-3">
