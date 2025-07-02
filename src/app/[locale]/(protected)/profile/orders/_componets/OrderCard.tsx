@@ -2,16 +2,17 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Order } from "@/types/profile.types";
+
+import OrderDetail from "./OrderDetail";
 
 interface OrderCardProps {
   order: Order;
 }
 const OrderCard = ({ order }: OrderCardProps) => {
   return (
-    <Card className="py-2">
+    <Card className="border-2 py-2 shadow-none">
       <CardContent className="flex justify-between px-4">
         <div className="flex items-center gap-4">
           <div className="relative size-28">
@@ -44,7 +45,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
           <div className="text-primary text-lg font-bold">
             ${order.total_price}
           </div>
-          <Button>View details</Button>
+          <OrderDetail order={order} />
         </div>
       </CardContent>
     </Card>
