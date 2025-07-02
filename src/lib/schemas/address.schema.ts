@@ -15,7 +15,7 @@ export const addressSchema = z.object({
   }),
   floor: z.string().optional(),
   landmark: z.string().optional(),
-  pinCode: z.string().optional(),
+  pinCode: z.string().min(1, { message: "Please enter pin code" }),
   contact_no: z.string().refine(isValidPhoneNumber, {
     message: "Invalid phone number",
   }),
