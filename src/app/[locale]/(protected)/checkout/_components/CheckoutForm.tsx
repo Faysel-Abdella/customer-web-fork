@@ -1,7 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import { useState, useTransition } from "react";
 
+import { toast } from "sonner";
+
+import { placeOrder } from "@/actions/actions";
 import { useCart } from "@/contexts/CartContext";
+import { useRouter } from "@/i18n/navigation";
+import { objectToFormData } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 
 import CartItems from "./CartItems";
@@ -18,6 +23,40 @@ const CheckoutForm = () => {
     string | null
   >(null);
 
+  const router = useRouter();
+  const [isOrdering, startOrdering] = useTransition();
+
+  const handleOrder = () => {
+    if (!selectedAddress) {
+      toast.info("Please select an address");
+      return;
+    }
+    startOrdering(async () => {
+      const data = objectToFormData({
+        "Detail[store_id]": 5,
+        "Detail[address]": selectedAddress.id,
+        "Detail[total_price]": 5,
+        "Detail[payable_amount]": 10,
+        "Detail[type_id]": selectedPaymentMethod,
+        payment_status: 1,
+        "Detail[item]": JSON.stringify(cartItems),
+      });
+
+      const results = await placeOrder(data);
+
+      if (results.error) {
+        toast.error("Failed at placing order");
+      }
+
+      if (results.hesabPayLink) {
+        console.log(results.hesabPayLink);
+      }
+      if (results.success) {
+        router.push("/home");
+        toast.success("Order placed successfully");
+      }
+    });
+  };
   return (
     <div className="parent-container pb-10">
       {cartItems && (
@@ -42,6 +81,8 @@ const CheckoutForm = () => {
             <PaymentDetail
               selectedPaymentMethod={selectedPaymentMethod}
               setSelectedPaymentMethod={setSelectedPaymentMethod}
+              handlePayment={handleOrder}
+              isOrdering={isOrdering}
             />
           </div>
         </div>

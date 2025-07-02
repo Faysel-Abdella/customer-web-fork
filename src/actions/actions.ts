@@ -60,3 +60,32 @@ export async function getCategiesList(): Promise<GetBannerItemsResult> {
     else return { error: "Failed to fetch banner items" };
   }
 }
+
+interface PlaceOrderResults {
+  success: boolean;
+  hesabPayLink?: string;
+  error?: string;
+}
+
+interface PlaceOrderResponse {
+  hesabPayLink?: string;
+}
+
+export async function placeOrder(data: FormData): Promise<PlaceOrderResults> {
+  try {
+    const responseData: PlaceOrderResponse =
+      await fetchWithAuth<PlaceOrderResponse>(`/api/cart-item/place-order`, {
+        method: "POST",
+        body: data,
+      });
+    if (responseData.hesabPayLink) {
+      return { success: true, hesabPayLink: responseData.hesabPayLink };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error: error };
+    else return { success: false, error: "Failed to create order" };
+  }
+}

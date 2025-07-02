@@ -27,10 +27,14 @@ const paymentMethods = [
 interface PaymentDetailProps {
   selectedPaymentMethod: string | null;
   setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string | null>>;
+  handlePayment: () => void;
+  isOrdering: boolean;
 }
 const PaymentDetail = ({
   selectedPaymentMethod,
   setSelectedPaymentMethod,
+  handlePayment,
+  isOrdering,
 }: PaymentDetailProps) => {
   const { isLoadingTotalPrice, totalPrice } = useCart();
 
@@ -103,7 +107,11 @@ const PaymentDetail = ({
               ))}
             </RadioGroup>
           </div>
-          <Button className="mt-6 w-full rounded-xl bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600">
+          <Button
+            className="mt-6 w-full rounded-xl bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600"
+            onClick={handlePayment}
+            disabled={selectedPaymentMethod == null || isOrdering}
+          >
             Order Now
           </Button>
         </CardContent>
