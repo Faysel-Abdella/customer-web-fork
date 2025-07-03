@@ -5,14 +5,14 @@ import { Link } from "@/i18n/navigation";
 
 const categories = [
   {
-    name: "Fast Food",
+    name: "Foods",
     icon: "🍔",
     img: "/assets/images/homepage/fast_food.webp",
     color: "from-orange-400 to-red-500",
     count: "120+",
   },
   {
-    name: "Beverages",
+    name: "Drinks",
     icon: "🥤",
     img: "/assets/images/homepage/beverage.jpg",
     color: "from-blue-400 to-cyan-500",

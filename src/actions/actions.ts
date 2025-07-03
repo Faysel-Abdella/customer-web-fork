@@ -2,6 +2,7 @@
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { LoginResponse } from "@/types/auth.types";
+import { MenuItem } from "@/types/restaurant.types";
 
 export async function updateProfileAction(data: FormData) {
   try {
@@ -87,5 +88,26 @@ export async function placeOrder(data: FormData): Promise<PlaceOrderResults> {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to create order" };
+  }
+}
+
+interface PopularDishesResponse {
+  items: MenuItem[];
+}
+
+interface GetPopularDishesResult {
+  data?: MenuItem[];
+  error?: string;
+}
+
+export async function getPopularDishes(): Promise<GetPopularDishesResult> {
+  try {
+    const responseData: PopularDishesResponse =
+      await fetchWithAuth<PopularDishesResponse>(`/api/cart-item/popular-dish`);
+
+    return { data: responseData.items };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch popular dishes list." };
   }
 }

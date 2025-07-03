@@ -79,3 +79,27 @@ export async function getRestaurantMenuList(
     return { error: "Failed to fetch menu list." };
   }
 }
+
+interface MenuItemDetailResponse {
+  detail: MenuItem;
+}
+interface GetMenuItemDetailResult {
+  data?: MenuItem;
+  error?: string;
+}
+
+export async function getMenuItemDetail(
+  menuItemId: string,
+): Promise<GetMenuItemDetailResult> {
+  try {
+    const responseData: MenuItemDetailResponse =
+      await fetchWithoutAuth<MenuItemDetailResponse>(
+        `/api/restaurant/item-detail?id=${menuItemId}`,
+      );
+
+    return { data: responseData.detail };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch menu item detail." };
+  }
+}

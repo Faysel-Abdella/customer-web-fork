@@ -7,7 +7,7 @@ import { TrendingDishes } from "./_components/TrendingDishes";
 
 const HomePage = () => {
   return (
-    <div className="min-h-dvh">
+    <div className="h-full min-h-dvh">
       <Header />
       <div className="flex flex-col items-center pt-32 md:p-10 md:pt-32">
         <div className="container flex w-full justify-center gap-10 max-xl:flex-col">
@@ -18,7 +18,7 @@ const HomePage = () => {
               <TrendingDishes />
             </div>
           </div>
-          <div className="h-dvh w-1/3 pb-10 max-xl:w-full max-xl:px-5">
+          <div className="w-1/3 pb-10 max-xl:w-full max-xl:px-5 xl:h-dvh">
             <TopRestaurants />
           </div>
         </div>

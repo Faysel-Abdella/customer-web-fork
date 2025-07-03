@@ -105,7 +105,7 @@ export function TopRestaurants() {
               <div className="flex">
                 <div className="relative aspect-video w-2/5 overflow-hidden rounded-xl md:aspect-square">
                   <Image
-                    src={restaurant.image || "/placeholder.svg"}
+                    src={restaurant.image}
                     alt={restaurant.name}
                     fill
                     className="rounded-2xl object-cover transition-transform duration-500 group-hover:scale-110"
