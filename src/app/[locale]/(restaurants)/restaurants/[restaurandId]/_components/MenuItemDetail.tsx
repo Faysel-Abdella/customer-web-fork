@@ -37,7 +37,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
@@ -48,6 +48,7 @@ interface MenuItemDetailProps {
   restaurantId: string;
 }
 const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
+  const currentPath = usePathname();
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [itemQuantity, setItemQuantity] = useState(1);
@@ -128,6 +129,10 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
     });
 
     return selectedAddons;
+  };
+
+  const setPreviousPath = () => {
+    localStorage.setItem("previousPath", currentPath);
   };
   return (
     <>
@@ -291,7 +296,7 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
             </DialogFooter>
           ) : (
             <DialogFooter>
-              <Button className="w-full" asChild>
+              <Button className="w-full" asChild onClick={setPreviousPath}>
                 <Link href={"/login"}>Order</Link>
               </Button>
             </DialogFooter>

@@ -26,9 +26,9 @@ export default function ProtectedLayout({
       router.push("/login");
     }
 
-    if (user?.is_profile_setup === 0 && user.contact_no) {
-      router.push("/profile-setup");
-    }
+    // if (user?.is_profile_setup === 0 && user.contact_no) {
+    //   router.push("/profile-setup");
+    // }
   }, [user, isLoading, router]);
 
   if (isLoading || !user) {
