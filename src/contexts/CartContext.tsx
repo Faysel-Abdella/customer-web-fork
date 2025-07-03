@@ -21,12 +21,16 @@ interface CartContextType {
   totalPrice: number;
   refreshCart: () => Promise<void>;
   silentRefreshCart: () => Promise<void>;
+  currentRestaurantId: number | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
+  const [currentRestaurantId, setCurrentRestaurantId] = useState<number | null>(
+    null,
+  );
   const [totalItems, setTotalItems] = useState<number>(0);
   const [isPending, startTransition] = useTransition();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -37,7 +41,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const result = await getCartItems();
 
       if (result.data) {
+        if (result.data.length > 0) {
+          setCurrentRestaurantId(result.data[0].store_id);
+        } else {
+          setCurrentRestaurantId(null);
+        }
         setCartItems(result.data);
+
         setTotalItems(result.data.length);
       }
       if (result.error) {
@@ -45,6 +55,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           "An error occurred while refreshing the cart:",
           result.error,
         );
+        setCurrentRestaurantId(null);
         setCartItems([]);
         setTotalItems(0);
       }
@@ -55,6 +66,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const result = await getCartItems();
 
     if (result.data) {
+      if (result.data.length > 0) {
+        setCurrentRestaurantId(result.data[0].store_id);
+      } else {
+        setCurrentRestaurantId(null);
+      }
       setCartItems(result.data);
       setTotalItems(result.data.length);
     }
@@ -63,6 +79,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         "An error occurred while refreshing the cart:",
         result.error,
       );
+      setCurrentRestaurantId(null);
       setCartItems([]);
       setTotalItems(0);
     }
@@ -86,6 +103,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [cartItems, refreshCart]);
 
   const value = {
+    currentRestaurantId,
     cartItems,
     totalItems,
     isPending,

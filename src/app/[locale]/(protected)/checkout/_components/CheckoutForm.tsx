@@ -17,7 +17,8 @@ import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
-  const { cartItems, totalPrice, isPending } = useCart();
+  const { cartItems, totalPrice, isPending, currentRestaurantId, totalItems } =
+    useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -38,7 +39,7 @@ const CheckoutForm = () => {
     }
     startOrdering(async () => {
       const data = objectToFormData({
-        "Detail[store_id]": cartItems[0].store_id,
+        "Detail[store_id]": currentRestaurantId,
         "Detail[address]": selectedAddress.id,
         "Detail[total_price]": totalPrice,
         "Detail[payable_amount]": totalPrice,
@@ -90,6 +91,7 @@ const CheckoutForm = () => {
               setSelectedPaymentMethod={setSelectedPaymentMethod}
               handlePayment={handleOrder}
               isOrdering={isOrdering}
+              emptyCart={totalItems == 0}
             />
           </div>
         </div>

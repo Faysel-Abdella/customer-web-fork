@@ -29,12 +29,14 @@ interface PaymentDetailProps {
   setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string | null>>;
   handlePayment: () => void;
   isOrdering: boolean;
+  emptyCart: boolean;
 }
 const PaymentDetail = ({
   selectedPaymentMethod,
   setSelectedPaymentMethod,
   handlePayment,
   isOrdering,
+  emptyCart,
 }: PaymentDetailProps) => {
   const { isLoadingTotalPrice, totalPrice } = useCart();
 
@@ -110,7 +112,7 @@ const PaymentDetail = ({
           <Button
             className="mt-6 w-full rounded-xl bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600"
             onClick={handlePayment}
-            disabled={selectedPaymentMethod == null || isOrdering}
+            disabled={selectedPaymentMethod == null || isOrdering || emptyCart}
           >
             Order Now
           </Button>

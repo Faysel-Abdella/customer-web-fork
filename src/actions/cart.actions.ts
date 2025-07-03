@@ -9,8 +9,13 @@ interface CartActionResults {
 }
 export async function addToCartAction(
   data: FormData,
+  clearCart: boolean = false,
 ): Promise<CartActionResults> {
   try {
+    if (clearCart) {
+      await fetchWithAuth("/api/cart/delete-cart");
+    }
+
     await fetchWithAuth(`/api/cart/add-to-cart`, {
       method: "POST",
       body: data,
