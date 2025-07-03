@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
-import { Address, Order } from "@/types/profile.types";
+import { Address, Notification, Order } from "@/types/profile.types";
 
 interface AddressActionResults {
   success: boolean;
@@ -102,5 +102,29 @@ export async function getOrdersList(): Promise<GetOrdersListResults> {
     console.error(error);
     if (typeof error === "string") return { error };
     else return { error: "Failed to fetch address list" };
+  }
+}
+
+interface GetNotificationListResults {
+  data?: Notification[];
+  error?: string;
+}
+
+interface NotificationListResponse {
+  list: Notification[];
+}
+
+export async function getNotificationList(): Promise<GetNotificationListResults> {
+  try {
+    const responseData: NotificationListResponse =
+      await fetchWithAuth<NotificationListResponse>(
+        `/api/user/notification-list`,
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch notication list" };
   }
 }

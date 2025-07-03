@@ -93,3 +93,19 @@ export type Order = {
   orderState: OrderState[]; // Array of OrderState
   storeDetail: Restaurant;
 };
+
+export type Notification = {
+  id: number;
+  title: string;
+  description: string;
+  modelId: number | null;
+  modelType: string | null;
+  isRead: boolean;
+  stateId: number;
+  typeId: number;
+  createdOn: string; // ISO 8601 string for date/time
+  toUserId: number;
+  createdById: number;
+  fullName: string;
+  imageFile: string | null;
+};

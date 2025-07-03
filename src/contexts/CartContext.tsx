@@ -13,6 +13,8 @@ import {
 import { getCartItems, getTotalCartPrice } from "@/actions/cart.actions";
 import { CartItem } from "@/types/restaurant.types";
 
+import { useAuth } from "./AuthContext";
+
 interface CartContextType {
   cartItems: CartItem[] | null;
   totalItems: number;
@@ -27,6 +29,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
   const [currentRestaurantId, setCurrentRestaurantId] = useState<number | null>(
     null,
@@ -86,21 +89,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    refreshCart();
-  }, [refreshCart]);
+    if (user) {
+      refreshCart();
+    }
+  }, [refreshCart, user]);
 
   useEffect(() => {
-    startTotalPrice(async () => {
-      const result = await getTotalCartPrice();
+    if (user) {
+      startTotalPrice(async () => {
+        const result = await getTotalCartPrice();
 
-      if (result.data) {
-        setTotalPrice(result.data);
-      }
-      if (result.error) {
-        refreshCart();
-      }
-    });
-  }, [cartItems, refreshCart]);
+        if (result.data) {
+          setTotalPrice(result.data);
+        }
+        if (result.error) {
+          refreshCart();
+        }
+      });
+    }
+  }, [cartItems, refreshCart, user]);
 
   const value = {
     currentRestaurantId,
