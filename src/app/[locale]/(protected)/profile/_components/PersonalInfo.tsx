@@ -13,9 +13,11 @@ const PersonalInfo = () => {
 
   if (user)
     return (
-      <div className="w-full max-w-2xl space-y-5 px-10 py-5">
+      <div className="w-full max-w-2xl space-y-5 px-0 py-5 pb-10 md:px-10">
         <div>
-          <h2 className="text-3xl font-bold">Personal Information</h2>
+          <h2 className="text-2xl font-bold md:text-3xl">
+            Personal Information
+          </h2>
           <p className="text-muted-foreground mt-2">
             Manage your personal details and preferences.
           </p>

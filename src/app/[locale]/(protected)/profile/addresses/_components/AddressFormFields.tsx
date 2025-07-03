@@ -51,7 +51,7 @@ const AddressFormFields = ({ form, setCountry }: AddressFormFieldsProps) => {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="flex space-x-4"
+                className="grid grid-cols-4"
               >
                 {addressTypes.map((addressType) => (
                   <FormItem

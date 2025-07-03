@@ -82,22 +82,22 @@ const AddAddressModal = () => {
       <DialogTrigger asChild>
         <Button>Add New Address</Button>
       </DialogTrigger>
-      <DialogContent className="max-h-dvh w-7xl max-w-7xl min-w-3xl overflow-y-auto lg:min-w-4xl xl:min-w-5xl">
+      <DialogContent className="max-h-dvh min-w-dvw overflow-y-auto md:min-w-3xl lg:min-w-4xl xl:min-w-5xl">
         <DialogHeader>
           <DialogTitle>Add new addresss</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className="flex gap-5">
+        <div className="flex gap-5 max-md:flex-col">
           <LocationPicker
             onLocationSelect={({ address, position }) => {
               console.log({ address, position });
             }}
-            className="w-1/2"
+            className="md:w-1/2"
           />
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-1/2 space-y-6"
+              className="space-y-6 md:w-1/2"
             >
               <AddressFormFields form={form} setCountry={setCountry} />
 

@@ -9,17 +9,17 @@ const AddressListSkeleton = () => {
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 {/* Skeleton for CardTitle */}
-                <div className="h-6 w-48 animate-pulse rounded bg-gray-200"></div>
+                <div className="bg-border h-6 w-32 animate-pulse rounded md:w-48"></div>
                 {/* Skeleton for Badge (conditionally rendered) */}
-                <div className="h-5 w-20 animate-pulse rounded-full bg-gray-200"></div>
+                <div className="bg-border h-5 w-16 animate-pulse rounded-full md:w-20"></div>
               </div>
               <div className="flex space-x-2">
                 {" "}
                 {/* Use flex and space-x for buttons */}
                 {/* Skeleton for Edit Button */}
-                <div className="h-8 w-8 animate-pulse rounded-md bg-gray-200"></div>
+                <div className="bg-border h-8 w-8 animate-pulse rounded-md"></div>
                 {/* Skeleton for Trash Button */}
-                <div className="h-8 w-8 animate-pulse rounded-md bg-gray-200"></div>
+                <div className="bg-border h-8 w-8 animate-pulse rounded-md"></div>
               </div>
             </div>
           </CardHeader>
@@ -28,15 +28,15 @@ const AddressListSkeleton = () => {
               {" "}
               {/* Increased space-y for paragraphs */}
               {/* Skeleton for address */}
-              <div className="h-4 w-64 animate-pulse rounded bg-gray-200"></div>
+              <div className="bg-border h-4 w-32 animate-pulse rounded md:w-64"></div>
               {/* Skeleton for description */}
-              <div className="h-4 w-52 animate-pulse rounded bg-gray-200"></div>
+              <div className="bg-border h-4 w-28 animate-pulse rounded md:w-52"></div>
               {/* Skeleton for pincode */}
-              <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+              <div className="bg-border h-4 w-20 animate-pulse rounded md:w-24"></div>
             </div>
             <div>
               {/* Skeleton for Set Default Button */}
-              <div className="h-9 w-28 animate-pulse rounded-md bg-gray-200"></div>
+              <div className="bg-border h-9 w-20 animate-pulse rounded-md md:w-28"></div>
             </div>
           </CardContent>
         </Card>
