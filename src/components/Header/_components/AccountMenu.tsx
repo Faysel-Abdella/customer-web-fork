@@ -27,7 +27,7 @@ const AccountMenu = ({ user }: AccountMenuProps) => {
     <div className="flex items-center gap-4 md:gap-5">
       <LanguageSelector className="max-lg:hidden" />
       <HeaderThemeToggle className="max-lg:hidden" />
-      <CartSheet />
+
       <UnAuthUserPopover className="max-lg:hidden" />
     </div>
   );

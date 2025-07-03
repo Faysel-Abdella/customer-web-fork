@@ -7,6 +7,7 @@ import { Clock, DollarSign, Heart, MapPin, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
 import { Restaurant } from "@/types/restaurant.types";
 
 interface RestaurantCardProps {
@@ -14,6 +15,7 @@ interface RestaurantCardProps {
 }
 
 export function RestaurantCard({ restaurant }: RestaurantCardProps) {
+  const { user } = useAuth();
   const placeholderImage = "/assets/images/restaurant_placeholder.webp";
   const [imgSrc, setImgSrc] = useState(
     restaurant.image_file || placeholderImage,
@@ -60,20 +62,21 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             }}
           />
         </Link>
-
-        <Button
-          variant="ghost"
-          size="icon"
-          className="bg-background/70 absolute top-3 right-3 shadow-sm"
-        >
-          <Heart
-            className={`h-5 w-5 ${
-              restaurant.is_favourite
-                ? "fill-red-500 text-red-500"
-                : "text-muted-foreground hover:text-red-500"
-            }`}
-          />
-        </Button>
+        {user && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-background/70 absolute top-3 right-3 shadow-sm"
+          >
+            <Heart
+              className={`h-5 w-5 ${
+                restaurant.is_favourite
+                  ? "fill-red-500 text-red-500"
+                  : "text-muted-foreground hover:text-red-500"
+              }`}
+            />
+          </Button>
+        )}
       </div>
 
       <CardContent className="p-4">

@@ -35,7 +35,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import { Link } from "@/i18n/navigation";
 import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
@@ -46,6 +48,7 @@ interface MenuItemDetailProps {
   restaurantId: string;
 }
 const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
+  const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedAddonIds, setSelectedAddonIds] = useState<number[]>([]);
@@ -221,68 +224,78 @@ const MenuItemDetail = ({ menuItem, restaurantId }: MenuItemDetailProps) => {
               />
             </div>
           </div>
-          <DialogFooter className="px-2">
-            <form onSubmit={handleSubmit} className="w-full space-y-4">
-              <div className="space-y-4">
-                <p>Quantity:</p>
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant={"outline"}
-                    onClick={() =>
-                      setItemQuantity((prev) => (prev > 0 ? prev - 1 : prev))
-                    }
-                    type="button"
-                  >
-                    <Minus />
-                  </Button>
-                  <Input
-                    className="w-28"
-                    type="number"
-                    min={1}
-                    max={10}
-                    value={itemQuantity}
-                    onChange={(e) => setItemQuantity(parseInt(e.target.value))}
-                  />
-                  <Button
-                    variant={"outline"}
-                    onClick={() =>
-                      setItemQuantity((prev) => (prev < 10 ? prev + 1 : prev))
-                    }
-                    type="button"
-                  >
-                    <Plus />
-                  </Button>
+          {user != null ? (
+            <DialogFooter className="px-2">
+              <form onSubmit={handleSubmit} className="w-full space-y-4">
+                <div className="space-y-4">
+                  <p>Quantity:</p>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant={"outline"}
+                      onClick={() =>
+                        setItemQuantity((prev) => (prev > 0 ? prev - 1 : prev))
+                      }
+                      type="button"
+                    >
+                      <Minus />
+                    </Button>
+                    <Input
+                      className="w-28"
+                      type="number"
+                      min={1}
+                      max={10}
+                      value={itemQuantity}
+                      onChange={(e) =>
+                        setItemQuantity(parseInt(e.target.value))
+                      }
+                    />
+                    <Button
+                      variant={"outline"}
+                      onClick={() =>
+                        setItemQuantity((prev) => (prev < 10 ? prev + 1 : prev))
+                      }
+                      type="button"
+                    >
+                      <Plus />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <div className="border-primary flex justify-between rounded-lg border p-2">
-                <div>
-                  <p>Item price</p>
-                  <p>Add-on price</p>
-                  <p>Total price</p>
+                <div className="border-primary flex justify-between rounded-lg border p-2">
+                  <div>
+                    <p>Item price</p>
+                    <p>Add-on price</p>
+                    <p>Total price</p>
+                  </div>
+                  <div>
+                    <p>{menuItem.itemPrice[0].price} $</p>
+                    <p>{calculateAddOnPrice()}$</p>
+                    <p className="text-primary">
+                      {(parseInt(menuItem.itemPrice[0].price) +
+                        calculateAddOnPrice()) *
+                        itemQuantity}
+                      $
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p>{menuItem.itemPrice[0].price} $</p>
-                  <p>{calculateAddOnPrice()}$</p>
-                  <p className="text-primary">
-                    {(parseInt(menuItem.itemPrice[0].price) +
-                      calculateAddOnPrice()) *
-                      itemQuantity}
-                    $
-                  </p>
-                </div>
-              </div>
-              <Button
-                disabled={isPending || itemQuantity <= 0}
-                className="w-full"
-              >
-                {isPending ? (
-                  <Loader2 className="animate-spin" />
-                ) : (
-                  "Add to cart"
-                )}
+                <Button
+                  disabled={isPending || itemQuantity <= 0}
+                  className="w-full"
+                >
+                  {isPending ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Add to cart"
+                  )}
+                </Button>
+              </form>
+            </DialogFooter>
+          ) : (
+            <DialogFooter>
+              <Button className="w-full" asChild>
+                <Link href={"/login"}>Order</Link>
               </Button>
-            </form>
-          </DialogFooter>
+            </DialogFooter>
+          )}
         </DialogContent>
       </Dialog>
     </>

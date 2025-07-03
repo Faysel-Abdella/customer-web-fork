@@ -7,6 +7,7 @@ import { Clock, Heart, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
 import { MenuItem } from "@/types/restaurant.types";
 
 import MenuItemDetail from "./MenuItemDetail";
@@ -17,6 +18,7 @@ interface MenuListItemProps {
 }
 
 const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
+  const { user } = useAuth();
   const placeholderImage = "/assets/images/foodPlaceholder.jpg";
   const [imgSrc, setImgSrc] = useState(menuItem.image_file || placeholderImage);
   const renderStars = (rating: number) => {
@@ -57,20 +59,21 @@ const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
                 Available
               </Badge>
             )}
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="bg-background/70 absolute top-2 right-2 shadow-sm"
-            >
-              <Heart
-                className={`h-5 w-5 ${
-                  menuItem.is_favourite
-                    ? "fill-red-500 text-red-500"
-                    : "text-muted-foreground hover:text-red-500"
-                }`}
-              />
-            </Button>
+            {user && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="bg-background/70 absolute top-2 right-2 shadow-sm"
+              >
+                <Heart
+                  className={`h-5 w-5 ${
+                    menuItem.is_favourite
+                      ? "fill-red-500 text-red-500"
+                      : "text-muted-foreground hover:text-red-500"
+                  }`}
+                />
+              </Button>
+            )}
           </div>
 
           <div className="flex w-full flex-col justify-between p-3 md:px-4 md:py-2">
