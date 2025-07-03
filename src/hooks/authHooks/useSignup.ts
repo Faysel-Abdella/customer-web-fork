@@ -27,7 +27,7 @@ export const useSignup = () => {
 
       const responseData: LoginResponse = await response.json();
 
-      console.log("✅ Login successful", responseData);
+      console.log("✅ Login successful");
 
       const unVerifiedUser = {
         country_code: responseData.detail.country_code,

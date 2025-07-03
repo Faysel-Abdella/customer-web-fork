@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Bell,
-  CreditCard,
-  HelpCircle,
-  MapPin,
-  ShoppingBag,
-  User,
-} from "lucide-react";
+import { Bell, HelpCircle, MapPin, ShoppingBag, User } from "lucide-react";
 
 import LogoutButton from "@/components/Header/_components/LogoutButton";
 import { Button } from "@/components/ui/button";
@@ -41,12 +34,7 @@ const navigationItems = [
     id: "orders",
     href: "/profile/orders",
   },
-  {
-    title: "Payment Methods",
-    icon: CreditCard,
-    id: "payment",
-    href: "/profile/payment-methods",
-  },
+
   {
     title: "Notifications",
     icon: Bell,

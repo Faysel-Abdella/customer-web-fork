@@ -215,10 +215,9 @@ const sampleNotifications: Notification[] = [
 
 export async function getNotificationList(): Promise<GetNotificationListResults> {
   try {
-    const responseData: NotificationListResponse =
-      await fetchWithAuth<NotificationListResponse>(
-        `/api/user/notification-list`,
-      );
+    await fetchWithAuth<NotificationListResponse>(
+      `/api/user/notification-list`,
+    );
 
     return { data: sampleNotifications };
   } catch (error) {
