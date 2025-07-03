@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Eye } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -48,7 +50,12 @@ const OrderDetail = ({ order }: OrderDetailProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>View Details</Button>
+        <Button variant={"outline"}>
+          <span className="max-md:hidden">View Details</span>
+          <span className="md:hidden">
+            <Eye />
+          </span>
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-h-dvh overflow-y-auto p-4">
         <DialogHeader>
