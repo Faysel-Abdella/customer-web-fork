@@ -29,6 +29,7 @@ export type VerifyOtpPayload = {
   "User[otp]": string;
   "User[contact_no]": string;
   "User[country_code]": string;
+  device_type: string;
 };
 export type ResendOtpPayload = {
   "User[contact_no]": string;

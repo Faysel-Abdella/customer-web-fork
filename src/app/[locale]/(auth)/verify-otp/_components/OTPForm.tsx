@@ -46,9 +46,10 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
 
   function onSubmit(data: z.infer<typeof oTPSchema>) {
     verifyOtp({
+      "User[otp]": data.code,
       "User[contact_no]": contact_no,
       "User[country_code]": country_code,
-      "User[otp]": data.code,
+      device_type: "WEB",
     });
   }
 
