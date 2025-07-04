@@ -2,7 +2,7 @@
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { LoginResponse } from "@/types/auth.types";
-import { MenuItem } from "@/types/restaurant.types";
+import { MenuItem, Offer } from "@/types/restaurant.types";
 
 export async function updateProfileAction(data: FormData) {
   try {
@@ -109,5 +109,25 @@ export async function getPopularDishes(): Promise<GetPopularDishesResult> {
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch popular dishes list." };
+  }
+}
+interface OffersListResponse {
+  list: Offer[];
+}
+
+interface GetOffersListResult {
+  data?: Offer[];
+  error?: string;
+}
+
+export async function getOffersList(): Promise<GetOffersListResult> {
+  try {
+    const responseData: OffersListResponse =
+      await fetchWithAuth<OffersListResponse>(`/api/offer/coupon-list`);
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch offers list." };
   }
 }

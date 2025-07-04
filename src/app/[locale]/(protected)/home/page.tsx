@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 
 import Banner from "./_components/Banner";
 import { Categories } from "./_components/Categories";
+import Offers from "./_components/Offers";
 import { TopRestaurants } from "./_components/TopRestaurants";
 import { TrendingDishes } from "./_components/TrendingDishes";
 
@@ -16,6 +17,7 @@ const HomePage = () => {
             <div className="flex flex-col gap-4 p-5">
               <Categories />
               <TrendingDishes />
+              <Offers />
             </div>
           </div>
           <div className="w-1/3 max-xl:w-full max-xl:px-5 xl:min-h-dvh">

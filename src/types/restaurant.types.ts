@@ -245,3 +245,21 @@ export type CartItem = {
   restaurant_items: RestaurantItem[];
   additional_items: AdditionalItem[];
 };
+
+export interface Offer {
+  id: number;
+  title: string;
+  code: string;
+  discount: string; // String, but represents a number. Consider 'number' if you convert.
+  image_file: string; // URL for the offer image
+  description: string; // Contains HTML, will need sanitization
+  minimum_amount: string; // String, but represents a number. Consider 'number' if you convert.
+  item_id: number | null; // Can be null
+  restaurant_id: number;
+  end_time: string; // Consider Date if you'll parse it
+  state_id: number;
+  type_id: number;
+  created_on: string; // Consider Date if you'll parse it
+  created_by_id: number;
+  restaruentDetail: Restaurant; // Note: Typo in backend 'restaruentDetail' instead of 'restaurantDetail'
+}
