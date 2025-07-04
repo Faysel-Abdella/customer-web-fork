@@ -30,6 +30,19 @@ export async function getRestaurants(
     return { error: "Failed to fetch restaurants." };
   }
 }
+export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
+  try {
+    const responseData: RestaurantResponce =
+      await fetchWithoutAuth<RestaurantResponce>(
+        "/api/restaurant/add-home-page",
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch restaurants." };
+  }
+}
 
 interface RestaurantDetailResponce {
   detail: Restaurant;

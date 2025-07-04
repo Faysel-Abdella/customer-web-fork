@@ -38,7 +38,7 @@ const CheckoutForm = () => {
       return;
     }
     startOrdering(async () => {
-      const data = objectToFormData({
+      const rawData = {
         "Detail[store_id]": currentRestaurantId,
         "Detail[address]": selectedAddress.id,
         "Detail[total_price]": totalPrice,
@@ -46,7 +46,10 @@ const CheckoutForm = () => {
         "Detail[type_id]": selectedPaymentMethod,
         payment_status: 1,
         "Detail[item]": JSON.stringify(cartItems),
-      });
+      };
+
+      console.log("Raw Data:", rawData);
+      const data = objectToFormData(rawData);
 
       const results = await placeOrder(data);
 

@@ -18,7 +18,7 @@ const HomePage = () => {
               <TrendingDishes />
             </div>
           </div>
-          <div className="w-1/3 pb-10 max-xl:w-full max-xl:px-5 xl:h-dvh">
+          <div className="w-1/3 max-xl:w-full max-xl:px-5 xl:min-h-dvh">
             <TopRestaurants />
           </div>
         </div>
