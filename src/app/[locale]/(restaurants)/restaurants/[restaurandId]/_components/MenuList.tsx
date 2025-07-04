@@ -21,11 +21,7 @@ const MenuList = async ({ restaurantId }: MenuListProps) => {
 
   if (menuList && menuList.length > 0)
     return menuList.map((menuItem) => (
-      <MenuListItem
-        key={menuItem.id}
-        menuItem={menuItem}
-        restaurantId={restaurantId}
-      />
+      <MenuListItem key={menuItem.id} menuItem={menuItem} />
     ));
 };
 

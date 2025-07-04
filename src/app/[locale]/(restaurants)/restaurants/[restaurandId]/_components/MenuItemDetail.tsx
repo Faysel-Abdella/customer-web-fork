@@ -2,7 +2,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 
-import { Clock, Heart, Loader, Loader2, Minus, Plus, Star } from "lucide-react";
+import { Clock, Heart, Loader2, Minus, Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 
 import { addToCartAction } from "@/actions/cart.actions";
@@ -43,6 +43,7 @@ import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import AddOnList from "./AddOnList";
+import MenuItemDetailSkeleton from "./MenuItemDetailSkeleton";
 
 interface MenuItemDetailProps {
   menuItemId: string;
@@ -50,6 +51,7 @@ interface MenuItemDetailProps {
 }
 const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
   const [menuItem, setMenuItem] = useState<MenuItem>();
+  const [isOpen, setIsOpen] = useState(false);
 
   const currentPath = usePathname();
   const { user } = useAuth();
@@ -143,6 +145,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
   };
 
   useEffect(() => {
+    if (!isOpen) return;
     startLoadingItem(async () => {
       const data = await getMenuItemDetail(menuItemId);
 
@@ -150,11 +153,12 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
         toast.error("Failed to fetch menu item details", {
           description: data.error,
         });
+        setIsOpen(false);
       } else {
         setMenuItem(data.data);
       }
     });
-  }, [menuItemId, setMenuItem]);
+  }, [menuItemId, setMenuItem, isOpen]);
 
   return (
     <>
@@ -175,13 +179,13 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button className={className}>View details</Button>
         </DialogTrigger>
         {isLoadingItem ? (
-          <DialogContent className="flex size-80 items-center justify-center">
-            <Loader size={35} className="animate-spin" />
+          <DialogContent className="max-h-dvh overflow-auto px-2 py-4 pt-5 max-md:min-w-screen max-md:rounded-none">
+            <MenuItemDetailSkeleton />
           </DialogContent>
         ) : (
           menuItem && (

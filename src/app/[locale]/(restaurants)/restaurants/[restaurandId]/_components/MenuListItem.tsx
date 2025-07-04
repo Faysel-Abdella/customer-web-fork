@@ -14,10 +14,9 @@ import MenuItemDetail from "./MenuItemDetail";
 
 interface MenuListItemProps {
   menuItem: MenuItem;
-  restaurantId: string;
 }
 
-const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
+const MenuListItem = ({ menuItem }: MenuListItemProps) => {
   const { user } = useAuth();
   const placeholderImage = "/assets/images/foodPlaceholder.jpg";
   const [imgSrc, setImgSrc] = useState(menuItem.image_file || placeholderImage);
@@ -118,10 +117,7 @@ const MenuListItem = ({ menuItem, restaurantId }: MenuListItemProps) => {
                 <Clock size={15} /> <span>{menuItem.cook_time} minutes</span>
               </div>
               <div className="flex items-center gap-2">
-                <MenuItemDetail
-                  menuItem={menuItem}
-                  restaurantId={restaurantId}
-                />
+                <MenuItemDetail menuItemId={menuItem.id.toString()} />
               </div>
             </div>
           </div>
