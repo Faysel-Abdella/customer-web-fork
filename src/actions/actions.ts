@@ -131,3 +131,23 @@ export async function getOffersList(): Promise<GetOffersListResult> {
     return { error: "Failed to fetch offers list." };
   }
 }
+
+interface AddToFavoritesResults {
+  success: boolean;
+  error?: string;
+}
+
+export async function addToFavorites(
+  id: string,
+  typeId: string,
+): Promise<AddToFavoritesResults> {
+  console.log("id:", id, "typeId:", typeId);
+  try {
+    await fetchWithAuth(`/api/state/favourite?id=${id}&type=${typeId}`);
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error: error };
+    else return { success: false, error: "Failed to add item to favorites" };
+  }
+}

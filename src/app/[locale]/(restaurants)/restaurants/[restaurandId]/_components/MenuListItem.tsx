@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { Clock, Heart, Star } from "lucide-react";
+import { Clock, Star } from "lucide-react";
 
+import FavoriteButton from "@/components/FavoriteButton";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { MenuItem } from "@/types/restaurant.types";
@@ -59,19 +59,12 @@ const MenuListItem = ({ menuItem }: MenuListItemProps) => {
               </Badge>
             )}
             {user && (
-              <Button
-                variant="ghost"
-                size="icon"
+              <FavoriteButton
+                is_favorite={menuItem.is_favourite == 1}
+                itemId={menuItem.id.toString()}
+                type={"menu_item"}
                 className="bg-background/70 absolute top-2 right-2 shadow-sm"
-              >
-                <Heart
-                  className={`h-5 w-5 ${
-                    menuItem.is_favourite
-                      ? "fill-red-500 text-red-500"
-                      : "text-muted-foreground hover:text-red-500"
-                  }`}
-                />
-              </Button>
+              />
             )}
           </div>
 

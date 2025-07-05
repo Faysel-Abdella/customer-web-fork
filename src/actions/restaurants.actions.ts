@@ -1,6 +1,10 @@
 "use server";
 
-import { fetchWithAuth, fetchWithoutAuth } from "@/lib/fetchWithAuth";
+import {
+  fetchOnCondition,
+  fetchWithAuth,
+  fetchWithoutAuth,
+} from "@/lib/fetchWithAuth";
 import { MenuItem, Offer, Restaurant } from "@/types/restaurant.types";
 
 interface RestaurantResponce {
@@ -22,7 +26,7 @@ export async function getRestaurants(
 
   try {
     const responseData: RestaurantResponce =
-      await fetchWithoutAuth<RestaurantResponce>(url);
+      await fetchOnCondition<RestaurantResponce>(url);
 
     return { data: responseData.list };
   } catch (error) {
@@ -82,7 +86,7 @@ export async function getRestaurantMenuList(
 ): Promise<GetRestaurantMenuListResults> {
   try {
     const responseData: RestaurantMenuListResponse =
-      await fetchWithoutAuth<RestaurantMenuListResponse>(
+      await fetchOnCondition<RestaurantMenuListResponse>(
         `/api/restaurant/menu-list?id=${restaurantId}`,
       );
 
@@ -106,7 +110,7 @@ export async function getMenuItemDetail(
 ): Promise<GetMenuItemDetailResult> {
   try {
     const responseData: MenuItemDetailResponse =
-      await fetchWithoutAuth<MenuItemDetailResponse>(
+      await fetchOnCondition<MenuItemDetailResponse>(
         `/api/restaurant/item-detail?id=${menuItemId}`,
       );
 
