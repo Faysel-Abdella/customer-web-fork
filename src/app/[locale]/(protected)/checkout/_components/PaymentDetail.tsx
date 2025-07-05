@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
+import { Offer } from "@/types/restaurant.types";
 
 const paymentMethods = [
   {
@@ -30,6 +31,7 @@ interface PaymentDetailProps {
   handlePayment: () => void;
   isOrdering: boolean;
   emptyCart: boolean;
+  selectedOffer: Offer | null;
 }
 const PaymentDetail = ({
   selectedPaymentMethod,
@@ -37,8 +39,11 @@ const PaymentDetail = ({
   handlePayment,
   isOrdering,
   emptyCart,
+  selectedOffer,
 }: PaymentDetailProps) => {
   const { isLoadingTotalPrice, totalPrice } = useCart();
+
+  const discount: number = selectedOffer ? parseInt(selectedOffer.discount) : 0;
 
   return (
     <div className="sticky top-28 mt-4 space-y-10">
@@ -56,6 +61,14 @@ const PaymentDetail = ({
               <span className="text-muted-foreground">Delivery fees</span>
               <span className="font-semibold text-orange-500">$10</span>
             </div>
+            {selectedOffer && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Discount</span>
+                <span className="font-semibold text-orange-500">
+                  - ${selectedOffer?.discount}
+                </span>
+              </div>
+            )}
             <Separator />
             <div className="flex justify-between text-lg">
               <span className="font-semibold">Total price</span>
@@ -63,7 +76,7 @@ const PaymentDetail = ({
                 <Loader2 className="size-5 animate-spin" />
               ) : (
                 <span className="font-bold text-orange-500">
-                  ${totalPrice + 10}
+                  ${totalPrice + 10 - discount}
                 </span>
               )}
             </div>

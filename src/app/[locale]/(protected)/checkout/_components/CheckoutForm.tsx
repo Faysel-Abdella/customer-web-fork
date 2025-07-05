@@ -8,6 +8,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "@/i18n/navigation";
 import { objectToFormData } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
+import { Offer } from "@/types/restaurant.types";
 
 import CartItems from "./CartItems";
 import CheckoutFormSkeleton from "./CheckoutFormSkeleton.tsx";
@@ -21,12 +22,15 @@ const CheckoutForm = () => {
     useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | null
   >(null);
 
   const router = useRouter();
   const [isOrdering, startOrdering] = useTransition();
+
+  const discount: number = selectedOffer ? parseInt(selectedOffer.discount) : 0;
 
   const handleOrder = () => {
     if (!selectedAddress) {
@@ -42,7 +46,9 @@ const CheckoutForm = () => {
         "Detail[store_id]": currentRestaurantId,
         "Detail[address]": selectedAddress.id,
         "Detail[total_price]": totalPrice,
-        "Detail[payable_amount]": totalPrice,
+        "Detail[payable_amount]": totalPrice - discount,
+        "Detail[discount_price]": discount,
+        "Detail[delivery_charge]": 10,
         "Detail[type_id]": selectedPaymentMethod,
         payment_status: 1,
         "Detail[item]": JSON.stringify(cartItems),
@@ -78,7 +84,10 @@ const CheckoutForm = () => {
                 <CartItems key={item.id} cartItem={item} />
               ))}
             </div>
-            <Offers />
+            <Offers
+              selectedOffer={selectedOffer}
+              setSelectedOffer={setSelectedOffer}
+            />
             <SelectAddress
               selectedAddress={selectedAddress}
               setSelectedAddress={setSelectedAddress}
@@ -90,6 +99,7 @@ const CheckoutForm = () => {
           </div>
           <div className="lg:col-span-1">
             <PaymentDetail
+              selectedOffer={selectedOffer}
               selectedPaymentMethod={selectedPaymentMethod}
               setSelectedPaymentMethod={setSelectedPaymentMethod}
               handlePayment={handleOrder}
