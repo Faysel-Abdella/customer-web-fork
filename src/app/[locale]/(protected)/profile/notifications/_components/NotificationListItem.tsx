@@ -39,9 +39,14 @@ const NotificationListItem = ({ notification }: NotificationListItemProps) => {
                 >
                   {notification.description}
                 </p>
-                <p className="text-muted-foreground mt-2 text-xs">
-                  {format(notification.createdOn, "yyyy-mm-dd hh-MMa")}
-                </p>
+                {notification.createdOn && (
+                  <div className="text-muted-foreground mb-4">
+                    {format(
+                      new Date(notification.createdOn),
+                      "dd/MM/yyyy hh:mmaa",
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex gap-1">
