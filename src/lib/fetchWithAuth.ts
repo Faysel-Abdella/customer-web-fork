@@ -88,3 +88,52 @@ export async function fetchWithoutAuth<T>(
 
   return response.json() as T;
 }
+
+const ReturnHeader = async (options: RequestInit = {}) => {
+  const cookieStore = await cookies();
+
+  const tokenCookie = cookieStore.get("access-token");
+
+  if (!tokenCookie) {
+    return;
+  }
+  const cleanToken = parseYii2Token(tokenCookie.value);
+
+  if (!cleanToken) {
+    throw new Error("Failed to parse authentication token from cookie.");
+  }
+
+  return {
+    Authorization: `Bearer ${cleanToken}`,
+    ...options.headers,
+  };
+};
+
+export async function fetchOnCondition<T>(
+  relativePath: string,
+  options: RequestInit = {},
+): Promise<T> {
+  const baseUrl = process.env.API_BASE_URL;
+  if (!baseUrl) {
+    throw new Error("API_BASE_URL is not defined in your .env.local file.");
+  }
+  const fullUrl = new URL(relativePath, baseUrl).toString();
+
+  const headers = await ReturnHeader(options);
+  const response = await fetch(fullUrl, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    const responseData = await response.json();
+    console.log(responseData);
+    const error = await processError(response);
+
+    throw new Error(
+      `API request failed with status ${response.status} and error: ${error}`,
+    );
+  }
+
+  return response.json() as T;
+}

@@ -17,6 +17,7 @@ interface NotificationDetailProps {
   notification: Notification;
 }
 const NotificationDetail = ({ notification }: NotificationDetailProps) => {
+  console.log(notification.createdOn);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -30,9 +31,12 @@ const NotificationDetail = ({ notification }: NotificationDetailProps) => {
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
         <div>{notification.title}</div>
-        <div className="text-muted-foreground mb-4">
-          {format(new Date(notification.createdOn), "dd/MM/yyyy hh:mmaa")}
-        </div>
+        {notification.createdOn && (
+          <div className="text-muted-foreground mb-4">
+            {format(new Date(notification.createdOn), "dd/MM/yyyy hh:mmaa")}
+          </div>
+        )}
+
         <div className="bg-secondary rounded-lg border p-3">
           {notification.description}
         </div>

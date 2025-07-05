@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Clock, DollarSign, Heart, MapPin, Star } from "lucide-react";
+import { Clock, DollarSign, MapPin, Star } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import FavoriteButton from "@/components/FavoriteButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { Restaurant } from "@/types/restaurant.types";
@@ -63,19 +63,12 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
           />
         </Link>
         {user && (
-          <Button
-            variant="ghost"
-            size="icon"
+          <FavoriteButton
+            is_favorite={restaurant.is_favourite === 1}
+            itemId={restaurant.id.toString()}
+            type={"restaurant"}
             className="bg-background/70 absolute top-3 right-3 shadow-sm"
-          >
-            <Heart
-              className={`h-5 w-5 ${
-                restaurant.is_favourite
-                  ? "fill-red-500 text-red-500"
-                  : "text-muted-foreground hover:text-red-500"
-              }`}
-            />
-          </Button>
+          />
         )}
       </div>
 

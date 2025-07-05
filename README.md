@@ -2,8 +2,6 @@
 
 # Dev tools
 
-## Test
-
 IDE: VsCode (Recommended Cursor)
 
 ### VS code Extensions (Mandatory)

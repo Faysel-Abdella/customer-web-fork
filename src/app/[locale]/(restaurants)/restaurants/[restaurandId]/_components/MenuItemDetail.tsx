@@ -2,11 +2,12 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 
-import { Clock, Heart, Loader2, Minus, Plus, Star } from "lucide-react";
+import { Clock, Loader2, Minus, Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 
 import { addToCartAction } from "@/actions/cart.actions";
 import { getMenuItemDetail } from "@/actions/restaurants.actions";
+import FavoriteButton from "@/components/FavoriteButton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -221,15 +222,13 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
                   <div className="border-b pb-2">
                     <div className="flex w-full items-center justify-between">
                       <p className="text-xl font-semibold">{menuItem.title}</p>
-                      <Button variant="ghost" size="icon" className="">
-                        <Heart
-                          className={`h-5 w-5 ${
-                            menuItem.is_favourite
-                              ? "fill-red-500 text-red-500"
-                              : "text-muted-foreground hover:text-red-500"
-                          }`}
+                      {user && (
+                        <FavoriteButton
+                          is_favorite={menuItem.is_favourite == 1}
+                          itemId={menuItem.id.toString()}
+                          type={"menu_item"}
                         />
-                      </Button>
+                      )}
                     </div>
 
                     <Badge variant={"secondary"} className="border-border mb-2">
