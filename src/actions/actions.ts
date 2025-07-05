@@ -147,7 +147,6 @@ export async function addToFavorites(
   id: string,
   typeId: string,
 ): Promise<AddToFavoritesResults> {
-  console.log("id:", id, "typeId:", typeId);
   try {
     await fetchWithAuth(`/api/state/favourite?id=${id}&type=${typeId}`);
     return { success: true };

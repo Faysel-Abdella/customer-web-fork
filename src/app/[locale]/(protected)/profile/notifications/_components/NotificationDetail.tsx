@@ -17,7 +17,6 @@ interface NotificationDetailProps {
   notification: Notification;
 }
 const NotificationDetail = ({ notification }: NotificationDetailProps) => {
-  console.log(notification.createdOn);
   return (
     <Dialog>
       <DialogTrigger asChild>

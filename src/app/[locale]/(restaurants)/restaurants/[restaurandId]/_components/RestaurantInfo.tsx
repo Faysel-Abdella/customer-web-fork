@@ -1,4 +1,6 @@
+"use client";
 import { format } from "date-fns";
+import DOMPurify from "dompurify";
 import { MapPin, Phone } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +26,11 @@ const formateHHMM = (date?: string) => {
   return format(new Date(date), "hh:MM");
 };
 const RestaurantInfo = ({ restaurant }: RestaurantInfoProps) => {
+  const descriptionHtml = restaurant.description;
+
+  const sanitizedDescription = DOMPurify.sanitize(descriptionHtml, {
+    USE_PROFILES: { html: true },
+  });
   return (
     <div className="flex gap-10 max-lg:flex-col">
       <Card className="w-full shadow-none">
@@ -34,8 +41,7 @@ const RestaurantInfo = ({ restaurant }: RestaurantInfoProps) => {
         <CardContent className="space-y-4">
           <div>
             <p className="mb-2 font-bold">About</p>
-
-            <p>{restaurant.description}</p>
+            <p dangerouslySetInnerHTML={{ __html: sanitizedDescription }}></p>
           </div>
           <Separator />
           <div>

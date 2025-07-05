@@ -2,6 +2,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 
+import DOMPurify from "dompurify";
 import { Clock, Loader2, Minus, Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 
@@ -62,6 +63,14 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
   const { refreshCart, currentRestaurantId } = useCart();
   const [isClearCartOpen, setClearCartOpen] = useState(false);
   const [isLoadingItem, startLoadingItem] = useTransition();
+
+  const descriptionHtml = menuItem?.description;
+
+  const sanitizedDescription =
+    descriptionHtml &&
+    DOMPurify.sanitize(descriptionHtml, {
+      USE_PROFILES: { html: true },
+    });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -252,9 +261,14 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
                   </div>
                   <div className="space-y-2 border-b pb-4">
                     <p className="font-bold">Description</p>
-                    <p className="text-muted-foreground">
-                      {menuItem.description}
-                    </p>
+                    {sanitizedDescription && (
+                      <p
+                        className="text-muted-foreground"
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizedDescription,
+                        }}
+                      />
+                    )}
                   </div>
                   <AddOnList
                     addOns={menuItem.addOnsList}

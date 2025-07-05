@@ -15,7 +15,6 @@ const RestaurantsList = async ({ params }: RestaurantListProps) => {
 
   const { data: restaurants, error } = await getRestaurants(queryParams);
 
-  console.log("RestaurantsList", restaurants);
   if (error) {
     return (
       <div className="col-span-1 flex h-dvh w-full flex-col items-center justify-center gap-5 sm:col-span-2 lg:col-span-3 xl:col-span-4">

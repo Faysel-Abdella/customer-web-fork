@@ -49,7 +49,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                 </div>
                 <p
                   className="text-muted-foreground line-clamp-2 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: sanitizedDescription }} // Use sanitized HTML here
+                  dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
                 />
 
                 <div className="flex items-center space-x-6 text-sm">
