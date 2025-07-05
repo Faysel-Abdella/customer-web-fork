@@ -2,6 +2,8 @@ import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
+import { AddOn, CartItem } from "@/types/restaurant.types";
+
 import { HttpError } from "./HttpError";
 
 export function cn(...inputs: ClassValue[]) {
@@ -85,3 +87,16 @@ export function buildUrlSearchParams(searchParams: {
 
   return params;
 }
+
+export const getAddOns = (cartItem: CartItem) => {
+  const addOns: AddOn[] = [];
+  const additinoalItems = cartItem.additional_items;
+  additinoalItems.forEach((item) => {
+    cartItem.restaurant_items[0].addOnsList.forEach((addOn) => {
+      if (addOn.id == item.add_on_id) {
+        addOns.push(addOn);
+      }
+    });
+  });
+  return addOns;
+};

@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
 import useDebounce from "@/hooks/useDebounce";
 import { useRouter } from "@/i18n/navigation";
+import { getAddOns } from "@/lib/utils";
 import { CartItem } from "@/types/restaurant.types";
 
 interface CartItemsProps {
@@ -94,7 +95,7 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
                   <Loader2 className="text-muted-foreground h-7 w-6 animate-spin" />
                 ) : (
                   <p className="text-lg font-bold text-orange-500">
-                    ${cartItem.total_price}
+                    ${cartItem.selected_rest_price.price}
                   </p>
                 )}
               </div>
@@ -165,15 +166,24 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
             </div>
           </div>
         </div>
-        <div className="mt-4 border-t pt-4">
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Add ons</span>
-            <span className="font-semibold">
-              {cartItem.additional_items.map(
-                (item) => " ," + " $" + item.price,
-              )}
-            </span>
-          </div>
+        <div className="mt-4 border-t pt-2">
+          {cartItem.additional_items &&
+            cartItem.additional_items.length > 0 && (
+              <div className="flex w-full flex-col">
+                <p className="mb-2 font-semibold">Add ons</p>
+                <div className="flex flex-col">
+                  {getAddOns(cartItem).map((addOn) => (
+                    <div
+                      key={addOn.id}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <p>{addOn.title}</p>
+                      <p>${addOn.price}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
         </div>
       </CardContent>
     </Card>

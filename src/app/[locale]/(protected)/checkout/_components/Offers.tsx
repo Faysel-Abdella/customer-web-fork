@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useTransition } from "react";
 
-import { Edit, MapPin, Plus, TicketPercent } from "lucide-react";
+import { BadgePercent, Edit, Plus, TicketPercent } from "lucide-react";
 
 import { getOffersList } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,7 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
   useEffect(() => {
     if (!offersList && !isPending) {
       startTransition(async () => {
+        if (!currentRestaurantId) return;
         const result = await getOffersList(currentRestaurantId?.toString());
         if (result.data) {
           setOffersList(result.data);
@@ -51,11 +52,11 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
             {selectedOffer ? (
               <Button
                 variant="ghost"
-                className="bg-secondary h-auto w-full justify-between rounded-xl border p-2"
+                className="bg-secondary dark:bg-secondary h-auto w-full justify-between rounded-xl border p-2"
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-full bg-orange-500 p-2">
-                    <MapPin className="h-4 w-4 text-white" />
+                    <TicketPercent className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex flex-col items-start">
                     <div className="flex items-center gap-2">
@@ -71,7 +72,7 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
             ) : (
               <Button
                 variant="ghost"
-                className="h-auto w-full justify-between rounded-xl p-2"
+                className="bg-secondary dark:bg-secondary h-auto w-full justify-between rounded-xl border p-2"
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-full bg-orange-500 p-2">
@@ -91,7 +92,13 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
               <DialogDescription>Select an Offer to apply</DialogDescription>
             </DialogHeader>
             <div>
-              {offersList &&
+              {offersList && offersList.length === 0 ? (
+                <div className="flex h-full w-full items-center justify-center gap-4">
+                  <BadgePercent size={25} />
+                  <p className="">No Offers Available</p>
+                </div>
+              ) : (
+                offersList &&
                 offersList.map((offer) => (
                   <OfferCard
                     selectedOffer={selectedOffer}
@@ -99,7 +106,8 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
                     key={offer.id}
                     offer={offer}
                   />
-                ))}
+                ))
+              )}
               {error && <p>Couldnt fetch offers</p>}
             </div>
           </DialogContent>

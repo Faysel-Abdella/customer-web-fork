@@ -242,7 +242,7 @@ export type CartItem = {
   created_on: string;
   created_by_id: number;
   cart_type: number;
-  restaurant_items: RestaurantItem[];
+  restaurant_items: MenuItem[];
   additional_items: AdditionalItem[];
 };
 

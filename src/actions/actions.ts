@@ -126,7 +126,7 @@ interface GetOffersListResult {
 export async function getOffersList(id?: string): Promise<GetOffersListResult> {
   try {
     const url = id
-      ? `/api/offer/coupon-list?restaurantId=${id}`
+      ? `/api/offer/coupon-list?id=${id}`
       : `/api/offer/coupon-list`;
     const responseData: OffersListResponse =
       await fetchWithAuth<OffersListResponse>(url);
