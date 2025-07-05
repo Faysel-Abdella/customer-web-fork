@@ -40,13 +40,15 @@ const addressTypes = [
 ];
 
 const getAddressType = (value: string) => {
+  if (!value) return null;
   return addressTypes.find((item) => item.value == value);
 };
 
 const OrderDetail = ({ order }: OrderDetailProps) => {
-  const addresType = getAddressType(
-    order.customer_address_deatil.type_id.toString(),
-  );
+  const addresType = order.customer_address_deatil.type_id
+    ? getAddressType(order.customer_address_deatil.type_id.toString())
+    : addressTypes[3];
+
   return (
     <Dialog>
       <DialogTrigger asChild>

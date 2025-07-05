@@ -59,7 +59,7 @@ const PaymentDetail = ({
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Delivery fees</span>
-              <span className="font-semibold text-orange-500">$10</span>
+              <span className="font-semibold text-orange-500">$0</span>
             </div>
             {selectedOffer && (
               <div className="flex justify-between">
@@ -76,7 +76,7 @@ const PaymentDetail = ({
                 <Loader2 className="size-5 animate-spin" />
               ) : (
                 <span className="font-bold text-orange-500">
-                  ${totalPrice + 10 - discount}
+                  ${totalPrice - discount}
                 </span>
               )}
             </div>

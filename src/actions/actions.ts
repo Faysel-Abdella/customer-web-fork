@@ -64,23 +64,26 @@ export async function getCategiesList(): Promise<GetBannerItemsResult> {
 
 interface PlaceOrderResults {
   success: boolean;
-  hesabPayLink?: string;
+  payment_url?: string;
   error?: string;
 }
 
 interface PlaceOrderResponse {
-  hesabPayLink?: string;
+  payment_url?: string;
 }
 
-export async function placeOrder(data: FormData): Promise<PlaceOrderResults> {
+export async function placeOrder(data: string): Promise<PlaceOrderResults> {
   try {
     const responseData: PlaceOrderResponse =
       await fetchWithAuth<PlaceOrderResponse>(`/api/cart-item/place-order`, {
         method: "POST",
         body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-    if (responseData.hesabPayLink) {
-      return { success: true, hesabPayLink: responseData.hesabPayLink };
+    if (responseData.payment_url) {
+      return { success: true, payment_url: responseData.payment_url };
     }
 
     return { success: true };
@@ -120,10 +123,13 @@ interface GetOffersListResult {
   error?: string;
 }
 
-export async function getOffersList(): Promise<GetOffersListResult> {
+export async function getOffersList(id?: string): Promise<GetOffersListResult> {
   try {
+    const url = id
+      ? `/api/offer/coupon-list?restaurantId=${id}`
+      : `/api/offer/coupon-list`;
     const responseData: OffersListResponse =
-      await fetchWithAuth<OffersListResponse>(`/api/offer/coupon-list`);
+      await fetchWithAuth<OffersListResponse>(url);
 
     return { data: responseData.list };
   } catch (error) {

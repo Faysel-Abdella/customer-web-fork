@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { placeOrder } from "@/actions/actions";
 import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "@/i18n/navigation";
-import { objectToFormData } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 import { Offer } from "@/types/restaurant.types";
 
@@ -43,30 +42,27 @@ const CheckoutForm = () => {
     }
     startOrdering(async () => {
       const rawData = {
-        "Detail[store_id]": currentRestaurantId,
-        "Detail[address]": selectedAddress.id,
-        "Detail[total_price]": totalPrice,
-        "Detail[payable_amount]": totalPrice - discount,
-        "Detail[discount_price]": discount,
-        "Detail[delivery_charge]": 10,
-        "Detail[type_id]": selectedPaymentMethod,
-        payment_status: 1,
-        "Detail[item]": JSON.stringify(cartItems),
+        Detail: {
+          store_id: currentRestaurantId,
+          address: selectedAddress.id.toString(),
+          total_price: (totalPrice - discount).toString(),
+          payable_amount: totalPrice.toString(),
+          type_id: parseInt(selectedPaymentMethod!),
+          payment_status: 1,
+          item: JSON.stringify(cartItems),
+        },
       };
 
-      console.log("Raw Data:", rawData);
-      const data = objectToFormData(rawData);
-
-      const results = await placeOrder(data);
+      const results = await placeOrder(JSON.stringify(rawData));
 
       if (results.error) {
         toast.error("Failed at placing order");
+        return;
       }
 
-      if (results.hesabPayLink) {
-        console.log(results.hesabPayLink);
-      }
-      if (results.success) {
+      if (results.payment_url) {
+        window.location.href = results.payment_url;
+      } else {
         router.push("/profile/orders");
         toast.success("Order placed successfully");
       }
