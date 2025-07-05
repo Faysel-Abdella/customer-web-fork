@@ -1,11 +1,10 @@
-// src/components/layout/notification-popover.tsx
-
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
-import { BellIcon, Car, CheckCircle2, Star } from "lucide-react";
+import { BellIcon, CircleX, Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { getNotificationList } from "@/actions/profile.actions";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -14,41 +13,36 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-
-// You can define a type for your notifications for type safety
-type Notification = {
-  id: string;
-  icon: React.ElementType;
-  title: string;
-  description: string;
-};
-
-// Mock data - in a real app, you would fetch this from your API
-const notifications: Notification[] = [
-  {
-    id: "1",
-    icon: Car,
-    title: "Your order is on its way!",
-    description: "Your Kitfo from Genet Restaurant will arrive soon.",
-  },
-  {
-    id: "2",
-    icon: CheckCircle2,
-    title: "Order confirmed",
-    description: "We've received your order for Doro Wot.",
-  },
-  {
-    id: "3",
-    icon: Star,
-    title: "Rate your last meal",
-    description: "How was the Tibs from Kategna Restaurant?",
-  },
-];
+import { Notification } from "@/types/profile.types";
 
 export function NotificationPopover({
   className,
 }: React.ComponentProps<"button">) {
   const t = useTranslations("header.notifications");
+
+  const [notifications, setNotifications] = useState<Notification[] | null>(
+    null,
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchNotifications = useCallback(async () => {
+    setIsLoading(true);
+    const result = await getNotificationList();
+
+    if (result.error) {
+      setError(result.error);
+      setIsLoading(false);
+    } else if (result.data) {
+      setNotifications(result.data);
+      setIsLoading(false);
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -60,7 +54,7 @@ export function NotificationPopover({
           )}
         >
           <BellIcon size={20} />
-          {notifications.length > 0 && (
+          {notifications?.length && notifications?.length > 0 && (
             <span className="absolute top-0 right-0 flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
@@ -76,11 +70,23 @@ export function NotificationPopover({
           </div>
           <Separator />
 
-          <div className="max-h-80 space-y-4 overflow-y-auto p-4">
-            {notifications.length > 0 ? (
-              notifications.map((notification) => (
-                <div key={notification.id} className="flex items-start gap-4">
-                  <notification.icon className="text-muted-foreground mt-1 h-5 w-5" />
+          <div className="max-h-80 space-y-4 overflow-y-auto p-4 pb-0">
+            {error && (
+              <div className="flex h-full w-full items-center justify-center gap-4">
+                <CircleX size={25} className="animate-spin" /> Couldnt fetch
+                notification
+              </div>
+            )}
+            {isLoading ? (
+              <div className="flex h-72 w-full items-center justify-center">
+                <Loader size={25} className="animate-spin" />
+              </div>
+            ) : notifications?.length && notifications?.length > 0 ? (
+              notifications.slice(0, 3).map((notification) => (
+                <div
+                  key={notification.id}
+                  className="flex items-start gap-4 border-b pb-2"
+                >
                   <div className="grid gap-1">
                     <p className="font-semibold">{notification.title}</p>
                     <p className="text-muted-foreground text-sm">
@@ -98,11 +104,9 @@ export function NotificationPopover({
 
           <Separator />
           <div className="p-2">
-            <Link href="#" passHref>
-              <Button variant="ghost" className="hover:bg-primary w-full">
-                {t("view_all")}
-              </Button>
-            </Link>
+            <Button variant="ghost" className="hover:bg-primary w-full" asChild>
+              <Link href="/profile/notifications">{t("view_all")}</Link>
+            </Button>
           </div>
         </div>
       </PopoverContent>
