@@ -77,7 +77,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                   <span>${restaurant.price_per_person}</span>
                 </div>
               </div>
-              <Button className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 shadow-lg shadow-orange-500/25 transition-transform duration-200 group-hover:scale-105 hover:from-orange-600 hover:to-red-600 dark:shadow-orange-500/40">
+              <Button className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 transition-transform duration-200 group-hover:scale-105 hover:from-orange-600 hover:to-red-600">
                 Order Now
               </Button>
             </div>

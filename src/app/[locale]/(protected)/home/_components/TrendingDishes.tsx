@@ -27,7 +27,7 @@ export async function TrendingDishes() {
           {data.slice(0, 4).map((dish, index) => (
             <Card
               key={index}
-              className="group bg-secondary cursor-pointer overflow-hidden border p-0 shadow-none backdrop-blur-sm transition-all duration-300"
+              className="group cursor-pointer overflow-hidden border p-0 shadow-none backdrop-blur-sm transition-all duration-300"
             >
               <CardContent className="p-0">
                 <div className="relative">
@@ -79,7 +79,7 @@ export async function TrendingDishes() {
                     </div>
                     <MenuItemDetail
                       menuItemId={dish.id.toString()}
-                      className="rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 shadow-lg shadow-orange-500/25 hover:from-orange-600 hover:to-red-600 dark:shadow-orange-500/40"
+                      className="rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4"
                     />
                   </div>
                 </div>

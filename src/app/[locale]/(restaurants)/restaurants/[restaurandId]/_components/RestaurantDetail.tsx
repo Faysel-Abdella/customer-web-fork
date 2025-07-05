@@ -1,18 +1,47 @@
 import { Suspense } from "react";
 
 import { getRestaurantDetails } from "@/actions/restaurants.actions";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 
+import CustomTabsTrigger from "./CustomTabsTrigger";
 import MenuList from "./MenuList";
 import { MenuListSkeleton } from "./MenuListItemSkeleton";
 import RestaurantBanner from "./RestaurantBanner";
 import RestaurantInfo from "./RestaurantInfo";
+import RestaurantOffers from "./RestaurantOffers";
 import RestaurantPhotos from "./RestaurantPhotos";
 
 interface RestaurantDetailProps {
   restaurantId: string;
+  tab?: string;
 }
-const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
+
+const tabs = [
+  {
+    title: "Menu",
+    value: "menu",
+  },
+  {
+    title: "Reviews",
+    value: "reviews",
+  },
+  {
+    title: "Photos",
+    value: "photos",
+  },
+  {
+    title: "Info",
+    value: "info",
+  },
+  {
+    title: "Offers",
+    value: "offers",
+  },
+];
+const RestaurantDetail = async ({
+  restaurantId,
+  tab,
+}: RestaurantDetailProps) => {
   const { data: restaurant, error } = await getRestaurantDetails(restaurantId);
 
   if (error)
@@ -26,12 +55,15 @@ const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
       <div>
         <RestaurantBanner restaurant={restaurant} />
         <div className="parent-container">
-          <Tabs defaultValue="menu" className="w-full p-5">
-            <TabsList className="mb-6 grid w-full grid-cols-4">
-              <TabsTrigger value="menu">Menu</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews</TabsTrigger>
-              <TabsTrigger value="photos">Photos</TabsTrigger>
-              <TabsTrigger value="info">Info</TabsTrigger>
+          <Tabs defaultValue={tab || "menu"} className="w-full p-5">
+            <TabsList className="mb-6 grid w-full grid-cols-5">
+              {tabs.map((tab) => (
+                <CustomTabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  title={tab.title}
+                />
+              ))}
             </TabsList>
 
             <TabsContent value="menu" className="min- space-y-6">
@@ -48,6 +80,9 @@ const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
 
             <TabsContent value="info" className="space-y-6">
               <RestaurantInfo restaurant={restaurant} />
+            </TabsContent>
+            <TabsContent value="offers" className="space-y-6">
+              <RestaurantOffers restaurantId={restaurant.id.toString()} />
             </TabsContent>
           </Tabs>
         </div>

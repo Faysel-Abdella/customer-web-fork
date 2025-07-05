@@ -1,7 +1,7 @@
 "use server";
 
-import { fetchWithoutAuth } from "@/lib/fetchWithAuth";
-import { MenuItem, Restaurant } from "@/types/restaurant.types";
+import { fetchWithAuth, fetchWithoutAuth } from "@/lib/fetchWithAuth";
+import { MenuItem, Offer, Restaurant } from "@/types/restaurant.types";
 
 interface RestaurantResponce {
   list: Restaurant[];
@@ -114,5 +114,30 @@ export async function getMenuItemDetail(
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch menu item detail." };
+  }
+}
+
+interface RestaurantOffersResponse {
+  list: Offer[];
+}
+
+interface GetRestaurantOffers {
+  data?: Offer[];
+  error?: string;
+}
+
+export async function getRestaurantOffers(
+  id: string,
+): Promise<GetRestaurantOffers> {
+  try {
+    const responseData: RestaurantOffersResponse =
+      await fetchWithAuth<RestaurantOffersResponse>(
+        `/api/offer/coupon-list?id=${id}`,
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch restaurant offers." };
   }
 }
