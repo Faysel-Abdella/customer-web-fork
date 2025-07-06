@@ -1,8 +1,15 @@
 import React from "react";
+import { Metadata } from "next";
 
 import { useTranslations } from "next-intl";
 
 import TitleBanner from "../_components/TitleBanner";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions | Time delivery",
+  description:
+    "Please review the terms and conditions for using the Time-Delivery service.",
+};
 
 const TermsPage = () => {
   const t = useTranslations("terms_and_conditions");

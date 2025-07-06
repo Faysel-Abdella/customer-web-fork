@@ -53,7 +53,7 @@
       "mobile_number": "Mobile Number",
       "send_button": "Send"
     },
-    "account_setup": {
+    "account_update": {
       "title": "Setup Your Account",
       "first_name": "First Name",
       "last_name": "Last Name",

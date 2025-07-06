@@ -25,10 +25,6 @@ export default function ProtectedLayout({
     if (!user) {
       router.push("/login");
     }
-
-    // if (user?.is_profile_setup === 0 && user.contact_no) {
-    //   router.push("/profile-setup");
-    // }
   }, [user, isLoading, router]);
 
   if (isLoading || !user) {
@@ -36,7 +32,7 @@ export default function ProtectedLayout({
       <div className="flex h-dvh w-full items-center justify-center">
         <Loader2 size={50} className="animate-spin" />
       </div>
-    ); // Or a dedicated loader component
+    );
   }
 
   return (

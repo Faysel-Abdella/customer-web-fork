@@ -1,6 +1,13 @@
 import React from "react";
+import { Metadata } from "next";
 
 import SignupForm from "./_components/SignupForm";
+
+export const metadata: Metadata = {
+  title: "Create Your Time-Delivery Account | Time delivery",
+  description:
+    "Sign up for a new account to start ordering food from your favorite local restaurants. It's quick and easy.",
+};
 
 const SignupPage = () => {
   return (

@@ -1,10 +1,15 @@
 import React from "react";
+import { Metadata } from "next";
 
 import { ArrowLeft } from "lucide-react";
 
 import { Link } from "@/i18n/navigation";
 
 import { ForgotPasswordForm } from "./_components/ForgotPasswordForm";
+
+export const metadata: Metadata = {
+  title: "Forgot Your Password?",
+};
 
 const ForgotPasswordPage = () => {
   return (

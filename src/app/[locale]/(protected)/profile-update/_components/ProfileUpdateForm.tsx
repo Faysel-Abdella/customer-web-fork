@@ -17,16 +17,16 @@ import { Form } from "@/components/ui/form";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUpdateProfile } from "@/hooks/authHooks/useUpdateProfile";
 import { useRouter } from "@/i18n/navigation";
-import { profileSetupSchema } from "@/lib/schemas/auth.schema";
+import { profileUpdateSchema } from "@/lib/schemas/auth.schema";
 import { cn, formatYYYYMMDD } from "@/lib/utils";
 
-import ProfileSetupFormFields from "./ProfileSetupFormFields";
+import ProfileUpdateFormFields from "./ProfileUpdateFormFields";
 
-const ProfileSetupForm = ({
+const ProfileUpdateForm = ({
   className,
   ...props
 }: React.ComponentProps<"div">) => {
-  const t = useTranslations("auth.account_setup");
+  const t = useTranslations("auth.account_update");
   const { user } = useAuth();
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
   const router = useRouter();
@@ -37,8 +37,8 @@ const ProfileSetupForm = ({
 
   const { error, isLoading, updateProfile } = useUpdateProfile();
 
-  const form = useForm<z.infer<typeof profileSetupSchema>>({
-    resolver: zodResolver(profileSetupSchema),
+  const form = useForm<z.infer<typeof profileUpdateSchema>>({
+    resolver: zodResolver(profileUpdateSchema),
     defaultValues: {
       first_name: user?.first_name,
       last_name: user?.last_name,
@@ -48,7 +48,7 @@ const ProfileSetupForm = ({
     },
   });
 
-  function onSubmit(values: z.infer<typeof profileSetupSchema>) {
+  function onSubmit(values: z.infer<typeof profileUpdateSchema>) {
     const phoneNumberObj = parsePhoneNumberFromString(
       form.getValues("contact_no"),
     );
@@ -89,7 +89,7 @@ const ProfileSetupForm = ({
               <h1 className="text-xl font-bold">{t("title")}</h1>
             </div>
             <div className="flex flex-col gap-6">
-              <ProfileSetupFormFields form={form} setCountry={setCountry} />
+              <ProfileUpdateFormFields form={form} setCountry={setCountry} />
 
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
@@ -106,4 +106,4 @@ const ProfileSetupForm = ({
   );
 };
 
-export default ProfileSetupForm;
+export default ProfileUpdateForm;

@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
 
-import ProfileSetupForm from "./_components/ProfileSetupForm";
+import ProfileUpdateForm from "./_components/ProfileUpdateForm";
 
-const ProfileSetupPage = () => {
+const ProfileUpdatePage = () => {
   return (
     <div className="flex min-h-svh items-center justify-start">
       <div className="flex w-full justify-center lg:w-2/5">
         <div className="bg-background flex w-fit justify-center rounded-xl p-10 max-sm:min-h-dvh max-sm:w-full max-sm:rounded-none">
-          {<ProfileSetupForm className="sm:w-sm" />}
+          {<ProfileUpdateForm className="sm:w-sm" />}
         </div>
       </div>
       <div className="fixed top-0 right-0 -z-10 h-svh w-full overflow-hidden lg:w-3/5">
@@ -54,4 +54,4 @@ const ProfileSetupPage = () => {
   );
 };
 
-export default ProfileSetupPage;
+export default ProfileUpdatePage;

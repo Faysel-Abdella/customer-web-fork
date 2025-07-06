@@ -1,8 +1,15 @@
 import React from "react";
+import { Metadata } from "next";
 
 import { useTranslations } from "next-intl";
 
 import TitleBanner from "../_components/TitleBanner";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Your privacy is important to us. Read the Time-Delivery privacy policy to understand how we collect, use, and protect your personal information.",
+};
 
 const PrivacyPage = () => {
   const t = useTranslations("privacy");

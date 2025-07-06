@@ -1,9 +1,16 @@
 import React from "react";
+import { Metadata } from "next";
 import Link from "next/link";
 
 import { ArrowLeft } from "lucide-react";
 
 import OTPForm from "./_components/OTPForm";
+
+export const metadata: Metadata = {
+  title: "Verify Your Account | Time delivery",
+  description:
+    "Enter the one-time password (OTP) sent to your device to verify your account and complete your registration or login.",
+};
 
 const VerifyOTPPage = () => {
   return (

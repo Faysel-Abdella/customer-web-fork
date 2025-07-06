@@ -1,4 +1,12 @@
+import { Metadata } from "next";
+
 import { LoginForm } from "./_components/LoginForm";
+
+export const metadata: Metadata = {
+  title: "Login to Your Account",
+  description:
+    "Sign in to your Time-Delivery account to reorder your favorite meals, track your delivery, and manage your profile.",
+};
 
 const LoginPage = () => {
   return (

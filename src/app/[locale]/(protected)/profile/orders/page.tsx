@@ -1,4 +1,12 @@
+import { Metadata } from "next";
+
 import OrdersList from "./_componets/OrdersList";
+
+export const metadata: Metadata = {
+  title: "Your Orders | Time delivery",
+  description:
+    "View your past and current orders. Track the status of your delivery and reorder your favorite meals with ease.",
+};
 
 const OrdersPage = () => {
   return (

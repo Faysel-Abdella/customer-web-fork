@@ -22,17 +22,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { profileSetupSchema } from "@/lib/schemas/auth.schema";
+import { profileUpdateSchema } from "@/lib/schemas/auth.schema";
 
-interface ProfileSetupFormFieldsProps {
-  form: UseFormReturn<z.infer<typeof profileSetupSchema>>;
+interface ProfileUpdateFormFieldsProps {
+  form: UseFormReturn<z.infer<typeof profileUpdateSchema>>;
   setCountry: React.Dispatch<React.SetStateAction<CountryCode | undefined>>;
 }
-const ProfileSetupFormFields = ({
+const ProfileUpdateFormFields = ({
   form,
   setCountry,
-}: ProfileSetupFormFieldsProps) => {
-  const t = useTranslations("auth.account_setup");
+}: ProfileUpdateFormFieldsProps) => {
+  const t = useTranslations("auth.account_update");
 
   return (
     <>
@@ -124,4 +124,4 @@ const ProfileSetupFormFields = ({
   );
 };
 
-export default ProfileSetupFormFields;
+export default ProfileUpdateFormFields;

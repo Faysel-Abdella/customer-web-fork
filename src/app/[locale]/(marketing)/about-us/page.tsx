@@ -1,4 +1,5 @@
 import React from "react";
+import { Metadata } from "next";
 import Image from "next/image";
 
 import { Calendar, Clock, ShoppingBag, Truck, Utensils } from "lucide-react";
@@ -7,6 +8,12 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 
 import TitleBanner from "../_components/TitleBanner";
+
+export const metadata: Metadata = {
+  title: "About Time-Delivery",
+  description:
+    "Learn more about Time-Delivery's mission to bring delicious food from the best local restaurants right to your doorstep.",
+};
 
 const services = [
   {

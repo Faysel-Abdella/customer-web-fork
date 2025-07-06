@@ -1,9 +1,16 @@
 import { Suspense } from "react";
+import { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 
 import NotificationList from "./_components/NotificationList";
 import NotificationListSkeleton from "./_components/NotificationListSkeleton";
+
+export const metadata: Metadata = {
+  title: "Notification Settings | Time delivery",
+  description:
+    "Customize your notification preferences. Choose how you want to be updated about your orders and promotions from Time-Delivery.",
+};
 
 const NotificationsPage = () => {
   return (

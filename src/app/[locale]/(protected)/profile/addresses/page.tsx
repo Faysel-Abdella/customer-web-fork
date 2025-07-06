@@ -1,8 +1,15 @@
 import React, { Suspense } from "react";
+import { Metadata } from "next";
 
 import AddAddressModal from "./_components/AddAddressModal";
 import AddressList from "./_components/AddressList";
 import AddressListSkeleton from "./_components/AddressListSkeleton";
+
+export const metadata: Metadata = {
+  title: "Manage Your Delivery Addresses | Time delivery",
+  description:
+    "Add, edit, or remove your delivery addresses. Save multiple locations for a quicker checkout process with Time-Delivery.",
+};
 
 const AddressesPage = () => {
   return (

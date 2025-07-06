@@ -57,7 +57,7 @@ export const oTPSchema = z.object({
   }),
 });
 
-export const profileSetupSchema = z.object({
+export const profileUpdateSchema = z.object({
   first_name: z.string().min(1, { message: "First name is required" }),
   last_name: z.string().min(1, { message: "Last name is required" }),
   contact_no: z

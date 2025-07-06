@@ -1,4 +1,5 @@
 import React from "react";
+import { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+  title: "Help & Support | Time delivery",
+  description:
+    "Find answers to frequently asked questions and get help with your Time-Delivery orders and account.",
+};
 
 const HelpAndSupportPage = () => {
   return (

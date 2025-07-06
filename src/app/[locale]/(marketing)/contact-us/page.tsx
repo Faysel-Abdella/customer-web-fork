@@ -1,9 +1,17 @@
+import { Metadata } from "next";
+
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import TitleBanner from "../_components/TitleBanner";
 
 import ContactForm from "./_components/ContactForm";
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Have a question or need help with your order? Contact the Time-Delivery support team. We're here to assist you.",
+};
+
 const contactDetails = [
   {
     icon: Phone,
