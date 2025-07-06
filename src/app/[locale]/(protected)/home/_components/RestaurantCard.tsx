@@ -6,6 +6,7 @@ import { Clock, Heart, MapPin, Star, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 import { Restaurant } from "@/types/restaurant.types";
 
 interface RestaurantCardProps {
@@ -21,7 +22,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
     <Card className="group overflow-hidden border p-0 shadow-none backdrop-blur-sm transition-all duration-300">
       <CardContent className="p-2 py-3">
         <div className="flex max-md:flex-col">
-          <div className="relative aspect-video w-full overflow-hidden rounded-lg md:aspect-square md:w-2/5">
+          <div className="relative aspect-video h-56 w-full overflow-hidden rounded-lg md:aspect-square md:w-2/5">
             <Image
               src={restaurant.image_file}
               alt={restaurant.title}
@@ -48,7 +49,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                   {restaurant.location}
                 </div>
                 <p
-                  className="text-muted-foreground line-clamp-2 leading-relaxed"
+                  className="text-muted-foreground line-clamp-2 text-sm leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
                 />
 
@@ -77,8 +78,11 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                   <span>${restaurant.price_per_person}</span>
                 </div>
               </div>
-              <Button className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 transition-transform duration-200 group-hover:scale-105 hover:from-orange-600 hover:to-red-600">
-                Order Now
+              <Button
+                className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 transition-transform duration-200 group-hover:scale-105 hover:from-orange-600 hover:to-red-600"
+                asChild
+              >
+                <Link href={`/restaurants/${restaurant.id}`}>Order Now</Link>
               </Button>
             </div>
           </div>
