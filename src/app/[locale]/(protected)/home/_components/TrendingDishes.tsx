@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Clock, FlameIcon as Fire, Heart, Star } from "lucide-react";
 
 import { getPopularDishes } from "@/actions/actions";
-import MenuItemDetail from "@/app/[locale]/(restaurants)/restaurants/[restaurandId]/_components/MenuItemDetail";
+import MenuItemDetail from "@/app/[locale]/(restaurants)/restaurants/[restaurantId]/_components/MenuItemDetail";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 

@@ -62,33 +62,6 @@ export async function fetchWithAuth<T>(
   return response.json() as T;
 }
 
-export async function fetchWithoutAuth<T>(
-  relativePath: string,
-  options: RequestInit = {},
-): Promise<T> {
-  const baseUrl = process.env.API_BASE_URL;
-  if (!baseUrl) {
-    throw new Error("API_BASE_URL is not defined in your .env.local file.");
-  }
-  const fullUrl = new URL(relativePath, baseUrl).toString();
-
-  const response = await fetch(fullUrl, {
-    ...options,
-  });
-
-  if (!response.ok) {
-    const responseData = await response.json();
-    console.log(responseData);
-    const error = await processError(response);
-
-    throw new Error(
-      `API request failed with status ${response.status} and error: ${error}`,
-    );
-  }
-
-  return response.json() as T;
-}
-
 const ReturnHeader = async (options: RequestInit = {}) => {
   const cookieStore = await cookies();
 
