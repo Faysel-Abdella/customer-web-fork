@@ -1,6 +1,13 @@
 "use client";
 
-import { Bell, HelpCircle, MapPin, ShoppingBag, User } from "lucide-react";
+import {
+  Bell,
+  Heart,
+  HelpCircle,
+  MapPin,
+  ShoppingBag,
+  User,
+} from "lucide-react";
 
 import LogoutButton from "@/components/Header/_components/LogoutButton";
 import { Button } from "@/components/ui/button";
@@ -21,6 +28,12 @@ const navigationItems = [
     icon: User,
     id: "personal",
     href: "/profile",
+  },
+  {
+    title: "Favourites",
+    icon: Heart,
+    id: "favourites",
+    href: "/profile/favourites",
   },
   {
     title: "Addresses",

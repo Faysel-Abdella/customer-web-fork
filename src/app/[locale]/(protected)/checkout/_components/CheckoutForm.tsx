@@ -17,8 +17,14 @@ import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
-  const { cartItems, totalPrice, isPending, currentRestaurantId, totalItems } =
-    useCart();
+  const {
+    cartItems,
+    totalPrice,
+    isPending,
+    currentRestaurantId,
+    totalItems,
+    silentRefreshCart,
+  } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
@@ -64,6 +70,7 @@ const CheckoutForm = () => {
         window.location.href = results.payment_url;
       } else {
         router.push("/profile/orders");
+        silentRefreshCart();
         toast.success("Order placed successfully");
       }
     });
