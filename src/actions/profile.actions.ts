@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
-import { Address, Notification, Order } from "@/types/profile.types";
+import { Address, FAQ, Notification, Order } from "@/types/profile.types";
 import { Restaurant } from "@/types/restaurant.types";
 
 interface AddressActionResults {
@@ -150,5 +150,27 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
     console.error(error);
     if (typeof error === "string") return { error };
     else return { error: "Failed to fetch favorites list" };
+  }
+}
+
+interface GetFaqResults {
+  data?: FAQ[];
+  error?: string;
+}
+
+interface FaqListResponse {
+  list: FAQ[];
+}
+
+export async function getFaqList(): Promise<GetFaqResults> {
+  try {
+    const responseData: FaqListResponse =
+      await fetchWithAuth<FaqListResponse>(`/api/user/faq`);
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch frequently asked questions." };
   }
 }

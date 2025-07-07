@@ -109,3 +109,10 @@ export type Notification = {
   fullName: string;
   imageFile: string | null;
 };
+
+export type FAQ = {
+  id: number;
+  question: string;
+  answer: string;
+  created_on: string;
+};

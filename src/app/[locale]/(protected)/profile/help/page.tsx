@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
   title: "Help & Support | Time delivery",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 const HelpAndSupportPage = () => {
   return (
-    <div className="w-full space-y-6 px-10 py-5">
+    <div className="w-full space-y-6 px-1 py-5 md:px-10">
       <div>
         <h2 className="text-3xl font-bold">Help & Support</h2>
         <p className="text-muted-foreground mt-2">
@@ -34,7 +35,7 @@ const HelpAndSupportPage = () => {
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full bg-transparent">
-              Browse FAQ
+              <Link href={"/profile/help/faq"}>Browse FAQ</Link>
             </Button>
           </CardContent>
         </Card>
