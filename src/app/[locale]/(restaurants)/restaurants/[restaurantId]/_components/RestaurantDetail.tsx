@@ -55,7 +55,7 @@ const RestaurantDetail = async ({
       <div>
         <RestaurantBanner restaurant={restaurant} />
         <div className="parent-container">
-          <Tabs defaultValue={tab || "menu"} className="w-full p-5">
+          <Tabs defaultValue={tab || "menu"} className="w-full py-5">
             <TabsList className="mb-6 grid w-full grid-cols-5">
               {tabs.map((tab) => (
                 <CustomTabsTrigger
