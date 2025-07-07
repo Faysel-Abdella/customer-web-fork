@@ -58,8 +58,8 @@ const HelpAndSupportPage = () => {
             <CardDescription>Chat with our support team</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full bg-transparent">
-              Start Chat
+            <Button variant="outline" className="w-full bg-transparent" asChild>
+              <Link href={"/profile/help/chat"}>Start Chat</Link>
             </Button>
           </CardContent>
         </Card>

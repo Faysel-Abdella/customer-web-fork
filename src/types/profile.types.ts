@@ -116,3 +116,38 @@ export type FAQ = {
   answer: string;
   created_on: string;
 };
+
+export interface SentMessageRequestType {
+  fromId: string | number;
+  fromName: string;
+  toId: number;
+  toName: string;
+  message: string;
+  createdOn: string;
+  isRead: boolean;
+  stateId: number;
+  fromUserProfileFile: string;
+  toUserProfileFile: string;
+  typeId: number;
+  sendOn: string;
+}
+
+export interface Message {
+  id: number;
+  message: string;
+  from_id: number;
+  from_name: string;
+  to_name: string;
+  to_id: number;
+  readers: unknown[] | null;
+  request_id: number | null;
+  created_on: string;
+  is_read: number;
+  state_id: number;
+  from_user_profile_file: string;
+  to_user_profile_file: string;
+  message_status: boolean;
+  type_id: number;
+  notified_users: unknown[] | null;
+  send_on: string;
+}

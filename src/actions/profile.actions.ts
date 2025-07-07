@@ -2,7 +2,14 @@
 import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
-import { Address, FAQ, Notification, Order } from "@/types/profile.types";
+import {
+  Address,
+  FAQ,
+  Message,
+  Notification,
+  Order,
+  SentMessageRequestType as SendMessageRequestType,
+} from "@/types/profile.types";
 import { Restaurant } from "@/types/restaurant.types";
 
 interface AddressActionResults {
@@ -172,5 +179,54 @@ export async function getFaqList(): Promise<GetFaqResults> {
     console.error(error);
     if (typeof error === "string") return { error };
     else return { error: "Failed to fetch frequently asked questions." };
+  }
+}
+
+interface SendMessageResults {
+  success?: boolean;
+  error?: string;
+}
+
+export async function sendMessage(
+  data: SendMessageRequestType,
+): Promise<SendMessageResults> {
+  try {
+    const body = JSON.stringify(data);
+
+    await fetchWithAuth(`/api/user/send`, {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to send message" };
+  }
+}
+
+interface GetMessagesResult {
+  data?: Message[];
+  error?: string;
+}
+
+interface MessagesResponse {
+  messages: Message[];
+}
+
+export async function getMessages(): Promise<GetMessagesResult> {
+  try {
+    const responseData: MessagesResponse =
+      await fetchWithAuth<MessagesResponse>(`/api/user/history`);
+
+    return { data: responseData.messages };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch messages." };
   }
 }
