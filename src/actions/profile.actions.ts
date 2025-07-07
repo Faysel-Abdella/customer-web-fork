@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { Address, Notification, Order } from "@/types/profile.types";
+import { Restaurant } from "@/types/restaurant.types";
 
 interface AddressActionResults {
   success: boolean;
@@ -224,5 +225,28 @@ export async function getNotificationList(): Promise<GetNotificationListResults>
     console.error(error);
     if (typeof error === "string") return { error };
     else return { error: "Failed to fetch notication list" };
+  }
+}
+interface GetFavoritesListResult {
+  data?: { id: number; model_detail: Restaurant }[];
+  error?: string;
+}
+
+interface FavoritesListResponse {
+  list: { id: number; model_detail: Restaurant }[];
+}
+
+export async function getFavoritesList(): Promise<GetFavoritesListResult> {
+  try {
+    const responseData: FavoritesListResponse =
+      await fetchWithAuth<FavoritesListResponse>(
+        `/api/state/favourite-list?id=1`,
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch favorites list" };
   }
 }

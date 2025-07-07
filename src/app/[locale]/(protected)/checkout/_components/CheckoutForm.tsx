@@ -17,8 +17,14 @@ import PaymentDetail from "./PaymentDetail";
 import SelectAddress from "./SelectAddress";
 
 const CheckoutForm = () => {
-  const { cartItems, totalPrice, isPending, currentRestaurantId, totalItems } =
-    useCart();
+  const {
+    cartItems,
+    totalPrice,
+    isPending,
+    currentRestaurantId,
+    totalItems,
+    silentRefreshCart,
+  } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -62,6 +68,7 @@ const CheckoutForm = () => {
       }
       if (results.success) {
         router.push("/profile/orders");
+        silentRefreshCart();
         toast.success("Order placed successfully");
       }
     });
