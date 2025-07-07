@@ -42,18 +42,6 @@ const HelpAndSupportPage = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Contact Support</CardTitle>
-            <CardDescription>
-              Get in touch with our support team
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button className="w-full">Contact Us</Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
             <CardTitle>Live Chat</CardTitle>
             <CardDescription>Chat with our support team</CardDescription>
           </CardHeader>
@@ -64,7 +52,7 @@ const HelpAndSupportPage = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>User Guide</CardTitle>
             <CardDescription>Learn how to use our platform</CardDescription>
@@ -74,7 +62,7 @@ const HelpAndSupportPage = () => {
               View Guide
             </Button>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );
