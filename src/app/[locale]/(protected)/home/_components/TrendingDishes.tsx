@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Clock, FlameIcon as Fire, Heart, Star } from "lucide-react";
 
 import { getPopularDishes } from "@/actions/actions";
-import MenuItemDetail from "@/app/[locale]/(restaurants)/restaurants/[restaurantId]/_components/MenuItemDetail";
+import MenuItemDetail from "@/app/[locale]/(public)/restaurants/[restaurantId]/_components/MenuItemDetail";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -14,12 +14,8 @@ export async function TrendingDishes() {
       <section className="mb-16">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-              Trending Dishes
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Most loved by our customers
-            </p>
+            <h2 className="mb-2 text-3xl font-bold">Trending Dishes</h2>
+            <p className="text-muted-foreground">Most loved by our customers</p>
           </div>
           <Fire className="h-8 w-8 text-red-500" />
         </div>
