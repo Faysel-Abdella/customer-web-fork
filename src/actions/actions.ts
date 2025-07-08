@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWithAuth";
 import { LoginResponse } from "@/types/auth.types";
 import { MenuItem, Offer } from "@/types/restaurant.types";
 
@@ -156,5 +156,30 @@ export async function addToFavorites(
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to add item to favorites" };
+  }
+}
+
+interface CategoryItemsResponse {
+  list: MenuItem[];
+}
+
+interface CategoryItemsResult {
+  data?: MenuItem[];
+  error?: string;
+}
+
+export async function getCategoryItems(
+  id: string,
+): Promise<CategoryItemsResult> {
+  try {
+    const responseData: CategoryItemsResponse =
+      await fetchOnCondition<CategoryItemsResponse>(
+        `/api/cart-item/items-by-category?category_id=${id}`,
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch category items." };
   }
 }
