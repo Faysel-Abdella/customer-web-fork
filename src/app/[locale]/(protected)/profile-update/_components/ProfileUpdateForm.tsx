@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUpdateProfile } from "@/hooks/authHooks/useUpdateProfile";
-import { useRouter } from "@/i18n/navigation";
 import { profileUpdateSchema } from "@/lib/schemas/auth.schema";
 import { cn, formatYYYYMMDD } from "@/lib/utils";
 
@@ -29,13 +28,8 @@ const ProfileUpdateForm = ({
   const t = useTranslations("auth.account_update");
   const { user } = useAuth();
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
-  const router = useRouter();
 
-  if (!user?.contact_no) {
-    router.push("/home");
-  }
-
-  const { error, isLoading, updateProfile } = useUpdateProfile();
+  const { error, isLoading, updateProfile, isSuccess } = useUpdateProfile();
 
   const form = useForm<z.infer<typeof profileUpdateSchema>>({
     resolver: zodResolver(profileUpdateSchema),
@@ -49,9 +43,8 @@ const ProfileUpdateForm = ({
   });
 
   function onSubmit(values: z.infer<typeof profileUpdateSchema>) {
-    const phoneNumberObj = parsePhoneNumberFromString(
-      form.getValues("contact_no"),
-    );
+    const phoneNumberObj = parsePhoneNumberFromString(values.contact_no);
+
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
 
@@ -69,7 +62,10 @@ const ProfileUpdateForm = ({
     if (error) {
       toast.error("Error", { description: error });
     }
-  }, [error]);
+    if (isSuccess) {
+      toast.success("Updated profile");
+    }
+  }, [error, isSuccess]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/HttpError";
 import { objectToUrlEncoded, processError } from "@/lib/utils";
 import { LoginPayload, LoginResponse, UserDetail } from "@/types/auth.types";
@@ -11,6 +12,7 @@ export const useLogin = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [user, setUser] = useState<UserDetail>();
   const { login: contextLogin } = useAuth();
+  const router = useRouter();
 
   const login = async (data: LoginPayload) => {
     setIsLoading(true);
@@ -31,9 +33,19 @@ export const useLogin = () => {
 
       console.log("✅ Login successful");
       contextLogin(responseData.detail);
+
       setUser(responseData.detail);
       setIsLoading(false);
       setIsSuccess(true);
+
+      const previousPath = localStorage.getItem("previousPath");
+
+      if (previousPath) {
+        router.push(previousPath);
+        localStorage.removeItem(previousPath);
+      } else {
+        router.push("/home");
+      }
     } catch (error: unknown) {
       const errorMessage = await processError(error);
 

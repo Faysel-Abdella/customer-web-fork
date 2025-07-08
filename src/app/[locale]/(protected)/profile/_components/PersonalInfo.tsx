@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "@/i18n/navigation";
 
 const gender = ["male", "female", "other"];
 const PersonalInfo = () => {
@@ -23,14 +24,18 @@ const PersonalInfo = () => {
           </p>
         </div>
         <form className="space-y-6">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between">
             <Avatar className="h-20 w-20">
               <AvatarImage src={user.profile_file} />
-              <AvatarFallback className="text-lg">JD</AvatarFallback>
+              <AvatarFallback className="text-lg">
+                {user.first_name[0] + user.last_name[0]}
+              </AvatarFallback>
             </Avatar>
-            <Button variant="outline" size="sm">
-              <Edit className="mr-2 h-4 w-4" />
-              Change Photo
+            <Button variant="outline" size="lg" asChild>
+              <Link href={"/profile-update?source=edit"}>
+                <Edit className="mr-2 h-4 w-4" />
+                Edit
+              </Link>
             </Button>
           </div>
 

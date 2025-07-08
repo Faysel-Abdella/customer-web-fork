@@ -38,27 +38,32 @@ export function useSocialSSO({
         const result = await signInWithPopup(auth, provider);
         const user: User = result.user;
 
-        const backendPayload = new URLSearchParams();
-
         const userId = user.providerData[0]?.uid || user.uid;
 
         const uuid = crypto.randomUUID();
 
-        backendPayload.append("HaLogin[user_id]", userId);
-        backendPayload.append("HaLogin[login_provider]", providerName);
-        backendPayload.append("HaLogin[role_id]", "2");
-        backendPayload.append("HaLogin[email]", user.email || "");
-        backendPayload.append("HaLogin[full_name]", user.displayName || "");
-        backendPayload.append("HaLogin[image_url]", user.photoURL || "");
-        backendPayload.append("HaLogin[device_type]", "WEB");
-        backendPayload.append("HaLogin[device_token]", uuid);
-        backendPayload.append("HaLogin[device_udid]", uuid);
+        const socialLoginPayload = {
+          HaLogin: {
+            user_id: userId,
+            login_provider: providerName,
+            role_id: "2",
+            email: user.email || "",
+            full_name: user.displayName || "",
+            image_url: user.photoURL || "",
+            device_type: "WEB",
+            device_token: uuid,
+            device_udid: uuid,
+          },
+        };
 
-        const yourApiUrl = "/api/user/social-login";
+        const body = JSON.stringify(socialLoginPayload);
 
-        const response = await fetch(yourApiUrl, {
+        const response = await fetch("/api/user/social-login", {
           method: "POST",
-          body: backendPayload,
+          body,
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
         if (!response.ok) {

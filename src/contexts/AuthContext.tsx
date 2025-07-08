@@ -29,19 +29,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = (userData: UserDetail) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
-    const previousPath = localStorage.getItem("previousPath");
-
-    if (previousPath) {
-      router.push(previousPath);
-      localStorage.removeItem(previousPath);
-    } else {
-      router.push("/home");
-    }
   };
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
     router.push("/login");
   }, [router]);

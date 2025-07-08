@@ -14,9 +14,9 @@ export const useVerifyOtp = () => {
   const [error, setError] = useState<null | string>();
   const [isSuccess, setIsSuccess] = useState(false);
   const [user, setUser] = useState<UserDetail>();
-  const router = useRouter();
   const { login: contextLogin } = useAuth();
   const [isLoading, startTransition] = useTransition();
+  const router = useRouter();
 
   const verifyOtp = async (data: VerifyOtpPayload) => {
     setError(null);
@@ -37,7 +37,14 @@ export const useVerifyOtp = () => {
         localStorage.removeItem("unVerifiedUser");
         setUser(responseData.detail);
         setIsSuccess(true);
-        router.push("/home");
+        const previousPath = localStorage.getItem("previousPath");
+
+        if (previousPath) {
+          router.push(previousPath);
+          localStorage.removeItem(previousPath);
+        } else {
+          router.push("/profile-update");
+        }
       });
     } catch (error) {
       const errorMessage = await processError(error);

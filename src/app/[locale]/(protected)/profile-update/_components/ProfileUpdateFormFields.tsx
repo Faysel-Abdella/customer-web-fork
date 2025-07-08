@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/contexts/AuthContext";
 import { profileUpdateSchema } from "@/lib/schemas/auth.schema";
 
 interface ProfileUpdateFormFieldsProps {
@@ -33,6 +34,7 @@ const ProfileUpdateFormFields = ({
   setCountry,
 }: ProfileUpdateFormFieldsProps) => {
   const t = useTranslations("auth.account_update");
+  const { user } = useAuth();
 
   return (
     <>
@@ -113,6 +115,7 @@ const ProfileUpdateFormFields = ({
                 defaultCountry="ET"
                 onCountryChange={setCountry}
                 {...field}
+                disabled={!user?.contact_no}
               />
             </FormControl>
 
