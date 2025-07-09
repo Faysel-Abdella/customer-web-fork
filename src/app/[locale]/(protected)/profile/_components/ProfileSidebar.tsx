@@ -2,6 +2,7 @@
 
 import {
   Bell,
+  Gift,
   Heart,
   HelpCircle,
   MapPin,
@@ -55,6 +56,12 @@ const navigationItems = [
     icon: Bell,
     id: "notifications",
     href: "/profile/notifications",
+  },
+  {
+    title: "Referrals",
+    icon: Gift,
+    id: "referrals",
+    href: "/profile/referrals",
   },
   {
     title: "Security",
