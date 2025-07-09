@@ -12,7 +12,7 @@ export const loginSchema = z.object({
     }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+    .min(8, { message: "Password must be at least 8 characters" }),
 });
 
 export const signupSchema = z

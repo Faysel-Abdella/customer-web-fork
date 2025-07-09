@@ -19,3 +19,9 @@ export const changePasswordSchema = z
     path: ["confirm_password"],
     message: "Passwords do not match",
   });
+
+export const deleteAccountSchema = z.object({
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+});

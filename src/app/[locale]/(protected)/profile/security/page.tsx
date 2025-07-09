@@ -37,10 +37,9 @@ const SecurityPage = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle>Delete my accounts</CardTitle>
+            <CardTitle>Delete your accounts</CardTitle>
             <CardDescription>
-              Once you delete your account, all of your data will be permanently
-              removed.Your account will be permanently erased.
+              Your account will be permanently erased.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -49,7 +48,9 @@ const SecurityPage = () => {
               className="w-full border-red-500 bg-transparent text-red-500 dark:border-red-500"
               asChild
             >
-              <Link href={"/profile/help/chat"}>Delete account</Link>
+              <Link href={"/profile/security/delete-account"}>
+                Delete account
+              </Link>
             </Button>
           </CardContent>
         </Card>
