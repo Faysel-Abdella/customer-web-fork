@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -38,19 +39,24 @@ const ChangePasswordPage = () => {
     });
   }
   return (
-    <div className="w-full space-y-6 px-1 py-5 md:px-10">
-      <div>
-        <h2 className="text-3xl font-bold">Change your password</h2>
-        <p className="text-muted-foreground mt-2">
-          For your security, we recommend choosing a strong password that you
-          don&apos;t use elsewhere.
-        </p>
+    <div className="w-full space-y-6 px-1 py-5 md:px-5">
+      <div className="flex gap-2">
+        <BackButton>
+          <ArrowLeft />
+        </BackButton>
+        <div>
+          <h2 className="text-3xl font-bold">Change your password</h2>
+          <p className="text-muted-foreground mt-2">
+            For your security, we recommend choosing a strong password that you
+            don&apos;t use elsewhere.
+          </p>
+        </div>
       </div>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-xs space-y-8"
+          className="ml-10 max-w-xs space-y-8"
         >
           <FormField
             control={form.control}

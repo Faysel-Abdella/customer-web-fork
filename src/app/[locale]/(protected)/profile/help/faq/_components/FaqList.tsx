@@ -29,7 +29,7 @@ const FaqList = async () => {
       <Accordion
         type="single"
         collapsible
-        className="w-full"
+        className="w-full pl-12"
         defaultValue="item-1"
       >
         {faqList.map((faq) => (

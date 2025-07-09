@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -36,25 +37,32 @@ const DeleteAccountPage = () => {
     });
   }
   return (
-    <div className="w-full space-y-5 px-1 py-5 md:px-10">
-      <div>
-        <h2 className="text-3xl font-bold text-red-500">Delete your account</h2>
-        <p className="text-muted-foreground mt-2 mb-2">
-          Once you delete your account, there is no going back. This action
-          cannot be undone and will:
-        </p>
-        <ul className="text-muted-foreground mb-4 ml-4 space-y-1 text-sm">
-          <li>• Permanently delete your profile and account data</li>
-          <li>• Remove all your referral history and stats</li>
-          <li>• Cancel any pending rewards or payouts</li>
-          <li>• Revoke access to all services</li>
-        </ul>
+    <div className="w-full space-y-5 px-1 py-5 md:px-5">
+      <div className="flex gap-2">
+        <BackButton>
+          <ArrowLeft />
+        </BackButton>
+        <div>
+          <h2 className="text-3xl font-bold text-red-500">
+            Delete your account
+          </h2>
+          <p className="text-muted-foreground mt-2 mb-2">
+            Once you delete your account, there is no going back. This action
+            cannot be undone and will:
+          </p>
+          <ul className="text-muted-foreground mb-4 ml-4 space-y-1 text-sm">
+            <li>• Permanently delete your profile and account data</li>
+            <li>• Remove all your referral history and stats</li>
+            <li>• Cancel any pending rewards or payouts</li>
+            <li>• Revoke access to all services</li>
+          </ul>
+        </div>
       </div>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-xs space-y-5 pl-4"
+          className="max-w-md space-y-5 pl-14"
         >
           <FormField
             control={form.control}
