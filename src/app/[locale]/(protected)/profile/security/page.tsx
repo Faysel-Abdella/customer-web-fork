@@ -24,14 +24,13 @@ const SecurityPage = () => {
         <Card>
           <CardHeader>
             <CardTitle>Change your password</CardTitle>
-            <CardDescription>
-              For your security, we recommend choosing a strong password that
-              you don&apos;t use elsewhere.
-            </CardDescription>
+            <CardDescription>Update your password below.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full bg-transparent">
-              <Link href={"/profile/help/faq"}>Change password</Link>
+            <Button variant="outline" className="w-full bg-transparent" asChild>
+              <Link href={"/profile/security/change-password"}>
+                Change password
+              </Link>
             </Button>
           </CardContent>
         </Card>
@@ -41,7 +40,7 @@ const SecurityPage = () => {
             <CardTitle>Delete my accounts</CardTitle>
             <CardDescription>
               Once you delete your account, all of your data will be permanently
-              removed.{" "}
+              removed.Your account will be permanently erased.
             </CardDescription>
           </CardHeader>
           <CardContent>

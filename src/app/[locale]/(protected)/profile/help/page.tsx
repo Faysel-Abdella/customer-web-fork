@@ -34,7 +34,7 @@ const HelpAndSupportPage = () => {
             <CardDescription>Find answers to common questions</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full bg-transparent">
+            <Button variant="outline" className="w-full bg-transparent" asChild>
               <Link href={"/profile/help/faq"}>Browse FAQ</Link>
             </Button>
           </CardContent>
