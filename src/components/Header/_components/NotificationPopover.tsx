@@ -43,6 +43,48 @@ export function NotificationPopover({
   useEffect(() => {
     fetchNotifications();
   }, [fetchNotifications]);
+
+  const renderNotifications = () => {
+    if (error)
+      return (
+        <div className="flex h-full w-full items-center justify-center gap-4">
+          <CircleX size={25} /> Couldnt fetch notification
+        </div>
+      );
+    if (isLoading)
+      return (
+        <div className="h- flex w-full items-center justify-center">
+          <Loader size={25} />
+        </div>
+      );
+
+    if (notifications?.length && notifications.length == 0) {
+      return (
+        <div className="text-muted-foreground py-8 text-center">
+          <p>{t("no_notifications")}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex h-full flex-col">
+          {notifications?.slice(0, 3).map((notification) => (
+            <div
+              key={notification.id}
+              className="flex items-start gap-4 border-b pb-2"
+            >
+              <div className="grid gap-1">
+                <p className="font-semibold">{notification.title}</p>
+                <p className="text-muted-foreground text-sm">
+                  {notification.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -54,12 +96,6 @@ export function NotificationPopover({
           )}
         >
           <BellIcon size={20} />
-          {notifications?.length && notifications?.length > 0 && (
-            <span className="absolute top-0 right-0 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
-            </span>
-          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0 md:w-96">
@@ -70,36 +106,8 @@ export function NotificationPopover({
           </div>
           <Separator />
 
-          <div className="max-h-80 space-y-4 overflow-y-auto p-4 pb-0">
-            {error && (
-              <div className="flex h-full w-full items-center justify-center gap-4">
-                <CircleX size={25} className="animate-spin" /> Couldnt fetch
-                notification
-              </div>
-            )}
-            {isLoading ? (
-              <div className="flex h-72 w-full items-center justify-center">
-                <Loader size={25} className="animate-spin" />
-              </div>
-            ) : notifications?.length && notifications?.length > 0 ? (
-              notifications.slice(0, 3).map((notification) => (
-                <div
-                  key={notification.id}
-                  className="flex items-start gap-4 border-b pb-2"
-                >
-                  <div className="grid gap-1">
-                    <p className="font-semibold">{notification.title}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {notification.description}
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-muted-foreground py-8 text-center">
-                <p>{t("no_notifications")}</p>
-              </div>
-            )}
+          <div className="flex h-72 items-center justify-center space-y-4 overflow-y-auto p-4 pb-0">
+            {renderNotifications()}
           </div>
 
           <Separator />

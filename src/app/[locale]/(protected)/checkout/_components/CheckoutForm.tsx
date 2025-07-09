@@ -23,7 +23,7 @@ const CheckoutForm = () => {
     isPending,
     currentRestaurantId,
     totalItems,
-    silentRefreshCart,
+    refreshCart,
   } = useCart();
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
@@ -69,8 +69,8 @@ const CheckoutForm = () => {
       if (results.payment_url) {
         window.location.href = results.payment_url;
       } else {
+        refreshCart();
         router.push("/profile/orders");
-        silentRefreshCart();
         toast.success("Order placed successfully");
       }
     });
