@@ -230,3 +230,28 @@ export async function getMessages(): Promise<GetMessagesResult> {
     else return { error: "Failed to fetch messages." };
   }
 }
+
+interface ChangePasswordResult {
+  success?: boolean;
+  error?: string;
+}
+
+export async function changePassword(data: {
+  User: { password: string; confirm_password: string };
+}): Promise<ChangePasswordResult> {
+  const body = JSON.stringify(data);
+  try {
+    await fetchWithAuth("/api/user/change-password", {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error };
+    else return { error: "Failed to fetch messages." };
+  }
+}

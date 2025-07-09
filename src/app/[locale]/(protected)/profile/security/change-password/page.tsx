@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { changePassword } from "@/actions/profile.actions";
 import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,20 +24,22 @@ import { changePasswordSchema } from "@/lib/schemas/profile.schema";
 const ChangePasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
     defaultValues: { password: "", confirm_password: "" },
   });
 
-  function onSubmit(values: z.infer<typeof changePasswordSchema>) {
-    toast("data", {
-      description: (
-        <code>
-          <p>Password: {values.password}</p>
-          <p>Change password: {values.confirm_password}</p>
-        </code>
-      ),
-    });
+  async function onSubmit(values: z.infer<typeof changePasswordSchema>) {
+    setIsLoading(true);
+    const result = await changePassword({ User: values });
+    if (result.error) {
+      toast.error("Error", { description: result.error });
+    }
+    if (result.success) {
+      toast.success("Successfully changed password");
+    }
+    setIsLoading(false);
   }
   return (
     <div className="w-full space-y-6 px-1 py-5 md:px-5">
@@ -117,7 +120,13 @@ const ChangePasswordPage = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Change password</Button>
+          <Button type="submit" disabled={isLoading} className="w-full">
+            {isLoading ? (
+              <Loader className="animate-spin" />
+            ) : (
+              "Change password"
+            )}
+          </Button>
         </form>
       </Form>
     </div>
