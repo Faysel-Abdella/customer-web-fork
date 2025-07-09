@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Award,
   Bell,
   Gift,
   Heart,
@@ -62,6 +63,12 @@ const navigationItems = [
     icon: Gift,
     id: "referrals",
     href: "/profile/referrals",
+  },
+  {
+    title: "Loyalty Points",
+    icon: Award,
+    id: "loyalty",
+    href: "/profile/loyalty",
   },
   {
     title: "Security",
