@@ -263,3 +263,11 @@ export interface Offer {
   created_by_id: number;
   restaruentDetail: Restaurant; // Note: Typo in backend 'restaruentDetail' instead of 'restaurantDetail'
 }
+
+export type Category = {
+  id: number;
+  title: string;
+  image: string;
+  created_on: string;
+  created_by_id: number;
+};

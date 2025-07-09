@@ -2,7 +2,7 @@
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWithAuth";
 import { LoginResponse } from "@/types/auth.types";
-import { MenuItem, Offer } from "@/types/restaurant.types";
+import { Category, MenuItem, Offer } from "@/types/restaurant.types";
 
 export async function updateProfileAction(data: FormData) {
   try {
@@ -37,19 +37,6 @@ interface GetBannerItemsResult {
 }
 
 export async function getBannerItems(): Promise<GetBannerItemsResult> {
-  try {
-    const responseData: BannerDataResponse =
-      await fetchWithAuth<BannerDataResponse>(`/api/item-detail/banner-images`);
-
-    return { data: responseData.list };
-  } catch (error) {
-    console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch banner items" };
-  }
-}
-
-export async function getCategiesList(): Promise<GetBannerItemsResult> {
   try {
     const responseData: BannerDataResponse =
       await fetchWithAuth<BannerDataResponse>(`/api/item-detail/banner-images`);
@@ -181,5 +168,28 @@ export async function getCategoryItems(
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch category items." };
+  }
+}
+
+interface CategoriesListResponse {
+  list: Category[];
+}
+
+interface getCategoriesList {
+  data?: Category[];
+  error?: string;
+}
+
+export async function getCategiesList(): Promise<getCategoriesList> {
+  try {
+    const responseData: CategoriesListResponse =
+      await fetchWithAuth<CategoriesListResponse>(
+        `/api/restaurant/category-list`,
+      );
+
+    return { data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to fetch categories list." };
   }
 }

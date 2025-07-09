@@ -32,18 +32,16 @@ const ItemCard = ({ menuItem }: ItemCardProps) => {
           </div>
         </div>
         <div className="p-4">
-          <h3 className="mb-2 font-bold text-gray-900 dark:text-white">
-            {menuItem.title}
-          </h3>
+          <h3 className="mb-2 font-bold">{menuItem.title}</h3>
           <div className="mb-3 flex items-center space-x-2">
             <div className="flex items-center space-x-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <span className="text-muted-foreground text-sm font-medium">
                 {menuItem.avg_rating}
               </span>
             </div>
-            <span className="text-gray-300 dark:text-gray-600">•</span>
-            <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-muted-foreground">•</span>
+            <div className="text-muted-foreground flex items-center gap-1 text-sm">
               <span>{menuItem.cook_time}</span>
               <Clock size={16} />
               <span>minutes</span>
