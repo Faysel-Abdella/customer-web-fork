@@ -5,6 +5,7 @@ import {
   Heart,
   HelpCircle,
   MapPin,
+  Shield,
   ShoppingBag,
   User,
 } from "lucide-react";
@@ -29,6 +30,7 @@ const navigationItems = [
     id: "personal",
     href: "/profile",
   },
+
   {
     title: "Favourites",
     icon: Heart,
@@ -54,7 +56,12 @@ const navigationItems = [
     id: "notifications",
     href: "/profile/notifications",
   },
-
+  {
+    title: "Security",
+    icon: Shield,
+    id: "security",
+    href: "/profile/security",
+  },
   {
     title: "Help & Support",
     icon: HelpCircle,

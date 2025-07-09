@@ -51,18 +51,6 @@ const HelpAndSupportPage = () => {
             </Button>
           </CardContent>
         </Card>
-
-        {/* <Card>
-          <CardHeader>
-            <CardTitle>User Guide</CardTitle>
-            <CardDescription>Learn how to use our platform</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button variant="outline" className="w-full bg-transparent">
-              View Guide
-            </Button>
-          </CardContent>
-        </Card> */}
       </div>
     </div>
   );
