@@ -6,7 +6,7 @@ const RestaurantDetailSkeleton = () => {
   return (
     <div className="animate-pulse">
       {/* --- Banner Skeleton --- */}
-      <div className="relative h-64 bg-gray-300 md:h-80">
+      <div className="bg-muted-foreground relative h-64 md:h-80">
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute right-4 bottom-4 left-4">
           <div className="rounded-lg bg-gray-200/95 p-4 backdrop-blur-sm">
@@ -47,11 +47,12 @@ const RestaurantDetailSkeleton = () => {
       <div className="parent-container">
         <div className="w-full p-5">
           {/* Tab Triggers Skeleton */}
-          <div className="mb-6 grid w-full grid-cols-4 gap-2 md:gap-4">
-            <div className="h-10 rounded-md bg-gray-300" />
-            <div className="h-10 rounded-md bg-gray-300" />
-            <div className="h-10 rounded-md bg-gray-300" />
-            <div className="h-10 rounded-md bg-gray-300" />
+          <div className="bg-muted mb-6 grid w-full grid-cols-5 gap-2 rounded-lg p-1 md:gap-4">
+            <div className="bg-background h-7 rounded-md shadow-md" />
+            <div className="bg-background h-7 rounded-md shadow-md" />
+            <div className="bg-background h-7 rounded-md shadow-md" />
+            <div className="bg-background h-7 rounded-md shadow-md" />
+            <div className="bg-background h-7 rounded-md shadow-md" />
           </div>
 
           {/* MenuList Content Skeleton */}
