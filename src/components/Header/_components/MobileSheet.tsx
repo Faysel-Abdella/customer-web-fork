@@ -68,13 +68,13 @@ const MobileSheet = () => {
               <Link href={"/restaurants"} className="hover:text-primary">
                 {t("restaurants")}
               </Link>
-              <Link href={"#"} className="hover:text-primary">
-                {t("offers")}
+              <Link href={"/profile/favorites"} className="hover:text-primary">
+                Favorites
               </Link>
-              <Link href={"#"} className="hover:text-primary">
+              <Link href={"/profile/order"} className="hover:text-primary">
                 {t("orders")}
               </Link>
-              <Link href={"#"} className="hover:text-primary">
+              <Link href={"/profile"} className="hover:text-primary">
                 {t("profile")}
               </Link>
             </div>

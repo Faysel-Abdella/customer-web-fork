@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 
-import { Heart, LogOut, User2, Wallet } from "lucide-react";
+import { Heart, LogOut, ShoppingBag, User2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -61,24 +61,24 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
 
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/profile" passHref>
-            <DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/profile">
               <User2 className="mr-2 h-4 w-4" />
               <span>Profile</span>
-            </DropdownMenuItem>
-          </Link>
-          <Link href="/wallet" passHref>
-            <DropdownMenuItem>
-              <Wallet className="mr-2 h-4 w-4" />
-              <span>Wallet</span>
-            </DropdownMenuItem>
-          </Link>
-          <Link href="/favorites" passHref>
-            <DropdownMenuItem>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/profile/favorites">
               <Heart className="mr-2 h-4 w-4" />
               <span>Favorites</span>
-            </DropdownMenuItem>
-          </Link>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/profile/wallet">
+              <ShoppingBag className="mr-2 h-4 w-4" />
+              <span>Orders</span>
+            </Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

@@ -73,7 +73,7 @@ const ReturnHeader = async (options: RequestInit = {}) => {
   const cleanToken = parseYii2Token(tokenCookie.value);
 
   if (!cleanToken) {
-    throw new Error("Failed to parse authentication token from cookie.");
+    return;
   }
 
   return {

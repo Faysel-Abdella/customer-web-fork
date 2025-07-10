@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { fetchWithAuth } from "@/lib/fetchWrappers";
 import { CartItem } from "@/types/restaurant.types";
 
 interface CartActionResults {

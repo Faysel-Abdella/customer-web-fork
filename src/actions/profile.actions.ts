@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { fetchWithAuth } from "@/lib/fetchWrappers";
 import {
   Address,
   FAQ,

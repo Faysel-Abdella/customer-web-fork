@@ -48,7 +48,7 @@ const Header = () => {
       </div>
       <div className="flex w-1/3 items-center justify-evenly font-medium max-lg:hidden">
         <Link href={"/restaurants"} className="hover:text-primary">
-          {t("restaurants")}
+          {t("restaurants")}2
         </Link>
         <Link href={"/about-us"} className="hover:text-primary">
           {t("about_us")}

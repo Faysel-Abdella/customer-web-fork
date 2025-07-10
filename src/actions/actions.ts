@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWithAuth";
+import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
 import { LoginResponse } from "@/types/auth.types";
 import { Category, MenuItem, Offer } from "@/types/restaurant.types";
 
