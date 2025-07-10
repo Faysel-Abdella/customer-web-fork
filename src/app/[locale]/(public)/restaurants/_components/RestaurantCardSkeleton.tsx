@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export function RestaurantCardSkeleton() {
   return (
-    <Card className="gap-0 overflow-hidden border-0 py-0 shadow-md">
+    <Card className="gap-0 overflow-hidden py-0 shadow-none">
       <div className="relative">
         <div className="bg-border h-48 w-full animate-pulse" />
 

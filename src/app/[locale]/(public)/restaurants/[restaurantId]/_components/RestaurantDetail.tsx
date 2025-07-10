@@ -7,6 +7,7 @@ import CustomTabsTrigger from "./CustomTabsTrigger";
 import MenuList from "./MenuList";
 import { MenuListSkeleton } from "./MenuListItemSkeleton";
 import RestaurantBanner from "./RestaurantBanner";
+import RestaurantDetailError from "./RestaurantDetailError";
 import RestaurantInfo from "./RestaurantInfo";
 import RestaurantOffers from "./RestaurantOffers";
 import RestaurantPhotos from "./RestaurantPhotos";
@@ -44,12 +45,7 @@ const RestaurantDetail = async ({
 }: RestaurantDetailProps) => {
   const { data: restaurant, error } = await getRestaurantDetails(restaurantId);
 
-  if (error)
-    return (
-      <div className="flex h-dvh w-full items-center justify-center">
-        <p>Something went wrong</p>
-      </div>
-    );
+  if (error) return <RestaurantDetailError />;
   if (restaurant)
     return (
       <div>
