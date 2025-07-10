@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useEffect, useState, useTransition } from "react";
 
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 
 import { addToCartAction } from "@/actions/cart.actions";
@@ -16,7 +17,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useCart } from "@/contexts/CartContext";
 import { usePathname } from "@/i18n/navigation";
 import { objectToFormData } from "@/lib/utils";
@@ -127,6 +133,10 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
           <Button className={className}>View details</Button>
         </DialogTrigger>
         <DialogContent className="max-h-dvh overflow-auto p-0 pt-6 max-sm:w-dvw max-sm:min-w-dvw">
+          <DialogHeader>
+            <DialogTitle className="hidden" />
+            <DialogDescription className="hidden" />
+          </DialogHeader>
           {isLoadingItem ? (
             <MenuItemDetailSkeleton />
           ) : (
