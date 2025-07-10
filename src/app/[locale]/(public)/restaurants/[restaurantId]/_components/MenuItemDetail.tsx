@@ -126,7 +126,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
         <DialogTrigger asChild>
           <Button className={className}>View details</Button>
         </DialogTrigger>
-        <DialogContent className="max-h-dvh overflow-auto p-0 max-sm:w-dvw max-sm:min-w-dvw">
+        <DialogContent className="max-h-dvh overflow-auto p-0 pt-6 max-sm:w-dvw max-sm:min-w-dvw">
           {isLoadingItem ? (
             <MenuItemDetailSkeleton />
           ) : (
