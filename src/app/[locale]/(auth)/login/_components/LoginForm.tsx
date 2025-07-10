@@ -23,7 +23,6 @@ import { Link } from "@/i18n/navigation";
 import { loginSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
-import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
 
@@ -128,7 +127,6 @@ export function LoginForm({
               </span>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <FacebookLoginButton />
               <GoogleLoginButton />
             </div>
           </div>
@@ -137,7 +135,6 @@ export function LoginForm({
       <div className="text-muted-foreground *:[a]:hover:text-primary flex flex-wrap gap-1 text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         {t("terms_guide")}
         <TermsAndConditions className="hover:text-primary cursor-pointer underline">
-          {" "}
           {t("terms_of_service")}{" "}
         </TermsAndConditions>
         {t("and")} <a href="#">{t("privacy_policy")}</a>.

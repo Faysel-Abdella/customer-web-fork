@@ -22,7 +22,6 @@ import { Link } from "@/i18n/navigation";
 import { signupSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
-import { FacebookLoginButton } from "../../_components/FacebookLoginButton";
 import { GoogleLoginButton } from "../../_components/GoogleLoginButton";
 import TermsAndConditions from "../../_components/TermsAndConditions";
 
@@ -137,7 +136,6 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
               </span>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              <FacebookLoginButton />
               <GoogleLoginButton />
             </div>
           </div>
