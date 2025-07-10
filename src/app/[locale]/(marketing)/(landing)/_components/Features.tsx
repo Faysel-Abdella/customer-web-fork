@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export const features = [
@@ -70,26 +71,30 @@ const Features = () => {
             </div>
           ))}
         </div>
-        <div className="mad-md:flex-col-reverse flex h-96 w-full rounded-tr-4xl rounded-bl-4xl bg-gradient-to-r from-orange-500 to-orange-600">
+        <div className="mad-md:flex-col-reverse flex h-72 w-full rounded-tr-4xl rounded-bl-4xl bg-gradient-to-r from-orange-500 to-orange-600 md:h-96">
           <div className="flex h-full w-full flex-col justify-center gap-10 pl-10 md:w-1/2">
-            <div className="text-5xl font-bold text-white">
+            <div className="text-3xl font-bold text-white md:text-5xl">
               {t("app_promo")}
             </div>
             <div className="flex gap-5">
-              <Image
-                width={180}
-                height={100}
-                src={"/assets/images/landing/store1.png"}
-                alt="playstore icon"
-                className="cursor-pointer"
-              />
-              <Image
-                width={180}
-                height={100}
-                src={"/assets/images/landing/store2.png"}
-                alt="playstore icon"
-                className="cursor-pointer"
-              />
+              <Link href={"#"}>
+                <Image
+                  width={180}
+                  height={100}
+                  src={"/assets/images/landing/store1.png"}
+                  alt="playstore icon"
+                  className="cursor-pointer"
+                />
+              </Link>
+              <Link href={"#"}>
+                <Image
+                  width={180}
+                  height={100}
+                  src={"/assets/images/landing/store2.png"}
+                  alt="playstore icon"
+                  className="cursor-pointer"
+                />
+              </Link>
             </div>
           </div>
           <div className="relative h-full w-1/2 justify-center">
@@ -98,7 +103,7 @@ const Features = () => {
               alt="mobile screenshot"
               width={327}
               height={613}
-              className="absolute -top-32 right-10 min-sm:-top-24"
+              className="absolute -top-28 right-10 min-sm:-top-24"
             />
           </div>
         </div>

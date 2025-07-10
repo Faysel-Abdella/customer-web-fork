@@ -110,10 +110,10 @@ const PopularItems = () => {
             {popularItems.map((item) => (
               <CarouselItem
                 key={item.title}
-                className="basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
                 <div className="pt-28">
-                  <div className="bg-primary/20 dark:border-border dark:bg-secondary border-primary relative flex h-44 w-56 flex-col items-center rounded-tr-4xl rounded-bl-4xl border">
+                  <div className="bg-primary/20 dark:border-border dark:bg-secondary border-primary relative flex h-44 flex-col items-center rounded-tr-4xl rounded-bl-4xl border md:w-56">
                     <Image
                       width={122}
                       height={95}
