@@ -2,13 +2,16 @@
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
 import { MenuItem, Offer, Restaurant } from "@/types/restaurant.types";
+import { PageData } from "@/types/shared.types";
 
 interface RestaurantResponce {
   list: Restaurant[];
+  _meta: PageData;
 }
 
 interface GetRestaurantsResult {
   data?: Restaurant[];
+  pageData?: PageData;
   error?: string;
 }
 
@@ -24,7 +27,7 @@ export async function getRestaurants(
     const responseData: RestaurantResponce =
       await fetchOnCondition<RestaurantResponce>(url);
 
-    return { data: responseData.list };
+    return { data: responseData.list, pageData: responseData._meta };
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch restaurants." };

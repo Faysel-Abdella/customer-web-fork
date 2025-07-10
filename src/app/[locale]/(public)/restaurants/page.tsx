@@ -25,11 +25,9 @@ const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
             <MobileRestaurantFilter />
           </div>
           <div className="flex w-full flex-col gap-4 lg:w-3/4">
-            <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              <Suspense fallback={<RestaurantListSkeleton />}>
-                <RestaurantsList params={param} />
-              </Suspense>
-            </div>
+            <Suspense fallback={<RestaurantListSkeleton />}>
+              <RestaurantsList params={param} />
+            </Suspense>
           </div>
         </div>
       </div>
