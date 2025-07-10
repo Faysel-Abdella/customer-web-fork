@@ -22,7 +22,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
   return (
     <Card className="group overflow-hidden border p-0 shadow-none backdrop-blur-sm transition-all duration-300">
       <CardContent className="p-2 py-3">
-        <div className="flex max-md:flex-col">
+        <div className="flex gap-2 max-md:flex-col">
           <div className="relative aspect-video h-56 w-full overflow-hidden rounded-lg md:aspect-square md:w-2/5">
             <Image
               src={restaurant.image_file}
