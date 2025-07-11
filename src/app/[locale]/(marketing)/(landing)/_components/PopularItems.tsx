@@ -1,8 +1,8 @@
-import React from "react";
 import Image from "next/image";
 
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
+import { getPopularDishes } from "@/actions/actions";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -12,33 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const popularItems = [
-  {
-    title: "Shrimp Noodle Soup",
-    imgUrl: "/assets/images/landing/popular-item1.png",
-    prices: 35.0,
-  },
-  {
-    title: "Beef Noodle Soup",
-    imgUrl: "/assets/images/landing/popular-item2.png",
-    prices: 38.0,
-  },
-  {
-    title: "Shrimp & Veggie Stir-fry",
-    imgUrl: "/assets/images/landing/popular-item3.png",
-    prices: 32.0,
-  },
-  {
-    title: "Spicy Fried Noodles",
-    imgUrl: "/assets/images/landing/popular-item4.png",
-    prices: 28.0,
-  },
-  {
-    title: "Steamed Rice",
-    imgUrl: "/assets/images/landing/popular-item5.png",
-    prices: 8.0,
-  },
-];
+import PopularItemCard from "./PopularItemCard";
 
 const popularOrder = [
   {
@@ -58,8 +32,10 @@ const popularOrder = [
   },
 ];
 
-const PopularItems = () => {
-  const t = useTranslations("landing.popular_food_items");
+const PopularItems = async () => {
+  const t = await getTranslations("landing.popular_food_items");
+
+  const { data: dishes } = await getPopularDishes();
   return (
     <div className="parent-container flex w-full flex-col items-center gap-20 py-20">
       <div className="container flex flex-col gap-20">
@@ -68,75 +44,27 @@ const PopularItems = () => {
             align: "start",
             loop: true,
           }}
-          className="overflow-visible"
+          className="space-y-5 overflow-visible"
         >
           <div className="flex items-center justify-center gap-5 max-md:flex-col md:justify-between">
             <h2 className="text-foreground text-4xl font-bold">{t("title")}</h2>
             <div className="flex gap-4">
-              <CarouselPrevious className="bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
-              <CarouselNext className="bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
+              <CarouselPrevious className="bg-primary dark:bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
+              <CarouselNext className="bg-primary dark:bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
             </div>
           </div>
-          <CarouselContent className="overflow-visible">
-            {popularItems.map((item) => (
-              <CarouselItem
-                key={item.title}
-                className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
-              >
-                <div className="pt-28">
-                  <div className="bg-primary/20 dark:border-border dark:bg-secondary border-primary relative flex h-44 flex-col items-center rounded-tr-4xl rounded-bl-4xl border md:w-56">
-                    <Image
-                      width={122}
-                      height={95}
-                      src={item.imgUrl}
-                      alt="image of popular item"
-                      className="absolute -top-10"
-                    />
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-5 pt-12">
-                      <span className="text-center text-xl font-bold">
-                        {item.title}
-                      </span>
-                      <span className="text-muted-foreground">
-                        {t("start_from")}
-                      </span>
-                      <span className="text-primary text-lg font-semibold">
-                        ${item.prices}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-            {popularItems.map((item) => (
-              <CarouselItem
-                key={item.title}
-                className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
-              >
-                <div className="pt-28">
-                  <div className="bg-primary/20 dark:border-border dark:bg-secondary border-primary relative flex h-44 flex-col items-center rounded-tr-4xl rounded-bl-4xl border md:w-56">
-                    <Image
-                      width={122}
-                      height={95}
-                      src={item.imgUrl}
-                      alt="image of popular item"
-                      className="absolute -top-10"
-                    />
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-5 pt-12">
-                      <span className="text-center text-xl font-bold">
-                        {item.title}
-                      </span>
-                      <span className="text-muted-foreground">
-                        {t("start_from")}
-                      </span>
-                      <span className="text-primary text-lg font-semibold">
-                        ${item.prices}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+          {dishes && (
+            <CarouselContent className="overflow-visible">
+              {dishes.map((item) => (
+                <CarouselItem
+                  key={item.title}
+                  className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                >
+                  <PopularItemCard menuItem={item} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          )}
         </Carousel>
         <div className="flex justify-evenly gap-10 max-lg:flex-col">
           {popularOrder.map((order) => (
