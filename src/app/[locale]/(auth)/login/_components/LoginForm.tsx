@@ -81,7 +81,7 @@ export function LoginForm({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-6">
-              <Logo href="/" />
+              <Logo href="/" className="h-9 w-24" />
               <h1 className="text-center text-lg font-bold md:text-xl">
                 {t("welcome")}
               </h1>
