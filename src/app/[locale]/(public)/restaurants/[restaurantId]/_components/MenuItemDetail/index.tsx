@@ -82,6 +82,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
     });
 
     startTransition(async () => {
+      console.log(isOpen);
       const results = await addToCartAction(data, clearCart);
       if (results.error) {
         toast.error("Failed to add item to cart", {
@@ -89,6 +90,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
         });
       } else {
         toast.success("Successfully added item to cart");
+        setIsOpen(false);
         refreshCart();
       }
     });

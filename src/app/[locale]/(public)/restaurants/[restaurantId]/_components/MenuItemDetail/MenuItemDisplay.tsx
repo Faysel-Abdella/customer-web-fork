@@ -16,7 +16,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { MenuItem } from "@/types/restaurant.types";
 
-import AddOnList from "./AddOnList";
+import AddOnList from "../AddOnList";
 
 interface MenuItemDisplayProps {
   menuItem: MenuItem;
