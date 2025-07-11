@@ -135,7 +135,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 {t("or_divider")}
               </span>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="">
               <GoogleLoginButton />
             </div>
           </div>

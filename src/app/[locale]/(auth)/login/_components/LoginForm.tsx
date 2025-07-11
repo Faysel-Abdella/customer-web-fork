@@ -126,7 +126,7 @@ export function LoginForm({
                 {t("or_divider")}
               </span>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="">
               <GoogleLoginButton />
             </div>
           </div>
