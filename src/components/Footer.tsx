@@ -22,13 +22,8 @@ export default function Footer() {
     <footer className="parent-container bg-black text-white">
       <div className="container mx-auto py-12 lg:py-16">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Logo className="size-10 border-0 lg:size-12" />
-              <p className="hover:text-primary text-1xl font-bold md:text-2xl lg:text-3xl">
-                {t("about.brand_name")}
-              </p>
-            </div>
+          <div className="flex flex-col gap-4">
+            <Logo href="#" className="mb-2" />
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t("about.description")}
             </p>

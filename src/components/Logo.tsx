@@ -1,26 +1,23 @@
 import Image from "next/image";
 
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface logoProps {
   className?: string;
+  href: string;
 }
-const Logo = ({ className }: logoProps) => {
+const Logo = ({ className, href }: logoProps) => {
   return (
-    <div
+    <Link
+      href={href}
       className={cn(
-        "relative flex size-16 items-center justify-center rounded-2xl border-2 border-white bg-gradient-to-r from-orange-500 to-red-500 shadow-lg",
+        "relative h-6 w-16 min-w-16 md:h-10 md:w-28 md:min-w-28 lg:h-12 lg:w-32 lg:min-w-32",
         className,
       )}
     >
-      <Image
-        src={"/assets/images/logo.png"}
-        alt="logo"
-        fill
-        priority
-        quality={100}
-      />
-    </div>
+      <Image src={"/assets/time_logo_full.png"} alt="time delivery logo" fill />
+    </Link>
   );
 };
 

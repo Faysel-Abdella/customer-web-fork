@@ -31,10 +31,8 @@ const MobileSheet = () => {
         <SheetHeader>
           <SheetTitle className="sr-only">mobile navigation sheet</SheetTitle>
           <div className="flex items-center justify-between pr-5">
-            <div className="flex items-center gap-2">
-              <Logo className="size-10 border-0" />
-              <p className="hover:text-primary text-xl font-bold">TIME</p>
-            </div>
+            <Logo href="#" />
+
             <div className="flex items-center gap-2">
               <LanguageSelector />
               <ThemeToggle />
