@@ -28,7 +28,7 @@ export interface Restaurant {
   created_by_first_name: string;
   created_by_last_name: string;
   created_by_email: string;
-  fee: string;
+  fee: number;
   location: string;
   latitude: string;
   longitude: string;

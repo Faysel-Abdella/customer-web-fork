@@ -84,7 +84,7 @@ const FavoritesListItem = ({ restaurant }: FavoritesListItemProps) => {
                     </div>
                   </div>
                   <span className="text-muted-foreground flex-shrink-0 text-xs">
-                    +${restaurant.estimated_delivery_fees}
+                    +${restaurant.fee}
                   </span>
                 </div>
               </div>

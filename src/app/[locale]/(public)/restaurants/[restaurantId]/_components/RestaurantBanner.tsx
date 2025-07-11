@@ -60,9 +60,7 @@ const RestaurantBanner = ({ restaurant }: RestaurantBanner) => {
             </div>
             <div className="text-right">
               <p className="text-muted-foreground text-sm">Delivery fee</p>
-              <p className="font-semibold text-orange-600">
-                ${restaurant.estimated_delivery_fees}
-              </p>
+              <p className="font-semibold text-orange-600">${restaurant.fee}</p>
             </div>
           </div>
         </div>

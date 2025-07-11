@@ -109,7 +109,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
           <div className="flex items-center justify-between border-t border-gray-100 pt-2">
             <span className="text-muted-foreground text-sm">Delivery fee</span>
             <span className="text-primary font-semibold">
-              ${restaurant.estimated_delivery_fees}
+              ${restaurant.fee}
             </span>
           </div>
         </div>
