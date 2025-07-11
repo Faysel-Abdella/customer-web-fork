@@ -139,10 +139,16 @@ export default function Footer() {
             <p className="text-center text-sm text-gray-400 md:text-left">
               {t.rich("bottom_bar.copyright", {
                 span: (chunk) => <span className="text-primary">{chunk}</span>,
+                a: (chunk) => (
+                  <a
+                    href="https://www.growztech.com/"
+                    className="text-primary hover:underline"
+                    target="_blank"
+                  >
+                    {chunk}
+                  </a>
+                ),
               })}
-              <Link href="#" className="text-primary hover:underline">
-                ToXSL Technologies
-              </Link>
             </p>
             <div className="flex items-center space-x-6">
               <Link
