@@ -44,9 +44,20 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
   const [isPending, startTransition] = useTransition();
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedAddonIds, setSelectedAddonIds] = useState<number[]>([]);
-  const { refreshCart, currentRestaurantId } = useCart();
+  const { refreshCart, currentRestaurantId, cartItems } = useCart();
   const [isClearCartOpen, setClearCartOpen] = useState(false);
   const [isLoadingItem, startLoadingItem] = useTransition();
+
+  const checkIfInCart = (): boolean => {
+    const itemInCart = cartItems?.find(
+      (item) => item.product_id.toString() === menuItemId,
+    );
+    if (itemInCart) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,6 +73,14 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
 
   const handleAddToCart = async (clearCart?: boolean) => {
     if (!menuItem) return;
+
+    console.log(cartItems);
+    console.log(menuItem);
+    console.log(checkIfInCart());
+    if (checkIfInCart()) {
+      toast.message("This item is already in cart");
+      return;
+    }
 
     const getSelectedAddons = () => {
       return menuItem.addOnsList
@@ -82,7 +101,6 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
     });
 
     startTransition(async () => {
-      console.log(isOpen);
       const results = await addToCartAction(data, clearCart);
       if (results.error) {
         toast.error("Failed to add item to cart", {
