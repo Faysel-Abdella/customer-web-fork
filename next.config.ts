@@ -4,6 +4,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig: NextConfig = {
   experimental: {
     serverComponentsHmrCache: false,
+    ppr: false,
   },
   images: {
     remotePatterns: [
