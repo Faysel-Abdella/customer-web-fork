@@ -7,11 +7,12 @@ import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
-import { Loader, Utensils } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useAuth } from "@/contexts/AuthContext";
@@ -73,15 +74,7 @@ const ProfileUpdateForm = ({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-10">
             <div className="flex flex-col items-center gap-2">
-              <a
-                href="#"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-red-500">
-                  <Utensils className="text-background" />
-                </div>
-                <span className="sr-only">Time Delivery Inc.</span>
-              </a>
+              <Logo href="/" className="mb-4" />
               <h1 className="text-xl font-bold">{t("title")}</h1>
             </div>
             <div className="flex flex-col gap-6">

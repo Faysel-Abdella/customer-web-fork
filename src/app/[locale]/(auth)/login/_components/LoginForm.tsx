@@ -80,15 +80,11 @@ export function LoginForm({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-center gap-2">
-              <Link
-                href="/"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
-                <Logo className="border-0" />
-                <span className="sr-only">Time Inc.</span>
-              </Link>
-              <h1 className="text-xl font-bold">{t("welcome")}</h1>
+            <div className="flex flex-col items-center gap-6">
+              <Logo href="/" />
+              <h1 className="text-center text-lg font-bold md:text-xl">
+                {t("welcome")}
+              </h1>
             </div>
             <div className="flex flex-col gap-6">
               <LoginFormFields form={form} setCountry={setCountry} />

@@ -22,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Link } from "@/i18n/navigation";
 import { forgotPasswordSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
@@ -61,13 +60,7 @@ export function ForgotPasswordForm({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-2">
-              <Link
-                href="/"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
-                <Logo className="border-0" />
-                <span className="sr-only">Time Inc.</span>
-              </Link>
+              <Logo href="/" className="mb-4" />
               <h1 className="text-xl font-bold">{t("title")}</h1>
               <div className="text-muted-foreground text-center text-sm">
                 {t("instruction")}

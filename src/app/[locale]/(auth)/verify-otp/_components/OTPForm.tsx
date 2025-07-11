@@ -24,7 +24,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useVerifyOtp } from "@/hooks/authHooks/useVerifyOtp";
-import { Link, useRouter } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { oTPSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
@@ -81,13 +81,7 @@ export function OTPForm({ className, ...props }: React.ComponentProps<"div">) {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-2">
-              <Link
-                href="/"
-                className="flex flex-col items-center gap-2 font-medium"
-              >
-                <Logo className="border-0" />
-                <span className="sr-only">Time Inc.</span>
-              </Link>
+              <Logo href="/" className="mb-4" />
               <h1 className="text-xl font-bold">{t("title")}</h1>
               <div className="text-muted-foreground text-center text-sm">
                 {t("enter_code_prompt")}{" "}
