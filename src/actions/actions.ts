@@ -72,9 +72,6 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
     if (responseData.payment_url) {
       return { success: true, payment_url: responseData.payment_url };
     }
-
-    await fetchWithAuth("/api/cart/delete-cart");
-
     return { success: true };
   } catch (error) {
     console.error(error);

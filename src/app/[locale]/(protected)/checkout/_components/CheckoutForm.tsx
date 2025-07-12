@@ -7,7 +7,7 @@ import { placeOrder } from "@/actions/actions";
 import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "@/i18n/navigation";
 import { Address } from "@/types/profile.types";
-import { Offer } from "@/types/restaurant.types";
+import { Offer, OrderPayload } from "@/types/restaurant.types";
 
 import CartItems from "./CartItems";
 import CheckoutFormSkeleton from "./CheckoutFormSkeleton.tsx";
@@ -37,6 +37,17 @@ const CheckoutForm = () => {
 
   const discount: number = selectedOffer ? parseInt(selectedOffer.discount) : 0;
 
+  const getItemArray = () => {
+    if (!cartItems || cartItems.length === 0) return [];
+    return cartItems.map((item) => ({
+      item_price: item.selected_rest_price.price,
+      price_id: item.price_id,
+      product_id: item.id,
+      quantity: item.quantity,
+      add_on: item.additional_items,
+    }));
+  };
+
   const handleOrder = () => {
     if (!selectedAddress) {
       toast.info("Please select an address");
@@ -46,19 +57,23 @@ const CheckoutForm = () => {
       toast.info("Empty cart");
       return;
     }
+
+    if (!currentRestaurantId) return;
+
+    const orderItems = getItemArray();
     startOrdering(async () => {
-      const rawData = {
+      const rawData: { Detail: OrderPayload } = {
         Detail: {
           store_id: currentRestaurantId,
           address: selectedAddress.id.toString(),
           total_price: (totalPrice - discount).toString(),
           payable_amount: totalPrice.toString(),
           type_id: parseInt(selectedPaymentMethod!),
-          payment_status: 1,
-          item: JSON.stringify(cartItems),
+          item: JSON.stringify(orderItems),
         },
       };
 
+      console.log(rawData);
       const results = await placeOrder(JSON.stringify(rawData));
 
       if (results.error) {

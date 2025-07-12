@@ -100,6 +100,17 @@ export interface AddOn {
   created_by_id: number;
 }
 
+export type AdditionalItem = {
+  id: number;
+  cart_item_id: number;
+  price: string;
+  add_on_id: number;
+  type_id: number;
+  state_id: number;
+  created_on: string;
+  created_by_id: number;
+};
+
 export interface MenuItem {
   id: number;
   cart_item_id: string;
@@ -202,30 +213,6 @@ export type MenuItemImage = {
   created_by_id: number;
 };
 
-export type AddOnItem = {
-  id: number;
-  title: string;
-  price: string;
-  limit: number;
-  item_id: number;
-  state_id: number;
-  add_on_category_id: AddOnCategory;
-  type_id: number;
-  created_on: string;
-  created_by_id: number;
-};
-
-export type AdditionalItem = {
-  id: number;
-  cart_item_id: number;
-  price: string;
-  add_on_id: number;
-  type_id: number;
-  state_id: number;
-  created_on: string;
-  created_by_id: number;
-};
-
 export type CartItem = {
   id: number;
   store_id: number;
@@ -270,4 +257,27 @@ export type Category = {
   image: string;
   created_on: string;
   created_by_id: number;
+};
+
+export type OrderAddOn = {
+  add_on_id: number;
+  price: string;
+};
+
+export type OrderItem = {
+  product_id: number;
+  quantity: number;
+  item_price: string;
+  price_id: number;
+  product_name?: string;
+  add_on?: OrderAddOn[];
+};
+
+export type OrderPayload = {
+  type_id: number;
+  store_id: number;
+  total_price: string;
+  payable_amount: string;
+  address?: string;
+  item: string;
 };
