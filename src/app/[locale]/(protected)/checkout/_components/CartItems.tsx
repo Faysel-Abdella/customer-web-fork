@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 
 import { Loader2, Minus, Plus, Trash } from "lucide-react";
@@ -22,7 +22,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
 import useDebounce from "@/hooks/useDebounce";
-import { useRouter } from "@/i18n/navigation";
 import { getAddOns } from "@/lib/utils";
 import { CartItem } from "@/types/restaurant.types";
 
@@ -32,37 +31,29 @@ interface CartItemsProps {
 const CartItems = ({ cartItem }: CartItemsProps) => {
   const [itemQuantity, setItemQuantity] = useState(cartItem.quantity);
 
-  const [isUpdating, startUpdateTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
 
   const { refreshCart, silentRefreshCart } = useCart();
-  const router = useRouter();
 
   const debouncedQuantity = useDebounce(itemQuantity, 500);
 
+  const updateQuantity = useCallback(async () => {
+    const result = await updateCartItem(
+      cartItem.id.toString(),
+      debouncedQuantity.toString(),
+    );
+    if (result.success) silentRefreshCart();
+    if (result.error) {
+      setItemQuantity(cartItem.quantity);
+      toast.error("Error", { description: result.error });
+    }
+  }, [cartItem.id, silentRefreshCart, debouncedQuantity, cartItem.quantity]);
+
   useEffect(() => {
     if (debouncedQuantity !== cartItem.quantity) {
-      startUpdateTransition(async () => {
-        const result = await updateCartItem(
-          cartItem.id.toString(),
-          debouncedQuantity.toString(),
-        );
-        if (result.success) {
-          silentRefreshCart();
-          router.refresh();
-        }
-        if (result.error) {
-          toast.error("Error", { description: result.error });
-        }
-      });
+      updateQuantity();
     }
-  }, [
-    debouncedQuantity,
-    cartItem.id,
-    cartItem.quantity,
-    silentRefreshCart,
-    router,
-  ]);
+  }, [debouncedQuantity, cartItem.quantity, updateQuantity]);
 
   const handleDelete = async () => {
     startDeleteTransition(async () => {
@@ -91,13 +82,10 @@ const CartItems = ({ cartItem }: CartItemsProps) => {
                 <h3 className="text-lg font-semibold">
                   {cartItem.restaurant_items[0].title}
                 </h3>
-                {isUpdating ? (
-                  <Loader2 className="text-muted-foreground h-7 w-6 animate-spin" />
-                ) : (
-                  <p className="text-lg font-bold text-orange-500">
-                    ${cartItem.selected_rest_price.price}
-                  </p>
-                )}
+
+                <p className="text-lg font-bold text-orange-500">
+                  ${cartItem.selected_rest_price.price}
+                </p>
               </div>
 
               <AlertDialog>

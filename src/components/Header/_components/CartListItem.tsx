@@ -1,4 +1,4 @@
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 
 import { Loader2, Minus, Plus, Trash } from "lucide-react";
@@ -29,27 +29,34 @@ interface CartListItemProps {
 const CartListItem = ({ cartItem }: CartListItemProps) => {
   const [itemQuantity, setItemQuantity] = useState(cartItem.quantity);
 
-  const [isUpdating, startUpdateTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
 
   const { refreshCart, silentRefreshCart } = useCart();
 
   const debouncedQuantity = useDebounce(itemQuantity, 500);
 
-  useEffect(() => {
-    if (debouncedQuantity !== cartItem.quantity) {
-      startUpdateTransition(async () => {
-        const result = await updateCartItem(
-          cartItem.id.toString(),
-          debouncedQuantity.toString(),
-        );
-        if (result.success) silentRefreshCart();
-        if (result.error) {
-          toast.error("Error", { description: result.error });
-        }
-      });
+  const initialRender = useRef(true);
+
+  const updateQuantity = useCallback(async () => {
+    const result = await updateCartItem(
+      cartItem.id.toString(),
+      debouncedQuantity.toString(),
+    );
+    if (result.success) silentRefreshCart();
+    if (result.error) {
+      toast.error("Error", { description: result.error });
     }
-  }, [debouncedQuantity, cartItem.id, cartItem.quantity, silentRefreshCart]);
+  }, [cartItem.id, silentRefreshCart, debouncedQuantity]);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (debouncedQuantity !== cartItem.quantity) {
+      updateQuantity();
+    }
+  }, [debouncedQuantity, cartItem.quantity, updateQuantity]);
 
   const handleDelete = async () => {
     startDeleteTransition(async () => {
@@ -79,13 +86,9 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
             <p className="line-clamp-2 font-medium">
               {cartItem.restaurant_items[0].title}
             </p>
-            {isUpdating ? (
-              <Loader2 className="text-muted-foreground h-5 w-6 animate-spin" />
-            ) : (
-              <p className="text-primary text-sm font-semibold max-md:text-xs">
-                ${cartItem.selected_rest_price.price}
-              </p>
-            )}
+            <p className="text-primary text-sm font-semibold max-md:text-xs">
+              ${cartItem.selected_rest_price.price}
+            </p>
           </div>
         </div>
         <div className="flex w-full flex-col items-end md:w-min md:flex-row-reverse md:items-center md:gap-3">
