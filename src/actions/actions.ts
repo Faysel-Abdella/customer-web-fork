@@ -84,7 +84,9 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
 }
 
 interface PopularDishesResponse {
-  items: MenuItem[];
+  items: {
+    list: MenuItem[];
+  };
 }
 
 interface GetPopularDishesResult {
@@ -97,7 +99,7 @@ export async function getPopularDishes(): Promise<GetPopularDishesResult> {
     const responseData: PopularDishesResponse =
       await fetchWithAuth<PopularDishesResponse>(`/api/cart-item/popular-dish`);
 
-    return { data: responseData.items };
+    return { data: responseData.items.list };
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch popular dishes list." };
