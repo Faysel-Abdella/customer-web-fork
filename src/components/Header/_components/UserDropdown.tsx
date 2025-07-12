@@ -68,9 +68,9 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile/favorites">
+            <Link href="/profile/favourites">
               <Heart className="mr-2 h-4 w-4" />
-              <span>Favorites</span>
+              <span>Favourites</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
