@@ -39,21 +39,24 @@ const PopularItems = async () => {
   return (
     <div className="parent-container flex w-full flex-col items-center gap-20 py-20">
       <div className="container flex flex-col gap-20">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="space-y-5 overflow-visible"
-        >
-          <div className="flex items-center justify-center gap-5 max-md:flex-col md:justify-between">
-            <h2 className="text-foreground text-4xl font-bold">{t("title")}</h2>
-            <div className="flex gap-4">
-              <CarouselPrevious className="bg-primary dark:bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
-              <CarouselNext className="bg-primary dark:bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
+        {dishes && (
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="space-y-5 overflow-visible"
+          >
+            <div className="flex items-center justify-center gap-5 max-md:flex-col md:justify-between">
+              <h2 className="text-foreground text-4xl font-bold">
+                {t("title")}
+              </h2>
+              <div className="flex gap-4">
+                <CarouselPrevious className="bg-primary dark:bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
+                <CarouselNext className="bg-primary dark:bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
+              </div>
             </div>
-          </div>
-          {dishes && (
+
             <CarouselContent className="overflow-visible">
               {dishes.map((item) => (
                 <CarouselItem
@@ -64,8 +67,8 @@ const PopularItems = async () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-          )}
-        </Carousel>
+          </Carousel>
+        )}
         <div className="flex justify-evenly gap-10 max-lg:flex-col">
           {popularOrder.map((order) => (
             <div
