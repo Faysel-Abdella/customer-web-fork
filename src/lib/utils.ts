@@ -100,3 +100,7 @@ export const getAddOns = (cartItem: CartItem) => {
   });
   return addOns;
 };
+
+export const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};

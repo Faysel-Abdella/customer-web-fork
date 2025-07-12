@@ -12,6 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { scrollToTop } from "@/lib/utils";
 import { PageData } from "@/types/shared.types";
 
 interface RestaurantPaginationProps {
@@ -25,16 +26,16 @@ const RestaurantPagination = ({ pageData }: RestaurantPaginationProps) => {
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
-
     if (page <= 0 || page > pageData.pageCount) return;
     if (params.get("page") == null) return;
+    if (page.toString() == pageData.currentPage.toString()) return;
 
-    if (params.get("page") == (pageData.currentPage - 1).toString()) return;
-    params.set("page", page.toString());
+    params.set("page", (page - 1).toString());
     router.push({
       pathname,
       query: Object.fromEntries(params),
     });
+    scrollToTop();
   };
   const setFreshParams = useCallback(() => {
     const params = new URLSearchParams(searchParams);
@@ -55,7 +56,7 @@ const RestaurantPagination = ({ pageData }: RestaurantPaginationProps) => {
         <PaginationItem>
           <PaginationPrevious
             className="cursor-pointer"
-            onClick={() => handlePageChange(pageData.currentPage)}
+            onClick={() => handlePageChange(pageData.currentPage - 1)}
           />
         </PaginationItem>
         {Array.from({ length: pageData.pageCount }, (_, i) => i + 1)
