@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
-import { LoginResponse } from "@/types/auth.types";
+import { LoginResponse, UserDetail } from "@/types/auth.types";
 import { Category, MenuItem, Offer } from "@/types/restaurant.types";
 
 export async function updateProfileAction(data: FormData) {
@@ -190,5 +190,51 @@ export async function getCategiesList(): Promise<getCategoriesList> {
   } catch (error) {
     console.error(error);
     return { error: "Failed to fetch categories list." };
+  }
+}
+
+interface ForgotPasswordPayload {
+  User: {
+    contact_no: string;
+    country_code: string;
+  };
+}
+
+interface ForgotPasswordResponse {
+  message: string;
+  detail: UserDetail;
+}
+
+interface ForgotPasswordResult {
+  message?: string;
+  detail?: UserDetail;
+  error?: string;
+}
+
+export async function forgotPassword(
+  data: ForgotPasswordPayload,
+): Promise<ForgotPasswordResult> {
+  const body = JSON.stringify(data);
+  try {
+    const responseData = await fetchOnCondition<ForgotPasswordResponse>(
+      "/api/user/forgot-password",
+      {
+        method: "POST",
+
+        body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    return {
+      detail: responseData.detail,
+      message: responseData.message,
+    };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { error: error };
+    else return { error: "Failed to add item to favorites" };
   }
 }

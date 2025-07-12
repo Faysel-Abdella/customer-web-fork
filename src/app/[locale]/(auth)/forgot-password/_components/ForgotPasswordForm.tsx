@@ -1,16 +1,19 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
+import { Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { forgotPassword } from "@/actions/actions";
 import Logo from "@/components/Logo";
 import { PhoneInput } from "@/components/PhoneNumberInput";
 import { Button } from "@/components/ui/button";
@@ -31,6 +34,8 @@ export function ForgotPasswordForm({
 }: React.ComponentProps<"div">) {
   const t = useTranslations("auth.forgot_password");
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -39,20 +44,37 @@ export function ForgotPasswordForm({
     },
   });
 
-  function onSubmit() {
+  async function onSubmit() {
+    setIsLoading(true);
     const phoneNumberObj = parsePhoneNumberFromString(
       form.getValues("contact_no"),
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
-    const data = { contact_no, country_code };
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+
+    const result = await forgotPassword({
+      User: { contact_no, country_code: "+" + country_code },
     });
+    if (result.detail && result.message) {
+      toast.success(result.message, { description: result.detail.otp });
+      const unVerifiedUser = {
+        country_code: result.detail.country_code,
+        contact_no: result.detail.contact_no,
+      };
+
+      localStorage.setItem("unVerifiedUser", JSON.stringify(unVerifiedUser));
+      localStorage.setItem(
+        "forgot_password",
+        JSON.stringify({ forgot_password: true }),
+      );
+      setIsLoading(false);
+      router.push("/verify-otp");
+    }
+    if (result.error) {
+      toast.error(result.error);
+      setIsLoading(false);
+    }
+    setIsLoading(false);
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -86,8 +108,12 @@ export function ForgotPasswordForm({
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                {t("send_button")}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  t("send_button")
+                )}
               </Button>
             </div>
           </div>
