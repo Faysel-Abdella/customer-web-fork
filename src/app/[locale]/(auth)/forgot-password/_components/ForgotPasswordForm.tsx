@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import parsePhoneNumberFromString, {
@@ -25,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "@/i18n/navigation";
 import { forgotPasswordSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
@@ -64,7 +64,7 @@ export function ForgotPasswordForm({
 
       localStorage.setItem("unVerifiedUser", JSON.stringify(unVerifiedUser));
       localStorage.setItem(
-        "forgot_password",
+        "forgotPassword",
         JSON.stringify({ forgot_password: true }),
       );
       setIsLoading(false);

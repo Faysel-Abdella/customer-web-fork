@@ -37,7 +37,14 @@ export const useVerifyOtp = () => {
         localStorage.removeItem("unVerifiedUser");
         setUser(responseData.detail);
         setIsSuccess(true);
+
         const previousPath = localStorage.getItem("previousPath");
+        const forgotPassword = localStorage.getItem("forgotPassword");
+
+        if (forgotPassword) {
+          router.push("/change-password");
+          return;
+        }
 
         if (previousPath) {
           router.push(previousPath);
