@@ -1,5 +1,6 @@
 import { UserDetail } from "./auth.types";
 import { Restaurant } from "./restaurant.types";
+import { ActionResult } from "./shared.types";
 
 export interface Address {
   id: number;
@@ -150,4 +151,40 @@ export interface Message {
   type_id: number;
   notified_users: unknown[] | null;
   send_on: string;
+}
+export interface GetAddressListResult extends ActionResult {
+  data?: Address[];
+}
+export interface AddressListResponse {
+  list: Address[];
+}
+export interface GetOrdersListResults extends ActionResult {
+  data?: Order[];
+}
+export interface OrdersListResponse {
+  list: Order[];
+}
+export interface GetNotificationListResults extends ActionResult {
+  data?: Notification[];
+}
+export interface NotificationListResponse {
+  list: Notification[];
+}
+export interface GetFavoritesListResult extends ActionResult {
+  data?: { id: number; model_detail: Restaurant }[];
+}
+export interface FavoritesListResponse {
+  list: { id: number; model_detail: Restaurant }[];
+}
+export interface GetFaqResults extends ActionResult {
+  data?: FAQ[];
+}
+export interface FaqListResponse {
+  list: FAQ[];
+}
+export interface GetMessagesResult extends ActionResult {
+  data?: Message[];
+}
+export interface MessagesResponse {
+  messages: Message[];
 }

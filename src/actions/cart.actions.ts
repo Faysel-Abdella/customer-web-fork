@@ -1,16 +1,18 @@
 "use server";
 
 import { fetchWithAuth } from "@/lib/fetchWrappers";
-import { CartItem } from "@/types/cart.types";
+import {
+  CartItemResponse,
+  GetCartItemsResult,
+  GetTotalCartPriceResult,
+  TotalCartPriceResponse,
+} from "@/types/restaurant.types";
+import { ActionResult } from "@/types/shared.types";
 
-interface CartActionResults {
-  success: boolean;
-  error?: string;
-}
 export async function addToCartAction(
   data: FormData,
   clearCart: boolean = false,
-): Promise<CartActionResults> {
+): Promise<ActionResult> {
   try {
     if (clearCart) {
       await fetchWithAuth("/api/cart/delete-cart");
@@ -28,7 +30,7 @@ export async function addToCartAction(
     else return { success: false, error: "Failed to add to cart" };
   }
 }
-export async function deleteCartItem(id: string): Promise<CartActionResults> {
+export async function deleteCartItem(id: string): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/cart/delete-cart?id=${id}`);
     return { success: true };
@@ -41,7 +43,7 @@ export async function deleteCartItem(id: string): Promise<CartActionResults> {
 export async function updateCartItem(
   id: string,
   quantity: string,
-): Promise<CartActionResults> {
+): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/cart/update-item?id=${id}&quantity=${quantity}`);
     return { success: true };
@@ -52,35 +54,17 @@ export async function updateCartItem(
   }
 }
 
-interface GetCartItemsResult {
-  data?: CartItem[];
-  error?: string;
-}
-
-interface CartItemResponse {
-  list: CartItem[];
-}
-
 export async function getCartItems(): Promise<GetCartItemsResult> {
   try {
     const responseData: CartItemResponse =
       await fetchWithAuth<CartItemResponse>(`/api/cart/my-cart-list`);
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch cart items." };
+    if (typeof error === "string") return { success: true, error };
+    else return { success: true, error: "Failed to fetch cart items." };
   }
-}
-
-interface GetTotalCartPriceResult {
-  data?: number;
-  error?: string;
-}
-
-interface TotalCartPriceResponse {
-  total_price: number;
 }
 
 export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
@@ -88,10 +72,10 @@ export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
     const responseData: TotalCartPriceResponse =
       await fetchWithAuth<TotalCartPriceResponse>(`/api/cart/total-price`);
 
-    return { data: responseData.total_price };
+    return { success: true, data: responseData.total_price };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch total price" };
+    if (typeof error === "string") return { success: true, error };
+    else return { success: true, error: "Failed to fetch total price" };
   }
 }

@@ -1,19 +1,18 @@
 "use server";
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
-import { MenuItem, Offer, Restaurant } from "@/types/restaurant.types";
-import { PageData } from "@/types/shared.types";
-
-interface RestaurantResponce {
-  list: Restaurant[];
-  _meta: PageData;
-}
-
-interface GetRestaurantsResult {
-  data?: Restaurant[];
-  pageData?: PageData;
-  error?: string;
-}
+import {
+  GetMenuItemDetailResult,
+  GetRestaurantDetailsResult,
+  GetRestaurantMenuListResults,
+  GetRestaurantOffersResult,
+  GetRestaurantsResult,
+  MenuItemDetailResponse,
+  RestaurantDetailResponce,
+  RestaurantMenuListResponse,
+  RestaurantOffersResponse,
+  RestaurantResponce,
+} from "@/types/restaurant.types";
 
 export async function getRestaurants(
   queryString: string,
@@ -27,10 +26,14 @@ export async function getRestaurants(
     const responseData: RestaurantResponce =
       await fetchOnCondition<RestaurantResponce>(url);
 
-    return { data: responseData.list, pageData: responseData._meta };
+    return {
+      success: true,
+      data: responseData.list,
+      pageData: responseData._meta,
+    };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch restaurants." };
+    return { success: false, error: "Failed to fetch restaurants." };
   }
 }
 export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
@@ -40,19 +43,11 @@ export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
         "/api/restaurant/add-home-page",
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch restaurants." };
+    return { success: false, error: "Failed to fetch restaurants." };
   }
-}
-
-interface RestaurantDetailResponce {
-  detail: Restaurant;
-}
-interface GetRestaurantDetailsResult {
-  data?: Restaurant;
-  error?: string;
 }
 
 export async function getRestaurantDetails(
@@ -64,20 +59,11 @@ export async function getRestaurantDetails(
         `/api/restaurant/restaurant-detail?id=${restaurantId}`,
       );
 
-    return { data: responseData.detail };
+    return { success: true, data: responseData.detail };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch restaurant detail." };
+    return { success: false, error: "Failed to fetch restaurant detail." };
   }
-}
-
-interface RestaurantMenuListResponse {
-  list: MenuItem[];
-}
-
-interface GetRestaurantMenuListResults {
-  data?: MenuItem[];
-  error?: string;
 }
 
 export async function getRestaurantMenuList(
@@ -89,19 +75,11 @@ export async function getRestaurantMenuList(
         `/api/restaurant/menu-list?id=${restaurantId}`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch menu list." };
+    return { success: false, error: "Failed to fetch menu list." };
   }
-}
-
-interface MenuItemDetailResponse {
-  detail: MenuItem;
-}
-interface GetMenuItemDetailResult {
-  data?: MenuItem;
-  error?: string;
 }
 
 export async function getMenuItemDetail(
@@ -113,34 +91,25 @@ export async function getMenuItemDetail(
         `/api/restaurant/item-detail?id=${menuItemId}`,
       );
 
-    return { data: responseData.detail };
+    return { success: true, data: responseData.detail };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch menu item detail." };
+    return { success: false, error: "Failed to fetch menu item detail." };
   }
-}
-
-interface RestaurantOffersResponse {
-  list: Offer[];
-}
-
-interface GetRestaurantOffers {
-  data?: Offer[];
-  error?: string;
 }
 
 export async function getRestaurantOffers(
   id: string,
-): Promise<GetRestaurantOffers> {
+): Promise<GetRestaurantOffersResult> {
   try {
     const responseData: RestaurantOffersResponse =
       await fetchWithAuth<RestaurantOffersResponse>(
         `/api/offer/coupon-list?id=${id}`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch restaurant offers." };
+    return { success: false, error: "Failed to fetch restaurant offers." };
   }
 }

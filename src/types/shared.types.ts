@@ -6,7 +6,7 @@ export interface PageData {
 }
 
 export interface ActionResult {
-  success?: boolean;
+  success: boolean;
   message?: string;
   error?: string;
 }

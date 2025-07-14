@@ -1,8 +1,27 @@
 "use server";
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
-import { LoginResponse, UserDetail } from "@/types/auth.types";
-import { Category, MenuItem, Offer } from "@/types/restaurant.types";
+import {
+  ForgotPasswordPayload,
+  ForgotPasswordResponse,
+  ForgotPasswordResult,
+  LoginResponse,
+} from "@/types/auth.types";
+import {
+  BannerDataResponse,
+  CategoriesListResponse,
+  CategoryItemsResponse,
+  CategoryItemsResult,
+  GetBannerItemsResult,
+  getCategoriesList,
+  GetOffersListResult,
+  GetPopularDishesResult,
+  OffersListResponse,
+  PlaceOrderResponse,
+  PlaceOrderResults,
+  PopularDishesResponse,
+} from "@/types/restaurant.types";
+import { ActionResult } from "@/types/shared.types";
 
 export async function updateProfileAction(data: FormData) {
   try {
@@ -22,53 +41,16 @@ export async function updateProfileAction(data: FormData) {
   }
 }
 
-export interface BannerItem {
-  id: number;
-  name: string;
-  url: string;
-}
-
-export interface BannerDetail {
-  id: string;
-  name: string;
-  image: string;
-  location: string;
-}
-interface BannerDataResponse {
-  banners: {
-    restaurant: BannerDetail;
-    sample_item_images: string[];
-  }[];
-}
-
-interface GetBannerItemsResult {
-  data?: {
-    restaurant: BannerDetail;
-    sample_item_images: string[];
-  }[];
-  error?: string;
-}
-
 export async function getBannerItems(): Promise<GetBannerItemsResult> {
   try {
     const responseData: BannerDataResponse =
       await fetchWithAuth<BannerDataResponse>(`/api/cart-item/banners`);
-    return { data: responseData.banners };
+    return { success: true, data: responseData.banners };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch banner items" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch banner items" };
   }
-}
-
-interface PlaceOrderResults {
-  success: boolean;
-  payment_url?: string;
-  error?: string;
-}
-
-interface PlaceOrderResponse {
-  payment_url?: string;
 }
 
 export async function placeOrder(data: string): Promise<PlaceOrderResults> {
@@ -92,35 +74,16 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
   }
 }
 
-interface PopularDishesResponse {
-  items: {
-    list: MenuItem[];
-  };
-}
-
-interface GetPopularDishesResult {
-  data?: MenuItem[];
-  error?: string;
-}
-
 export async function getPopularDishes(): Promise<GetPopularDishesResult> {
   try {
     const responseData: PopularDishesResponse =
       await fetchWithAuth<PopularDishesResponse>(`/api/cart-item/popular-dish`);
 
-    return { data: responseData.items.list };
+    return { success: true, data: responseData.items.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch popular dishes list." };
+    return { success: true, error: "Failed to fetch popular dishes list." };
   }
-}
-interface OffersListResponse {
-  list: Offer[];
-}
-
-interface GetOffersListResult {
-  data?: Offer[];
-  error?: string;
 }
 
 export async function getOffersList(id?: string): Promise<GetOffersListResult> {
@@ -131,22 +94,17 @@ export async function getOffersList(id?: string): Promise<GetOffersListResult> {
     const responseData: OffersListResponse =
       await fetchWithAuth<OffersListResponse>(url);
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch offers list." };
+    return { success: true, error: "Failed to fetch offers list." };
   }
-}
-
-interface AddToFavoritesResults {
-  success: boolean;
-  error?: string;
 }
 
 export async function addToFavorites(
   id: string,
   typeId: string,
-): Promise<AddToFavoritesResults> {
+): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/state/favourite?id=${id}&type=${typeId}`);
     return { success: true };
@@ -155,15 +113,6 @@ export async function addToFavorites(
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to add item to favorites" };
   }
-}
-
-interface CategoryItemsResponse {
-  list: MenuItem[];
-}
-
-interface CategoryItemsResult {
-  data?: MenuItem[];
-  error?: string;
 }
 
 export async function getCategoryItems(
@@ -175,20 +124,11 @@ export async function getCategoryItems(
         `/api/cart-item/items-by-category?category_id=${id}`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch category items." };
+    return { success: false, error: "Failed to fetch category items." };
   }
-}
-
-interface CategoriesListResponse {
-  list: Category[];
-}
-
-interface getCategoriesList {
-  data?: Category[];
-  error?: string;
 }
 
 export async function getCategiesList(): Promise<getCategoriesList> {
@@ -198,29 +138,11 @@ export async function getCategiesList(): Promise<getCategoriesList> {
         `/api/restaurant/category-list`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { error: "Failed to fetch categories list." };
+    return { success: false, error: "Failed to fetch categories list." };
   }
-}
-
-interface ForgotPasswordPayload {
-  User: {
-    contact_no: string;
-    country_code: string;
-  };
-}
-
-interface ForgotPasswordResponse {
-  message: string;
-  detail: UserDetail;
-}
-
-interface ForgotPasswordResult {
-  message?: string;
-  detail?: UserDetail;
-  error?: string;
 }
 
 export async function forgotPassword(
@@ -241,6 +163,7 @@ export async function forgotPassword(
     );
 
     return {
+      succes: true,
       detail: responseData.detail,
       message: responseData.message,
     };

@@ -3,23 +3,23 @@ import { revalidatePath } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWrappers";
 import {
-  Address,
-  FAQ,
-  Message,
-  Notification,
-  Order,
+  AddressListResponse,
+  FaqListResponse,
+  FavoritesListResponse,
+  GetAddressListResult,
+  GetFaqResults,
+  GetFavoritesListResult,
+  GetMessagesResult,
+  GetNotificationListResults,
+  GetOrdersListResults,
+  MessagesResponse,
+  NotificationListResponse,
+  OrdersListResponse,
   SentMessageRequestType as SendMessageRequestType,
 } from "@/types/profile.types";
-import { Restaurant } from "@/types/restaurant.types";
+import { ActionResult } from "@/types/shared.types";
 
-interface AddressActionResults {
-  success: boolean;
-  error?: string;
-}
-
-export async function addAddress(
-  data: FormData,
-): Promise<AddressActionResults> {
+export async function addAddress(data: FormData): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/address-management/add-address`, {
       method: "POST",
@@ -36,15 +36,6 @@ export async function addAddress(
   }
 }
 
-interface GetAddressListResult {
-  data?: Address[];
-  error?: string;
-}
-
-interface AddressListResponse {
-  list: Address[];
-}
-
 export async function getAddressList(): Promise<GetAddressListResult> {
   try {
     const responseData: AddressListResponse =
@@ -53,15 +44,15 @@ export async function getAddressList(): Promise<GetAddressListResult> {
         { method: "POST" },
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch address list" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch address list" };
   }
 }
 
-export async function deleteAddress(id: string): Promise<AddressActionResults> {
+export async function deleteAddress(id: string): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/address-management/delete-address?id=${id}`);
     revalidatePath("/profile/addresses");
@@ -74,9 +65,7 @@ export async function deleteAddress(id: string): Promise<AddressActionResults> {
   }
 }
 
-export async function setDefaultAddress(
-  id: string,
-): Promise<AddressActionResults> {
+export async function setDefaultAddress(id: string): Promise<ActionResult> {
   try {
     await fetchWithAuth(
       `/api/address-management/default-address?address_id=${id}`,
@@ -91,35 +80,17 @@ export async function setDefaultAddress(
   }
 }
 
-interface GetOrdersListResults {
-  data?: Order[];
-  error?: string;
-}
-
-interface OrdersListResponse {
-  list: Order[];
-}
-
 export async function getOrdersList(): Promise<GetOrdersListResults> {
   try {
     const responseData: OrdersListResponse =
       await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`);
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch address list" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch address list" };
   }
-}
-
-interface GetNotificationListResults {
-  data?: Notification[];
-  error?: string;
-}
-
-interface NotificationListResponse {
-  list: Notification[];
 }
 
 export async function getNotificationList(): Promise<GetNotificationListResults> {
@@ -129,22 +100,13 @@ export async function getNotificationList(): Promise<GetNotificationListResults>
         `/api/user/notification-list`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch notication list" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch notication list" };
   }
 }
-interface GetFavoritesListResult {
-  data?: { id: number; model_detail: Restaurant }[];
-  error?: string;
-}
-
-interface FavoritesListResponse {
-  list: { id: number; model_detail: Restaurant }[];
-}
-
 export async function getFavoritesList(): Promise<GetFavoritesListResult> {
   try {
     const responseData: FavoritesListResponse =
@@ -152,21 +114,12 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
         `/api/state/favourite-list?id=1`,
       );
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch favorites list" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch favorites list" };
   }
-}
-
-interface GetFaqResults {
-  data?: FAQ[];
-  error?: string;
-}
-
-interface FaqListResponse {
-  list: FAQ[];
 }
 
 export async function getFaqList(): Promise<GetFaqResults> {
@@ -174,22 +127,21 @@ export async function getFaqList(): Promise<GetFaqResults> {
     const responseData: FaqListResponse =
       await fetchWithAuth<FaqListResponse>(`/api/user/faq`);
 
-    return { data: responseData.list };
+    return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch frequently asked questions." };
+    if (typeof error === "string") return { success: false, error };
+    else
+      return {
+        success: false,
+        error: "Failed to fetch frequently asked questions.",
+      };
   }
-}
-
-interface SendMessageResults {
-  success?: boolean;
-  error?: string;
 }
 
 export async function sendMessage(
   data: SendMessageRequestType,
-): Promise<SendMessageResults> {
+): Promise<ActionResult> {
   try {
     const body = JSON.stringify(data);
 
@@ -204,18 +156,9 @@ export async function sendMessage(
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to send message" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to send message" };
   }
-}
-
-interface GetMessagesResult {
-  data?: Message[];
-  error?: string;
-}
-
-interface MessagesResponse {
-  messages: Message[];
 }
 
 export async function getMessages(): Promise<GetMessagesResult> {
@@ -223,22 +166,17 @@ export async function getMessages(): Promise<GetMessagesResult> {
     const responseData: MessagesResponse =
       await fetchWithAuth<MessagesResponse>(`/api/user/history`);
 
-    return { data: responseData.messages };
+    return { success: true, data: responseData.messages };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch messages." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch messages." };
   }
-}
-
-interface ChangePasswordResult {
-  success?: boolean;
-  error?: string;
 }
 
 export async function changePassword(data: {
   User: { password: string; confirm_password: string };
-}): Promise<ChangePasswordResult> {
+}): Promise<ActionResult> {
   const body = JSON.stringify(data);
   try {
     await fetchWithAuth("/api/user/change-password", {
@@ -251,7 +189,7 @@ export async function changePassword(data: {
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error };
-    else return { error: "Failed to fetch messages." };
+    if (typeof error === "string") return { success: true, error };
+    else return { success: false, error: "Failed to fetch messages." };
   }
 }

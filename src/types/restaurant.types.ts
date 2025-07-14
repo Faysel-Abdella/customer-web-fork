@@ -1,3 +1,6 @@
+import { CartItem } from "./cart.types";
+import { ActionResult, PageData } from "./shared.types";
+
 interface Availability {
   id: number;
   day_id: number;
@@ -260,4 +263,102 @@ export interface OrderPayload {
   payable_amount: string;
   address?: string;
   item: string;
+}
+
+export interface BannerDetail {
+  restaurant: {
+    id: string;
+    name: string;
+    image: string;
+    location: string;
+  };
+  sample_item_images: string[];
+}
+export interface BannerDataResponse {
+  banners: BannerDetail[];
+}
+export interface GetBannerItemsResult extends ActionResult {
+  data?: BannerDetail[];
+}
+
+export interface PlaceOrderResults extends ActionResult {
+  payment_url?: string;
+}
+
+export interface PlaceOrderResponse {
+  payment_url?: string;
+}
+
+export interface PopularDishesResponse {
+  items: {
+    list: MenuItem[];
+  };
+}
+
+export interface GetPopularDishesResult extends ActionResult {
+  data?: MenuItem[];
+}
+
+export interface OffersListResponse {
+  list: Offer[];
+}
+
+export interface GetOffersListResult extends ActionResult {
+  data?: Offer[];
+}
+export interface CategoryItemsResponse {
+  list: MenuItem[];
+}
+export interface CategoryItemsResult extends ActionResult {
+  data?: MenuItem[];
+}
+export interface CategoriesListResponse {
+  list: Category[];
+}
+export interface getCategoriesList extends ActionResult {
+  data?: Category[];
+}
+export interface GetCartItemsResult extends ActionResult {
+  data?: CartItem[];
+}
+export interface CartItemResponse {
+  list: CartItem[];
+}
+export interface GetTotalCartPriceResult extends ActionResult {
+  data?: number;
+}
+export interface TotalCartPriceResponse {
+  total_price: number;
+}
+export interface RestaurantResponce {
+  list: Restaurant[];
+  _meta: PageData;
+}
+export interface GetRestaurantsResult extends ActionResult {
+  data?: Restaurant[];
+  pageData?: PageData;
+}
+export interface RestaurantDetailResponce {
+  detail: Restaurant;
+}
+export interface GetRestaurantDetailsResult extends ActionResult {
+  data?: Restaurant;
+}
+export interface RestaurantMenuListResponse {
+  list: MenuItem[];
+}
+export interface GetRestaurantMenuListResults extends ActionResult {
+  data?: MenuItem[];
+}
+export interface MenuItemDetailResponse {
+  detail: MenuItem;
+}
+export interface GetMenuItemDetailResult extends ActionResult {
+  data?: MenuItem;
+}
+export interface RestaurantOffersResponse {
+  list: Offer[];
+}
+export interface GetRestaurantOffersResult extends ActionResult {
+  data?: Offer[];
 }

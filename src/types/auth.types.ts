@@ -1,3 +1,5 @@
+import { ActionResult } from "next/dist/server/app-render/types";
+
 export interface LoginPayload {
   "LoginForm[username]": string;
   "LoginForm[country_code]": string;
@@ -91,4 +93,17 @@ export interface LoginResponse extends ApiResponse {
 
 export interface ResendOtpResponse extends ApiResponse {
   detail: UserDetail;
+}
+export interface ForgotPasswordPayload {
+  User: {
+    contact_no: string;
+    country_code: string;
+  };
+}
+export interface ForgotPasswordResponse {
+  message: string;
+  detail: UserDetail;
+}
+export interface ForgotPasswordResult extends ActionResult {
+  detail?: UserDetail;
 }
