@@ -11,7 +11,7 @@ import {
 } from "react";
 
 import { getCartItems, getTotalCartPrice } from "@/actions/cart.actions";
-import { CartItem } from "@/types/restaurant.types";
+import { CartItem } from "@/types/cart.types";
 
 import { useAuth } from "./AuthContext";
 

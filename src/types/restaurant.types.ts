@@ -51,7 +51,7 @@ export interface Restaurant {
   files: File[];
 }
 
-export type ItemPrice = {
+export interface ItemPrice {
   id: number;
   title: string;
   price: string;
@@ -61,7 +61,7 @@ export type ItemPrice = {
   type_id: number;
   created_on: string;
   created_by_id: number;
-};
+}
 
 interface MenuImage {
   id: number;
@@ -100,7 +100,7 @@ export interface AddOn {
   created_by_id: number;
 }
 
-export type AdditionalItem = {
+export interface AdditionalItem {
   id: number;
   cart_item_id: number;
   price: string;
@@ -109,7 +109,7 @@ export type AdditionalItem = {
   state_id: number;
   created_on: string;
   created_by_id: number;
-};
+}
 
 export interface MenuItem {
   id: number;
@@ -147,15 +147,15 @@ export interface MenuItem {
   availability: Availability[];
 }
 
-export type AddToCartRequest = {
+export interface AddToCartRequest {
   "Cart[store_id]": string;
   "Cart[type_id]": string;
   "CartItem[product_id]": string;
   "CartItem[price_id]": string;
   "CartItem[quantity]": string;
-};
+}
 
-export type RestaurantItem = {
+export interface RestaurantItem {
   id: number;
   title: string;
   cuisine_type: number;
@@ -185,9 +185,9 @@ export type RestaurantItem = {
   is_ordered: boolean;
   menuImages: MenuImage[];
   itemPrice: ItemPrice[];
-};
+}
 
-export type SelectedRestPrice = {
+export interface SelectedRestPrice {
   id: number;
   title: string;
   price: string;
@@ -197,9 +197,9 @@ export type SelectedRestPrice = {
   type_id: number;
   created_on: string;
   created_by_id: number;
-};
+}
 
-export type MenuItemImage = {
+export interface MenuItemImage {
   id: number;
   name: string;
   size: number;
@@ -211,27 +211,7 @@ export type MenuItemImage = {
   type_id: number;
   created_on: string;
   created_by_id: number;
-};
-
-export type CartItem = {
-  id: number;
-  store_id: number;
-  cart_id: number;
-  product_id: number;
-  store_type: number;
-  price_id: number;
-  selected_store_price: string;
-  selected_rest_price: ItemPrice;
-  quantity: number;
-  total_price: number;
-  state_id: number;
-  type_id: number;
-  created_on: string;
-  created_by_id: number;
-  cart_type: number;
-  restaurant_items: MenuItem[];
-  additional_items: AdditionalItem[];
-};
+}
 
 export interface Offer {
   id: number;
@@ -251,33 +231,33 @@ export interface Offer {
   restaruentDetail: Restaurant; // Note: Typo in backend 'restaruentDetail' instead of 'restaurantDetail'
 }
 
-export type Category = {
+export interface Category {
   id: number;
   title: string;
   image: string;
   created_on: string;
   created_by_id: number;
-};
+}
 
-export type OrderAddOn = {
+export interface OrderAddOn {
   add_on_id: number;
   price: string;
-};
+}
 
-export type OrderItem = {
+export interface OrderItem {
   product_id: number;
   quantity: number;
   item_price: string;
   price_id: number;
   product_name?: string;
   add_on?: OrderAddOn[];
-};
+}
 
-export type OrderPayload = {
+export interface OrderPayload {
   type_id: number;
   store_id: number;
   total_price: string;
   payable_amount: string;
   address?: string;
   item: string;
-};
+}

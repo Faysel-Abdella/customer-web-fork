@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
 import useDebounce from "@/hooks/useDebounce";
 import { getAddOns } from "@/lib/utils";
-import { CartItem } from "@/types/restaurant.types";
+import { CartItem } from "@/types/cart.types";
 
 interface CartListItemProps {
   cartItem: CartItem;

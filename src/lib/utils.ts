@@ -2,7 +2,8 @@ import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
-import { AddOn, CartItem } from "@/types/restaurant.types";
+import { AddOn } from "@/types/restaurant.types";
+import { CartItem } from "@/types/cart.types";
 
 import { HttpError } from "./HttpError";
 

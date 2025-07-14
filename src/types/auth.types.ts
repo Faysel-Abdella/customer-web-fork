@@ -1,4 +1,4 @@
-export type LoginPayload = {
+export interface LoginPayload {
   "LoginForm[username]": string;
   "LoginForm[country_code]": string;
   "LoginForm[password]": string;
@@ -6,9 +6,9 @@ export type LoginPayload = {
   "LoginForm[device_type]": string;
   "LoginForm[device_token]": string;
   "LoginForm[device_udid]": string;
-};
+}
 
-export type SignupPayload = {
+export interface SignupPayload {
   "User[first_name]": string;
   "User[last_name]": string;
   "User[password]": string;
@@ -16,25 +16,25 @@ export type SignupPayload = {
   "User[contact_no]": string;
   "User[role_id]": string;
   confirm_password: string;
-};
-export type UpdateProfilePayload = {
+}
+export interface UpdateProfilePayload {
   "User[first_name]"?: string;
   "User[last_name]"?: string;
   "User[country_code]"?: string;
   "User[contact_no]"?: string;
   "User[date_of_birth]"?: string;
   "User[gender]"?: string;
-};
-export type VerifyOtpPayload = {
+}
+export interface VerifyOtpPayload {
   "User[otp]": string;
   "User[contact_no]": string;
   "User[country_code]": string;
   device_type: string;
-};
-export type ResendOtpPayload = {
+}
+export interface ResendOtpPayload {
   "User[contact_no]": string;
   "User[country_code]": string;
-};
+}
 
 type numericBool = 0 | 1;
 export interface UserDetail {
@@ -86,7 +86,6 @@ export interface ApiResponse {
 }
 
 export interface LoginResponse extends ApiResponse {
-  "access-token": string;
   detail: UserDetail;
 }
 

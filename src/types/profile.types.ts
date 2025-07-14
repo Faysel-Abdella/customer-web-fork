@@ -1,7 +1,7 @@
 import { UserDetail } from "./auth.types";
 import { Restaurant } from "./restaurant.types";
 
-export type Address = {
+export interface Address {
   id: number;
   title: string;
   title_ps: string; // Assuming 'ps' and 'fs' might stand for specific language variants
@@ -18,18 +18,18 @@ export type Address = {
   created_by_id: number;
   contact_no: string;
   country_code: string;
-};
+}
 
-export type OrderState = {
+export interface OrderState {
   id: number;
   order_id: number;
   state_id: number;
   description: string | null;
   created_on: string;
   created_by_id: number;
-};
+}
 
-export type StoreFile = {
+export interface StoreFile {
   id: number;
   name: string;
   size: number;
@@ -41,10 +41,10 @@ export type StoreFile = {
   type_id: number;
   created_on: string;
   created_by_id: number;
-};
+}
 
-// --- Main Order Type (Updated) ---
-export type Order = {
+// --- Main Order interface (Updated) ---
+export interface Order {
   id: number;
   otp: number | null;
   verify_otp: number;
@@ -82,19 +82,19 @@ export type Order = {
   initial_driver_latitude: string | null;
   initial_driver_longitude: string | null;
   rotation: number | null;
-  // driver_deatil: any | null; // Specific type if known
+  // driver_deatil: any | null; // Specific interface if known
   customer_detail: UserDetail; // Nested type
   invoice: string;
   restaurant_to_driver_distance: number | null; // Can be null
   distance: string; // "0 Km" is a string
   time: string; // "0 Min" is a string
   is_self_order: boolean;
-  // item_detail: any[]; // Specific type if known
+  // item_detail: any[]; // Specific interface if known
   orderState: OrderState[]; // Array of OrderState
   storeDetail: Restaurant;
-};
+}
 
-export type Notification = {
+export interface Notification {
   id: number;
   title: string;
   description: string;
@@ -108,14 +108,14 @@ export type Notification = {
   createdById: number;
   fullName: string;
   imageFile: string | null;
-};
+}
 
-export type FAQ = {
+export interface FAQ {
   id: number;
   question: string;
   answer: string;
   created_on: string;
-};
+}
 
 export interface SentMessageRequestType {
   fromId: string | number;

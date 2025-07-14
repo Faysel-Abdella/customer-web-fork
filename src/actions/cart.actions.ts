@@ -1,7 +1,7 @@
 "use server";
 
 import { fetchWithAuth } from "@/lib/fetchWrappers";
-import { CartItem } from "@/types/restaurant.types";
+import { CartItem } from "@/types/cart.types";
 
 interface CartActionResults {
   success: boolean;
