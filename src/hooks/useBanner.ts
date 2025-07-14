@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useState, useTransition } from "react";
 
-import { BannerItem, getBannerItems } from "@/actions/actions";
+import { BannerDetail, getBannerItems } from "@/actions/actions";
 
 export function useBanner() {
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<BannerItem[] | null>(null);
+  const [data, setData] = useState<
+    | {
+        restaurant: BannerDetail;
+        sample_item_images: string[];
+      }[]
+    | null
+  >(null);
   const [isPending, startTransition] = useTransition();
 
   const fetchBannerData = useCallback(async () => {

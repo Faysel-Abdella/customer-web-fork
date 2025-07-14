@@ -27,21 +27,33 @@ export interface BannerItem {
   name: string;
   url: string;
 }
+
+export interface BannerDetail {
+  id: string;
+  name: string;
+  image: string;
+  location: string;
+}
 interface BannerDataResponse {
-  list: BannerItem[];
+  banners: {
+    restaurant: BannerDetail;
+    sample_item_images: string[];
+  }[];
 }
 
 interface GetBannerItemsResult {
-  data?: BannerItem[];
+  data?: {
+    restaurant: BannerDetail;
+    sample_item_images: string[];
+  }[];
   error?: string;
 }
 
 export async function getBannerItems(): Promise<GetBannerItemsResult> {
   try {
     const responseData: BannerDataResponse =
-      await fetchWithAuth<BannerDataResponse>(`/api/item-detail/banner-images`);
-
-    return { data: responseData.list };
+      await fetchWithAuth<BannerDataResponse>(`/api/cart-item/banners`);
+    return { data: responseData.banners };
   } catch (error) {
     console.error(error);
     if (typeof error === "string") return { error };
