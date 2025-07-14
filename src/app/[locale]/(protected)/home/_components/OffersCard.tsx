@@ -20,7 +20,7 @@ const OffersCard = ({ offer }: OffersCardProps) => {
     return `${offer.discount}% OFF`;
   };
   return (
-    <Card className="group dark:bg-card dark:border-border w-80 overflow-hidden border border-orange-200 p-0 shadow-none transition-all duration-300">
+    <Card className="group dark:bg-card dark:border-border w-full overflow-hidden border border-orange-200 p-0 shadow-none transition-all duration-300">
       <CardContent className="p-0">
         <div className="relative">
           {/* Orange accent bar */}

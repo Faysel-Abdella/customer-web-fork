@@ -41,8 +41,8 @@ const Banner = () => {
             <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 max-md:rounded-none dark:from-orange-600 dark:to-orange-700">
               <CardContent className="flex h-full w-full pr-0 text-white max-md:flex-col-reverse max-md:px-2">
                 <div className="flex h-full justify-between md:w-1/2 md:flex-col md:px-8">
-                  <div className="flex h-full flex-col gap-2">
-                    <div className="flex flex-col gap-2">
+                  <div className="flex h-full flex-col justify-around gap-2">
+                    <div className="flex h-full flex-col justify-around gap-2">
                       <h2 className="line-clamp-2 text-xl font-bold md:text-5xl">
                         {item.restaurant.name}
                       </h2>
@@ -59,7 +59,7 @@ const Banner = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="mb-2 flex gap-2">
                       {item.sample_item_images
                         .slice(0, 3)
                         .map((image, index) => (

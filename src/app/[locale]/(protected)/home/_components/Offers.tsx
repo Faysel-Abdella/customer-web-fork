@@ -22,7 +22,7 @@ const Offers = async () => {
 
           <BadgePercent className="text-primary h-8 w-8" />
         </div>
-        <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {data.slice(0, 4).map((offer) => (
             <OffersCard key={offer.id} offer={offer} />
           ))}
