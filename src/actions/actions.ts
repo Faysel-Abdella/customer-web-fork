@@ -44,7 +44,9 @@ export async function updateProfileAction(data: FormData) {
 export async function getBannerItems(): Promise<GetBannerItemsResult> {
   try {
     const responseData: BannerDataResponse =
-      await fetchWithAuth<BannerDataResponse>(`/api/cart-item/banners`);
+      await fetchWithAuth<BannerDataResponse>(`/api/cart-item/banners`, {
+        retry: { retries: 3, delay: 1000 },
+      });
     return { success: true, data: responseData.banners };
   } catch (error) {
     console.error(error);
@@ -77,7 +79,12 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
 export async function getPopularDishes(): Promise<GetPopularDishesResult> {
   try {
     const responseData: PopularDishesResponse =
-      await fetchWithAuth<PopularDishesResponse>(`/api/cart-item/popular-dish`);
+      await fetchWithAuth<PopularDishesResponse>(
+        `/api/cart-item/popular-dish`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
 
     return { success: true, data: responseData.items.list };
   } catch (error) {
@@ -92,7 +99,9 @@ export async function getOffersList(id?: string): Promise<GetOffersListResult> {
       ? `/api/offer/coupon-list?id=${id}`
       : `/api/offer/coupon-list`;
     const responseData: OffersListResponse =
-      await fetchWithAuth<OffersListResponse>(url);
+      await fetchWithAuth<OffersListResponse>(url, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.list };
   } catch (error) {
@@ -122,6 +131,9 @@ export async function getCategoryItems(
     const responseData: CategoryItemsResponse =
       await fetchOnCondition<CategoryItemsResponse>(
         `/api/cart-item/items-by-category?category_id=${id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -136,6 +148,9 @@ export async function getCategiesList(): Promise<getCategoriesList> {
     const responseData: CategoriesListResponse =
       await fetchWithAuth<CategoriesListResponse>(
         `/api/restaurant/category-list`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };

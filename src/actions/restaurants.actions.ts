@@ -24,7 +24,9 @@ export async function getRestaurants(
 
   try {
     const responseData: RestaurantResponce =
-      await fetchOnCondition<RestaurantResponce>(url);
+      await fetchOnCondition<RestaurantResponce>(url, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return {
       success: true,
@@ -41,6 +43,9 @@ export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
     const responseData: RestaurantResponce =
       await fetchOnCondition<RestaurantResponce>(
         "/api/restaurant/add-home-page",
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -57,6 +62,9 @@ export async function getRestaurantDetails(
     const responseData: RestaurantDetailResponce =
       await fetchOnCondition<RestaurantDetailResponce>(
         `/api/restaurant/restaurant-detail?id=${restaurantId}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.detail };
@@ -73,6 +81,9 @@ export async function getRestaurantMenuList(
     const responseData: RestaurantMenuListResponse =
       await fetchOnCondition<RestaurantMenuListResponse>(
         `/api/restaurant/menu-list?id=${restaurantId}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -89,6 +100,9 @@ export async function getMenuItemDetail(
     const responseData: MenuItemDetailResponse =
       await fetchOnCondition<MenuItemDetailResponse>(
         `/api/restaurant/item-detail?id=${menuItemId}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.detail };
@@ -105,6 +119,9 @@ export async function getRestaurantOffers(
     const responseData: RestaurantOffersResponse =
       await fetchWithAuth<RestaurantOffersResponse>(
         `/api/offer/coupon-list?id=${id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };

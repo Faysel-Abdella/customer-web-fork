@@ -41,7 +41,7 @@ export async function getAddressList(): Promise<GetAddressListResult> {
     const responseData: AddressListResponse =
       await fetchWithAuth<AddressListResponse>(
         `/api/address-management/address-list`,
-        { method: "POST" },
+        { method: "POST", retry: { retries: 3, delay: 1000 } },
       );
 
     return { success: true, data: responseData.list };
@@ -83,7 +83,9 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
 export async function getOrdersList(): Promise<GetOrdersListResults> {
   try {
     const responseData: OrdersListResponse =
-      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`);
+      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.list };
   } catch (error) {
@@ -98,6 +100,9 @@ export async function getNotificationList(): Promise<GetNotificationListResults>
     const responseData: NotificationListResponse =
       await fetchWithAuth<NotificationListResponse>(
         `/api/user/notification-list`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -112,6 +117,9 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
     const responseData: FavoritesListResponse =
       await fetchWithAuth<FavoritesListResponse>(
         `/api/state/favourite-list?id=1`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -124,8 +132,12 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
 
 export async function getFaqList(): Promise<GetFaqResults> {
   try {
-    const responseData: FaqListResponse =
-      await fetchWithAuth<FaqListResponse>(`/api/user/faq`);
+    const responseData: FaqListResponse = await fetchWithAuth<FaqListResponse>(
+      `/api/user/faq`,
+      {
+        retry: { retries: 3, delay: 1000 },
+      },
+    );
 
     return { success: true, data: responseData.list };
   } catch (error) {
@@ -164,7 +176,9 @@ export async function sendMessage(
 export async function getMessages(): Promise<GetMessagesResult> {
   try {
     const responseData: MessagesResponse =
-      await fetchWithAuth<MessagesResponse>(`/api/user/history`);
+      await fetchWithAuth<MessagesResponse>(`/api/user/history`, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.messages };
   } catch (error) {

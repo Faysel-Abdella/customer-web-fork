@@ -57,7 +57,9 @@ export async function updateCartItem(
 export async function getCartItems(): Promise<GetCartItemsResult> {
   try {
     const responseData: CartItemResponse =
-      await fetchWithAuth<CartItemResponse>(`/api/cart/my-cart-list`);
+      await fetchWithAuth<CartItemResponse>(`/api/cart/my-cart-list`, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.list };
   } catch (error) {
@@ -70,7 +72,9 @@ export async function getCartItems(): Promise<GetCartItemsResult> {
 export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
   try {
     const responseData: TotalCartPriceResponse =
-      await fetchWithAuth<TotalCartPriceResponse>(`/api/cart/total-price`);
+      await fetchWithAuth<TotalCartPriceResponse>(`/api/cart/total-price`, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.total_price };
   } catch (error) {
