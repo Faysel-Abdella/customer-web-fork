@@ -11,6 +11,7 @@ import RestaurantDetailError from "./RestaurantDetailError";
 import RestaurantInfo from "./RestaurantInfo";
 import RestaurantOffers from "./RestaurantOffers";
 import RestaurantPhotos from "./RestaurantPhotos";
+import RestaurantReviews from "./RestaurantReviews";
 
 interface RestaurantDetailProps {
   restaurantId: string;
@@ -68,7 +69,9 @@ const RestaurantDetail = async ({
               </Suspense>
             </TabsContent>
 
-            <TabsContent value="reviews" className="space-y-6"></TabsContent>
+            <TabsContent value="reviews" className="space-y-6">
+              <RestaurantReviews />
+            </TabsContent>
 
             <TabsContent value="photos" className="space-y-6">
               <RestaurantPhotos restaurant={restaurant} />
