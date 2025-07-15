@@ -6,12 +6,14 @@ import {
   GetRestaurantDetailsResult,
   GetRestaurantMenuListResults,
   GetRestaurantOffersResult,
+  GetRestaurantReviewsResult,
   GetRestaurantsResult,
   MenuItemDetailResponse,
   RestaurantDetailResponce,
   RestaurantMenuListResponse,
   RestaurantOffersResponse,
   RestaurantResponce,
+  Reviews,
 } from "@/types/restaurant.types";
 
 export async function getRestaurants(
@@ -125,6 +127,23 @@ export async function getRestaurantOffers(
       );
 
     return { success: true, data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to fetch restaurant offers." };
+  }
+}
+export async function getRestaurantReviews(
+  id: string,
+): Promise<GetRestaurantReviewsResult> {
+  try {
+    const responseData: Reviews = await fetchWithAuth<Reviews>(
+      `/api/rating/rating-list?id=${id}`,
+      {
+        retry: { retries: 3, delay: 1000 },
+      },
+    );
+
+    return { success: true, data: responseData };
   } catch (error) {
     console.error(error);
     return { success: false, error: "Failed to fetch restaurant offers." };

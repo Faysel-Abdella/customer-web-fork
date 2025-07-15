@@ -12,6 +12,7 @@ import RestaurantInfo from "./RestaurantInfo";
 import RestaurantOffers from "./RestaurantOffers";
 import RestaurantPhotos from "./RestaurantPhotos";
 import RestaurantReviews from "./RestaurantReviews";
+import RestaurantReviewsSkeleton from "./RestaurantReviewsSkeleton";
 
 interface RestaurantDetailProps {
   restaurantId: string;
@@ -70,7 +71,9 @@ const RestaurantDetail = async ({
             </TabsContent>
 
             <TabsContent value="reviews" className="space-y-6">
-              <RestaurantReviews />
+              <Suspense fallback={<RestaurantReviewsSkeleton />}>
+                <RestaurantReviews restaurantId={restaurant.id.toString()} />
+              </Suspense>
             </TabsContent>
 
             <TabsContent value="photos" className="space-y-6">

@@ -1,55 +1,44 @@
-import React from "react";
+import { X } from "lucide-react";
+
+import { getRestaurantReviews } from "@/actions/restaurants.actions";
 
 import ReviewCard from "./ReviewCard";
+import ReviewSummary from "./ReviewSummary";
 
-export interface Review {
-  name: string;
-  profile: string;
-  rating: number;
-  review: string;
-  date: string;
+interface RestaurantReviewsProps {
+  restaurantId: string;
 }
-const sampleReviews: Review[] = [
-  {
-    name: "Growz Tech",
-    profile: "/placeholder.svg?height=40&width=40",
-    rating: 5,
-    review:
-      "Excellent service! The team was very professional and delivered exactly what we needed. Their attention to detail and customer service exceeded our expectations. I would definitely recommend them to anyone looking for quality work.",
-    date: "Jul 14, 2025",
-  },
-  {
-    name: "Sarah Johnson",
-    profile: "/placeholder.svg?height=40&width=40",
-    rating: 4,
-    review:
-      "Great experience overall. The project was completed on time and the quality was good. There were a few minor issues but they were quickly resolved by the support team.",
-    date: "Jul 19, 2025",
-  },
-  {
-    name: "Mike Chen",
-    profile: "/placeholder.svg?height=40&width=40",
-    rating: 5,
-    review:
-      "Outstanding work! Very impressed with the level of professionalism and expertise. The team went above and beyond to ensure everything was perfect. Communication was excellent throughout the entire process.",
-    date: "Jul 12, 2025",
-  },
-  {
-    name: "Emily Davis",
-    profile: "/placeholder.svg?height=40&width=40",
-    rating: 3,
-    review:
-      "Good service but there's room for improvement. The final result was satisfactory but took longer than expected to complete.",
-    date: "Jul 10, 2025",
-  },
-];
 
-const RestaurantReviews = () => {
+const RestaurantReviews = async ({ restaurantId }: RestaurantReviewsProps) => {
+  const { data: reviews } = await getRestaurantReviews(restaurantId);
+
+  if (!reviews)
+    return (
+      <div className="flex h-64 w-full items-center justify-center gap-2">
+        <X /> <span>Something went wrong</span>
+      </div>
+    );
+
+  const ratingDistribution = {
+    "5_star": reviews["5_star"].count,
+    "4_star": reviews["4_star"].count,
+    "3_star": reviews["3_star"].count,
+    "2_star": reviews["2_star"].count,
+    "1_star": reviews["1_star"].count,
+  };
+
   return (
-    <div className="w-full space-y-3">
-      {sampleReviews.map((review, index) => (
-        <ReviewCard key={index} review={review} />
-      ))}
+    <div className="">
+      <ReviewSummary
+        averageRating={reviews.average_rating}
+        ratingDistribution={ratingDistribution}
+        totalRatings={reviews.total_rating.count}
+      />
+      <div className="divide-border divide-y">
+        {reviews.list.map((review) => (
+          <ReviewCard key={review.id} review={review} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -362,3 +362,33 @@ export interface RestaurantOffersResponse {
 export interface GetRestaurantOffersResult extends ActionResult {
   data?: Offer[];
 }
+
+export interface ReviewItem {
+  id: number;
+  restaurant_id: number;
+  restaurant_rating: number;
+  restaurant_comment: string;
+  order_id: number;
+  created_on: string;
+  created_by_id: number;
+  created_by_name: string;
+  created_by_image: string; // URL
+}
+
+interface RatingCount {
+  count: string;
+}
+export interface Reviews {
+  "1_star": RatingCount;
+  "2_star": RatingCount;
+  "3_star": RatingCount;
+  "4_star": RatingCount;
+  "5_star": RatingCount;
+  total_rating: RatingCount;
+  average_rating: string;
+  list: ReviewItem[];
+}
+
+export interface GetRestaurantReviewsResult extends ActionResult {
+  data?: Reviews;
+}
