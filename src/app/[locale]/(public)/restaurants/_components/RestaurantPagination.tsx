@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -25,31 +25,21 @@ const RestaurantPagination = ({ pageData }: RestaurantPaginationProps) => {
   const router = useRouter();
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    if (page <= 0 || page > pageData.pageCount) return;
-    if (params.get("page") == null) return;
-    if (page.toString() == pageData.currentPage.toString()) return;
+    if (
+      page < 1 ||
+      page > pageData.pageCount ||
+      page === pageData.currentPage
+    ) {
+      return;
+    }
 
+    const params = new URLSearchParams(searchParams);
     params.set("page", (page - 1).toString());
-    router.push({
-      pathname,
-      query: Object.fromEntries(params),
-    });
+
+    router.push(`${pathname}?${params.toString()}`);
     scrollToTop();
   };
-  const setFreshParams = useCallback(() => {
-    const params = new URLSearchParams(searchParams);
-    if (params.get("page") == null) {
-      params.set("page", "0");
-      router.push({
-        pathname,
-        query: Object.fromEntries(params),
-      });
-    }
-  }, [pathname, router, searchParams]);
-  useEffect(() => {
-    setFreshParams();
-  }, [setFreshParams]);
+
   return (
     <Pagination>
       <PaginationContent>
@@ -66,16 +56,19 @@ const RestaurantPagination = ({ pageData }: RestaurantPaginationProps) => {
               <PaginationLink
                 className="cursor-pointer"
                 onClick={() => handlePageChange(page)}
-                isActive={page == pageData.currentPage}
+                isActive={page === pageData.currentPage}
               >
                 {page}
               </PaginationLink>
             </PaginationItem>
           ))}
 
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
+        {pageData.pageCount > 3 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+
         <PaginationItem>
           <PaginationNext
             className="cursor-pointer"

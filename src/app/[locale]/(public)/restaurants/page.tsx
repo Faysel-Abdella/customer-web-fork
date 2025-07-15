@@ -7,13 +7,17 @@ import RestaurantFilter from "./_components/RestaurantFilter";
 import RestaurantListSkeleton from "./_components/RestaurantListSkeleton";
 import RestaurantsList from "./_components/RestaurantsList";
 
+export const dynamic = "force-dynamic";
+
 interface RestaurantPageProps {
   searchParams: Promise<{
     [key: string]: string | string[] | undefined;
   }>;
 }
+
 const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
   const param = await searchParams;
+  const key = JSON.stringify(param);
   return (
     <div className="min-h-dvh">
       <TitleBanner title="Restaurants" className="pt-20" />
@@ -26,7 +30,7 @@ const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
           </div>
           <div className="flex w-full flex-col gap-4 lg:w-3/4">
             <Suspense fallback={<RestaurantListSkeleton />}>
-              <RestaurantsList params={param} />
+              <RestaurantsList key={key} params={param} />
             </Suspense>
           </div>
         </div>

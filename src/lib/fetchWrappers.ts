@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { ApiError } from "./HttpError";
 import { processError } from "./utils";
@@ -59,7 +60,8 @@ async function baseFetch<T>(
   const authHeader = await getAuthHeader();
 
   if (authRequirement === "required" && !authHeader) {
-    throw new Error("Authentication token not found. Please log in.");
+    console.log("Authentication token not found. Please log in.");
+    redirect("/login");
   }
 
   const headers = {
