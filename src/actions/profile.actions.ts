@@ -14,6 +14,8 @@ import {
   GetOrderDetailResponse,
   GetOrderDetailResult,
   GetOrdersListResults,
+  GetTransactionsListResponse,
+  GetTransactionsListResult,
   MessagesResponse,
   NotificationListResponse,
   OrdersListResponse,
@@ -230,5 +232,25 @@ export async function getOrderDetail(
     console.error(error);
     if (typeof error === "string") return { success: false, error };
     else return { success: false, error: "Failed to fetch order detail" };
+  }
+}
+
+export async function getTransactionsList(
+  user_id: string,
+): Promise<GetTransactionsListResult> {
+  try {
+    const responseData: GetTransactionsListResponse =
+      await fetchWithAuth<GetTransactionsListResponse>(
+        `/api/cart-item/user-transactions?user_id=${user_id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return { success: true, data: responseData.transactions };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch transactions list" };
   }
 }

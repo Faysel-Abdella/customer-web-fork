@@ -212,7 +212,8 @@ interface File {
   created_by_id: number;
 }
 
-interface Transaction {
+type gateway = "cash_on_delivery" | "hesabpay";
+export interface Transaction {
   id: number;
   order_id: number;
   user_id: number;
@@ -220,7 +221,8 @@ interface Transaction {
   amount: string;
   reference: string;
   status: string;
-  gateway: string;
+  gateway: gateway;
+  restaurant_name?: string;
   response: {
     url: string;
   };
@@ -334,4 +336,12 @@ export interface GetOrderDetailResult extends ActionResult {
 
 export interface GetOrderDetailResponse {
   detail: OrderDetail;
+}
+
+export interface GetTransactionsListResult extends ActionResult {
+  data?: Transaction[];
+}
+
+export interface GetTransactionsListResponse {
+  transactions: Transaction[];
 }
