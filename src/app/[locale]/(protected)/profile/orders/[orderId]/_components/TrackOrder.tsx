@@ -29,42 +29,35 @@ const orderStates: {
     label: "Order Placed",
     color: "text-orange-500",
     bgColor: "bg-orange-500",
-    status: "ASSIGNED",
+    status: "PENDING",
   },
   {
     stage: 2,
     label: "Order Confirmed",
     color: "text-green-500",
     bgColor: "bg-green-500",
-    status: "PENDING",
+    status: "ASSIGNED",
   },
   {
     stage: 3,
-    label: "Preparing",
-    color: "text-yellow-500",
+    label: "Ready for Pickup",
+    color: "text-red-500",
     bgColor: "bg-gray-400",
-    status: "PENDING",
+    status: "WAITING",
   },
   {
     stage: 4,
-    label: "Ready to pick up",
-    color: "text-red-500",
+    label: "Picked Up",
+    color: "text-blue-500",
     bgColor: "bg-gray-400",
-    status: "PENDING",
+    status: "PICKED_UP",
   },
   {
     stage: 5,
-    label: "Picked up",
-    color: "text-blue-500",
-    bgColor: "bg-gray-400",
-    status: "PENDING",
-  },
-  {
-    stage: 6,
     label: "Delivered",
     color: "text-orange-500",
     bgColor: "bg-gray-400",
-    status: "PENDING",
+    status: "DELIVERED",
   },
 ];
 
@@ -75,7 +68,7 @@ export function TrackOrder({ order_id }: TrackOrderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStage, setCurrentStage] = useState<number>(1);
 
-  const skeletonItems = Array(6).fill(0);
+  const skeletonItems = Array(5).fill(0);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -87,8 +80,7 @@ export function TrackOrder({ order_id }: TrackOrderProps) {
       setIsOpen(false);
     }
     if (status) {
-      const currentStatus = orderStates.find((item) => (item.status = status));
-
+      const currentStatus = orderStates.find((item) => item.status == status);
       if (currentStatus) setCurrentStage(currentStatus.stage);
     }
 
