@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Banner from "./_components/Banner";
 import { Categories } from "./_components/Categories";
 import Offers from "./_components/Offers";
-import { TopRestaurants } from "./_components/TopRestaurants";
+import TopRestaurants from "./_components/TopRestaurants";
 import { TrendingDishes } from "./_components/TrendingDishes";
 
 export const metadata: Metadata = {
@@ -18,18 +18,16 @@ const HomePage = () => {
   return (
     <div className="h-full min-h-dvh">
       <Header />
-      <div className="flex flex-col items-center pt-32 md:p-10 md:pt-32">
-        <div className="container flex w-full justify-center gap-10 max-xl:flex-col">
-          <div className="flex w-2/3 flex-col gap-4 max-xl:w-full">
+      <div className="flex flex-col items-center pt-36 md:p-10 md:pt-28">
+        <div className="container flex w-full flex-col justify-center gap-10">
+          <div className="flex w-full flex-col gap-4">
             <Banner />
             <div className="flex flex-col gap-4 p-5">
               <Categories />
+              <TopRestaurants />
               <TrendingDishes />
               <Offers />
             </div>
-          </div>
-          <div className="w-1/3 max-xl:w-full max-xl:px-5 xl:min-h-dvh">
-            <TopRestaurants />
           </div>
         </div>
       </div>

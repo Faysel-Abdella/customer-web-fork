@@ -15,14 +15,16 @@ import {
 } from "@/components/ui/carousel";
 import { useBanner } from "@/hooks/useBanner";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 const Banner = () => {
   const { data, error, isPending } = useBanner();
 
   if (isPending) {
     return (
-      <div className="h-80 w-full p-4">
+      <div className="flex h-80 w-full gap-4 p-4">
         <div className="h-full w-full animate-pulse rounded-xl bg-gray-300 dark:bg-gray-900" />
+        <div className="h-full w-full animate-pulse rounded-xl bg-gray-300 max-lg:hidden dark:bg-gray-900" />
       </div>
     );
   }
@@ -33,12 +35,18 @@ const Banner = () => {
     <Carousel
       className="w-full"
       plugins={[Autoplay({ delay: 10000, stopOnInteraction: true })]}
-      opts={{ loop: true }}
+      opts={{ loop: true, align: "start" }}
     >
       <CarouselContent className="-ml-0 h-80">
         {data?.map((item, index) => (
-          <CarouselItem key={index} className="pl-0">
-            <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 max-md:rounded-none dark:from-orange-600 dark:to-orange-700">
+          <CarouselItem
+            key={index}
+            className={cn(
+              "dark:bg-secondary rounded-xl border bg-white p-2 shadow",
+              data.length > 1 && "lg:ml-4 lg:basis-1/2",
+            )}
+          >
+            <Card className="flex h-full justify-end bg-gradient-to-r from-orange-500 to-orange-600 shadow-none max-md:rounded-none dark:from-orange-600 dark:to-orange-700">
               <CardContent className="flex h-full w-full pr-0 text-white max-md:flex-col-reverse max-md:px-2">
                 <div className="flex h-full justify-between md:w-1/2 md:flex-col md:px-8">
                   <div className="flex h-full flex-col justify-around gap-2">
@@ -100,8 +108,8 @@ const Banner = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="text-background ml-14 bg-white/20 md:h-20 dark:bg-white/20" />
-      <CarouselNext className="text-background mr-14 bg-white/20 md:h-20 dark:bg-white/20" />
+      <CarouselPrevious className="text-background bg-secondary ml-8 border" />
+      <CarouselNext className="text-background bg-secondary mr-8 border" />
     </Carousel>
   );
 };
