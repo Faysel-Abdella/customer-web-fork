@@ -33,7 +33,7 @@ export function LocationPicker({
 }: LocationPickerProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!, // Use environment variable for security
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
     libraries,
   });
   const [markerPosition, setMarkerPosition] = useState(defaultCenter);
@@ -61,7 +61,7 @@ export function LocationPicker({
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
         };
-        mapRef.current?.panTo(newPosition); // Move the map view
+        mapRef.current?.panTo(newPosition);
         setMarkerPosition(newPosition);
         geocodePosition(newPosition);
       }
@@ -82,16 +82,17 @@ export function LocationPicker({
     [],
   );
   if (loadError) {
-    return (
-      <div>
-        Error loading maps. Please check your API key and configuration.
-      </div>
-    );
+    return <div className="h-[400px]">Error loading maps.</div>;
   }
 
   if (!isLoaded) {
     return (
-      <div className="flex h-[400px] w-full animate-pulse items-center justify-center rounded-lg bg-gray-200">
+      <div
+        className={cn(
+          "bg-muted-foreground flex h-96 w-full animate-pulse items-center justify-center rounded-lg",
+          className,
+        )}
+      >
         Loading Map...
       </div>
     );

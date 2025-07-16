@@ -21,12 +21,15 @@ import {
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
 
-export async function addAddress(data: FormData): Promise<ActionResult> {
+export async function addAddress(data: object): Promise<ActionResult> {
+  const body = JSON.stringify(data);
   try {
     await fetchWithAuth(`/api/address-management/add-address`, {
       method: "POST",
-
-      body: data,
+      body,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     revalidatePath("/profile/addresses");
 

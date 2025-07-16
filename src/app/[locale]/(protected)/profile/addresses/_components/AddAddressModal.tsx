@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { addressSchema } from "@/lib/schemas/address.schema";
-import { objectToFormData } from "@/lib/utils";
 
 import AddressFormFields from "./AddressFormFields";
 import { LocationPicker } from "./LocationPicker";
@@ -44,6 +43,18 @@ const AddAddressModal = () => {
     },
   });
 
+  function onLocationSelect({
+    address,
+    position: { lat, lng },
+  }: {
+    address: string;
+    position: { lat: number; lng: number };
+  }) {
+    form.setValue("address", address);
+    form.setValue("latitude", lat.toString());
+    form.setValue("longitude", lng.toString());
+  }
+
   function onSubmit(values: z.infer<typeof addressSchema>) {
     const phoneNumberObj = parsePhoneNumberFromString(
       form.getValues("contact_no"),
@@ -51,24 +62,28 @@ const AddAddressModal = () => {
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
 
-    const data = objectToFormData({
-      "AddressManagement[title]": values.title,
-      "AddressManagement[address]": values.address,
-      "AddressManagement[country_code]": "+" + country_code,
-      "AddressManagement[contact_no]": contact_no,
-      "AddressManagement[latitude]": 8.5413,
-      "AddressManagement[longitude]": 39.2689,
-      "AddressManagement[type_id]": parseInt(values.addressType),
-      "AddressManagement[description]": values.landmark,
-      "AddressManagement[floor]": values.floor,
-      "AddressManagement[pincode]": values.pinCode,
-    });
+    const data = {
+      AddressManagement: {
+        title: values.title,
+        address: values.address,
+        country_code: "+" + country_code,
+        contact_no: contact_no,
+        latitude: values.latitude,
+        longitude: values.longitude,
+        type_id: parseInt(values.addressType),
+        description: values.landmark,
+        floor: values.floor,
+        pincode: values.pinCode,
+      },
+    };
 
     startTransition(async () => {
+      console.log(data);
       const results = await addAddress(data);
 
       if (results.success) {
         toast.success("Address Saved!");
+        form.reset();
         setOpen(false);
       }
 
@@ -89,9 +104,7 @@ const AddAddressModal = () => {
         </DialogHeader>
         <div className="flex gap-5 max-md:flex-col">
           <LocationPicker
-            onLocationSelect={({ address, position }) => {
-              console.log({ address, position });
-            }}
+            onLocationSelect={onLocationSelect}
             className="md:w-1/2"
           />
           <Form {...form}>
