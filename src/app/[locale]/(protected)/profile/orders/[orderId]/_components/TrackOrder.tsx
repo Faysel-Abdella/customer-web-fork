@@ -1,95 +1,164 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { MapPin } from "lucide-react";
+import { toast } from "sonner";
 
+import { getOrderStatus } from "@/actions/profile.actions";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-const orderStatuses = [
+import OrderMap from "./OrderMap";
+
+const orderStates: {
+  stage: number;
+  label: string;
+  color: string;
+  bgColor: string;
+  status: string;
+}[] = [
   {
-    status: "Order Placed",
+    stage: 1,
+    label: "Order Placed",
     color: "text-orange-500",
     bgColor: "bg-orange-500",
-    completed: true,
-    active: true,
+    status: "ASSIGNED",
   },
   {
-    status: "Order Confirmed",
+    stage: 2,
+    label: "Order Confirmed",
     color: "text-green-500",
     bgColor: "bg-green-500",
-    completed: true,
-    active: false,
+    status: "PENDING",
   },
   {
-    status: "Preparing",
+    stage: 3,
+    label: "Preparing",
     color: "text-yellow-500",
     bgColor: "bg-gray-400",
-    completed: false,
-    active: false,
+    status: "PENDING",
   },
   {
-    status: "Ready to pick up",
+    stage: 4,
+    label: "Ready to pick up",
     color: "text-red-500",
     bgColor: "bg-gray-400",
-    completed: false,
-    active: false,
+    status: "PENDING",
   },
   {
-    status: "Picked up",
+    stage: 5,
+    label: "Picked up",
     color: "text-blue-500",
     bgColor: "bg-gray-400",
-    completed: false,
-    active: false,
+    status: "PENDING",
   },
   {
-    status: "Delivered",
+    stage: 6,
+    label: "Delivered",
     color: "text-orange-500",
     bgColor: "bg-gray-400",
-    completed: false,
-    active: false,
+    status: "PENDING",
   },
 ];
 
-export function TrackOrder() {
+interface TrackOrderProps {
+  order_id: string;
+}
+export function TrackOrder({ order_id }: TrackOrderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentStage, setCurrentStage] = useState<number>(1);
+
+  const skeletonItems = Array(6).fill(0);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchOrderStatus = useCallback(async () => {
+    setIsLoading(true);
+    const { status, success } = await getOrderStatus(order_id);
+    if (!success) {
+      toast.error("Failed to get order status");
+      setIsOpen(false);
+    }
+    if (status) {
+      const currentStatus = orderStates.find((item) => (item.status = status));
+
+      if (currentStatus) setCurrentStage(currentStatus.stage);
+    }
+
+    setIsLoading(false);
+  }, [order_id]);
+
+  useEffect(() => {
+    fetchOrderStatus();
+  }, [fetchOrderStatus]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-orange-600 text-white hover:bg-orange-700">
+        <Button>
           <MapPin className="mr-2 h-4 w-4" />
           Track Order
         </Button>
       </DialogTrigger>
       <DialogContent className="flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto p-6">
-        <div className="bg-muted-foreground h-80 w-full animate-pulse rounded-3xl" />
-        <div className="w-fit">
-          <h2 className="mb-4 text-lg font-semibold">Trip</h2>
-          <div className="">
-            {orderStatuses.map((item, index) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`h-3 w-3 rounded-full ${
-                      item.completed ? item.bgColor : "bg-gray-300"
-                    } ${item.active ? "ring-2 ring-orange-300 dark:ring-orange-500/50" : ""}`}
-                  />
-                  {index < orderStatuses.length - 1 && (
-                    <div className="h-8 w-0.5 bg-gray-200" />
-                  )}
-                </div>
-                <div className="-mt-1.5">
-                  <span className="text-sm text-gray-500">Status: </span>
-                  <span
-                    className={item.completed ? item.color : "text-gray-400"}
-                  >
-                    {item.status}
-                  </span>
-                </div>
-              </div>
-            ))}
+        <DialogTitle />
+        <DialogDescription />
+        <OrderMap />
+        <div className="flex w-full flex-col">
+          <h2 className="mb-4 text-xl font-semibold">Trip</h2>
+          <div className="flex w-full items-center justify-center">
+            <div className="flex w-fit flex-col">
+              {isLoading
+                ? skeletonItems.map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex animate-pulse items-start gap-4"
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="h-3 w-3 rounded-full bg-gray-200 dark:bg-gray-700" />
+                        {index < skeletonItems.length - 1 && (
+                          <div className="h-8 w-0.5 bg-gray-200 dark:bg-gray-700" />
+                        )}
+                      </div>
+                      <div className="-mt-1.5 h-5 w-28 rounded-md bg-gray-200 dark:bg-gray-700" />
+                    </div>
+                  ))
+                : orderStates.map((item, index) => (
+                    <div key={item.stage} className="flex items-start gap-4">
+                      <div className="flex flex-col items-center">
+                        <div
+                          className={`h-3 w-3 rounded-full ${
+                            item.stage <= currentStage
+                              ? item.bgColor
+                              : "bg-secondary border"
+                          } ${item.stage == currentStage ? "ring-2 ring-orange-300 dark:ring-orange-500/50" : ""}`}
+                        />
+                        {index < orderStates.length - 1 && (
+                          <div className="h-8 w-0.5 bg-gray-200" />
+                        )}
+                      </div>
+                      <div className="-mt-1.5">
+                        <span className="text-sm text-gray-500">Status: </span>
+                        <span
+                          className={
+                            item.stage <= currentStage
+                              ? item.color
+                              : "text-muted-foreground"
+                          }
+                        >
+                          {item.label}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+            </div>
           </div>
         </div>
       </DialogContent>

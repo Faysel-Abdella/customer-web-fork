@@ -60,7 +60,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
             <p className="mb-4 font-medium">
               Order is being prepared and delivered by {order.store_title}
             </p>
-            <TrackOrder />
+            <TrackOrder order_id={order.id.toString()} />
           </div>
         </div>
       </div>

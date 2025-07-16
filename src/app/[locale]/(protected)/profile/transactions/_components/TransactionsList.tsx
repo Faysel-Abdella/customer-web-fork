@@ -66,9 +66,9 @@ const TransactionsList = () => {
 
   if (transactions)
     return (
-      <div className="space-y-4">
+      <div>
         {transactions.length > 0 ? (
-          <div>
+          <div className="space-y-4">
             {transactions.map((transaction) => (
               <TransactionCard key={transaction.id} transaction={transaction} />
             ))}

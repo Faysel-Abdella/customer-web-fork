@@ -14,6 +14,8 @@ import {
   GetOrderDetailResponse,
   GetOrderDetailResult,
   GetOrdersListResults,
+  GetOrderStatusResponse,
+  GetOrderStatusResult,
   GetTransactionsListResponse,
   GetTransactionsListResult,
   MessagesResponse,
@@ -252,5 +254,28 @@ export async function getTransactionsList(
     console.error(error);
     if (typeof error === "string") return { success: false, error };
     else return { success: false, error: "Failed to fetch transactions list" };
+  }
+}
+
+export async function getOrderStatus(
+  order_id: string,
+): Promise<GetOrderStatusResult> {
+  try {
+    const responseData: GetOrderStatusResponse =
+      await fetchWithAuth<GetOrderStatusResponse>(
+        `/api/user/order-track?order_id=${order_id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return {
+      success: true,
+      status: responseData.status_history.delivery_status,
+    };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch order status" };
   }
 }

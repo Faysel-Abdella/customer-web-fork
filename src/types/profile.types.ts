@@ -337,6 +337,15 @@ export interface GetOrderDetailResult extends ActionResult {
 export interface GetOrderDetailResponse {
   detail: OrderDetail;
 }
+export interface GetOrderStatusResult extends ActionResult {
+  status?: string;
+}
+
+export interface GetOrderStatusResponse {
+  status_history: {
+    delivery_status: string;
+  };
+}
 
 export interface GetTransactionsListResult extends ActionResult {
   data?: Transaction[];
