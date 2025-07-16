@@ -106,6 +106,7 @@ const AddAddressModal = () => {
           <LocationPicker
             onLocationSelect={onLocationSelect}
             className="md:w-1/2"
+            noAddressError={form.formState.errors.latitude ? true : false}
           />
           <Form {...form}>
             <form
