@@ -2,10 +2,10 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 import { Order } from "@/types/profile.types";
-
-import OrderDetail from "./OrderDetail";
 
 interface OrderCardProps {
   order: Order;
@@ -47,7 +47,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
           <div className="text-primary text-lg font-bold">
             ${order.total_price}
           </div>
-          <OrderDetail order={order} />
+          <Button asChild>
+            <Link href={`/profile/orders/${order.id}`}>View Details</Link>
+          </Button>
         </div>
       </CardContent>
     </Card>

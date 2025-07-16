@@ -1,5 +1,5 @@
 import { UserDetail } from "./auth.types";
-import { Restaurant } from "./restaurant.types";
+import { AddOn, Restaurant } from "./restaurant.types";
 import { ActionResult } from "./shared.types";
 
 export interface Address {
@@ -44,7 +44,6 @@ export interface StoreFile {
   created_by_id: number;
 }
 
-// --- Main Order interface (Updated) ---
 export interface Order {
   id: number;
   otp: number | null;
@@ -58,15 +57,15 @@ export interface Order {
   store_title: string;
   store_image: string;
   customer_address_id: string;
-  customer_address_deatil: Address; // Nested type
-  payable_amount: string; // "25.0" is a string
+  customer_address_deatil: Address;
+  payable_amount: string;
   tax: string;
   coupon_id: number;
   delivery_charge: string;
   discount_price: string;
   description: string | null;
   payment_status: number;
-  total_price: string; // "15.0" is a string
+  total_price: string;
   payment_type: number;
   state_id: number;
   updated_on: string | null;
@@ -88,11 +87,151 @@ export interface Order {
   invoice: string;
   restaurant_to_driver_distance: number | null; // Can be null
   distance: string; // "0 Km" is a string
-  time: string; // "0 Min" is a string
+  time: string;
   is_self_order: boolean;
-  // item_detail: any[]; // Specific interface if known
-  orderState: OrderState[]; // Array of OrderState
+  orderState: OrderState[];
   storeDetail: Restaurant;
+}
+
+export interface OrderDetail {
+  id: number;
+  otp: null | string;
+  verify_otp: number;
+  order_no: string;
+  order_type: null | number; // Assuming can be a number
+  is_rating: number;
+  rating_detail: string;
+  store_id: number;
+  store_title: string;
+  store_image: string;
+  customer_address_id: string;
+  customer_address_deatil: Address;
+  payable_amount: string;
+  tax: string;
+  coupon_id: number;
+  delivery_charge: string;
+  discount_price: string;
+  description: null | string;
+  payment_status: number;
+  total_price: string;
+  payment_type: number;
+  state_id: number;
+  updated_on: null | string;
+  created_on: string;
+  created_by_id: number;
+  created_by_name: string;
+  created_by_mobile_number: string;
+  refund_reason: null | string;
+  driver_id: null | number;
+  driver_latitude: null | string;
+  driver_longitude: null | string;
+  speed: null | number;
+  initial_driver_latitude: null | string;
+  initial_driver_longitude: null | string;
+  rotation: null | number;
+  invoice: string;
+  restaurant_to_driver_distance: null | number;
+  distance: string;
+  time: string;
+  is_self_order: boolean;
+  item_detail: ItemDetail[];
+  orderState: OrderState[];
+  storeDetail: StoreDetail;
+  transactions: Transaction[];
+}
+
+interface ItemDetail {
+  id: number;
+  order_id: number;
+  store_id: number;
+  product_id: number;
+  price_detail: object;
+  product_detail: string;
+  product_image: string;
+  quantity: number;
+  item_price: string;
+  state_id: number;
+  type_id: number;
+  price_id: number;
+  store_type: number;
+  created_on: string;
+  created_by_id: number;
+  addOn: AddOn[];
+}
+
+interface StoreDetail {
+  id: number;
+  title: string;
+  created_by_owner_name: string;
+  created_by_first_name: string;
+  created_by_last_name: string;
+  created_by_email: string;
+  fee: string;
+  location: string;
+  latitude: string;
+  longitude: string;
+  description: string;
+  image_file: string;
+  is_default: number; // 0 or 1, can be boolean
+  state_id: number;
+  type_id: number;
+  created_on: string;
+  contact_no: string;
+  created_by_id: number;
+  created_by_number: string;
+  average_rating: number;
+  estimated_delivery_fees: number;
+  estimated_delivery_distance: string;
+  estimated_delivery_time: string;
+  price_per_person: string;
+  is_favourite: number; // 0 or 1, can be boolean
+  availability: Availability[];
+  files: File[];
+}
+
+interface Availability {
+  id: number;
+  day_id: number;
+  resturant_id: number;
+  start_time: null | string;
+  end_time: null | string;
+  is_default: number; // 0 or 1, can be boolean
+}
+
+interface File {
+  id: number;
+  name: string;
+  size: number;
+  key: string;
+  url: string;
+  model_type: string;
+  model_id: number;
+  project_id: number;
+  type_id: number;
+  created_on: string;
+  created_by_id: number;
+}
+
+interface Transaction {
+  id: number;
+  order_id: number;
+  user_id: number;
+  store_id: number;
+  amount: string;
+  reference: string;
+  status: string;
+  gateway: string;
+  response: {
+    url: string;
+  };
+  created_at: null | string;
+  updated_at: null | string;
+  discount_amount: string;
+  referral_points_used: number;
+  platform_fee_reduction: string;
+  platform_fee_paid: string;
+  restaurant_discount: string;
+  admin_owes_restaurant: string;
 }
 
 export interface Notification {
@@ -187,4 +326,12 @@ export interface GetMessagesResult extends ActionResult {
 }
 export interface MessagesResponse {
   messages: Message[];
+}
+
+export interface GetOrderDetailResult extends ActionResult {
+  data?: OrderDetail;
+}
+
+export interface GetOrderDetailResponse {
+  detail: OrderDetail;
 }

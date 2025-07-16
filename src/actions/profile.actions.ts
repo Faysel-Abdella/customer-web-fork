@@ -11,6 +11,8 @@ import {
   GetFavoritesListResult,
   GetMessagesResult,
   GetNotificationListResults,
+  GetOrderDetailResponse,
+  GetOrderDetailResult,
   GetOrdersListResults,
   MessagesResponse,
   NotificationListResponse,
@@ -77,21 +79,6 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to delete address" };
-  }
-}
-
-export async function getOrdersList(): Promise<GetOrdersListResults> {
-  try {
-    const responseData: OrdersListResponse =
-      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
-        retry: { retries: 3, delay: 1000 },
-      });
-
-    return { success: true, data: responseData.list };
-  } catch (error) {
-    console.error(error);
-    if (typeof error === "string") return { success: false, error };
-    else return { success: false, error: "Failed to fetch address list" };
   }
 }
 
@@ -205,5 +192,40 @@ export async function changePassword(data: {
     console.error(error);
     if (typeof error === "string") return { success: true, error };
     else return { success: false, error: "Failed to fetch messages." };
+  }
+}
+
+export async function getOrdersList(): Promise<GetOrdersListResults> {
+  try {
+    const responseData: OrdersListResponse =
+      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
+        retry: { retries: 3, delay: 1000 },
+      });
+
+    return { success: true, data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch orders list" };
+  }
+}
+
+export async function getOrderDetail(
+  id: string,
+): Promise<GetOrderDetailResult> {
+  try {
+    const responseData: GetOrderDetailResponse =
+      await fetchWithAuth<GetOrderDetailResponse>(
+        `/api/cart-item/order-detail?id=${id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return { success: true, data: responseData.detail };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch order detail" };
   }
 }
