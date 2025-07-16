@@ -38,6 +38,7 @@ const AddAddressModal = () => {
       addressType: "1",
       address: "",
       landmark: "",
+      floor: "",
       pinCode: "",
       contact_no: "",
     },
@@ -50,6 +51,7 @@ const AddAddressModal = () => {
     address: string;
     position: { lat: number; lng: number };
   }) {
+    form.clearErrors("address");
     form.setValue("address", address);
     form.setValue("latitude", lat.toString());
     form.setValue("longitude", lng.toString());
