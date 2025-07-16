@@ -3,6 +3,15 @@ import { useCallback, useEffect, useState } from "react";
 
 import { getTransactionsList } from "@/actions/profile.actions";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { useAuth } from "@/contexts/AuthContext";
 import { Transaction } from "@/types/profile.types";
 
@@ -58,11 +67,30 @@ const TransactionsList = () => {
   if (transactions)
     return (
       <div className="space-y-4">
-        {}
         {transactions.length > 0 ? (
-          transactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
-          ))
+          <div>
+            {transactions.map((transaction) => (
+              <TransactionCard key={transaction.id} transaction={transaction} />
+            ))}
+            <div className="flex w-full items-start justify-start">
+              <Pagination className="w-fit">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious href="#" />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext href="#" />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          </div>
         ) : (
           <Card className="border shadow-none">
             <CardContent className="flex h-28 items-center justify-center">
