@@ -8,6 +8,7 @@ import MenuList from "./MenuList";
 import { MenuListSkeleton } from "./MenuListItemSkeleton";
 import RestaurantBanner from "./RestaurantBanner";
 import RestaurantDetailError from "./RestaurantDetailError";
+import RestaurantHeader from "./RestaurantHeader";
 import RestaurantInfo from "./RestaurantInfo";
 import RestaurantOffers from "./RestaurantOffers";
 import RestaurantPhotos from "./RestaurantPhotos";
@@ -52,6 +53,7 @@ const RestaurantDetail = async ({
     return (
       <div>
         <RestaurantBanner restaurant={restaurant} />
+        <RestaurantHeader restaurant={restaurant} />
         <div className="parent-container">
           <Tabs defaultValue={tab || "menu"} className="w-full py-5">
             <TabsList className="mb-6 grid w-full grid-cols-5">

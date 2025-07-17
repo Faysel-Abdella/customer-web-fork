@@ -46,7 +46,7 @@ const RestaurantDetailPage = async ({
   const searchParamsObj = await searchParams;
 
   return (
-    <div className="min-h-dvh py-16">
+    <div className="min-h-dvh px-20 py-16 pt-32">
       <Suspense fallback={<RestaurantDetailSkeleton />}>
         <RestaurantDetail
           tab={searchParamsObj?.tab}
