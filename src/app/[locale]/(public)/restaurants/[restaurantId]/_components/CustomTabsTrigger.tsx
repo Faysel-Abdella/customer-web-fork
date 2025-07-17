@@ -8,8 +8,13 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 interface CustomTabsTriggerProps {
   value: string;
   title: string;
+  className?: string;
 }
-const CustomTabsTrigger = ({ value, title }: CustomTabsTriggerProps) => {
+const CustomTabsTrigger = ({
+  value,
+  title,
+  className,
+}: CustomTabsTriggerProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,7 +29,7 @@ const CustomTabsTrigger = ({ value, title }: CustomTabsTriggerProps) => {
     });
   };
   return (
-    <TabsTrigger value={value} onClick={handleClick}>
+    <TabsTrigger value={value} onClick={handleClick} className={className}>
       {title}
     </TabsTrigger>
   );

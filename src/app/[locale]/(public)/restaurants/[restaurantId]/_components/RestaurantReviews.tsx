@@ -12,7 +12,7 @@ interface RestaurantReviewsProps {
 const RestaurantReviews = async ({ restaurantId }: RestaurantReviewsProps) => {
   const { data: reviews } = await getRestaurantReviews(restaurantId);
 
-  if (!reviews)
+  if (!reviews || !reviews.average_rating)
     return (
       <div className="flex h-64 w-full items-center justify-center gap-2">
         <X /> <span>Something went wrong</span>
