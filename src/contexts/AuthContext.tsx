@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 
+import { checkAuth } from "@/actions/actions";
 import { useRouter } from "@/i18n/navigation";
 import { UserDetail } from "@/types/auth.types";
 
@@ -44,7 +45,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading,
   };
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
+      const isAuthenticated = await checkAuth();
+
+      if (!isAuthenticated) {
+        logout();
+      }
+
       const storedUserJSON = localStorage.getItem("user");
 
       if (storedUserJSON) {
@@ -62,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     initializeAuth();
-  }, []);
+  }, [logout]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

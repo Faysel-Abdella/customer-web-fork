@@ -1,6 +1,10 @@
 "use server";
 
-import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
+import {
+  fetchOnCondition,
+  fetchWithAuth,
+  isAuthenticated,
+} from "@/lib/fetchWrappers";
 import {
   ForgotPasswordPayload,
   ForgotPasswordResponse,
@@ -187,4 +191,8 @@ export async function forgotPassword(
     if (typeof error === "string") return { error: error };
     else return { error: "Failed to add item to favorites" };
   }
+}
+
+export async function checkAuth() {
+  return await isAuthenticated();
 }
