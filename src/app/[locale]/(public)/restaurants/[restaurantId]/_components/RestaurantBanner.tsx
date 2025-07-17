@@ -9,8 +9,8 @@ interface RestaurantBannerProps {
 const RestaurantBanner = ({ restaurant }: RestaurantBannerProps) => {
   return (
     <div className="mb-12 w-full">
-      <div className="dark:bg-card relative h-72 w-full rounded-3xl border p-2 shadow-xl">
-        <div className="relative h-full w-full overflow-hidden rounded-2xl">
+      <div className="dark:bg-card relative h-72 w-full border shadow-xl sm:rounded-3xl sm:p-2">
+        <div className="relative h-full w-full overflow-hidden sm:rounded-2xl">
           <Image
             src={restaurant.image_file}
             alt={restaurant.title}
@@ -18,7 +18,8 @@ const RestaurantBanner = ({ restaurant }: RestaurantBannerProps) => {
             className="object-cover"
           />
         </div>
-        <div className="absolute -bottom-12 left-12">
+
+        <div className="absolute -bottom-12 max-sm:flex max-sm:w-full max-sm:justify-center sm:left-12">
           <div className="border-card relative size-24 overflow-hidden rounded-full border-4 shadow-xl">
             <Image
               src={restaurant.image_file}

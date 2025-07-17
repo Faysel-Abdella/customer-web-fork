@@ -1,6 +1,6 @@
 import { Clock, MapPin, Star } from "lucide-react";
 
-import { MenuListSkeleton } from "./MenuListItemSkeleton";
+import { MenuListSkeleton } from "./MenuListSkeleton";
 
 const RestaurantDetailSkeleton = () => {
   return (

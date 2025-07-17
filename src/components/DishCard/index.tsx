@@ -10,23 +10,34 @@ interface DishCardProps {
 }
 
 const DishCard = ({ dish }: DishCardProps) => {
-  const formatPrice = (price?: string) => {
-    if (!price) return "$$";
+  const getPrice = () => {
+    let price = "0";
+    if (dish.itemPrice) {
+      price = dish.itemPrice[0].price;
+    }
+    if (dish.item_prices) {
+      price = dish.item_prices[0].price;
+    }
     const value = parseFloat(price);
     return `$${value.toFixed(2)}`;
   };
+
+  const getCookTime = () => {
+    const cookTime = dish.cook_time;
+    const startOfM = cookTime.indexOf("M");
+    if (!startOfM) return cookTime;
+
+    return cookTime.slice(0, startOfM).trim();
+  };
+
   return (
-    <div className="relative flex h-60 w-full items-end">
+    <div className="relative flex h-56 w-full items-end">
       <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-4 max-sm:p-5 sm:min-w-72">
         <div className="flex w-full justify-end">
-          <p className="text-xl font-semibold">
-            {dish.item_prices && formatPrice(dish.item_prices[0].price)}
-          </p>
+          <p className="text-xl font-semibold">{getPrice()}</p>
         </div>
-        <div className="space-y-2">
-          <div className="flex h-14 w-full items-center">
-            <p className="line-clamp-2 text-lg font-semibold">{dish.title}</p>
-          </div>
+        <div className="space-y-4">
+          <p className="line-clamp-1 text-lg font-semibold">{dish.title}</p>
 
           <div className="flex w-full justify-between gap-1.5">
             <div className="text-muted-foreground flex items-center gap-1">
@@ -34,10 +45,12 @@ const DishCard = ({ dish }: DishCardProps) => {
                 <Star size={16} className="fill-primary text-primary" />
                 <span>{dish.avg_rating}</span>
               </div>
-              <div className="flex items-center">
-                <Dot />
-                <span>{dish.cook_time}</span>
-              </div>
+              {dish.cook_time.trim() && (
+                <div className="flex items-center">
+                  <Dot />
+                  <span>{getCookTime()} min</span>
+                </div>
+              )}
             </div>
             <Button size={"icon"} className="rounded-lg">
               <Plus size={24} />

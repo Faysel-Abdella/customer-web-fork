@@ -7,7 +7,7 @@ interface RestaurantHeaderProps {
 const RestaurantHeader = ({ restaurant }: RestaurantHeaderProps) => {
   return (
     <>
-      <div className="flex w-full items-center justify-between py-6 pt-3">
+      <div className="flex w-full items-center justify-between gap-5 py-6 pt-3 max-sm:flex-col">
         <div>
           <p className="text-3xl font-semibold">{restaurant.title}</p>
         </div>

@@ -147,6 +147,7 @@ export interface MenuItem {
   menuImages: MenuImage[];
   addOnsList: AddOn[];
   item_prices: ItemPrice[];
+  itemPrice: ItemPrice[];
   availability: Availability[];
 }
 

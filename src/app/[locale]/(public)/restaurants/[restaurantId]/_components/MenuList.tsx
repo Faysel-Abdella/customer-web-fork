@@ -1,6 +1,5 @@
 import { getRestaurantMenuList } from "@/actions/restaurants.actions";
-
-import MenuListItem from "./MenuListItem";
+import DishCard from "@/components/DishCard";
 
 interface MenuListProps {
   restaurantId: string;
@@ -20,9 +19,13 @@ const MenuList = async ({ restaurantId }: MenuListProps) => {
     );
 
   if (menuList && menuList.length > 0)
-    return menuList.map((menuItem) => (
-      <MenuListItem key={menuItem.id} menuItem={menuItem} />
-    ));
+    return (
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+        {menuList.map((menuItem) => (
+          <DishCard key={menuItem.id} dish={menuItem} />
+        ))}
+      </div>
+    );
 };
 
 export default MenuList;

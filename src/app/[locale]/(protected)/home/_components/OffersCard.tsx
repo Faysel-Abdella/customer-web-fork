@@ -70,7 +70,7 @@ const OffersCard = ({ offer }: OffersCardProps) => {
               className="mt-2 w-full bg-gradient-to-r from-orange-500 to-amber-500 font-semibold text-white shadow-lg transition-all duration-300 hover:from-orange-600 hover:to-amber-600 hover:shadow-xl"
               asChild
             >
-              <Link href={`/restaurants/${offer.restaurant_id}?tab=offers`}>
+              <Link href={`/restaurants/${offer.restaurant_id}`}>
                 View Detail
               </Link>
             </Button>
