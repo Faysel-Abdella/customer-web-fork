@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 import { ApiError } from "./HttpError";
 import { processError } from "./utils";
@@ -60,8 +59,7 @@ async function baseFetch<T>(
   const authHeader = await getAuthHeader();
 
   if (authRequirement === "required" && !authHeader) {
-    console.log("Authentication token not found. Please log in.");
-    redirect("/login");
+    throw Error("Authentication token not found. Please log in.");
   }
 
   const headers = {
@@ -141,4 +139,14 @@ export function fetchOnCondition<T>(
   options: FetchOptions = {},
 ): Promise<T> {
   return baseFetch<T>(relativePath, "optional", options);
+}
+
+export async function isAuthenticated(): Promise<boolean> {
+  const cookieStore = await cookies();
+  const tokenCookie = cookieStore.get("access-token");
+
+  if (tokenCookie?.value) {
+    return true;
+  }
+  return false;
 }

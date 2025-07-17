@@ -26,14 +26,16 @@ interface LocationPickerProps {
     address: string;
     position: google.maps.LatLngLiteral;
   }) => void;
+  noAddressError: boolean;
 }
 export function LocationPicker({
   onLocationSelect,
   className,
+  noAddressError,
 }: LocationPickerProps) {
   const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!, // Use environment variable for security
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
     libraries,
   });
   const [markerPosition, setMarkerPosition] = useState(defaultCenter);
@@ -61,7 +63,7 @@ export function LocationPicker({
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
         };
-        mapRef.current?.panTo(newPosition); // Move the map view
+        mapRef.current?.panTo(newPosition);
         setMarkerPosition(newPosition);
         geocodePosition(newPosition);
       }
@@ -82,16 +84,17 @@ export function LocationPicker({
     [],
   );
   if (loadError) {
-    return (
-      <div>
-        Error loading maps. Please check your API key and configuration.
-      </div>
-    );
+    return <div className="h-[400px]">Error loading maps.</div>;
   }
 
   if (!isLoaded) {
     return (
-      <div className="flex h-[400px] w-full animate-pulse items-center justify-center rounded-lg bg-gray-200">
+      <div
+        className={cn(
+          "bg-muted-foreground flex h-96 w-full animate-pulse items-center justify-center rounded-lg",
+          className,
+        )}
+      >
         Loading Map...
       </div>
     );
@@ -102,7 +105,6 @@ export function LocationPicker({
       <p className="text-muted-foreground mb-2 text-sm">
         Drag the pin or search for a location to select an address.
       </p>
-
       <Autocomplete
         onLoad={(ref) => (autocompleteRef.current = ref)}
         onPlaceChanged={handlePlaceSelect}
@@ -135,7 +137,12 @@ export function LocationPicker({
         </GoogleMap>
       </div>
 
-      <div className="bg-secondary mt-4 rounded-lg border p-4">
+      <div
+        className={cn(
+          "bg-secondary mt-4 rounded-lg border p-4",
+          noAddressError && "ring-2 ring-red-400",
+        )}
+      >
         <h3 className="text-lg font-bold">Selected Location:</h3>
         {selectedAddress ? (
           <div>
@@ -162,6 +169,9 @@ export function LocationPicker({
           Confirm Location
         </Button>
       </div>
+      {noAddressError && (
+        <div className="text-red-400">Please select a location on the map.</div>
+      )}
     </div>
   );
 }

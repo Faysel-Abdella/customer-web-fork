@@ -13,6 +13,8 @@ export const addressSchema = z.object({
   address: z.string().min(10, {
     message: "Please enter a more detailed address.",
   }),
+  latitude: z.string({ required_error: "Please select location" }),
+  longitude: z.string({ required_error: "Please select location" }),
   floor: z.string().optional(),
   landmark: z.string().optional(),
   pinCode: z.string().min(1, { message: "Please enter pin code" }),

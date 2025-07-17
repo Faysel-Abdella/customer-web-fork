@@ -11,7 +11,13 @@ import {
   GetFavoritesListResult,
   GetMessagesResult,
   GetNotificationListResults,
+  GetOrderDetailResponse,
+  GetOrderDetailResult,
   GetOrdersListResults,
+  GetOrderStatusResponse,
+  GetOrderStatusResult,
+  GetTransactionsListResponse,
+  GetTransactionsListResult,
   MessagesResponse,
   NotificationListResponse,
   OrdersListResponse,
@@ -19,12 +25,15 @@ import {
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
 
-export async function addAddress(data: FormData): Promise<ActionResult> {
+export async function addAddress(data: object): Promise<ActionResult> {
+  const body = JSON.stringify(data);
   try {
     await fetchWithAuth(`/api/address-management/add-address`, {
       method: "POST",
-
-      body: data,
+      body,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     revalidatePath("/profile/addresses");
 
@@ -77,21 +86,6 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to delete address" };
-  }
-}
-
-export async function getOrdersList(): Promise<GetOrdersListResults> {
-  try {
-    const responseData: OrdersListResponse =
-      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
-        retry: { retries: 3, delay: 1000 },
-      });
-
-    return { success: true, data: responseData.list };
-  } catch (error) {
-    console.error(error);
-    if (typeof error === "string") return { success: false, error };
-    else return { success: false, error: "Failed to fetch address list" };
   }
 }
 
@@ -205,5 +199,83 @@ export async function changePassword(data: {
     console.error(error);
     if (typeof error === "string") return { success: true, error };
     else return { success: false, error: "Failed to fetch messages." };
+  }
+}
+
+export async function getOrdersList(): Promise<GetOrdersListResults> {
+  try {
+    const responseData: OrdersListResponse =
+      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
+        retry: { retries: 3, delay: 1000 },
+      });
+
+    return { success: true, data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch orders list" };
+  }
+}
+
+export async function getOrderDetail(
+  id: string,
+): Promise<GetOrderDetailResult> {
+  try {
+    const responseData: GetOrderDetailResponse =
+      await fetchWithAuth<GetOrderDetailResponse>(
+        `/api/cart-item/order-detail?id=${id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return { success: true, data: responseData.detail };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch order detail" };
+  }
+}
+
+export async function getTransactionsList(
+  user_id: string,
+): Promise<GetTransactionsListResult> {
+  try {
+    const responseData: GetTransactionsListResponse =
+      await fetchWithAuth<GetTransactionsListResponse>(
+        `/api/cart-item/user-transactions?user_id=${user_id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return { success: true, data: responseData.transactions };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch transactions list" };
+  }
+}
+
+export async function getOrderStatus(
+  order_id: string,
+): Promise<GetOrderStatusResult> {
+  try {
+    const responseData: GetOrderStatusResponse =
+      await fetchWithAuth<GetOrderStatusResponse>(
+        `/api/user/order-track?order_id=${order_id}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return {
+      success: true,
+      status: responseData.status_history.delivery_status,
+    };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch order status" };
   }
 }

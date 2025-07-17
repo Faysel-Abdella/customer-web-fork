@@ -3,6 +3,7 @@
 import {
   Award,
   Bell,
+  CreditCard,
   Gift,
   Heart,
   HelpCircle,
@@ -51,7 +52,12 @@ const navigationItems = [
     id: "orders",
     href: "/profile/orders",
   },
-
+  {
+    title: "Transaction History",
+    icon: CreditCard,
+    id: "transactions",
+    href: "/profile/transactions",
+  },
   {
     title: "Notifications",
     icon: Bell,
