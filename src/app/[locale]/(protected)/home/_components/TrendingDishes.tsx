@@ -1,88 +1,54 @@
-import Image from "next/image";
-
-import { Clock, FlameIcon as Fire, Heart, Star } from "lucide-react";
-
 import { getPopularDishes } from "@/actions/actions";
-import MenuItemDetail from "@/app/[locale]/(public)/restaurants/[restaurantId]/_components/MenuItemDetail";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import DishCard from "@/components/DishCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Link } from "@/i18n/navigation";
 
 export async function TrendingDishes() {
-  const { data } = await getPopularDishes();
-  if (data)
+  const { data: dishes } = await getPopularDishes();
+  if (dishes)
     return (
-      <section className="mb-16">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h2 className="mb-2 text-3xl font-bold">Trending Dishes</h2>
-            <p className="text-muted-foreground">Most loved by our customers</p>
-          </div>
-          <Fire className="h-8 w-8 text-red-500" />
-        </div>
-        <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {data.slice(0, 4).map((dish, index) => (
-            <Card
-              key={index}
-              className="group cursor-pointer overflow-hidden border p-0 shadow-none backdrop-blur-sm transition-all duration-300"
-            >
-              <CardContent className="p-0">
-                <div className="relative">
-                  <div className="aspect-square overflow-hidden">
-                    <Image
-                      src={dish.image_file || "/placeholder.svg"}
-                      alt={dish.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="space-y-5 overflow-visible"
+      >
+        <div className="flex w-full items-center justify-between gap-5">
+          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">
+            Trending Dishes
+          </h2>
 
-                  <div className="absolute top-3 right-3">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full bg-white/90 shadow-lg hover:bg-white dark:bg-gray-800/90 dark:hover:bg-gray-700"
-                    >
-                      <Heart className="h-4 w-4 text-gray-700 dark:text-gray-200" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="mb-2 font-bold text-gray-900 dark:text-white">
-                    {dish.title}
-                  </h3>
-                  <div className="mb-3 flex items-center space-x-2">
-                    <div className="flex items-center space-x-1">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {dish.avg_rating}
-                      </span>
-                    </div>
-                    <span className="text-gray-300 dark:text-gray-600">•</span>
-                    <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-                      <span>{dish.cook_time}</span>
-                      <Clock size={16} />
-                      <span>minutes</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold text-orange-500">
-                        {dish.price}
-                      </span>
-                      <span className="text-sm text-gray-400 line-through dark:text-gray-500">
-                        {dish.price}
-                      </span>
-                    </div>
-                    <MenuItemDetail
-                      menuItemId={dish.id.toString()}
-                      className="rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          <div className="flex items-center gap-4">
+            <Link
+              href="#"
+              className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"
+            >
+              See All
+            </Link>
+            <div className="flex gap-2">
+              <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
+              <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />
+            </div>
+          </div>
         </div>
-      </section>
+
+        <CarouselContent className="overflow-visible">
+          {dishes?.map((dish) => (
+            <CarouselItem
+              key={dish.id}
+              className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            >
+              <DishCard dish={dish} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     );
 }

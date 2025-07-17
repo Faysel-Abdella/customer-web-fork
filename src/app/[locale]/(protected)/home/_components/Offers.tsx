@@ -1,6 +1,12 @@
-import { BadgePercent } from "lucide-react";
-
 import { getOffersList } from "@/actions/actions";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Link } from "@/i18n/navigation";
 
 import OffersCard from "./OffersCard";
 
@@ -9,25 +15,41 @@ const Offers = async () => {
 
   if (data)
     return (
-      <section className="mb-16">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-              Explore Offers
-            </h2>
-            <p className="text-muted-foreground">
-              See great deals and discounts on your favorite dishes
-            </p>
-          </div>
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="space-y-5 overflow-visible"
+      >
+        <div className="flex w-full items-center justify-between gap-5">
+          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">Offers</h2>
 
-          <BadgePercent className="text-primary h-8 w-8" />
+          <div className="flex items-center gap-4">
+            <Link
+              href="#"
+              className="group text-muted-foreground flex items-center font-semibold hover:text-orange-600"
+            >
+              See All
+            </Link>
+            <div className="flex gap-2">
+              <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
+              <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {data.slice(0, 4).map((offer) => (
-            <OffersCard key={offer.id} offer={offer} />
+
+        <CarouselContent className="overflow-visible">
+          {data?.map((offer) => (
+            <CarouselItem
+              key={offer.id}
+              className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            >
+              <OffersCard offer={offer} />
+            </CarouselItem>
           ))}
-        </div>
-      </section>
+        </CarouselContent>
+      </Carousel>
     );
 };
 

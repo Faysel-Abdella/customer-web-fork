@@ -12,7 +12,7 @@ import { Link } from "@/i18n/navigation";
 
 import RestaurantCard from "./RestaurantCard";
 
-const TopRestaurants = async () => {
+const PopularRestaurants = async () => {
   const { data: restaurants } = await getTopRestaurants();
 
   if (restaurants)
@@ -24,20 +24,15 @@ const TopRestaurants = async () => {
         }}
         className="space-y-5 overflow-visible"
       >
-        <div className="flex items-center justify-center gap-5 max-md:flex-col md:justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900 md:mb-2 md:text-3xl dark:text-white">
-              Top Restaurants
-            </h2>
-            <p className="text-gray-600 max-md:text-sm dark:text-gray-400">
-              Handpicked by our food experts
-            </p>
-          </div>
+        <div className="flex w-full items-center justify-between">
+          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">
+            Popular Restaurants
+          </h2>
 
           <div className="flex items-center gap-4">
             <Link
-              href="/restaurants"
-              className="group text-muted-foreground flex items-center font-semibold hover:text-orange-600"
+              href="#"
+              className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"
             >
               See All
             </Link>
@@ -62,4 +57,4 @@ const TopRestaurants = async () => {
     );
 };
 
-export default TopRestaurants;
+export default PopularRestaurants;

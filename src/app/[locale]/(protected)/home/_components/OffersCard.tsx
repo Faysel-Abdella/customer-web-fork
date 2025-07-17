@@ -20,14 +20,12 @@ const OffersCard = ({ offer }: OffersCardProps) => {
     return `${offer.discount}% OFF`;
   };
   return (
-    <Card className="group dark:bg-card dark:border-border w-full overflow-hidden border border-orange-200 p-0 shadow-none transition-all duration-300">
+    <Card className="group dark:bg-card dark:border-border w-80 overflow-hidden border border-orange-200 p-0 shadow-none transition-all duration-300">
       <CardContent className="p-0">
         <div className="relative">
-          {/* Orange accent bar */}
           <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-orange-400 to-amber-400" />
 
           <div className="p-4">
-            {/* Header */}
             <div className="mb-2 flex items-start justify-between">
               <div className="flex-1">
                 <h3 className="mb-1 text-base font-bold text-gray-900 transition-colors group-hover:text-orange-600 dark:text-gray-100 dark:group-hover:text-orange-400">
@@ -39,13 +37,11 @@ const OffersCard = ({ offer }: OffersCardProps) => {
                 </div>
               </div>
 
-              {/* Discount Badge */}
               <Badge className="bg-gradient-to-r from-orange-500 to-amber-500 px-3 py-1 text-sm font-bold text-white shadow-lg hover:from-orange-600 hover:to-amber-600">
                 {getDiscountText()}
               </Badge>
             </div>
 
-            {/* Promo Code Section */}
             <div className="bg-secondary dark:bg-secondary mb-3 rounded-lg border-2 border-dashed border-orange-300 p-3 dark:border-orange-700">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -60,7 +56,6 @@ const OffersCard = ({ offer }: OffersCardProps) => {
               </div>
             </div>
 
-            {/* Footer Info */}
             <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
