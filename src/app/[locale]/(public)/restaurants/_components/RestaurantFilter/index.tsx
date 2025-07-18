@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useRouter } from "@/i18n/navigation";
 
@@ -130,9 +131,9 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
 
   return (
     <div className={className}>
-      <SortRestaurants setFilters={setFilter} filters={filters} />
-      <CategoryFilter setFilters={setFilter} filters={filters} />
-      <PriceFilter filters={filters} setFilters={setFilter} />
+      <SortRestaurants />
+      <CategoryFilter />
+      <PriceFilter />
       <div className="flex gap-4">
         <Checkbox
           id="freeDelivery"
@@ -176,6 +177,7 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
           ))}
         </div>
       </div>
+      <Select></Select>
       <div>
         <Label className="mb-4">Offers</Label>
         <RadioGroup

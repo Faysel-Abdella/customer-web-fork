@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -6,8 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { RestaurantFilters } from ".";
+import { cn } from "@/lib/utils";
 
 const restaurantSortTypes = [
   {
@@ -25,33 +23,30 @@ const restaurantSortTypes = [
 ];
 
 interface SortRestaurantsProps {
-  filters: RestaurantFilters;
-  setFilters: React.Dispatch<React.SetStateAction<RestaurantFilters>>;
+  className?: string;
 }
-const SortRestaurants = ({ filters, setFilters }: SortRestaurantsProps) => {
+
+const SortRestaurants = ({ className }: SortRestaurantsProps) => {
   return (
-    <div>
-      <Label className="mb-2">Sort</Label>
-      <Select
-        value={filters.sort_by}
-        defaultValue={filters.sort_by}
-        onValueChange={(value: string) =>
-          setFilters((prev) => ({ ...prev, sort_by: value }))
-        }
+    <Select>
+      <SelectTrigger
+        size="default"
+        className={cn(
+          "w-28 items-center rounded-full data-[size=default]:h-10",
+          className,
+        )}
       >
-        <SelectTrigger className="w-full">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="none">None</SelectItem>
-          {restaurantSortTypes.map((sort) => (
-            <SelectItem key={sort.value} value={sort.value}>
-              {sort.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+        <SelectValue placeholder="Sort" className="h-12" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="none">None</SelectItem>
+        {restaurantSortTypes.map((sort) => (
+          <SelectItem key={sort.value} value={sort.value}>
+            {sort.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };
 

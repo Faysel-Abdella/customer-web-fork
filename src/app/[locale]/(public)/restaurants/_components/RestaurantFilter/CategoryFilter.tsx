@@ -1,9 +1,5 @@
-import React from "react";
-
-import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/ui/multi-select";
-
-import { RestaurantFilters } from ".";
+import { cn } from "@/lib/utils";
 
 const restaurantCategories = [
   {
@@ -21,25 +17,22 @@ const restaurantCategories = [
 ];
 
 interface CategoryFilterProps {
-  filters: RestaurantFilters;
-  setFilters: React.Dispatch<React.SetStateAction<RestaurantFilters>>;
+  className?: string;
 }
-const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
+const CategoryFilter = ({ className }: CategoryFilterProps) => {
   return (
-    <div>
-      <Label className="mb-2">Category</Label>
-      <MultiSelect
-        options={restaurantCategories}
-        onValueChange={(e) => {
-          setFilters((prev) => ({ ...prev, category: e }));
-        }}
-        defaultValue={filters.category}
-        value={filters.category}
-        placeholder="Select categories"
-        variant="inverted"
-        maxCount={3}
-      />
-    </div>
+    <MultiSelect
+      options={restaurantCategories}
+      onValueChange={(e) => {
+        console.log(e);
+      }}
+      // defaultValue={filters.category}
+      // value={filters.category}
+      placeholder="Select categories"
+      variant="inverted"
+      maxCount={3}
+      className={cn("text-foreground w-fit rounded-full", className)}
+    />
   );
 };
 
