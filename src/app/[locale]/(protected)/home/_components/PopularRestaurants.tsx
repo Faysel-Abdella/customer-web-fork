@@ -1,6 +1,5 @@
-import React from "react";
-
 import { getTopRestaurants } from "@/actions/restaurants.actions";
+import RestaurantCard from "@/components/RestaurantCard";
 import {
   Carousel,
   CarouselContent,
@@ -9,8 +8,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Link } from "@/i18n/navigation";
-
-import RestaurantCard from "./RestaurantCard";
 
 const PopularRestaurants = async () => {
   const { data: restaurants } = await getTopRestaurants();

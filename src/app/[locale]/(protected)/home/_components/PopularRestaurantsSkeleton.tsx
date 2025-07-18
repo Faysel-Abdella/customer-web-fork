@@ -1,11 +1,10 @@
+import RestaurantCardSkeleton from "@/components/RestaurantCardSkeleton";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
-
-import RestaurantCardSkeleton from "./RestaurantCardSkeleton";
 
 const PopularRestaurantsSkeleton = () => {
   return (
