@@ -1,5 +1,3 @@
-import { X } from "lucide-react";
-
 import { getRestaurantReviews } from "@/actions/restaurants.actions";
 
 import ReviewCard from "./ReviewCard";
@@ -14,8 +12,19 @@ const RestaurantReviews = async ({ restaurantId }: RestaurantReviewsProps) => {
 
   if (!reviews || !reviews.average_rating)
     return (
-      <div className="flex h-64 w-full items-center justify-center gap-2">
-        <X /> <span>Something went wrong</span>
+      <div className="">
+        <h3 className="mb-8 text-xl font-semibold">Rating and Review</h3>
+        <ReviewSummary
+          averageRating={"0"}
+          ratingDistribution={{
+            "1_star": "0",
+            "2_star": "0",
+            "3_star": "0",
+            "4_star": "0",
+            "5_star": "0",
+          }}
+          totalRatings={"0"}
+        />
       </div>
     );
 
@@ -29,6 +38,7 @@ const RestaurantReviews = async ({ restaurantId }: RestaurantReviewsProps) => {
 
   return (
     <div className="">
+      <h3 className="mb-8 text-xl font-semibold">Rating and Review</h3>
       <ReviewSummary
         averageRating={reviews.average_rating}
         ratingDistribution={ratingDistribution}

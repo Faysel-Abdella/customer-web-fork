@@ -23,7 +23,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
     <div className="flex gap-4 border-b p-6">
       <Avatar className="h-12 w-12 flex-shrink-0">
         <AvatarImage
-          src={review.created_by_image || "/placeholder.svg"}
+          src={review.created_by_image}
           alt={review.created_by_name}
         />
         <AvatarFallback className="text-primary font-medium">

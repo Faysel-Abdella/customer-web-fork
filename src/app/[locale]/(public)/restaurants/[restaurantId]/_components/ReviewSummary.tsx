@@ -1,7 +1,4 @@
-import React from "react";
-
-import { Star } from "lucide-react";
-
+import FadingDivider from "@/components/FadingDivider";
 import ReviewStars from "@/components/ReviewStars";
 import { Progress } from "@/components/ui/progress";
 
@@ -37,39 +34,37 @@ const ReviewSummary = ({
   ];
 
   return (
-    <div className="flex items-start gap-8">
-      <div className="flex flex-col items-center">
-        <div className="mb-1 text-5xl font-bold">
-          {Number.parseFloat(averageRating).toFixed(1)}
+    <div className="flex items-center gap-8">
+      <div className="flex h-full w-fit flex-col items-center justify-between">
+        <div className="flex items-end gap-2">
+          <div className="mb-1 text-5xl font-bold">
+            {Number.parseFloat(averageRating).toFixed(1)}
+          </div>
+          <div className="text-muted-foreground mb-2 text-sm">
+            ({totalRatings})
+          </div>
         </div>
-        <div className="text-muted-foreground mb-2 text-sm">out of 5</div>
+        <div className="flex items-center gap-2">
+          <ReviewStars rating={Number.parseFloat(averageRating)} />
+        </div>
       </div>
 
       <div className="flex-1">
-        <div className="mb-4 flex items-center gap-2">
-          <ReviewStars rating={Number.parseFloat(averageRating)} />
-        </div>
-
         <div className="space-y-2">
           {ratingBars.map((bar) => (
             <div key={bar.stars} className="flex items-center gap-3">
-              <div className="flex w-12 items-center gap-1">
-                <Star className="h-3 w-3 fill-orange-400 text-orange-400" />
-                <span className="text-muted-foreground text-xs">
-                  {bar.stars}
-                </span>
-              </div>
+              <span className="text-muted-foreground text-xs">{bar.stars}</span>
+
               <Progress value={getRatingPercentage(bar.count)} />
             </div>
           ))}
         </div>
       </div>
-
-      <div className="text-right">
-        <div className="text-muted-foreground text-sm">
-          {totalRatings} Ratings
-        </div>
-      </div>
+      <FadingDivider className="h-28 w-px bg-gradient-to-b max-md:hidden" />
+      <p className="text-muted-foreground w-1/5 text-sm max-md:hidden">
+        Ratings and reviews are verified and come from people who received the
+        same services.
+      </p>
     </div>
   );
 };
