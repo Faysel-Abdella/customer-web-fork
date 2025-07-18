@@ -1,10 +1,7 @@
-import React from "react";
-
 import { SearchX } from "lucide-react";
 
 import { getCategoryItems } from "@/actions/actions";
-
-import ItemCard from "./ItemCard";
+import DishCard from "@/components/DishCard";
 
 interface ItemsListProps {
   id: string;
@@ -24,7 +21,7 @@ const ItemsList = async ({ id }: ItemsListProps) => {
     return (
       <div className="col-span-1 flex h-dvh w-full flex-col items-center justify-center gap-5 sm:col-span-2 lg:col-span-3 xl:col-span-4">
         <SearchX size={50} />
-        <p className="text-xl">No Results</p>
+        <p className="text-xl">No items in this category</p>
       </div>
     );
 
@@ -32,7 +29,7 @@ const ItemsList = async ({ id }: ItemsListProps) => {
     return (
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((item) => (
-          <ItemCard key={item.id} menuItem={item} />
+          <DishCard key={item.id} dish={item} />
         ))}
       </div>
     );
