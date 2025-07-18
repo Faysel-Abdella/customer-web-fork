@@ -1,9 +1,9 @@
 import { SearchX } from "lucide-react";
 
 import { getRestaurants } from "@/actions/restaurants.actions";
+import RestaurantCard from "@/components/RestaurantCard";
 import { buildUrlSearchParams } from "@/lib/utils";
 
-import { RestaurantCard } from "./RestaurantCard";
 import RestaurantPagination from "./RestaurantPagination";
 
 interface RestaurantListProps {

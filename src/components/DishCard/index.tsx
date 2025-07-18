@@ -3,11 +3,12 @@ import { Dot, Plus, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MenuItem } from "@/types/restaurant.types";
 
-import DishCardImage from "./DishCardImage";
+import CustomImage from "../CustomImage";
 
 interface DishCardProps {
   dish: MenuItem;
 }
+const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
 const DishCard = ({ dish }: DishCardProps) => {
   const getPrice = () => {
@@ -60,7 +61,11 @@ const DishCard = ({ dish }: DishCardProps) => {
       </div>
       <div className="absolute top-0 left-5 h-28 w-36 overflow-hidden rounded-3xl shadow-lg sm:w-44">
         <div className="relative h-full w-full">
-          <DishCardImage imgUrl={dish.image_file} title={dish.title} />
+          <CustomImage
+            placeholderImage={foodPlaceholder}
+            imgUrl={dish.image_file}
+            title={dish.title}
+          />
         </div>
       </div>
     </div>

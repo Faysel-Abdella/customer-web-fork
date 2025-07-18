@@ -1,24 +1,26 @@
 "use client";
-import Image from "next/image";
 
 import { Dot, Star } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Restaurant } from "@/types/restaurant.types";
 
+import CustomImage from "../CustomImage";
+
 interface RestaurantCardProps {
   restaurant: Restaurant;
 }
+
+const restaurantImagePlaceHolder = "/assets/images/restaurant_placeholder.webp";
 const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
   return (
     <Card className="group bg-background w-full overflow-hidden border-0 p-2 shadow-none transition-all hover:cursor-pointer">
       <CardContent className="space-y-2 px-0">
         <div className="relative h-40 w-full overflow-hidden rounded-2xl">
-          <Image
-            src={restaurant.image_file}
-            alt={restaurant.title}
-            fill
-            className="object-cover"
+          <CustomImage
+            imgUrl={restaurant.image_file}
+            title={restaurant.title}
+            placeholderImage={restaurantImagePlaceHolder}
           />
         </div>
         <div className="space-y-1">

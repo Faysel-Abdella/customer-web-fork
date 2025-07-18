@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RestaurantCardSkeleton } from "./RestaurantCardSkeleton";
+import RestaurantCardSkeleton from "@/components/RestaurantCard/RestaurantCardSkeleton";
 
 const RestaurantListSkeleton = () => {
   return (

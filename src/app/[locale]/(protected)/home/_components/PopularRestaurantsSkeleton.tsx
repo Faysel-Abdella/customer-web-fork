@@ -1,4 +1,4 @@
-import RestaurantCardSkeleton from "@/components/RestaurantCardSkeleton";
+import RestaurantCardSkeleton from "@/components/RestaurantCard/RestaurantCardSkeleton";
 import {
   Carousel,
   CarouselContent,

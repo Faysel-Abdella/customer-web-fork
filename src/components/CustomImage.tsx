@@ -4,18 +4,23 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-interface DishCardImageProps {
+interface CustomImageProps {
   imgUrl: string;
   title: string;
+  placeholderImage: string;
   className?: string;
 }
-const DishCardImage = ({ imgUrl, title, className }: DishCardImageProps) => {
-  const placeholderImage = "/assets/images/foodPlaceholder.jpg";
+const CustomImage = ({
+  imgUrl,
+  title,
+  className,
+  placeholderImage,
+}: CustomImageProps) => {
   const [imgSrc, setImgSrc] = useState(imgUrl || placeholderImage);
 
   useEffect(() => {
     setImgSrc(imgUrl || placeholderImage);
-  }, [imgUrl]);
+  }, [imgUrl, placeholderImage]);
   return (
     <Image
       src={imgSrc}
@@ -32,4 +37,4 @@ const DishCardImage = ({ imgUrl, title, className }: DishCardImageProps) => {
   );
 };
 
-export default DishCardImage;
+export default CustomImage;
