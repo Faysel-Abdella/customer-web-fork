@@ -38,7 +38,7 @@ export function CartSheet() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex w-full flex-col rounded-l-2xl px-2 md:px-6">
+      <SheetContent className="flex w-full flex-col rounded-l-2xl border-0 px-2 md:px-6">
         <SheetHeader className="px-0">
           <SheetTitle className="text-lg font-semibold">My Cart</SheetTitle>
         </SheetHeader>
