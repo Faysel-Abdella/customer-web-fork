@@ -2,8 +2,8 @@ import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import AddAddressModal from "../addresses/_components/AddAddressModal";
-import AddressList from "../addresses/_components/AddressList";
+import AddAddressModal from "./AddAddressModal";
+import AddressList from "./AddressList";
 
 const DeliveryInfo = () => {
   return (
