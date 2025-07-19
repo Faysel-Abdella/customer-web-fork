@@ -5,7 +5,6 @@ import { Loader, ShoppingCart } from "lucide-react";
 import CheckoutSheet from "@/components/CheckoutSheet";
 import FadingDivider from "@/components/FadingDivider";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -40,11 +39,9 @@ export function CartSheet() {
         </Button>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col rounded-l-2xl px-2 md:px-6">
-        <SheetHeader>
-          <SheetTitle>My Cart</SheetTitle>
+        <SheetHeader className="px-0">
+          <SheetTitle className="text-lg font-semibold">My Cart</SheetTitle>
         </SheetHeader>
-
-        <Separator />
 
         {isPending ? (
           <div className="flex h-96 w-full items-center justify-center">
@@ -53,7 +50,7 @@ export function CartSheet() {
         ) : totalItems > 0 ? (
           <>
             <div className="flex-1 overflow-y-auto">
-              <div className="space-y-4 py-4">
+              <div className="space-y-4 py-2">
                 {cartItems &&
                   cartItems.map((item) => (
                     <CartListItem key={item.id} cartItem={item} />

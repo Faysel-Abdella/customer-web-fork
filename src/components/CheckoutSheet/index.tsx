@@ -115,7 +115,7 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
           <SheetTitle className="text-xl font-semibold">Check out</SheetTitle>
           <SheetDescription className="hidden"></SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col gap-6 px-4">
+        <div className="flex flex-col gap-6 px-5">
           <Instructions
             additionalInstructions={additionalInstructions}
             setAdditionalInstructions={setAdditionalInstructions}

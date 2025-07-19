@@ -25,18 +25,18 @@ const OrderButton = ({
 
   return (
     <div>
-      <div className="space-y-3">
+      <div className="space-y-2">
         <FadingDivider />
-        <div className="flex justify-between">
-          <span className="text-muted-foreground">Item total</span>
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground text-sm">Item total</span>
           <span className="font-semibold text-orange-500">${totalPrice}</span>
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Delivery fees</span>
           <span className="font-semibold text-orange-500">$0</span>
         </div>
         {selectedOffer && (
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Discount</span>
             <span className="font-semibold text-orange-500">
               - ${selectedOffer?.discount}

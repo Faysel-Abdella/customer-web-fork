@@ -70,7 +70,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
   };
 
   return (
-    <div key={cartItem.id} className="flex flex-col items-center gap-4 pb-3">
+    <div key={cartItem.id} className="flex flex-col items-center gap-4">
       <div className="flex w-full items-center justify-between gap-4">
         <div className="flex h-full w-full items-center gap-2 md:gap-4">
           <div className="relative h-14 w-16 min-w-16 overflow-hidden rounded-lg">
