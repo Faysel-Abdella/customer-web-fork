@@ -153,7 +153,10 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
             <Plus />
           </Button>
         </DialogTrigger>
-        <DialogContent className="h-dvh min-w-72 gap-0 overflow-auto border-0 p-0 max-sm:w-dvw max-sm:min-w-dvw">
+        <DialogContent
+          showCloseButton={false}
+          className="h-dvh min-w-72 gap-0 overflow-auto border-0 p-0 max-sm:w-dvw max-sm:min-w-dvw"
+        >
           <DialogHeader>
             <DialogTitle className="hidden" />
             <DialogDescription className="hidden" />
