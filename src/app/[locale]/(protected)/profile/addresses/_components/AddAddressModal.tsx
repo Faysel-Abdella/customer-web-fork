@@ -7,6 +7,7 @@ import parsePhoneNumberFromString, {
   CountryCode,
   getCountryCallingCode,
 } from "libphonenumber-js";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -97,7 +98,10 @@ const AddAddressModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Add New Address</Button>
+        <Button>
+          <Plus />
+          Add New Address
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-h-dvh min-w-dvw overflow-y-auto md:min-w-3xl lg:min-w-4xl xl:min-w-5xl">
         <DialogHeader>

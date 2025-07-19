@@ -16,10 +16,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 interface AddressListItemProps {
   address: Address;
@@ -34,7 +34,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
       const results = await deleteAddress(address.id.toString());
       if (results.success) {
         toast.success("Successfully deleted address");
-        router.push("/profile/addresses");
+        router.refresh();
       }
       if (results.error) {
         toast.error("Failed at deleting address");
@@ -46,7 +46,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
     startUpdate(async () => {
       const results = await setDefaultAddress(address.id.toString());
       if (results.success) {
-        router.push("/profile/addresses");
+        router.refresh();
       }
       if (results.error) {
         toast.error("Failed at setting default address");
@@ -54,18 +54,18 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
     });
   };
   return (
-    <Card className="shadow-none gap-0">
-      <CardHeader>
+    <Card
+      className={cn(
+        "gap-0 px-4 py-2 shadow-none",
+        address.is_default == 1 && "bg-secondary",
+      )}
+    >
+      <CardHeader className="p-0">
         <div className="flex items-start justify-between">
           <div className="space-y-2">
             <CardTitle className="text-lg">{address.title}</CardTitle>
-            {address.is_default == 1 && (
-              <Badge variant="secondary">Default</Badge>
-            )}
           </div>
           <div>
-           
-
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="ghost" size="sm" disabled={isDeleting}>
@@ -95,7 +95,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex items-end justify-between">
+      <CardContent className="flex items-end justify-between px-0">
         <div className="text-muted-foreground space-y-1">
           <p>{address.address}</p>
           <p>{address.description}</p>
@@ -104,10 +104,12 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
         <div>
           <Button
             size={"sm"}
+            variant={"link"}
             disabled={isUpdating || address.is_default == 1}
             onClick={handleSetDefaultAddress}
             className="w-24"
-          >{isUpdating?<Loader2 className="animate-spin"/>:"Set Default"}
+          >
+            {isUpdating ? <Loader2 className="animate-spin" /> : "Set Default"}
           </Button>
         </div>
       </CardContent>

@@ -7,7 +7,7 @@ import {
   Gift,
   Heart,
   HelpCircle,
-  MapPin,
+  LogOut,
   Shield,
   ShoppingBag,
   User,
@@ -40,12 +40,7 @@ const navigationItems = [
     id: "favourites",
     href: "/profile/favourites",
   },
-  {
-    title: "Addresses",
-    icon: MapPin,
-    id: "addresses",
-    href: "/profile/addresses",
-  },
+
   {
     title: "Orders",
     icon: ShoppingBag,
@@ -95,20 +90,21 @@ const ProfileSidebar = () => {
   const router = useRouter();
   return (
     <>
-      <nav className="max-w-72 min-w-72 flex-1 space-y-5 border-r p-4 max-lg:hidden">
+      <nav className="max-w-72 min-w-72 flex-1 space-y-5 p-4 max-lg:hidden">
+        <p className="text-muted-foreground">Account</p>
         <ul className="space-y-2">
           {navigationItems.map((item) => (
             <li key={item.id}>
               <Link
                 href={item.href}
                 className={cn(
-                  "hover:bg-primary/50 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-200",
+                  "hover:bg-primary/50 text-muted-foreground flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-200",
                   item.href === pathname &&
-                    "bg-primary/40 border-primary border-r-4",
+                    "bg-secondary text-foreground font-semibold",
                 )}
               >
                 <item.icon className="h-5 w-5" />
-                <span className="font-medium">{item.title}</span>
+                <span>{item.title}</span>
               </Link>
             </li>
           ))}
@@ -116,7 +112,8 @@ const ProfileSidebar = () => {
         <Separator />
         <div className="w-full">
           <LogoutButton>
-            <Button variant={"outline"} className="w-full">
+            <Button variant={"ghost"} className="w-full cursor-pointer">
+              <LogOut />
               Logout
             </Button>
           </LogoutButton>

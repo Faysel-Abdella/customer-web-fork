@@ -4,8 +4,8 @@ const AddressListSkeleton = () => {
   return (
     <div className="grid gap-6">
       {Array.from({ length: 3 }).map((_, index) => (
-        <Card key={index} className="shadow-none">
-          <CardHeader>
+        <Card key={index} className="px-4 py-2 shadow-none">
+          <CardHeader className="p-0">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 {/* Skeleton for CardTitle */}
@@ -23,7 +23,7 @@ const AddressListSkeleton = () => {
               </div>
             </div>
           </CardHeader>
-          <CardContent className="flex items-end justify-between">
+          <CardContent className="flex items-end justify-between px-0">
             <div className="text-muted-foreground space-y-2">
               {" "}
               {/* Increased space-y for paragraphs */}
