@@ -2,7 +2,7 @@ import { CircleX } from "lucide-react";
 
 import { getAddressList } from "@/actions/profile.actions";
 
-import AddressListItem from "../addresses/_components/AddressListItem";
+import AddressListItem from "./AddressListItem";
 
 const AddressList = async () => {
   const { data, error } = await getAddressList();

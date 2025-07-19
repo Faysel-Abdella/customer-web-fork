@@ -87,6 +87,7 @@ interface MultiSelectProps
    * Optional, defaults to "Select options".
    */
   placeholder?: string;
+  placeholderClassName?: string;
 
   /**
    * Animation duration in seconds for the visual effects (e.g., bouncing badges).
@@ -131,6 +132,7 @@ export const MultiSelect = React.forwardRef<
       variant,
       defaultValue = [],
       placeholder = "Select options",
+      placeholderClassName,
       animation = 0,
       maxCount = 3,
       modalPopover = false,
@@ -272,7 +274,12 @@ export const MultiSelect = React.forwardRef<
               </div>
             ) : (
               <div className="mx-auto flex w-full items-center justify-between">
-                <span className="text-muted-foreground mx-3 text-sm">
+                <span
+                  className={cn(
+                    "text-muted-foreground mx-3 text-sm",
+                    placeholderClassName,
+                  )}
+                >
                   {placeholder}
                 </span>
                 <ChevronDown className="text-muted-foreground mx-2 h-4 cursor-pointer" />

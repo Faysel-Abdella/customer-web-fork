@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Select,
   SelectContent,
@@ -5,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useFilter from "@/hooks/useFilter";
 import { cn } from "@/lib/utils";
 
 const restaurantSortTypes = [
@@ -27,8 +30,17 @@ interface SortRestaurantsProps {
 }
 
 const SortRestaurants = ({ className }: SortRestaurantsProps) => {
+  const { applyFilters, activeValue } = useFilter("sort_by", "none");
+
+  const [value, setValue] = useState(activeValue);
+
+  const handleFilter = (sort: string) => {
+    setValue(sort);
+    applyFilters(sort);
+  };
+
   return (
-    <Select>
+    <Select value={value} onValueChange={handleFilter}>
       <SelectTrigger
         size="default"
         className={cn(

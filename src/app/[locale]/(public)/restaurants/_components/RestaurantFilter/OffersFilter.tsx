@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Tag } from "lucide-react";
 
@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useFilter from "@/hooks/useFilter";
 import { cn } from "@/lib/utils";
 
 const offers = [20, 45, 50, 60];
@@ -20,6 +21,19 @@ interface OffersFilterProps {
   className?: string;
 }
 const OffersFilter = ({ className }: OffersFilterProps) => {
+  const { applyFilters, activeValue } = useFilter("offer", "");
+
+  const [value, setValue] = useState(activeValue);
+
+  const handleFilter = (sort: string) => {
+    if (value == sort) {
+      setValue("");
+      applyFilters("");
+    } else {
+      setValue(sort);
+      applyFilters(sort);
+    }
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,7 +45,7 @@ const OffersFilter = ({ className }: OffersFilterProps) => {
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Offers</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup>
+        <DropdownMenuRadioGroup value={value} onValueChange={handleFilter}>
           {offers.map((offer) => (
             <DropdownMenuRadioItem
               key={offer}
