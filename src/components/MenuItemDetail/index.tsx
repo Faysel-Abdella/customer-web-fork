@@ -2,6 +2,7 @@
 import { FormEvent, useEffect, useState, useTransition } from "react";
 
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import { addToCartAction } from "@/actions/cart.actions";
@@ -31,6 +32,7 @@ import { MenuItem } from "@/types/restaurant.types";
 import AddToCartForm from "./AddToCartForm";
 import MenuItemDetailSkeleton from "./MenuItemDetailSkeleton";
 import MenuItemDisplay from "./MenuItemDisplay";
+import MenuItemHeader from "./MenuItemHeader";
 
 interface MenuItemDetailProps {
   menuItemId: string;
@@ -74,9 +76,6 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
   const handleAddToCart = async (clearCart?: boolean) => {
     if (!menuItem) return;
 
-    console.log(cartItems);
-    console.log(menuItem);
-    console.log(checkIfInCart());
     if (checkIfInCart()) {
       toast.message("This item is already in cart");
       return;
@@ -150,9 +149,11 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
       </AlertDialog>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button className={className}>View details</Button>
+          <Button className={className} size={"icon"}>
+            <Plus />
+          </Button>
         </DialogTrigger>
-        <DialogContent className="max-h-dvh overflow-auto p-0 pt-6 max-sm:w-dvw max-sm:min-w-dvw">
+        <DialogContent className="h-dvh min-w-72 gap-0 overflow-auto border-0 p-0 max-sm:w-dvw max-sm:min-w-dvw">
           <DialogHeader>
             <DialogTitle className="hidden" />
             <DialogDescription className="hidden" />
@@ -162,15 +163,17 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
           ) : (
             menuItem && (
               <>
+                <MenuItemHeader menuItem={menuItem} />
                 <MenuItemDisplay
                   menuItem={menuItem}
                   selectedAddonIds={selectedAddonIds}
                   setSelectedAddonIds={setSelectedAddonIds}
+                  itemQuantity={itemQuantity}
+                  setItemQuantity={setItemQuantity}
                 />
                 <AddToCartForm
                   menuItem={menuItem}
                   itemQuantity={itemQuantity}
-                  setItemQuantity={setItemQuantity}
                   handleSubmit={handleSubmit}
                   isPending={isPending}
                   selectedAddonIds={selectedAddonIds}

@@ -1,10 +1,10 @@
-import DishCardSkeleton from "@/components/DishCard/DishCardSkeleton";
+import MenuItemCardSkeleton from "@/components/MenuItemCard/MenuItemCard";
 
 const ItemsList = async () => {
   return (
     <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {Array.from({ length: 12 }).map((_, index) => (
-        <DishCardSkeleton key={index} />
+        <MenuItemCardSkeleton key={index} />
       ))}
     </div>
   );

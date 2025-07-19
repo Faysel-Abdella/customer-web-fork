@@ -1,4 +1,4 @@
-import DishCardSkeleton from "@/components/DishCard/DishCardSkeleton";
+import MenuItemCardSkeleton from "@/components/MenuItemCard/MenuItemCard";
 import {
   Carousel,
   CarouselContent,
@@ -27,7 +27,7 @@ export const TrendingDishesSkeleton = () => {
               key={index}
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <DishCardSkeleton />
+              <MenuItemCardSkeleton />
             </CarouselItem>
           ))}
         </CarouselContent>

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 
-import { Loader2, Minus, Plus, Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import { deleteCartItem, updateCartItem } from "@/actions/cart.actions";
+import QuantityControl from "@/components/QuantityControl";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +18,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useCart } from "@/contexts/CartContext";
 import useDebounce from "@/hooks/useDebounce";
 import { getAddOns } from "@/lib/utils";
@@ -125,35 +125,10 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-
-          <div className="flex w-full items-center justify-start gap-2">
-            <Button
-              variant={"outline"}
-              onClick={() =>
-                setItemQuantity((prev) => (prev > 0 ? prev - 1 : prev))
-              }
-              className="h-8 w-8"
-            >
-              <Minus />
-            </Button>
-            <Input
-              className="w-14"
-              type="number"
-              min={1}
-              max={10}
-              value={itemQuantity}
-              onChange={(e) => setItemQuantity(parseInt(e.target.value))}
-            />
-            <Button
-              variant={"outline"}
-              onClick={() =>
-                setItemQuantity((prev) => (prev < 10 ? prev + 1 : prev))
-              }
-              className="h-8 w-8"
-            >
-              <Plus />
-            </Button>
-          </div>
+          <QuantityControl
+            itemQuantity={itemQuantity}
+            setItemQuantity={setItemQuantity}
+          />
         </div>
       </div>
       {cartItem.additional_items && cartItem.additional_items.length > 0 && (

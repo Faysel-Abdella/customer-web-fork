@@ -2,8 +2,8 @@ import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
-import { AddOn } from "@/types/restaurant.types";
 import { CartItem } from "@/types/cart.types";
+import { AddOn, MenuItem } from "@/types/restaurant.types";
 
 import { HttpError } from "./HttpError";
 
@@ -104,4 +104,16 @@ export const getAddOns = (cartItem: CartItem) => {
 
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+export const getMenuItemPrice = (menuItem: MenuItem) => {
+  let price = "0";
+  if (menuItem.itemPrice) {
+    price = menuItem.itemPrice[0].price;
+  }
+  if (menuItem.item_prices) {
+    price = menuItem.item_prices[0].price;
+  }
+  const value = parseFloat(price);
+  return `$${value.toFixed(2)}`;
 };

@@ -1,5 +1,5 @@
 import { getPopularDishes } from "@/actions/actions";
-import DishCard from "@/components/DishCard";
+import MenuItemCard from "@/components/MenuItemCard";
 import {
   Carousel,
   CarouselContent,
@@ -45,7 +45,7 @@ export async function TrendingDishes() {
               key={dish.id}
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <DishCard dish={dish} />
+              <MenuItemCard menuItem={dish} />
             </CarouselItem>
           ))}
         </CarouselContent>

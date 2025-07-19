@@ -1,7 +1,7 @@
 import { SearchX } from "lucide-react";
 
 import { getCategoryItems } from "@/actions/actions";
-import DishCard from "@/components/DishCard";
+import MenuItemCard from "@/components/MenuItemCard";
 
 interface ItemsListProps {
   id: string;
@@ -29,7 +29,7 @@ const ItemsList = async ({ id }: ItemsListProps) => {
     return (
       <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((item) => (
-          <DishCard key={item.id} dish={item} />
+          <MenuItemCard key={item.id} menuItem={item} />
         ))}
       </div>
     );

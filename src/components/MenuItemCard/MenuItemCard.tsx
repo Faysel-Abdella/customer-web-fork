@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-const DishCardSkeleton = () => {
+const MenuItemCardSkeleton = () => {
   return (
     <div className="relative flex h-60 w-full items-end">
       {/* The background card */}
@@ -32,4 +32,4 @@ const DishCardSkeleton = () => {
   );
 };
 
-export default DishCardSkeleton;
+export default MenuItemCardSkeleton;
