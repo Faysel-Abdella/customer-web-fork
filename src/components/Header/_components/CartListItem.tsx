@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 
-import { Loader2, Trash } from "lucide-react";
+import { Dot, Loader2, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import { deleteCartItem, updateCartItem } from "@/actions/cart.actions";
+import FadingDivider from "@/components/FadingDivider";
 import QuantityControl from "@/components/QuantityControl";
 import {
   AlertDialog,
@@ -69,24 +70,21 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
   };
 
   return (
-    <div
-      key={cartItem.id}
-      className="flex flex-col items-center gap-4 border-b pb-3"
-    >
+    <div key={cartItem.id} className="flex flex-col items-center gap-4 pb-3">
       <div className="flex w-full items-center justify-between gap-4">
         <div className="flex h-full w-full items-center gap-2 md:gap-4">
-          <div className="relative h-16 w-16 overflow-hidden rounded-md">
+          <div className="relative h-14 w-16 min-w-16 overflow-hidden rounded-lg">
             <Image
               fill
               src={cartItem.restaurant_items[0].image_file}
               alt={`${cartItem.restaurant_items[0].title}`}
             />
           </div>
-          <div className="flex h-full flex-1 flex-col">
+          <div className="flex h-14 w-full flex-col justify-between">
             <p className="line-clamp-2 font-medium">
               {cartItem.restaurant_items[0].title}
             </p>
-            <p className="text-primary text-sm font-semibold max-md:text-xs">
+            <p className="text-muted-foreground font-medium">
               ${cartItem.selected_rest_price.price}
             </p>
           </div>
@@ -97,7 +95,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="hover:bg-background h-8 w-8 border-red-500 text-red-400 hover:border hover:text-red-500"
+                className="hover:bg-background h-8 w-8 cursor-pointer hover:text-red-400"
                 disabled={isDeleting}
               >
                 {isDeleting ? (
@@ -131,22 +129,26 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
           />
         </div>
       </div>
+
       {cartItem.additional_items && cartItem.additional_items.length > 0 && (
-        <div className="flex w-full flex-col">
-          <p>Add ons</p>
+        <div className="flex w-full flex-col gap-2 pl-4">
+          <div className="flex items-center text-sm font-medium">Add-ons</div>
           <div className="flex flex-col">
             {getAddOns(cartItem).map((addOn) => (
-              <div
-                key={addOn.id}
-                className="flex items-center justify-between text-sm"
-              >
-                <p>{addOn.title}</p>
-                <p>${addOn.price}</p>
+              <div key={addOn.id} className="flex items-center gap-2">
+                <Dot size={20} />
+                <div className="flex flex-col gap-2">
+                  <p className="font-medium">{addOn.title}</p>
+                  <p className="text-muted-foreground text-sm">
+                    ${addOn.price}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
+      <FadingDivider />
     </div>
   );
 };

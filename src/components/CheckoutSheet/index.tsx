@@ -4,23 +4,37 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { placeOrder } from "@/actions/actions";
+import Instructions from "@/components/CheckoutSheet/_components/Instructions";
+import Offers from "@/components/CheckoutSheet/_components/Offers";
+import OrderButton from "@/components/CheckoutSheet/_components/OrderButton";
+import SelectAddress from "@/components/CheckoutSheet/_components/SelectAddress";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { CartItem } from "@/types/cart.types";
 import { Address } from "@/types/profile.types";
 import { Offer, OrderPayload } from "@/types/restaurant.types";
 
-import CartItems from "./CartItems";
-import CheckoutFormSkeleton from "./CheckoutFormSkeleton.tsx";
-import Instructions from "./Instructions";
-import Offers from "./Offers";
-import PaymentDetail from "./PaymentDetail";
-import SelectAddress from "./SelectAddress";
+import { Button } from "../ui/button";
 
-const CheckoutForm = () => {
+import PaymentMethods from "./_components/PaymentMethods";
+
+interface CheckoutSheetProps {
+  className?: string;
+}
+const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
   const {
     cartItems,
     totalPrice,
-    isPending,
     currentRestaurantId,
     totalItems,
     refreshCart,
@@ -39,7 +53,7 @@ const CheckoutForm = () => {
 
   const getItemArray = () => {
     if (!cartItems || cartItems.length === 0) return [];
-    return cartItems.map((item) => ({
+    return cartItems.map((item: CartItem) => ({
       item_price: item.selected_rest_price.price,
       price_id: item.price_id,
       product_id: item.id,
@@ -91,44 +105,46 @@ const CheckoutForm = () => {
     });
   };
 
-  if (isPending) return <CheckoutFormSkeleton />;
   return (
-    <div className="parent-container pb-10">
-      {cartItems && (
-        <div className="grid gap-5 lg:grid-cols-3">
-          <div className="grid gap-5 lg:col-span-2">
-            <div className="space-y-4 py-4">
-              {cartItems.map((item) => (
-                <CartItems key={item.id} cartItem={item} />
-              ))}
-            </div>
-            <Offers
-              selectedOffer={selectedOffer}
-              setSelectedOffer={setSelectedOffer}
-            />
-            <SelectAddress
-              selectedAddress={selectedAddress}
-              setSelectedAddress={setSelectedAddress}
-            />
-            <Instructions
-              additionalInstructions={additionalInstructions}
-              setAdditionalInstructions={setAdditionalInstructions}
-            />
-          </div>
-          <div className="lg:col-span-1">
-            <PaymentDetail
-              selectedOffer={selectedOffer}
-              selectedPaymentMethod={selectedPaymentMethod}
-              setSelectedPaymentMethod={setSelectedPaymentMethod}
-              handlePayment={handleOrder}
-              isOrdering={isOrdering}
-              emptyCart={totalItems == 0}
-            />
-          </div>
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button className={cn(className)}>Checkout</Button>
+      </SheetTrigger>
+      <SheetContent className="h-dvh gap-0 overflow-y-auto rounded-l-2xl max-sm:w-dvw">
+        <SheetHeader>
+          <SheetTitle className="text-xl font-semibold">Check out</SheetTitle>
+          <SheetDescription className="hidden"></SheetDescription>
+        </SheetHeader>
+        <div className="flex flex-col gap-6 px-4">
+          <Instructions
+            additionalInstructions={additionalInstructions}
+            setAdditionalInstructions={setAdditionalInstructions}
+          />
+          <SelectAddress
+            selectedAddress={selectedAddress}
+            setSelectedAddress={setSelectedAddress}
+          />
+          <Offers
+            selectedOffer={selectedOffer}
+            setSelectedOffer={setSelectedOffer}
+          />
+          <PaymentMethods
+            selectedPaymentMethod={selectedPaymentMethod}
+            setSelectedPaymentMethod={setSelectedPaymentMethod}
+          />
         </div>
-      )}
-    </div>
+        <SheetFooter>
+          <OrderButton
+            selectedOffer={selectedOffer}
+            selectedPaymentMethod={selectedPaymentMethod}
+            handlePayment={handleOrder}
+            isOrdering={isOrdering}
+            emptyCart={totalItems == 0}
+          />
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 };
 
-export default CheckoutForm;
+export default CheckoutSheet;

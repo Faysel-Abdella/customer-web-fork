@@ -1,8 +1,9 @@
 "use client";
-import Link from "next/link";
 
 import { Loader, ShoppingCart } from "lucide-react";
 
+import CheckoutSheet from "@/components/CheckoutSheet";
+import FadingDivider from "@/components/FadingDivider";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -38,7 +39,7 @@ export function CartSheet() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex w-full flex-col sm:max-w-md">
+      <SheetContent className="flex w-full flex-col rounded-l-2xl px-2 md:px-6">
         <SheetHeader>
           <SheetTitle>My Cart</SheetTitle>
         </SheetHeader>
@@ -51,7 +52,7 @@ export function CartSheet() {
           </div>
         ) : totalItems > 0 ? (
           <>
-            <div className="flex-1 overflow-y-auto px-2 md:px-6">
+            <div className="flex-1 overflow-y-auto">
               <div className="space-y-4 py-4">
                 {cartItems &&
                   cartItems.map((item) => (
@@ -60,22 +61,21 @@ export function CartSheet() {
               </div>
             </div>
 
-            <Separator />
-            <SheetFooter className="pt-0">
+            <FadingDivider />
+            <SheetFooter className="p-0 pb-4">
               <div className="w-full space-y-4">
                 <div className="flex items-center justify-between font-semibold">
                   <span>Subtotal</span>
-                  <span className="text-primary text-xl">
+                  <span className="">
                     {isLoadingTotalPrice ? (
                       <Loader className="size-3.5 animate-spin" />
                     ) : (
-                      totalPrice
+                      "$" + totalPrice
                     )}
                   </span>
                 </div>
-                <Button size="lg" className="w-full" asChild>
-                  <Link href="/checkout">Checkout</Link>
-                </Button>
+
+                <CheckoutSheet className="w-full" />
               </div>
             </SheetFooter>
           </>
