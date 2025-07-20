@@ -1,28 +1,15 @@
 "use client";
-import { format } from "date-fns";
 import DOMPurify from "dompurify";
 import { MapPin, Phone } from "lucide-react";
 
 import { Restaurant } from "@/types/restaurant.types";
 
+import AvailabilityModal from "./AvailabilityModal";
+
 interface RestaurantInfoProps {
   restaurant: Restaurant;
 }
 
-const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
-const formateHHMM = (date?: string) => {
-  if (!date) return;
-
-  return format(new Date(date), "hh:MM aa");
-};
 const RestaurantInfo = ({ restaurant }: RestaurantInfoProps) => {
   const descriptionHtml = restaurant.description;
 
@@ -36,6 +23,7 @@ const RestaurantInfo = ({ restaurant }: RestaurantInfoProps) => {
         <p className="font-bold">About</p>
         <p dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
       </div>
+      <AvailabilityModal availability={restaurant.availability} />
       <div>
         <p className="mb-2 font-semibold">Contact Information</p>
         <div className="space-y-2">
@@ -54,24 +42,6 @@ const RestaurantInfo = ({ restaurant }: RestaurantInfoProps) => {
             </div>
             <p></p>
           </div>
-        </div>
-      </div>
-      <div>
-        <p className="mb-6 text-xl font-semibold">Availability</p>
-        <div className="space-y-4">
-          {restaurant.availability.map((availability) => (
-            <div
-              key={availability.id}
-              className="border-border bg-secondary dark:bg-card flex items-center justify-between rounded-md border p-2 px-4"
-            >
-              <p>{days[availability.day_id]}</p>
-              <div className="flex items-center gap-2">
-                <p>{formateHHMM(availability.start_time)}</p>
-                <span>-</span>
-                <p>{formateHHMM(availability.end_time)}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>

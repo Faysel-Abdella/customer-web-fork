@@ -1,7 +1,7 @@
 import { CartItem } from "./cart.types";
 import { ActionResult, PageData } from "./shared.types";
 
-interface Availability {
+export interface Availability {
   id: number;
   day_id: number;
   resturant_id: number;
