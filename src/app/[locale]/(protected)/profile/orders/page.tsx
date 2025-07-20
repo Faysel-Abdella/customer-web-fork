@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import OrdersList from "./_componets/OrdersList";
+import OrdersList from "./_components/OrdersList";
 
 export const metadata: Metadata = {
   title: "Your Orders | Time delivery",
