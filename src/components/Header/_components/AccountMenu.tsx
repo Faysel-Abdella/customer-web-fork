@@ -14,7 +14,7 @@ interface AccountMenuProps {
 const AccountMenu = ({ user }: AccountMenuProps) => {
   if (user)
     return (
-      <div className="flex items-center gap-4 md:gap-5">
+      <div className="flex items-center gap-2 md:gap-5">
         <LanguageSelector className="max-lg:hidden" />
         <HeaderThemeToggle className="max-lg:hidden" />
         <NotificationPopover />
@@ -24,8 +24,8 @@ const AccountMenu = ({ user }: AccountMenuProps) => {
       </div>
     );
   return (
-    <div className="flex items-center gap-4 md:gap-5">
-      <LanguageSelector className="max-lg:hidden" />
+    <div className="flex items-center gap-2 md:gap-5">
+      <LanguageSelector />
       <HeaderThemeToggle className="max-lg:hidden" />
 
       <UnAuthUserPopover className="max-lg:hidden" />
