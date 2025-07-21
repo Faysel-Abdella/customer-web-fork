@@ -1,18 +1,17 @@
 import { X } from "lucide-react";
 
 import { getFavoritesList } from "@/actions/profile.actions";
+import RestaurantCard from "@/components/RestaurantCard";
 import { Card, CardContent } from "@/components/ui/card";
-
-import FavoritesListItem from "./FavoritesListItem";
 
 const FavoritesList = async () => {
   const { data, error } = await getFavoritesList();
   if (data)
     return (
       <div>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {data.map((favourite) => (
-            <FavoritesListItem
+            <RestaurantCard
               key={favourite.model_detail.id}
               restaurant={favourite.model_detail}
             />
