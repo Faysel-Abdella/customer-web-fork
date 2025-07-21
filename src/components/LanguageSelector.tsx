@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useParams } from "next/navigation";
 
-import { Globe, Loader2 } from "lucide-react";
+import { Languages, Loader2 } from "lucide-react";
 import { Locale, useLocale } from "next-intl";
 
 import {
@@ -40,9 +40,14 @@ const languages: Language[] = [
   },
 ];
 
+interface LanguageSelectorProps {
+  className?: string;
+  size?: "sm" | "default";
+}
 export default function LanguageSelector({
   className,
-}: React.ComponentProps<"div">) {
+  size = "default",
+}: LanguageSelectorProps) {
   const currentLocale = useLocale();
   const router = useRouter();
   const [language] = useState<string>(currentLocale);
@@ -72,6 +77,7 @@ export default function LanguageSelector({
         }}
       >
         <SelectTrigger
+          size={size}
           id={"language_selector"}
           className={cn(
             "border-border w-[100px] border pl-9 shadow-none",
@@ -79,7 +85,7 @@ export default function LanguageSelector({
           )}
           title={"Language selector"}
         >
-          <Globe
+          <Languages
             className={"text-muted-foreground absolute left-2.5 h-4 w-4"}
           />
           {isPending ? (

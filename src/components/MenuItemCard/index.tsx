@@ -24,7 +24,7 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
     <div className="relative flex h-56 w-full items-end">
       <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-4 max-sm:p-5 sm:min-w-72">
         <div className="flex w-full justify-end">
-          <p className="text-xl font-semibold">{getMenuItemPrice(menuItem)}</p>
+          <p className="text-lg font-semibold">{getMenuItemPrice(menuItem)}</p>
         </div>
         <div className="space-y-4">
           <p className="line-clamp-1 text-lg font-semibold">{menuItem.title}</p>

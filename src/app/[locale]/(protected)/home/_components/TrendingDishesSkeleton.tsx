@@ -1,4 +1,4 @@
-import MenuItemCardSkeleton from "@/components/MenuItemCard/MenuItemCard";
+import MenuItemCardSkeleton from "@/components/MenuItemCard/MenuItemCardSkeleton";
 import {
   Carousel,
   CarouselContent,

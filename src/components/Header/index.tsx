@@ -24,7 +24,7 @@ const Header = () => {
           className="hover:text-primary flex items-center gap-1 font-medium max-md:text-sm"
         >
           {t("restaurants")}
-          <MoveUpRight size={10} />
+          <MoveUpRight size={10} className="lg:hidden" />
         </Link>
         <MobileMenu user={user!} />
       </div>

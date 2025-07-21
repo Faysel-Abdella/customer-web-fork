@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Heart, LogOut, ShoppingBag, User2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import LanguageSelector from "@/components/LanguageSelector";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
@@ -54,13 +56,17 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
               {user?.full_name}
             </p>
             <p className="text-muted-foreground text-xs leading-none">
-              {user?.email}
+              {user?.email || `${user?.country_code}${user?.contact_no}`}
             </p>
           </div>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <div className="flex w-full items-center justify-between px-2 lg:hidden">
+            <Label>Language</Label>
+            <LanguageSelector size="sm" className="w-24" />
+          </div>
           <DropdownMenuItem asChild>
             <Link href="/profile">
               <User2 className="mr-2 h-4 w-4" />
@@ -74,7 +80,7 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile/wallet">
+            <Link href="/profile/orders">
               <ShoppingBag className="mr-2 h-4 w-4" />
               <span>Orders</span>
             </Link>
