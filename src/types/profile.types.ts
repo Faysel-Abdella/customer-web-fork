@@ -213,6 +213,7 @@ interface File {
 }
 
 type gateway = "cash_on_delivery" | "hesabpay";
+type TransactionState = "pending" | "success" | "failed";
 export interface Transaction {
   id: number;
   order_id: number;
@@ -220,14 +221,14 @@ export interface Transaction {
   store_id: number;
   amount: string;
   reference: string;
-  status: string;
+  status: TransactionState;
   gateway: gateway;
   restaurant_name?: string;
   response: {
     url: string;
   };
-  created_at: null | string;
-  updated_at: null | string;
+  created_at: string;
+  updated_at: string;
   discount_amount: string;
   referral_points_used: number;
   platform_fee_reduction: string;

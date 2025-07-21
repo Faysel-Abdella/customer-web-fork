@@ -1,12 +1,14 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 
+import { Loader } from "lucide-react";
+
 import { getTransactionsList } from "@/actions/profile.actions";
+import { DataTable } from "@/components/data-table";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -15,8 +17,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { Transaction } from "@/types/profile.types";
 
-import { TransactionCard } from "./TransactionCard";
-import TransactionCardSkeleton from "./TransactionCardSkeleton";
+import { TransactionColumns } from "./columns";
 
 const TransactionsList = () => {
   const { user } = useAuth();
@@ -44,15 +45,12 @@ const TransactionsList = () => {
     fetchTransactions();
   }, [user, fetchTransactions]);
 
-  if (isLoading) {
+  if (isLoading)
     return (
-      <div className="space-y-4">
-        <TransactionCardSkeleton />
-        <TransactionCardSkeleton />
-        <TransactionCardSkeleton />
+      <div className="flex h-64 w-full items-center justify-center">
+        <Loader size={30} className="animate-spin" />
       </div>
     );
-  }
 
   if (error) {
     return (
@@ -69,9 +67,7 @@ const TransactionsList = () => {
       <div>
         {transactions.length > 0 ? (
           <div className="space-y-4">
-            {transactions.map((transaction) => (
-              <TransactionCard key={transaction.id} transaction={transaction} />
-            ))}
+            <DataTable columns={TransactionColumns} data={transactions} />
             <div className="flex w-full items-start justify-start">
               <Pagination className="w-fit">
                 <PaginationContent>
@@ -81,9 +77,9 @@ const TransactionsList = () => {
                   <PaginationItem>
                     <PaginationLink href="#">1</PaginationLink>
                   </PaginationItem>
-                  <PaginationItem>
+                  {/* <PaginationItem>
                     <PaginationEllipsis />
-                  </PaginationItem>
+                  </PaginationItem> */}
                   <PaginationItem>
                     <PaginationNext href="#" />
                   </PaginationItem>
