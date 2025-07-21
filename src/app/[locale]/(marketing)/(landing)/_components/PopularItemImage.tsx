@@ -10,7 +10,11 @@ const PopularItemImage = ({ imgTitle, imgUrl }: PopularItemImageProps) => {
   const placeholderImage = "/assets/images/foodPlaceholder.jpg";
   const [imgSrc, setImgSrc] = useState(imgUrl);
   useEffect(() => {
-    setImgSrc(imgUrl || placeholderImage);
+    if (imgUrl === "") {
+      setImgSrc(placeholderImage);
+    } else {
+      setImgSrc(imgUrl || placeholderImage);
+    }
   }, [imgUrl]);
   return (
     <Image

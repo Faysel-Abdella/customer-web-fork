@@ -1,6 +1,6 @@
 "use server";
 
-import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
+import { fetchOnCondition } from "@/lib/fetchWrappers";
 import {
   GetMenuItemDetailResult,
   GetRestaurantDetailsResult,
@@ -119,7 +119,7 @@ export async function getRestaurantOffers(
 ): Promise<GetRestaurantOffersResult> {
   try {
     const responseData: RestaurantOffersResponse =
-      await fetchWithAuth<RestaurantOffersResponse>(
+      await fetchOnCondition<RestaurantOffersResponse>(
         `/api/offer/coupon-list?id=${id}`,
         {
           retry: { retries: 3, delay: 1000 },
@@ -136,7 +136,7 @@ export async function getRestaurantReviews(
   id: string,
 ): Promise<GetRestaurantReviewsResult> {
   try {
-    const responseData: Reviews = await fetchWithAuth<Reviews>(
+    const responseData: Reviews = await fetchOnCondition<Reviews>(
       `/api/rating/rating-list?id=${id}`,
       {
         retry: { retries: 3, delay: 1000 },

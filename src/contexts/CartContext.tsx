@@ -10,6 +10,7 @@ import {
   useTransition,
 } from "react";
 
+import { checkAuth } from "@/actions/auth.actions";
 import { getCartItems, getTotalCartPrice } from "@/actions/cart.actions";
 import { CartItem } from "@/types/cart.types";
 
@@ -21,8 +22,8 @@ interface CartContextType {
   isPending: boolean;
   isLoadingTotalPrice: boolean;
   totalPrice: number;
-  refreshCart: () => Promise<void>;
-  silentRefreshCart: () => Promise<void>;
+  refreshCart: () => void;
+  silentRefreshCart: () => void;
   currentRestaurantId: number | null;
 }
 
@@ -35,89 +36,72 @@ export function CartProvider({ children }: { children: ReactNode }) {
     null,
   );
   const [totalItems, setTotalItems] = useState<number>(0);
-  const [isPending, startTransition] = useTransition();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isPending, startTransition] = useTransition();
   const [isLoadingTotalPrice, startTotalPrice] = useTransition();
 
-  const refreshCart = useCallback(async () => {
-    startTransition(async () => {
-      const result = await getCartItems();
-
-      if (result.data) {
-        if (result.data.length > 0) {
-          setCurrentRestaurantId(result.data[0].store_id);
-        } else {
-          setCurrentRestaurantId(null);
-        }
-        setCartItems(result.data);
-
-        setTotalItems(result.data.length);
-      }
-      if (result.error) {
-        console.error(
-          "An error occurred while refreshing the cart:",
-          result.error,
-        );
-        setCurrentRestaurantId(null);
-        setCartItems([]);
-        setTotalItems(0);
-      }
-    });
-  }, []);
-
-  const silentRefreshCart = useCallback(async () => {
-    const result = await getCartItems();
-
-    if (result.data) {
-      if (result.data.length > 0) {
-        setCurrentRestaurantId(result.data[0].store_id);
-      } else {
-        setCurrentRestaurantId(null);
-      }
-      setCartItems(result.data);
-      setTotalItems(result.data.length);
-    }
-    if (result.error) {
-      console.error(
-        "An error occurred while refreshing the cart:",
-        result.error,
-      );
-      setCurrentRestaurantId(null);
+  const fetchAndSetCartData = useCallback(async () => {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
       setCartItems([]);
       setTotalItems(0);
+      setTotalPrice(0);
+      setCurrentRestaurantId(null);
+      return;
+    }
+
+    const itemsResult = await getCartItems();
+
+    if (itemsResult.error || !itemsResult.data) {
+      console.error("Failed to get cart items:", itemsResult.error);
+      setCartItems([]);
+      setTotalItems(0);
+      setTotalPrice(0);
+      setCurrentRestaurantId(null);
+      return;
+    }
+
+    const cartData = itemsResult.data;
+    setCartItems(cartData);
+    setTotalItems(cartData.length);
+
+    if (cartData.length > 0) {
+      setCurrentRestaurantId(cartData[0].store_id);
+      startTotalPrice(async () => {
+        const priceResult = await getTotalCartPrice();
+        if (priceResult.data) {
+          setTotalPrice(priceResult.data);
+        }
+      });
+    } else {
+      setCurrentRestaurantId(null);
+      setTotalPrice(0);
     }
   }, []);
 
+  const refreshCart = useCallback(() => {
+    startTransition(async () => {
+      await fetchAndSetCartData();
+    });
+  }, [fetchAndSetCartData]);
+
+  const silentRefreshCart = useCallback(async () => {
+    await fetchAndSetCartData();
+  }, [fetchAndSetCartData]);
+
   useEffect(() => {
-    if (user) {
-      refreshCart();
-    }
+    refreshCart();
   }, [refreshCart, user]);
-
-  useEffect(() => {
-    if (user) {
-      startTotalPrice(async () => {
-        const result = await getTotalCartPrice();
-
-        if (result.data) {
-          setTotalPrice(result.data);
-        }
-        if (result.error) {
-          refreshCart();
-        }
-      });
-    }
-  }, [cartItems, refreshCart, user]);
 
   const value = {
     currentRestaurantId,
     cartItems,
     totalItems,
     isPending,
-    isLoadingTotalPrice,
     totalPrice,
+    isLoadingTotalPrice,
     refreshCart,
-    silentRefreshCart,
+    silentRefreshCart, // Expose the silent refresh function
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

@@ -1,7 +1,6 @@
 "use server";
 
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
-import { isAuthenticated } from "@/lib/auth";
 import {
   ForgotPasswordPayload,
   ForgotPasswordResponse,
@@ -80,7 +79,7 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
 export async function getPopularDishes(): Promise<GetPopularDishesResult> {
   try {
     const responseData: PopularDishesResponse =
-      await fetchWithAuth<PopularDishesResponse>(
+      await fetchOnCondition<PopularDishesResponse>(
         `/api/cart-item/popular-dish`,
         {
           retry: { retries: 3, delay: 1000 },
@@ -188,8 +187,4 @@ export async function forgotPassword(
     if (typeof error === "string") return { error: error };
     else return { error: "Failed to add item to favorites" };
   }
-}
-
-export async function checkAuth() {
-  return await isAuthenticated();
 }

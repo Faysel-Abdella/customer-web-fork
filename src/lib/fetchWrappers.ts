@@ -78,6 +78,7 @@ async function baseFetch<T>(
     let errorPayload: unknown = null;
     try {
       errorPayload = await response.json();
+      console.log("Error payload:", errorPayload);
     } catch {}
     const errorMessage = await processError(response);
     throw new ApiError(

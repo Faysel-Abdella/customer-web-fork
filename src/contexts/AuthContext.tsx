@@ -9,6 +9,9 @@ import {
   useState,
 } from "react";
 
+import { toast } from "sonner";
+
+import { clearTokenCookie, logoutAction } from "@/actions/auth.actions";
 import { useRouter } from "@/i18n/navigation";
 import { UserDetail } from "@/types/auth.types";
 
@@ -31,10 +34,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = useCallback(() => {
-    setUser(null);
-    localStorage.removeItem("user");
-    router.push("/login");
+  const logout = useCallback(async () => {
+    const { success, error } = await logoutAction();
+    if (success) {
+      setUser(null);
+      localStorage.removeItem("user");
+      await clearTokenCookie();
+      router.push("/login");
+    }
+    if (error) {
+      toast.error("Logout failed, Please try again", { description: error });
+    }
   }, [router]);
 
   const value = {
@@ -55,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           console.error("Failed to parse user data from localStorage.", error);
           setUser(null);
           localStorage.clear();
+          logout();
         }
       }
 
