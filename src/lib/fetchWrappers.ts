@@ -140,13 +140,3 @@ export function fetchOnCondition<T>(
 ): Promise<T> {
   return baseFetch<T>(relativePath, "optional", options);
 }
-
-export async function isAuthenticated(): Promise<boolean> {
-  const cookieStore = await cookies();
-  const tokenCookie = cookieStore.get("access-token");
-
-  if (tokenCookie?.value) {
-    return true;
-  }
-  return false;
-}

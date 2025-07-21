@@ -1,10 +1,7 @@
 "use server";
 
-import {
-  fetchOnCondition,
-  fetchWithAuth,
-  isAuthenticated,
-} from "@/lib/fetchWrappers";
+import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
+import { isAuthenticated } from "@/lib/auth";
 import {
   ForgotPasswordPayload,
   ForgotPasswordResponse,
