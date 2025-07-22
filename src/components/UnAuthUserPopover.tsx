@@ -26,6 +26,9 @@ const UnAuthUserPopover = ({ className }: React.ComponentProps<"div">) => {
         <Button asChild>
           <Link href={"/login"}>{t("login")}</Link>
         </Button>
+        <Button asChild variant={"outline"}>
+          <Link href={"/signup"}>{t("signup")}</Link>
+        </Button>
       </PopoverContent>
     </Popover>
   );
