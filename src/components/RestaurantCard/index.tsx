@@ -1,10 +1,11 @@
 "use client";
 
-import { Dot, Star } from "lucide-react";
+import { Dot, Star, Truck } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
@@ -12,13 +13,19 @@ import FavoriteButton from "../FavoriteButton";
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
+  className?: string;
 }
 
 const restaurantImagePlaceHolder = "/assets/images/restaurant_placeholder.webp";
-const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
+const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
   const { user } = useAuth();
   return (
-    <Card className="group bg-background w-full overflow-hidden border-0 p-2 shadow-none transition-all hover:cursor-pointer">
+    <Card
+      className={cn(
+        "group bg-background w-full overflow-hidden border-0 p-0 shadow-none transition-all hover:cursor-pointer",
+        className,
+      )}
+    >
       <CardContent className="space-y-2 px-0">
         <div className="relative h-40 w-full overflow-hidden rounded-2xl">
           <Link href={`/restaurants/${restaurant.id}`}>
@@ -33,12 +40,17 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
               is_favorite={restaurant.is_favourite === 1}
               itemId={restaurant.id.toString()}
               type="restaurant"
-              className="bg-card/50 absolute top-4 right-4 z-10 rounded-full"
+              className="bg-card/50 absolute top-4 left-4 z-10 rounded-full"
             />
           )}
+          <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-2 py-1 pr-3">
+            <Truck size={16} />
+            <div className="bg-foreground h-4 w-px" />
+            <span className="font-semibold">${restaurant.fee}</span>
+          </div>
         </div>
         <Link href={`/restaurants/${restaurant.id}`}>
-          <div className="space-y-1">
+          <div className="space-y-1 p-2">
             <p className="group-hover:text-primary truncate text-lg">
               {restaurant.title}
             </p>
