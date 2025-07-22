@@ -10,12 +10,22 @@ const PopularItemImage = ({ imgTitle, imgUrl }: PopularItemImageProps) => {
   const placeholderImage = "/assets/images/foodPlaceholder.jpg";
   const [imgSrc, setImgSrc] = useState(imgUrl);
   useEffect(() => {
-    if (imgUrl === "") {
-      setImgSrc(placeholderImage);
-    } else {
-      setImgSrc(imgUrl || placeholderImage);
-    }
+    setImgSrc(imgUrl || placeholderImage);
   }, [imgUrl]);
+
+  if (imgUrl == "")
+    return (
+      <Image
+        src={placeholderImage}
+        alt={imgTitle}
+        fill
+        className="rounded-t-lg object-cover transition-transform duration-300 group-hover:scale-105"
+        onError={() => {
+          setImgSrc(placeholderImage);
+        }}
+      />
+    );
+
   return (
     <Image
       src={imgSrc}
