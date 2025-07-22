@@ -43,11 +43,15 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
               className="bg-card/50 absolute top-4 left-4 z-10 rounded-full"
             />
           )}
-          <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-2 py-1 pr-3">
-            <Truck size={16} />
-            <div className="bg-foreground h-4 w-px" />
-            <span className="font-semibold">${restaurant.fee}</span>
-          </div>
+          {restaurant.fee && (
+            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-2 py-1 pr-3">
+              <Truck size={16} className="text-foreground" />
+              <div className="bg-foreground h-4 w-px" />
+              <span className="text-foreground font-semibold">
+                ${restaurant.fee}
+              </span>
+            </div>
+          )}
         </div>
         <Link href={`/restaurants/${restaurant.id}`}>
           <div className="space-y-1 p-2">

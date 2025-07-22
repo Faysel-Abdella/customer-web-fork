@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
 import { getTopRestaurants } from "@/actions/restaurants.actions";
-import RestaurantCard from "@/components/RestaurantCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
@@ -20,12 +19,11 @@ const PopularRestaurants = async () => {
                 {t("title")}
               </p>
             </div>
-            <div className="grid h-full w-full grid-cols-1 justify-center gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid h-full grid-cols-1 justify-center gap-8 md:grid-cols-2 lg:grid-cols-3">
               {popularRestaurants.map((restaurant) => (
-                <RestaurantCard
+                <PopularRestaurantCard
                   restaurant={restaurant}
                   key={restaurant.id}
-                  className="bg-neutral-800 text-white"
                 />
               ))}
             </div>
