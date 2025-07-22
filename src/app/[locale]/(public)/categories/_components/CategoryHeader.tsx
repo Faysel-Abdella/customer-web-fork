@@ -1,19 +1,12 @@
-import React from "react";
-
-const categories = [
-  { id: "1", title: "Food" },
-  { id: "2", title: "Drinks" },
-  { id: "3", title: "Other" },
-];
-
 interface CategoryHeaderProps {
-  id: string;
+  title: string;
+  amount?: number;
 }
-const CategoryHeader = ({ id }: CategoryHeaderProps) => {
-  const category = categories.find((item) => item.id == id);
+const CategoryHeader = ({ amount, title }: CategoryHeaderProps) => {
   return (
-    <div>
-      <h2 className="text-3xl font-semibold">{category?.title}</h2>
+    <div className="mb-8 flex items-center gap-2">
+      <h2 className="text-3xl font-semibold">{title}</h2>
+      {amount && <p className="text-muted-foreground text-3xl">({amount})</p>}
     </div>
   );
 };

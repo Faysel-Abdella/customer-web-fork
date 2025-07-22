@@ -28,7 +28,7 @@ const PopularRestaurants = async () => {
 
           <div className="flex items-center gap-4">
             <Link
-              href="#"
+              href="/restaurants"
               className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"
             >
               See All
@@ -40,11 +40,11 @@ const PopularRestaurants = async () => {
           </div>
         </div>
 
-        <CarouselContent className="overflow-visible">
+        <CarouselContent className="-ml-4 overflow-visible">
           {restaurants?.map((restaurant) => (
             <CarouselItem
               key={restaurant.id}
-              className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+              className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
             >
               <RestaurantCard restaurant={restaurant} />
             </CarouselItem>

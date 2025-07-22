@@ -1,18 +1,14 @@
-import React from "react";
+import { Suspense } from "react";
 
-import CategoryHeader from "./_components/CategoryHeader";
-import ItemsList from "./_components/ItemsList";
-interface CategoryPageProps {
-  searchParams: Promise<{ id: string }>;
-}
+import CategoryList from "./_components/CategoryList";
+import CategoryListSkeleton from "./_components/CategoryListSkeleton";
 
-const CategoryPage = async ({ searchParams }: CategoryPageProps) => {
-  const { id } = (await searchParams) || "1";
-
+const CategoryPage = () => {
   return (
     <div className="min-h-dvh space-y-10 px-3 pt-36 pb-20 sm:px-4 md:px-10 lg:px-14">
-      <CategoryHeader id={id} />
-      <ItemsList id={id} />
+      <Suspense fallback={<CategoryListSkeleton />}>
+        <CategoryList />
+      </Suspense>
     </div>
   );
 };

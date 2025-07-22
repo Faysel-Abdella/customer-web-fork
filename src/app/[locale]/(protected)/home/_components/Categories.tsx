@@ -1,7 +1,12 @@
-import Image from "next/image";
-
 import { getCategiesList } from "@/actions/actions";
-import { Card, CardContent } from "@/components/ui/card";
+import CategoryCard from "@/components/CategoryCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Link } from "@/i18n/navigation";
 
 export async function Categories() {
@@ -9,46 +14,42 @@ export async function Categories() {
 
   if (categories)
     return (
-      <section className="mb-16">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900 md:mb-2 md:text-3xl dark:text-white">
-              Browse Categories
-            </h2>
-            <p className="text-gray-600 max-md:text-sm dark:text-gray-400">
-              Discover your favorite cuisines
-            </p>
-          </div>
-          <Link href={"#"} className="text-primary underline">
-            View all
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-4 xl:gap-6">
-          {categories.map((category, index) => (
-            <Card
-              key={index}
-              className="group bg-secondary dark:bg-secondary cursor-pointer border p-0 shadow-none backdrop-blur-sm transition-all duration-300"
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="space-y-5 overflow-visible"
+      >
+        <div className="flex w-full items-center justify-between">
+          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">Categories</h2>
+
+          <div className="flex items-center gap-4">
+            <Link
+              href="/categories"
+              className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"
             >
-              <Link href={`/categories?id=${category.id}`}>
-                <CardContent className="relative flex flex-col items-center justify-between gap-2 overflow-hidden p-2 pb-4 text-center">
-                  <div className="relative h-28 w-full overflow-hidden rounded-2xl">
-                    <Image
-                      src={category.image}
-                      fill
-                      alt={`${category.title} category food`}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="text-primary mb-1 font-bold transition-all group-hover:underline dark:text-white">
-                      {category.title}
-                    </h3>
-                  </div>
-                </CardContent>
-              </Link>
-            </Card>
-          ))}
+              See All
+            </Link>
+            <div className="flex gap-2">
+              <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
+              <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />
+            </div>
+          </div>
         </div>
-      </section>
+
+        <CarouselContent className="-ml-4 overflow-visible">
+          {categories?.map((category) => (
+            <CarouselItem
+              key={category.id}
+              className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            >
+              <div className="p-1">
+                <CategoryCard category={category} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     );
 }
