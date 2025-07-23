@@ -9,7 +9,13 @@ export const metadata: Metadata = {
     "View your past and current orders. Track the status of your delivery and reorder your favorite meals with ease.",
 };
 
-const OrdersPage = () => {
+interface OrdersPageProps {
+  searchParams: Promise<{
+    [key: string]: string | string[] | undefined;
+  }>;
+}
+const OrdersPage = async ({ searchParams }: OrdersPageProps) => {
+  const params = await searchParams;
   return (
     <div className="w-full space-y-6 px-0 py-5 md:px-10">
       <div className="flex items-center justify-between">
@@ -23,7 +29,7 @@ const OrdersPage = () => {
       </div>
 
       <div className="space-y-4">
-        <OrdersList />
+        <OrdersList params={params} />
       </div>
     </div>
   );

@@ -202,14 +202,23 @@ export async function changePassword(data: {
   }
 }
 
-export async function getOrdersList(): Promise<GetOrdersListResults> {
+export async function getOrdersList(
+  queryString: string,
+): Promise<GetOrdersListResults> {
   try {
     const responseData: OrdersListResponse =
-      await fetchWithAuth<OrdersListResponse>(`/api/cart-item/order-history`, {
-        retry: { retries: 3, delay: 1000 },
-      });
+      await fetchWithAuth<OrdersListResponse>(
+        `/api/cart-item/order-history?${queryString}`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
 
-    return { success: true, data: responseData.list };
+    return {
+      success: true,
+      data: responseData.list,
+      pageData: responseData._meta,
+    };
   } catch (error) {
     console.error(error);
     if (typeof error === "string") return { success: false, error };

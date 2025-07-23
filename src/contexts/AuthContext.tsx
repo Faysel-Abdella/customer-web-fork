@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       router.push("/login");
     }
     if (error) {
-      toast.error("Logout failed, Please try again", { description: error });
+      toast.error("Logout failed, Please try again");
     }
   }, [router]);
 

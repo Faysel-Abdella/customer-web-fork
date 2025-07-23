@@ -34,13 +34,13 @@ export const orderColumns: ColumnDef<Order>[] = [
     header: "Status",
     cell: ({ row }) => {
       const orderState = row.original.orderState;
-      console.log("Order State:", orderState);
       return (
-        <Badge
-          variant="outline"
-          className="rounded-full border-0 bg-green-200 text-green-600 dark:bg-green-500/20"
-        >
-          Active
+        <Badge variant="outline">
+          {orderState[0]
+            ? orderState[0].state_id == 1
+              ? "Active"
+              : "InActive"
+            : "Unavailable"}
         </Badge>
       );
     },

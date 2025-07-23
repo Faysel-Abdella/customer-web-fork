@@ -1,30 +1,47 @@
 "use client";
-import React, { useState } from "react";
 
-// import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const OrderFilter = () => {
-  //   const searchParams = useSearchParams();
-  const [status, setStatus] = useState("a");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const currentStatus = searchParams.get("state_id") || "1";
+
+  const handleFilterChange = (value: string) => {
+    if (!value) return;
+
+    const params = new URLSearchParams(searchParams);
+
+    if (value === "5") {
+      params.set("state_id", "5");
+    } else {
+      params.delete("state_id");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div>
       <ToggleGroup
-        defaultValue="a"
         type="single"
         className="bg-secondary p-1"
-        value={status}
-        onValueChange={(e) => setStatus(e)}
+        value={currentStatus}
+        onValueChange={handleFilterChange}
       >
         <ToggleGroupItem
-          value="a"
-          className="data-[state=on]:bg-background rounded-md rounded-l-md"
+          value="1"
+          className="data-[state=on]:bg-background rounded-md"
         >
           Active orders
         </ToggleGroupItem>
         <ToggleGroupItem
-          value="b"
-          className="data-[state=on]:bg-background rounded-md rounded-r-md"
+          value="5"
+          className="data-[state=on]:bg-background rounded-md"
         >
           Past orders
         </ToggleGroupItem>

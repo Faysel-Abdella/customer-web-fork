@@ -1,6 +1,6 @@
 import { UserDetail } from "./auth.types";
 import { AddOn, Restaurant } from "./restaurant.types";
-import { ActionResult } from "./shared.types";
+import { ActionResult, PageData } from "./shared.types";
 
 export interface Address {
   id: number;
@@ -302,9 +302,11 @@ export interface AddressListResponse {
 }
 export interface GetOrdersListResults extends ActionResult {
   data?: Order[];
+  pageData?: PageData;
 }
 export interface OrdersListResponse {
   list: Order[];
+  _meta: PageData;
 }
 export interface GetNotificationListResults extends ActionResult {
   data?: Notification[];
