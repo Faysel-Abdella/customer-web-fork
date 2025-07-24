@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -7,8 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useFilter from "@/hooks/useFilter";
-import { cn } from "@/lib/utils";
+
+import { RestaurantFilters } from ".";
 
 const restaurantSortTypes = [
   {
@@ -26,39 +25,33 @@ const restaurantSortTypes = [
 ];
 
 interface SortRestaurantsProps {
-  className?: string;
+  filters: RestaurantFilters;
+  setFilters: React.Dispatch<React.SetStateAction<RestaurantFilters>>;
 }
-
-const SortRestaurants = ({ className }: SortRestaurantsProps) => {
-  const { applyFilters, activeValue } = useFilter("sort_by", "none");
-
-  const [value, setValue] = useState(activeValue);
-
-  const handleFilter = (sort: string) => {
-    setValue(sort);
-    applyFilters(sort);
-  };
-
+const SortRestaurants = ({ filters, setFilters }: SortRestaurantsProps) => {
   return (
-    <Select value={value} onValueChange={handleFilter}>
-      <SelectTrigger
-        size="default"
-        className={cn(
-          "w-28 items-center rounded-full data-[size=default]:h-10",
-          className,
-        )}
+    <div>
+      <Label className="mb-2">Sort</Label>
+      <Select
+        value={filters.sort_by}
+        defaultValue={filters.sort_by}
+        onValueChange={(value: string) =>
+          setFilters((prev) => ({ ...prev, sort_by: value }))
+        }
       >
-        <SelectValue placeholder="Sort" className="h-12" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="none">None</SelectItem>
-        {restaurantSortTypes.map((sort) => (
-          <SelectItem key={sort.value} value={sort.value}>
-            {sort.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+        <SelectTrigger className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="none">None</SelectItem>
+          {restaurantSortTypes.map((sort) => (
+            <SelectItem key={sort.value} value={sort.value}>
+              {sort.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 

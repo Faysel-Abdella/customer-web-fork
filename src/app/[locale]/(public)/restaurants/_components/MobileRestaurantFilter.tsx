@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import RestaurantsFilters from "./RestaurantsFilters";
+import RestaurantFilters from "./RestaurantFilter";
 
 const MobileRestaurantFilter = () => {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,10 @@ const MobileRestaurantFilter = () => {
             mobile restaurant filters
           </DialogDescription>
         </DialogHeader>
-        <RestaurantsFilters isMobile className="flex flex-col" />
+        <RestaurantFilters
+          className="r flex w-full flex-col gap-5 px-5"
+          setOpen={setOpen}
+        />
       </DialogContent>
     </Dialog>
   );
