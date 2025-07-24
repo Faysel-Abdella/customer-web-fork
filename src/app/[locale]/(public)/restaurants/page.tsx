@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import MobileRestaurantFilter from "./_components/MobileRestaurantFilter";
 import RestaurantFilter from "./_components/RestaurantFilter";
 import RestaurantListSkeleton from "./_components/RestaurantListSkeleton";
 import RestaurantsList from "./_components/RestaurantsList";
@@ -18,12 +19,15 @@ const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
   const searchString: string | undefined =
     typeof param["search"] == "string" ? param["search"] : undefined;
   return (
-    <div className="flex min-h-dvh flex-col gap-8 px-3 pt-32 pb-20 sm:px-4 md:px-10 lg:px-32">
-      <h2 className="text-3xl font-semibold">Restaurants</h2>
+    <div className="flex min-h-dvh flex-col gap-8 px-3 pt-36 pb-20 sm:px-4 md:px-10 lg:px-20 lg:pt-32 xl:px-32">
+      <div className="flex gap-10 max-lg:flex-col">
+        <div className="flex w-full max-lg:justify-between lg:w-1/4 lg:flex-col lg:gap-5">
+          <h2 className="text-3xl font-semibold">Restaurants</h2>
 
-      <div className="flex gap-10">
-        <RestaurantFilter className="bg-card h-fit w-1/4 space-y-4 rounded-xl border p-4" />
-        <div className="w-3/4">
+          <RestaurantFilter className="bg-card sticky top-24 h-fit space-y-4 rounded-xl border p-4 max-lg:hidden" />
+          <MobileRestaurantFilter className="w-fit" />
+        </div>
+        <div className="w-full lg:w-3/4 lg:pt-14">
           <Suspense fallback={<RestaurantListSkeleton />}>
             <RestaurantsList
               key={key}

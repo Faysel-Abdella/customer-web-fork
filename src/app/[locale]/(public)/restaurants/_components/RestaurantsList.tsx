@@ -45,7 +45,7 @@ const RestaurantsList = async ({
     return (
       <div className="flex w-full flex-col gap-5">
         {searchString && (
-          <div>
+          <div className="font-semibold">
             Results for &apos; {searchString} &apos;{" "}
             <span className="text-muted-foreground">
               ({pageData?.totalCount})
