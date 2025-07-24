@@ -21,7 +21,7 @@ import {
   PlaceOrderResults,
   PopularDishesResponse,
 } from "@/types/restaurant.types";
-import { ActionResult } from "@/types/shared.types";
+import { ActionResult, GeocodingResponse } from "@/types/shared.types";
 
 export async function updateProfileAction(data: FormData) {
   try {
@@ -186,5 +186,38 @@ export async function forgotPassword(
     console.error(error);
     if (typeof error === "string") return { error: error };
     else return { error: "Failed to add item to favorites" };
+  }
+}
+
+export async function reverseGeocode(
+  latitude: number,
+  longitude: number,
+): Promise<string | null> {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_API;
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data: GeocodingResponse = await response.json();
+    if (data.status === "OK") {
+      const bestResult = data.results[0];
+      if (bestResult) {
+        const address = bestResult.formatted_address;
+        return address;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
   }
 }

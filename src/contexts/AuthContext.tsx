@@ -11,7 +11,11 @@ import {
 
 import { toast } from "sonner";
 
-import { clearTokenCookie, logoutAction } from "@/actions/auth.actions";
+import {
+  checkAuth,
+  clearTokenCookie,
+  logoutAction,
+} from "@/actions/auth.actions";
 import { useRouter } from "@/i18n/navigation";
 import { UserDetail } from "@/types/auth.types";
 
@@ -19,6 +23,7 @@ interface AuthContextType {
   user: UserDetail | null;
   login: (userData: UserDetail) => void;
   logout: () => void;
+  isAuthenticated: boolean;
   isLoading: boolean;
 }
 
@@ -27,6 +32,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserDetail | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const router = useRouter();
 
   const login = (userData: UserDetail) => {
@@ -52,9 +58,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login,
     logout,
     isLoading,
+    isAuthenticated,
   };
   useEffect(() => {
+    setIsLoading(true);
     const initializeAuth = async () => {
+      const authStatus = await checkAuth();
+
+      setIsAuthenticated(authStatus);
+
+      if (!authStatus) {
+        setIsLoading(false);
+        return;
+      }
       const storedUserJSON = localStorage.getItem("user");
 
       if (storedUserJSON) {
@@ -73,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     initializeAuth();
-  }, [logout]);
+  }, [logout, isAuthenticated]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

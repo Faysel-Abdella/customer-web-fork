@@ -32,7 +32,6 @@ const CategoryFilter = ({ className }: CategoryFilterProps) => {
   const currentCategories = searchParams.getAll("category") || [];
   const [categories, setCategories] = useState<string[]>(currentCategories);
 
-  console.log(categories);
   const debouncedValue = useDebounce(categories, 500);
 
   const isInitialMount = useRef(true);

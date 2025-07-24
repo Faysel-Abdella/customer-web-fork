@@ -81,7 +81,6 @@ const AddAddressModal = () => {
     };
 
     startTransition(async () => {
-      console.log(data);
       const results = await addAddress(data);
 
       if (results.success) {

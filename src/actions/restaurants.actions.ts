@@ -19,10 +19,7 @@ import {
 export async function getRestaurants(
   queryString: string,
 ): Promise<GetRestaurantsResult> {
-  const url =
-    queryString === ""
-      ? "/api/restaurant/restaurant-list"
-      : `/api/state/search-restaurant?${queryString}`;
+  const url = `/api/state/search-restaurant?${queryString}`;
 
   try {
     const responseData: RestaurantResponce =
@@ -30,6 +27,7 @@ export async function getRestaurants(
         retry: { retries: 3, delay: 1000 },
       });
 
+    console.log("fetched restaurants");
     return {
       success: true,
       data: responseData.list,

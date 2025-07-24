@@ -35,7 +35,7 @@ const RestaurantPagination = ({ pageData }: RestaurantPaginationProps) => {
 
     const params = new URLSearchParams(searchParams);
     params.set("page", (page - 1).toString());
-
+    console.log("pagination change");
     router.push(`${pathname}?${params.toString()}`);
     scrollToTop();
   };

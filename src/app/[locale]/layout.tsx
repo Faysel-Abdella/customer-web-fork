@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import LocationProvider from "@/contexts/LocationContext";
 import { routing } from "@/i18n/routing";
 
 import "./globals.css";
@@ -39,17 +40,19 @@ export default async function RootLayout({
       <body className={` ${poppins.className} antialiased`}>
         <NextIntlClientProvider>
           <AuthProvider>
-            <CartProvider>
-              <ThemeProvider
-                attribute={"class"}
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                {children}
-                <Toaster richColors />
-              </ThemeProvider>
-            </CartProvider>
+            <LocationProvider>
+              <CartProvider>
+                <ThemeProvider
+                  attribute={"class"}
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  {children}
+                  <Toaster richColors />
+                </ThemeProvider>
+              </CartProvider>
+            </LocationProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
