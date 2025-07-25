@@ -21,6 +21,7 @@ export async function getRestaurants(
 ): Promise<GetRestaurantsResult> {
   const url = `/api/state/search-restaurant?${queryString}`;
 
+  console.log("fetching url:", url);
   try {
     const responseData: RestaurantResponce =
       await fetchOnCondition<RestaurantResponce>(url, {

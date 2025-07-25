@@ -50,7 +50,7 @@ export function LocationPicker({
         setSelectedAddress(results[0].formatted_address);
       } else {
         setSelectedAddress("Address not found.");
-        console.error("Geocoder failed due to: " + status);
+        // console.error("Geocoder failed due to: " + status);
       }
     });
   };

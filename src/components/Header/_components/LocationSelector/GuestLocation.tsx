@@ -15,7 +15,7 @@ import useGeolocation from "@/hooks/useGeolocation";
 const GuestLocation = () => {
   const { address, location } = useGeolocation();
   const { setLocation } = useLocation();
-  console.log("i am here");
+  // console.log("i am here");
 
   useEffect(() => {
     if (location) {

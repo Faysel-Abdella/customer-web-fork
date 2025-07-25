@@ -14,7 +14,7 @@ export function LocationHandler() {
   const { location } = useLocation();
 
   const latInUrl = searchParams.get("lat");
-  const lngInUrl = searchParams.get("lng");
+  const lngInUrl = searchParams.get("lon");
 
   useEffect(() => {
     if (!location) {
@@ -33,8 +33,8 @@ export function LocationHandler() {
 
     const params = new URLSearchParams(searchParams.toString());
     params.set("lat", latitude.toString());
-    params.set("lng", longitude.toString());
-    console.log("router.replace called to update location");
+    params.set("lon", longitude.toString());
+    // console.log("router.replace called to update location");
     router.replace(`${pathname}?${params.toString()}`);
   }, [location, pathname, router, latInUrl, lngInUrl, searchParams]);
 

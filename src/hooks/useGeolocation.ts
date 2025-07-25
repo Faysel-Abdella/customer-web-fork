@@ -13,11 +13,8 @@ export default function useGeolocation() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchAddress = async (latitude: number, longitude: number) => {
-    console.log("fetching real address");
     const data = await reverseGeocode(latitude, longitude);
-    console.log(data);
     if (data) {
-      console.log("hai");
       setAddress(data);
     } else {
       setAddressError("Unable to fetch address");

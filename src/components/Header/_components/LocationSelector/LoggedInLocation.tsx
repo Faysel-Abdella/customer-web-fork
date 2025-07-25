@@ -61,7 +61,7 @@ const LoggedInLocation = () => {
 
   const fetchAddressList = useCallback(async () => {
     startTransition(async () => {
-      console.log("Fetching locations");
+      // console.log("Fetching locations");
       const result = await getAddressList();
       if (result.data) {
         setAddressList(result.data);
