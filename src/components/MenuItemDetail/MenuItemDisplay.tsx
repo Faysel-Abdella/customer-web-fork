@@ -1,7 +1,7 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { Clock, Dot, Star } from "lucide-react";
+import { Clock, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { getMenuItemPrice } from "@/lib/utils";
@@ -31,19 +31,6 @@ const MenuItemDisplay = ({
     USE_PROFILES: { html: true },
   });
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${
-          i < Math.floor(rating)
-            ? "fill-orange-400 text-orange-400"
-            : "fill-gray-200 text-gray-200"
-        }`}
-      />
-    ));
-  };
-
   return (
     <div className="flex-1 space-y-5 overflow-y-auto px-4 pt-6">
       <div className="flex flex-col gap-3">
@@ -64,14 +51,9 @@ const MenuItemDisplay = ({
           <p className="text-xl font-semibold">{getMenuItemPrice(menuItem)}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="text-muted-foreground flex items-center gap-2">
-            {renderStars(menuItem.avg_rating)} {menuItem.avg_rating}
-          </div>
-          <div className="text-muted-foreground flex items-center gap-1">
-            <Clock size={16} /> {menuItem.cook_time}
-            <span> min</span>
-          </div>
+        <div className="text-muted-foreground flex items-center gap-1">
+          <Clock size={16} /> {menuItem.cook_time}
+          <span> min</span>
         </div>
       </div>
 

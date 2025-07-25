@@ -1,5 +1,5 @@
 "use client";
-import { Dot, Star } from "lucide-react";
+import { Clock } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { getMenuItemPrice } from "@/lib/utils";
@@ -45,13 +45,9 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
 
           <div className="flex w-full justify-between gap-1.5">
             <div className="text-muted-foreground flex items-center gap-1">
-              <div className="flex items-center gap-1">
-                <Star size={16} className="fill-primary text-primary" />
-                <span>{menuItem.avg_rating}</span>
-              </div>
               {menuItem.cook_time.trim() && (
-                <div className="flex items-center">
-                  <Dot />
+                <div className="flex items-center gap-2">
+                  <Clock size={14} />
                   <span>{getCookTime()} min</span>
                 </div>
               )}
