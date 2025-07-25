@@ -24,7 +24,7 @@ const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
         <div className="flex w-full max-lg:justify-between lg:w-1/4 lg:flex-col lg:gap-5">
           <h2 className="text-3xl font-semibold">Restaurants</h2>
 
-          <RestaurantFilter className="bg-card sticky top-24 h-fit space-y-4 rounded-xl border p-4 max-lg:hidden" />
+          <RestaurantFilter className="bg-card h-fit space-y-6 rounded-xl border p-5 max-lg:hidden" />
           <MobileRestaurantFilter className="w-fit" />
         </div>
         <div className="w-full lg:w-3/4 lg:pt-14">
