@@ -40,7 +40,7 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
               is_favorite={restaurant.is_favourite === 1}
               itemId={restaurant.id.toString()}
               type="restaurant"
-              className="bg-card/50 absolute top-4 left-4 z-10 rounded-full"
+              className="bg-card absolute top-4 left-4 z-10 rounded-full"
             />
           )}
           {restaurant.fee && (

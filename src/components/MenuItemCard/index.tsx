@@ -1,9 +1,12 @@
+"use client";
 import { Dot, Star } from "lucide-react";
 
+import { useAuth } from "@/contexts/AuthContext";
 import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import FavoriteButton from "../FavoriteButton";
 import MenuItemDetail from "../MenuItemDetail";
 
 interface MenuItemCardProps {
@@ -12,6 +15,7 @@ interface MenuItemCardProps {
 const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
 const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
+  const { user } = useAuth();
   const currentPrice = getMenuItemPrice(menuItem);
   const minPercent = 10;
   const maxPercent = 30;
@@ -56,7 +60,7 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-5 h-28 w-36 overflow-hidden rounded-3xl shadow-lg sm:w-44">
+      <div className="absolute top-0 left-5 h-28 w-36 overflow-hidden rounded-2xl shadow-lg sm:w-44">
         <div className="relative h-full w-full">
           <CustomImage
             placeholderImage={foodPlaceholder}
@@ -64,6 +68,14 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             title={menuItem.title}
           />
         </div>
+        {user && (
+          <FavoriteButton
+            is_favorite={menuItem.is_favourite === 1}
+            itemId={menuItem.id.toString()}
+            type="menu_item"
+            className="bg-card absolute top-2.5 left-2.5 z-10 size-7 rounded-full"
+          />
+        )}
       </div>
     </div>
   );
