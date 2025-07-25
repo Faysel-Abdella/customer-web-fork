@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const RestaurantCardSkeleton = () => {
   return (
-    <Card className="w-full border-0 p-2 shadow-none">
+    <Card className="w-full border-0 shadow-none">
       <CardContent className="space-y-2 px-0">
         <Skeleton className="h-40 w-full rounded-2xl" />
         <div className="space-y-2">
