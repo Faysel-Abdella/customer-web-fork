@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "@/i18n/navigation";
 import { auth } from "@/lib/firebase"; // Import your initialized auth service
 import { HttpError } from "@/lib/HttpError";
 import { processError } from "@/lib/utils";
@@ -21,6 +22,7 @@ export function useSocialSSO({
   const [error, setError] = useState<null | string>();
   const [isSuccess, setIsSuccess] = useState(false);
   const [user, setUser] = useState<UserDetail>();
+  const router = useRouter();
   const { login: contextLogin } = useAuth();
   const [isLoading, startTransition] = useTransition();
 
@@ -77,6 +79,14 @@ export function useSocialSSO({
         contextLogin(responseData.detail);
         setUser(responseData.detail);
         setIsSuccess(true);
+        const previousPath = localStorage.getItem("previousPath");
+
+        if (previousPath) {
+          router.push(previousPath);
+          localStorage.removeItem(previousPath);
+        } else {
+          router.push("/home");
+        }
       });
     } catch (error) {
       const errorMessage = await processError(error);
