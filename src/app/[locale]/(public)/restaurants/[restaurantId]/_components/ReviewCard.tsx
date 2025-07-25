@@ -20,48 +20,46 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
     : review.restaurant_comment.slice(0, maxLength);
 
   return (
-    <div className="flex gap-4 border-b p-6">
-      <Avatar className="h-12 w-12 flex-shrink-0">
-        <AvatarImage
-          src={review.created_by_image}
-          alt={review.created_by_name}
-        />
-        <AvatarFallback className="text-primary font-medium">
-          {review.created_by_name}
-        </AvatarFallback>
-      </Avatar>
+    <div className="flex flex-col gap-3">
+      <div className="flex w-full items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Avatar className="aspect-square h-9.5 w-9.5 flex-shrink-0">
+            <AvatarImage
+              src={review.created_by_image}
+              alt={review.created_by_name}
+            />
+            <AvatarFallback className="text-primary font-medium">
+              {review.created_by_name}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex w-full flex-col">
+            <h3 className="line-clamp-1 text-base font-semibold">
+              {review.created_by_name}
+            </h3>
 
-      <div className="min-w-0 flex-1">
-        <div className="mb-2 flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold">{review.created_by_name}</h3>
-
-          <span className="text-muted-foreground text-sm whitespace-nowrap">
-            {review.created_on &&
-              format(new Date(review.created_on), "MMM dd',' yyyy")}
-          </span>
+            <span className="text-muted-foreground text-xs whitespace-nowrap">
+              {review.created_on &&
+                format(new Date(review.created_on), "MMM dd',' yyyy")}
+            </span>
+          </div>
         </div>
-
-        <div className="mb-3 flex items-center gap-1">
+        <div className="flex">
           <ReviewStars rating={review.restaurant_rating} />
-          <span className="text-muted-foreground ml-1 text-sm">
-            ({review.restaurant_rating}/5)
-          </span>
         </div>
-
-        <div className="text-muted-foreground text-sm leading-relaxed">
-          {displayText}
-          {shouldTruncate && !isExpanded && "..."}
-          {shouldTruncate && (
-            <Button
-              variant="link"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="ml-1 h-auto p-0 font-medium text-orange-600 hover:text-orange-700"
-            >
-              {isExpanded ? "Read less" : "Read more"}
-            </Button>
-          )}
-        </div>
+      </div>
+      <div className="text-muted-foreground w-full text-sm leading-relaxed">
+        {displayText}
+        {shouldTruncate && !isExpanded && "..."}
+        {shouldTruncate && (
+          <Button
+            variant="link"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="ml-1 h-auto p-0 font-medium text-orange-600 hover:text-orange-700"
+          >
+            {isExpanded ? "Read less" : "Read more"}
+          </Button>
+        )}
       </div>
     </div>
   );

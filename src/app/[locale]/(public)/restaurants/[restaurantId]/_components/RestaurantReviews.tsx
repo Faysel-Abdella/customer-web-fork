@@ -1,4 +1,5 @@
 import { getRestaurantReviews } from "@/actions/restaurants.actions";
+import FadingDivider from "@/components/FadingDivider";
 
 import ReviewCard from "./ReviewCard";
 import ReviewSummary from "./ReviewSummary";
@@ -37,18 +38,20 @@ const RestaurantReviews = async ({ restaurantId }: RestaurantReviewsProps) => {
   };
 
   return (
-    <div className="">
+    <div className="space-y-6">
       <h3 className="mb-8 text-xl font-semibold">Rating and Review</h3>
       <ReviewSummary
         averageRating={reviews.average_rating}
         ratingDistribution={ratingDistribution}
         totalRatings={reviews.total_rating.count}
       />
-      <div className="divide-border divide-y">
-        {reviews.list.map((review) => (
+      <FadingDivider className="max-h-px w-full" />
+      {reviews.list.map((review) => (
+        <>
           <ReviewCard key={review.id} review={review} />
-        ))}
-      </div>
+          <FadingDivider />
+        </>
+      ))}
     </div>
   );
 };

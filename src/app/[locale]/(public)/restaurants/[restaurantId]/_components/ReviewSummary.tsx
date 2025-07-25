@@ -34,10 +34,10 @@ const ReviewSummary = ({
   ];
 
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-4 lg:gap-8">
       <div className="flex h-full w-fit flex-col items-center justify-between">
         <div className="flex items-end gap-2">
-          <div className="mb-1 text-5xl font-bold">
+          <div className="mb-1 text-5xl font-medium">
             {Number.parseFloat(averageRating).toFixed(1)}
           </div>
           <div className="text-muted-foreground mb-2 text-sm">
@@ -49,22 +49,33 @@ const ReviewSummary = ({
         </div>
       </div>
 
-      <div className="flex-1">
-        <div className="space-y-2">
-          {ratingBars.map((bar) => (
-            <div key={bar.stars} className="flex items-center gap-3">
-              <span className="text-muted-foreground text-xs">{bar.stars}</span>
+      <div className="flex w-full items-center gap-4 md:w-1/2 lg:gap-8">
+        <FadingDivider className="h-28 w-px bg-gradient-to-b max-md:hidden" />
 
-              <Progress value={getRatingPercentage(bar.count)} />
-            </div>
-          ))}
+        <div className="w-full">
+          <div className="space-y-2">
+            {ratingBars.map((bar) => (
+              <div key={bar.stars} className="flex items-center gap-3">
+                <span className="text-muted-foreground text-xs">
+                  {bar.stars}
+                </span>
+
+                <Progress
+                  value={getRatingPercentage(bar.count) || 0}
+                  className="bg-muted"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <FadingDivider className="h-28 w-px bg-gradient-to-b max-md:hidden" />
-      <p className="text-muted-foreground w-1/5 text-sm max-md:hidden">
-        Ratings and reviews are verified and come from people who received the
-        same services.
-      </p>
+      <div className="flex w-1/2 items-center gap-4 max-md:hidden lg:gap-8">
+        <FadingDivider className="h-28 w-px min-w-px bg-gradient-to-b max-md:hidden" />
+        <p className="text-muted-foreground text-sm max-md:hidden">
+          Ratings and reviews are verified and come from people who received the
+          same services helping customers get genuine testimonials.
+        </p>
+      </div>
     </div>
   );
 };
