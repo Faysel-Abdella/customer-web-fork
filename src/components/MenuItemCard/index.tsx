@@ -12,6 +12,13 @@ interface MenuItemCardProps {
 const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
 const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
+  const currentPrice = getMenuItemPrice(menuItem);
+  const minPercent = 10;
+  const maxPercent = 30;
+  const randomPercent =
+    Math.floor(Math.random() * (maxPercent - minPercent + 1)) + minPercent;
+  const canceledPrice = currentPrice * (1 + randomPercent / 100);
+
   const getCookTime = () => {
     const cookTime = menuItem.cook_time;
     const startOfM = cookTime.indexOf("M");
@@ -23,8 +30,11 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
   return (
     <div className="relative flex h-56 w-full items-end">
       <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-4 max-sm:p-5 sm:min-w-72">
-        <div className="flex w-full justify-end">
-          <p className="text-lg font-semibold">{getMenuItemPrice(menuItem)}</p>
+        <div className="flex w-full flex-col items-end justify-end">
+          <p className="text-lg font-semibold">${currentPrice.toFixed(2)}</p>
+          <p className="text-muted-foreground text-sm line-through">
+            ${canceledPrice.toFixed(2)}
+          </p>
         </div>
         <div className="space-y-4">
           <p className="line-clamp-1 text-lg font-semibold">{menuItem.title}</p>

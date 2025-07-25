@@ -106,7 +106,7 @@ export const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-export const getMenuItemPrice = (menuItem: MenuItem) => {
+export const getMenuItemPrice = (menuItem: MenuItem): number => {
   let price = "0";
   if (menuItem.itemPrice) {
     price = menuItem.itemPrice[0].price;
@@ -115,5 +115,5 @@ export const getMenuItemPrice = (menuItem: MenuItem) => {
     price = menuItem.item_prices[0].price;
   }
   const value = parseFloat(price);
-  return `$${value.toFixed(2)}`;
+  return value;
 };
