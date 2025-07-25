@@ -41,7 +41,7 @@ const RestaurantDetailPage = async ({ params }: RestaurantDetailPageProps) => {
   const { restaurantId } = await params;
 
   return (
-    <div className="min-h-dvh py-16 pt-32 sm:px-8 lg:px-14 xl:px-16">
+    <div className="min-h-dvh py-16 pt-32 md:px-8 lg:px-14 xl:px-16">
       <Suspense fallback={<RestaurantDetailSkeleton />}>
         <RestaurantDetail restaurantId={restaurantId} />
       </Suspense>
