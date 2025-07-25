@@ -2,7 +2,7 @@
 import { Clock } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { getMenuItemPrice } from "@/lib/utils";
+import { getCookTime, getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
@@ -23,14 +23,6 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
     Math.floor(Math.random() * (maxPercent - minPercent + 1)) + minPercent;
   const canceledPrice = currentPrice * (1 + randomPercent / 100);
 
-  const getCookTime = () => {
-    const cookTime = menuItem.cook_time;
-    const startOfM = cookTime.indexOf("M");
-    if (!startOfM) return cookTime;
-
-    return cookTime.slice(0, startOfM).trim();
-  };
-
   return (
     <div className="relative flex h-56 w-full items-end">
       <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-4 max-sm:p-5 sm:min-w-72">
@@ -48,7 +40,7 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
               {menuItem.cook_time.trim() && (
                 <div className="flex items-center gap-2">
                   <Clock size={14} />
-                  <span>{getCookTime()} min</span>
+                  <span>{getCookTime(menuItem.cook_time)} min</span>
                 </div>
               )}
             </div>

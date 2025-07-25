@@ -4,7 +4,8 @@ import DOMPurify from "dompurify";
 import { Clock, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { getMenuItemPrice } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
+import { getCookTime, getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import FadingDivider from "../FadingDivider";
@@ -43,16 +44,21 @@ const MenuItemDisplay = ({
               {menuItem.cuisine_type_name}
             </Badge>
             <p className="text-lg font-medium">{menuItem.title}</p>
-            <p className="text-muted-foreground flex items-center justify-center gap-1 font-semibold">
+            <Link
+              href={`/restaurants/${menuItem.restaurant_id}`}
+              className="text-muted-foreground flex items-center justify-center gap-1 text-sm hover:underline"
+            >
               <Dot />
               <span>See restaurant</span>
-            </p>
+            </Link>
           </div>
-          <p className="text-xl font-semibold">{getMenuItemPrice(menuItem)}</p>
+          <p className="text-xl font-semibold">
+            ${getMenuItemPrice(menuItem).toFixed(2)}
+          </p>
         </div>
 
         <div className="text-muted-foreground flex items-center gap-1">
-          <Clock size={16} /> {menuItem.cook_time}
+          <Clock size={16} /> {getCookTime(menuItem.cook_time)}
           <span> min</span>
         </div>
       </div>

@@ -117,3 +117,11 @@ export const getMenuItemPrice = (menuItem: MenuItem): number => {
   const value = parseFloat(price);
   return value;
 };
+
+export const getCookTime = (baseCooktime: string) => {
+  const cookTime = baseCooktime.toLowerCase();
+  const startOfM = cookTime.indexOf("m");
+  if (!startOfM) return cookTime;
+
+  return cookTime.slice(0, startOfM).trim();
+};
