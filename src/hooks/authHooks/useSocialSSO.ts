@@ -35,8 +35,8 @@ export function useSocialSSO({
         ? new GoogleAuthProvider()
         : new FacebookAuthProvider();
 
-    try {
-      startTransition(async () => {
+    startTransition(async () => {
+      try {
         const result = await signInWithPopup(auth, provider);
         const user: User = result.user;
 
@@ -87,11 +87,11 @@ export function useSocialSSO({
         } else {
           router.push("/home");
         }
-      });
-    } catch (error) {
-      const errorMessage = await processError(error);
-      setError(errorMessage);
-    }
+      } catch (error) {
+        const errorMessage = await processError(error);
+        setError(errorMessage);
+      }
+    });
   };
 
   return { login, isSuccess, isLoading, error, user };

@@ -20,8 +20,8 @@ export const useVerifyOtp = () => {
 
   const verifyOtp = async (data: VerifyOtpPayload) => {
     setError(null);
-    try {
-      startTransition(async () => {
+    startTransition(async () => {
+      try {
         const body = objectToUrlEncoded(data);
 
         const response = await fetch("/api/user/verify-otp", {
@@ -52,12 +52,12 @@ export const useVerifyOtp = () => {
         } else {
           router.push("/profile-update");
         }
-      });
-    } catch (error) {
-      const errorMessage = await processError(error);
-      setError(errorMessage);
-      setIsSuccess(false);
-    }
+      } catch (error) {
+        const errorMessage = await processError(error);
+        setError(errorMessage);
+        setIsSuccess(false);
+      }
+    });
   };
 
   return {
