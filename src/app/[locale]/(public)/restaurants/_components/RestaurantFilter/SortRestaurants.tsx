@@ -12,15 +12,15 @@ import { RestaurantFilters } from ".";
 const restaurantSortTypes = [
   {
     label: "Price: Low to High",
-    value: "SORT_BY_LOW_TO_HIGH",
+    value: "1",
   },
   {
     label: "Price: High to Low",
-    value: "SORT_BY_HIGH_TO_LOW",
+    value: "2",
   },
   {
     label: "Previously Ordered",
-    value: "SORT_BY_PREVIOUS_ORDER",
+    value: "3",
   },
 ];
 
