@@ -46,7 +46,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
     : addressTypes[3];
 
   return (
-    <div className="max flex flex-col">
+    <div className="flex max-w-3xl flex-col">
       <div className="py-5">
         <div className="flex items-center justify-between">
           <span className="font-medium">Estimated Arrival</span>
