@@ -80,7 +80,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               alt={`${cartItem.restaurant_items[0].title}`}
             />
           </div>
-          <div className="flex h-14 w-full flex-col justify-between">
+          <div className="flex h-16 w-full flex-col justify-between">
             <p className="line-clamp-2 font-medium">
               {cartItem.restaurant_items[0].title}
             </p>
