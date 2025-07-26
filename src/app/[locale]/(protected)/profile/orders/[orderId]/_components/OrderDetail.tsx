@@ -137,7 +137,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
 
       <div className="pb-6">
         <ReviewModal
-          orderId={orderId}
+          order={order}
           className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600"
         />
         <Button className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600">

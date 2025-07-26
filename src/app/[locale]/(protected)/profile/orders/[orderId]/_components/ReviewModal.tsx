@@ -1,8 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
-import { Home } from "lucide-react";
+import { Home, Loader } from "lucide-react";
+import { toast } from "sonner";
 
+import { addRating } from "@/actions/profile.actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,23 +14,65 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { OrderDetail } from "@/types/profile.types";
 
 import StarRating from "./StarRating";
 
 interface ReviewModalProps {
-  orderId: string;
+  order: OrderDetail;
   className?: string;
 }
-const ReviewModal = ({ orderId, className }: ReviewModalProps) => {
+const ReviewModal = ({ order, className }: ReviewModalProps) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
   const [restaurantRating, setRestaurantRating] = useState(0);
-  const [riderRating, setRiderRating] = useState(0);
   const [restaurantComment, setRestaurantComment] = useState("");
+
+  const [riderRating, setRiderRating] = useState(0);
   const [riderComment, setRiderComment] = useState("");
+  const [isRating, startRating] = useTransition();
 
   const handleSaveReview = () => {
+    startRating(async () => {
+      let ratingRestaurant = null;
+      let ratingDriver = null;
+      if (restaurantComment.trim() != "" || restaurantRating != 0) {
+        const { success } = await addRating({
+          Rating: {
+            rating: restaurantRating.toString(),
+            comment: restaurantComment,
+            model_id: order.store_id.toString(),
+            orderId: order.id.toString(),
+          },
+        });
+        ratingRestaurant = success;
+      }
+      if (riderComment.trim() != "" || riderRating != 0) {
+        if (order.driver_id) {
+          const { success } = await addRating({
+            Rating: {
+              rating: riderRating.toString(),
+              comment: riderComment,
+              model_id: order.driver_id.toString(),
+              orderId: order.id.toString(),
+            },
+          });
+
+          ratingDriver = success;
+        }
+      }
+
+      if (ratingDriver && ratingRestaurant)
+        toast.success("Rated both restaurant and driver");
+      if (ratingDriver && !ratingRestaurant)
+        toast.message("Rated both driver but failed at rating restaurant");
+      if (!ratingDriver && ratingRestaurant)
+        toast.message("Rated restaurant but failed at rating driver");
+      if (!ratingDriver && !ratingRestaurant)
+        toast.error("Failed at rating both restaurant and driver");
+    });
     console.log({
-      orderId,
+      order,
       restaurantRating,
       riderRating,
       restaurantComment,
@@ -40,7 +84,9 @@ const ReviewModal = ({ orderId, className }: ReviewModalProps) => {
   return (
     <Dialog open={isReviewModalOpen} onOpenChange={setIsReviewModalOpen}>
       <DialogTrigger asChild>
-        <Button className={className}>Leave a review</Button>
+        <Button className={className} disabled={isRating}>
+          {isRating ? <Loader className="animate-spin" /> : "Leave a review"}
+        </Button>
       </DialogTrigger>
       <DialogContent className="mx-auto max-h-screen max-w-md overflow-y-auto">
         <DialogHeader className="flex flex-row items-center gap-3 space-y-0">
@@ -92,7 +138,7 @@ const ReviewModal = ({ orderId, className }: ReviewModalProps) => {
           </div>
 
           <Button onClick={handleSaveReview} className="w-full">
-            Save
+            {isRating ? <Loader className="animate-spin" /> : "Save"}
           </Button>
         </div>
       </DialogContent>

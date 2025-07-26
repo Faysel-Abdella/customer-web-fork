@@ -288,3 +288,30 @@ export async function getOrderStatus(
     else return { success: false, error: "Failed to fetch order status" };
   }
 }
+
+interface RatingPayload {
+  Rating: {
+    model_id: string;
+    orderId: string;
+    rating: string;
+    comment: string;
+  };
+}
+
+export async function addRating(data: RatingPayload): Promise<ActionResult> {
+  const body = JSON.stringify(data);
+  try {
+    await fetchWithAuth("/api/rating/add-rating", {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: true, error };
+    else return { success: false, error: "Rating added." };
+  }
+}
