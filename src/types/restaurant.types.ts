@@ -24,6 +24,11 @@ interface File {
   created_by_id: number;
 }
 
+interface RatingInfo {
+  totalReviews: string;
+  averageRating: string;
+}
+
 export interface Restaurant {
   id: number;
   title: string;
@@ -44,6 +49,7 @@ export interface Restaurant {
   contact_no: string;
   created_by_id: number;
   created_by_number: string;
+  rating_info: RatingInfo;
   average_rating: number;
   estimated_delivery_fees: number;
   estimated_delivery_distance: string;
