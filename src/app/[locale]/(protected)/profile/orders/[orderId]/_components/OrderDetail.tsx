@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import { getOrderDetail } from "@/actions/profile.actions";
-import { Button } from "@/components/ui/button";
 
 import ReviewModal from "./ReviewModal";
 import { TrackOrder } from "./TrackOrder";
@@ -140,9 +139,10 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
           order={order}
           className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600"
         />
-        <Button className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600">
+
+        {/* <Button className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600">
           Cancel Order
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -62,14 +62,31 @@ const ReviewModal = ({ order, className }: ReviewModalProps) => {
         }
       }
 
-      if (ratingDriver && ratingRestaurant)
+      if (ratingDriver && ratingRestaurant) {
+        setRestaurantComment("");
+        setRestaurantRating(0);
+        setRiderComment("");
+        setRiderRating(0);
         toast.success("Rated both restaurant and driver");
-      if (ratingDriver && !ratingRestaurant)
+      }
+      if (ratingDriver && !ratingRestaurant) {
+        setRiderComment("");
+        setRiderRating(0);
         toast.message("Rated both driver but failed at rating restaurant");
-      if (!ratingDriver && ratingRestaurant)
+      }
+      if (!ratingDriver && ratingRestaurant) {
+        setRestaurantComment("");
+        setRestaurantRating(0);
+
         toast.message("Rated restaurant but failed at rating driver");
-      if (!ratingDriver && !ratingRestaurant)
+      }
+      if (!ratingDriver && !ratingRestaurant) {
+        setRestaurantComment("");
+        setRestaurantRating(0);
+        setRiderComment("");
+        setRiderRating(0);
         toast.error("Failed at rating both restaurant and driver");
+      }
     });
     console.log({
       order,
