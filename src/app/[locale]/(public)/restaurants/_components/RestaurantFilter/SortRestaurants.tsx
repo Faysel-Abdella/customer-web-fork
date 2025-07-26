@@ -11,11 +11,11 @@ import { RestaurantFilters } from ".";
 
 const restaurantSortTypes = [
   {
-    label: "Price: Low to High",
+    label: "Price per person: Low to High",
     value: "1",
   },
   {
-    label: "Price: High to Low",
+    label: "Price per person: High to Low",
     value: "2",
   },
   {

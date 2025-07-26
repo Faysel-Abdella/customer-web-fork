@@ -12,7 +12,7 @@ interface PriceFilterProps {
 const PriceFilter = ({ filters, setFilters }: PriceFilterProps) => {
   return (
     <div>
-      <Label className="mb-10">Price</Label>
+      <Label className="mb-10">Price per person</Label>
       <div className="flex w-full items-center gap-4">
         <DualRangeSlider
           label={(value) => <span>{value}$</span>}
