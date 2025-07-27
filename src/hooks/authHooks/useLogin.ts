@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
+import { processError } from "@/lib/utils";
 import { LoginPayload, LoginResponse, UserDetail } from "@/types/auth.types";
 
 export const useLogin = () => {
@@ -18,10 +18,12 @@ export const useLogin = () => {
     setIsLoading(true);
     setIsSuccess(false);
     setError(null);
-    const body = objectToUrlEncoded(data);
+    const body = JSON.stringify(data);
     try {
       const response = await fetch("/api/user/login", {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
         body,
       });

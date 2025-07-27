@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
+import { processError } from "@/lib/utils";
 import { ResendOtpPayload, ResendOtpResponse } from "@/types/auth.types";
 
 export const useResendOtp = () => {
@@ -12,10 +12,12 @@ export const useResendOtp = () => {
   const resendOtp = async (data: ResendOtpPayload) => {
     setIsLoading(true);
     setError(null);
-    const body = objectToUrlEncoded(data);
+    const body = JSON.stringify(data);
     try {
       const response = await fetch("/api/user/resend-otp", {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
         body,
       });

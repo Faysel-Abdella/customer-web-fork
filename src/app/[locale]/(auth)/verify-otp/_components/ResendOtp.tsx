@@ -19,8 +19,10 @@ const ResendOtp = ({ contact_no, country_code }: ResendOtpProps) => {
 
   const handleResendOtp = () => {
     resendOtp({
-      "User[contact_no]": contact_no,
-      "User[country_code]": country_code,
+      User: {
+        contact_no: contact_no,
+        country_code: country_code,
+      },
     });
   };
 

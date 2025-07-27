@@ -10,9 +10,10 @@ import {
 import { ActionResult } from "@/types/shared.types";
 
 export async function addToCartAction(
-  data: FormData,
+  data: object,
   clearCart: boolean = false,
 ): Promise<ActionResult> {
+  const body = JSON.stringify(data);
   try {
     if (clearCart) {
       await fetchWithAuth("/api/cart/delete-cart");
@@ -20,7 +21,10 @@ export async function addToCartAction(
 
     await fetchWithAuth(`/api/cart/add-to-cart`, {
       method: "POST",
-      body: data,
+      body,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     return { success: true };

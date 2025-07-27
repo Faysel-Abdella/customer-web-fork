@@ -56,13 +56,15 @@ export function LoginForm({
     const uuid = crypto.randomUUID();
 
     login({
-      "LoginForm[username]": contact_no,
-      "LoginForm[country_code]": "+" + country_code,
-      "LoginForm[password]": values.password,
-      "LoginForm[role]": 2,
-      "LoginForm[device_type]": "WEB",
-      "LoginForm[device_token]": uuid,
-      "LoginForm[device_udid]": uuid,
+      LoginForm: {
+        username: contact_no,
+        country_code: "+" + country_code,
+        password: values.password,
+        role: 2,
+        device_type: "WEB",
+        device_token: uuid,
+        device_udid: uuid,
+      },
     });
   }
 

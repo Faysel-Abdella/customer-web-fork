@@ -50,12 +50,14 @@ const ProfileUpdateForm = ({
     const country_code = country ? getCountryCallingCode(country) : "";
 
     updateProfile({
-      "User[first_name]": values.first_name,
-      "User[last_name]": values.last_name,
-      "User[country_code]": "+" + country_code,
-      "User[contact_no]": contact_no,
-      "User[date_of_birth]": formatYYYYMMDD(values.dob),
-      "User[gender]": values.gender,
+      User: {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        country_code: "+" + country_code,
+        contact_no: contact_no,
+        date_of_birth: formatYYYYMMDD(values.dob),
+        gender: values.gender,
+      },
     });
   }
 

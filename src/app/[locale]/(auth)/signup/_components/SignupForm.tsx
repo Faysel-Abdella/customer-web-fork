@@ -55,12 +55,14 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     const country_code = country ? getCountryCallingCode(country) : "";
 
     signup({
-      "User[contact_no]": contact_no,
-      "User[country_code]": "+" + country_code,
-      "User[first_name]": values.first_name,
-      "User[last_name]": values.first_name,
-      "User[password]": values.password,
-      "User[role_id]": "2",
+      User: {
+        contact_no: contact_no,
+        country_code: "+" + country_code,
+        first_name: values.first_name,
+        last_name: values.last_name,
+        password: values.password,
+        role_id: "2",
+      },
       confirm_password: values.confirm_password,
     });
   }

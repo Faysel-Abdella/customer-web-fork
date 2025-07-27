@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { updateProfileAction } from "@/actions/actions";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
-import { objectToFormData } from "@/lib/utils";
 import { UpdateProfilePayload } from "@/types/auth.types";
 
 export const useUpdateProfile = () => {
@@ -19,7 +18,7 @@ export const useUpdateProfile = () => {
     setIsSuccess(false);
     setIsLoading(true);
     setError(null);
-    const body = objectToFormData(data);
+    const body = JSON.stringify(data);
     const result = await updateProfileAction(body);
 
     if (result.error) {
