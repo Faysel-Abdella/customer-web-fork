@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
 import { getTopRestaurants } from "@/actions/restaurants.actions";
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
 
 import PopularRestaurantCard from "./PopularRestaurantCard";
 
@@ -29,7 +29,7 @@ const PopularRestaurants = async () => {
             </div>
             <div className="flex w-full justify-center">
               <Button className="w-fit">
-                <Link href={"/restaurants"}>{t("view_all")}</Link>
+                <CustomLink href={"/restaurants"}>{t("view_all")}</CustomLink>
               </Button>
             </div>
           </div>

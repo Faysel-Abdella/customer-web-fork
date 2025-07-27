@@ -1,8 +1,8 @@
 import { Star } from "lucide-react";
 
+import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { MenuItem } from "@/types/restaurant.types";
 
 import PopularItemImage from "./PopularItemImage";
@@ -17,7 +17,7 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
   };
   return (
     <Card className="group h-64 overflow-hidden border p-0 shadow-none transition-all duration-300 hover:shadow-lg">
-      <Link href={`/restaurants/${menuItem.restaurant_id}`}>
+      <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
         <CardContent className="p-0">
           <div className="relative">
             <div className="relative h-40 w-full overflow-hidden rounded-t-lg">
@@ -62,7 +62,7 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
             </div>
           </div>
         </CardContent>
-      </Link>
+      </CustomLink>
     </Card>
   );
 };

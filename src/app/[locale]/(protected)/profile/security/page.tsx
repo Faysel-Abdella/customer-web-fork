@@ -1,5 +1,4 @@
-import React from "react";
-
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 
 const SecurityPage = () => {
   return (
@@ -28,9 +26,9 @@ const SecurityPage = () => {
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full bg-transparent" asChild>
-              <Link href={"/profile/security/change-password"}>
+              <CustomLink href={"/profile/security/change-password"}>
                 Change password
-              </Link>
+              </CustomLink>
             </Button>
           </CardContent>
         </Card>
@@ -48,9 +46,9 @@ const SecurityPage = () => {
               className="w-full border-red-500 bg-transparent text-red-500 dark:border-red-500"
               asChild
             >
-              <Link href={"/profile/security/delete-account"}>
+              <CustomLink href={"/profile/security/delete-account"}>
                 Delete account
-              </Link>
+              </CustomLink>
             </Button>
           </CardContent>
         </Card>

@@ -4,11 +4,11 @@ import { Dot, Star } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
 
 interface RestaurantCardProps {
@@ -28,13 +28,13 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
     >
       <CardContent className="space-y-2 px-0">
         <div className="relative h-40 w-full overflow-hidden rounded-2xl">
-          <Link href={`/restaurants/${restaurant.id}`}>
+          <CustomLink href={`/restaurants/${restaurant.id}`}>
             <CustomImage
               imgUrl={restaurant.image_file}
               title={restaurant.title}
               placeholderImage={restaurantImagePlaceHolder}
             />
-          </Link>
+          </CustomLink>
           {user && (
             <FavoriteButton
               is_favorite={restaurant.is_favourite === 1}
@@ -51,7 +51,7 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
             </div>
           )}
         </div>
-        <Link href={`/restaurants/${restaurant.id}`}>
+        <CustomLink href={`/restaurants/${restaurant.id}`}>
           <div className="space-y-1 p-2">
             <p className="group-hover:text-primary truncate text-lg">
               {restaurant.title}
@@ -68,7 +68,7 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
               </div>
             </div>
           </div>
-        </Link>
+        </CustomLink>
       </CardContent>
     </Card>
   );

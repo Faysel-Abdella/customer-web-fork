@@ -5,8 +5,8 @@ import DOMPurify from "dompurify";
 import { MapPin } from "lucide-react";
 
 import CustomImage from "@/components/CustomImage";
+import CustomLink from "@/components/CustomLink";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { Restaurant } from "@/types/restaurant.types";
 
 interface PopularRestaurantCardProps {
@@ -30,7 +30,7 @@ const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
     USE_PROFILES: { html: true },
   });
   return (
-    <Link href={`/restaurants/${restaurant.id}`}>
+    <CustomLink href={`/restaurants/${restaurant.id}`}>
       <Card className="w-full max-w-sm gap-4 overflow-hidden border-gray-800 bg-gray-900 py-0 shadow-lg transition-shadow duration-300 hover:shadow-xl">
         <div className="relative h-48 w-full">
           <CustomImage
@@ -69,7 +69,7 @@ const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </CustomLink>
   );
 };
 

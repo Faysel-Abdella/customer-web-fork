@@ -13,13 +13,13 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import CustomLink from "@/components/CustomLink";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useLogin } from "@/hooks/authHooks/useLogin";
-import { Link } from "@/i18n/navigation";
 import { loginSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
@@ -93,12 +93,12 @@ export function LoginForm({
                   <Checkbox id="remember-me" />
                   <Label htmlFor="remember-me">{t("remember_me")}</Label>
                 </div>
-                <Link
+                <CustomLink
                   href={"/forgot-password"}
                   className="text-primary text-sm font-semibold hover:underline"
                 >
                   {t("forgot_password")}
-                </Link>
+                </CustomLink>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? (
@@ -109,12 +109,12 @@ export function LoginForm({
               </Button>
               <div className="text-center text-sm">
                 {t("no_account")}{" "}
-                <Link
+                <CustomLink
                   href="/signup"
                   className="text-primary font-semibold underline-offset-4 hover:underline"
                 >
                   {t("sign_up_link")}
-                </Link>
+                </CustomLink>
               </div>
             </div>
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

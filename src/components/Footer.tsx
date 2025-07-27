@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import {
   ArrowRight,
   Facebook,
@@ -14,6 +12,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import CustomLink from "./CustomLink";
 import Logo from "./Logo";
 
 export default function Footer() {
@@ -28,24 +27,24 @@ export default function Footer() {
               {t("about.description")}
             </p>
             <div className="flex space-x-3">
-              <Link
+              <CustomLink
                 href="#"
                 className="hover:border-primary hover:text-primary flex h-8 w-8 items-center justify-center rounded-full border border-gray-600 transition-colors"
               >
                 <Facebook className="h-4 w-4" />
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="#"
                 className="hover:border-primary hover:text-primary flex h-8 w-8 items-center justify-center rounded-full border border-gray-600 transition-colors"
               >
                 <Instagram className="h-4 w-4" />
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="#"
                 className="hover:border-primary hover:text-primary flex h-8 w-8 items-center justify-center rounded-full border border-gray-600 transition-colors"
               >
                 <Twitter className="h-4 w-4" />
-              </Link>
+              </CustomLink>
             </div>
           </div>
           <div className="space-y-4">
@@ -53,36 +52,36 @@ export default function Footer() {
               {t("explore.title")}
             </h3>
             <nav className="space-y-3">
-              <Link
+              <CustomLink
                 href="/about-us"
                 className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 {t("explore.links.about_us")}
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="/contact-us"
                 className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 {t("explore.links.contact_us")}
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="/restaurants"
                 className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 {t("explore.links.restaurant")}
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="#"
                 className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 {t("explore.links.food_category")}
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="#"
                 className="hover:text-primary text-muted-foreground block text-sm transition-colors"
               >
                 {t("explore.links.help_center")}
-              </Link>
+              </CustomLink>
             </nav>
           </div>
           <div className="space-y-4">
@@ -146,18 +145,18 @@ export default function Footer() {
               })}
             </p>
             <div className="flex items-center space-x-6">
-              <Link
+              <CustomLink
                 href="/privacy"
                 className="hover:text-primary text-sm text-gray-400 transition-colors"
               >
                 {t("bottom_bar.privacy_policy")}
-              </Link>
-              <Link
+              </CustomLink>
+              <CustomLink
                 href="/terms-and-conditions"
                 className="text-sm text-blue-500 transition-colors hover:text-blue-400"
               >
                 {t("bottom_bar.terms_and_conditions")}
-              </Link>
+              </CustomLink>
             </div>
           </div>
         </div>

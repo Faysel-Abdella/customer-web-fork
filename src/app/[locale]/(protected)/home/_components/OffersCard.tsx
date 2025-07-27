@@ -1,12 +1,10 @@
-import React from "react";
-
 import { format } from "date-fns";
 import { Clock, Store, Tag } from "lucide-react";
 
+import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { Offer } from "@/types/restaurant.types";
 
 interface OffersCardProps {
@@ -70,9 +68,9 @@ const OffersCard = ({ offer }: OffersCardProps) => {
               className="mt-2 w-full bg-gradient-to-r from-orange-500 to-amber-500 font-semibold text-white shadow-lg transition-all duration-300 hover:from-orange-600 hover:to-amber-600 hover:shadow-xl"
               asChild
             >
-              <Link href={`/restaurants/${offer.restaurant_id}`}>
+              <CustomLink href={`/restaurants/${offer.restaurant_id}`}>
                 View Detail
-              </Link>
+              </CustomLink>
             </Button>
           </div>
         </div>

@@ -1,10 +1,10 @@
 // src/components/layout/account-menu.tsx
 "use client";
-import Link from "next/link";
 
 import { Heart, LogOut, ShoppingBag, User2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import CustomLink from "@/components/CustomLink";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -68,22 +68,22 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
             <LanguageSelector size="sm" className="w-24" />
           </div>
           <DropdownMenuItem asChild>
-            <Link href="/profile">
+            <CustomLink href="/profile">
               <User2 className="mr-2 h-4 w-4" />
               <span>Profile</span>
-            </Link>
+            </CustomLink>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile/favourites">
+            <CustomLink href="/profile/favourites">
               <Heart className="mr-2 h-4 w-4" />
               <span>Favourites</span>
-            </Link>
+            </CustomLink>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/profile/orders">
+            <CustomLink href="/profile/orders">
               <ShoppingBag className="mr-2 h-4 w-4" />
               <span>Orders</span>
-            </Link>
+            </CustomLink>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 

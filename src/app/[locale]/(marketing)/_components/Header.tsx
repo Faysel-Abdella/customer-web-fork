@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 import { useTranslations } from "next-intl";
 
+import CustomLink from "@/components/CustomLink";
 import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import UnAuthUserPopover from "@/components/UnAuthUserPopover";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 import MobileSheet from "./MobileSheet";
@@ -42,15 +42,15 @@ const Header = () => {
         <Logo href="/" />
       </div>
       <div className="flex w-1/3 items-center justify-evenly font-medium max-lg:hidden">
-        <Link href={"/restaurants"} className="hover:text-primary">
+        <CustomLink href={"/restaurants"} className="hover:text-primary">
           {t("restaurants")}
-        </Link>
-        <Link href={"/about-us"} className="hover:text-primary">
+        </CustomLink>
+        <CustomLink href={"/about-us"} className="hover:text-primary">
           {t("about_us")}
-        </Link>
-        <Link href={"/contact-us"} className="hover:text-primary">
+        </CustomLink>
+        <CustomLink href={"/contact-us"} className="hover:text-primary">
           {t("contact_us")}
-        </Link>
+        </CustomLink>
       </div>
       <div className="flex items-center justify-end lg:w-1/3 lg:gap-8">
         <LanguageSelector className="max-lg:hidden" />

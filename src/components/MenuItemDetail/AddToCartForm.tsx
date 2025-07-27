@@ -6,9 +6,9 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "@/i18n/navigation";
 import { MenuItem } from "@/types/restaurant.types";
 
+import CustomLink from "../CustomLink";
 import FadingDivider from "../FadingDivider";
 
 interface AddToCartFormProps {
@@ -73,7 +73,7 @@ const AddToCartForm = ({
           </form>
         ) : (
           <Button className="w-full" asChild onClick={setPreviousPath}>
-            <Link href="/login">Login to Order</Link>
+            <CustomLink href="/login">Login to Order</CustomLink>
           </Button>
         )}
       </DialogFooter>

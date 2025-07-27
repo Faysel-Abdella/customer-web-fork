@@ -5,7 +5,8 @@ import { useTranslations } from "next-intl";
 
 import Logo from "@/components/Logo";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "@/i18n/navigation";
+
+import CustomLink from "../CustomLink";
 
 import AccountMenu from "./_components/AccountMenu";
 import MobileMenu from "./_components/MobileMenu";
@@ -19,13 +20,13 @@ const Header = () => {
       <div className="flex items-center justify-between gap-2 max-lg:w-full lg:gap-10">
         <Logo href={user ? "/home" : "/"} />
 
-        <Link
+        <CustomLink
           href="/restaurants"
           className="hover:text-primary flex items-center gap-1 font-medium max-md:text-sm"
         >
           {t("restaurants")}
           <MoveUpRight size={10} className="lg:hidden" />
-        </Link>
+        </CustomLink>
         <MobileMenu user={user!} />
       </div>
 

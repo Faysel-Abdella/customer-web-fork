@@ -4,6 +4,7 @@ import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import { MapPin, Star } from "lucide-react";
 
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -14,7 +15,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useBanner } from "@/hooks/useBanner";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 const Banner = () => {
@@ -89,9 +89,9 @@ const Banner = () => {
                       className="hover:bg-primary rounded-full bg-white/20 p-4 hover:text-white"
                       asChild
                     >
-                      <Link href={`/restaurants/${item.restaurant.id}`}>
+                      <CustomLink href={`/restaurants/${item.restaurant.id}`}>
                         Order now
-                      </Link>
+                      </CustomLink>
                     </Button>
                   </div>
                 </div>
