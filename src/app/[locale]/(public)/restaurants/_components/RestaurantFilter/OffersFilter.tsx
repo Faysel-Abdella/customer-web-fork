@@ -25,13 +25,13 @@ const OffersFilter = ({ className }: OffersFilterProps) => {
 
   const [value, setValue] = useState(activeValue);
 
-  const handleFilter = (sort: string) => {
-    if (value == sort) {
+  const handleFilter = (offer: string) => {
+    if (value == offer) {
       setValue("");
       applyFilters("");
     } else {
-      setValue(sort);
-      applyFilters(sort);
+      setValue(offer);
+      applyFilters(offer);
     }
   };
   return (
