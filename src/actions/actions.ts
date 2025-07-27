@@ -89,7 +89,7 @@ export async function getPopularDishes(): Promise<GetPopularDishesResult> {
     return { success: true, data: responseData.items.list };
   } catch (error) {
     console.error(error);
-    return { success: true, error: "Failed to fetch popular dishes list." };
+    return { success: false, error: "Failed to fetch popular dishes list." };
   }
 }
 
@@ -106,7 +106,7 @@ export async function getOffersList(id?: string): Promise<GetOffersListResult> {
     return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { success: true, error: "Failed to fetch offers list." };
+    return { success: false, error: "Failed to fetch offers list." };
   }
 }
 
@@ -184,7 +184,7 @@ export async function forgotPassword(
     };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error: error };
-    else return { error: "Failed to add item to favorites" };
+    if (typeof error === "string") return { success: false, error: error };
+    else return { success: false, error: "Failed to initiate forgot password" };
   }
 }

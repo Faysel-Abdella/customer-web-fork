@@ -85,7 +85,7 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
   } catch (error) {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
-    else return { success: false, error: "Failed to delete address" };
+    else return { success: false, error: "Failed to set default address" };
   }
 }
 
@@ -197,8 +197,8 @@ export async function changePassword(data: {
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: false, error: "Failed to fetch messages." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to change password." };
   }
 }
 

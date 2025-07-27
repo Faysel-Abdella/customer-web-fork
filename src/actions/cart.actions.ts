@@ -64,8 +64,8 @@ export async function getCartItems(): Promise<GetCartItemsResult> {
     return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: true, error: "Failed to fetch cart items." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch cart items." };
   }
 }
 
@@ -79,7 +79,7 @@ export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
     return { success: true, data: responseData.total_price };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: true, error: "Failed to fetch total price" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch total price" };
   }
 }
