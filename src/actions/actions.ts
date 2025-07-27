@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
 import {
   ForgotPasswordPayload,
@@ -116,6 +118,8 @@ export async function addToFavorites(
 ): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/state/favourite?id=${id}&type=${typeId}`);
+
+    revalidatePath("/profile/favourites");
     return { success: true };
   } catch (error) {
     console.error(error);

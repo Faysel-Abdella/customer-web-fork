@@ -35,7 +35,7 @@ export async function addAddress(data: object): Promise<ActionResult> {
         "Content-Type": "application/json",
       },
     });
-    revalidatePath("/profile/addresses");
+    revalidatePath("/profile");
 
     return { success: true };
   } catch (error) {
