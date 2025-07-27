@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 
 import Banner from "./_components/Banner";
 import { Categories } from "./_components/Categories";
+import { CategoriesSkeleton } from "./_components/CategoriesSkeleton";
 import Offers from "./_components/Offers";
 import { OffersSkeleton } from "./_components/OffersSkeleton";
 import PopularRestaurants from "./_components/PopularRestaurants";
@@ -27,7 +28,9 @@ const HomePage = () => {
           <div className="flex w-full flex-col gap-4">
             <Banner />
             <div className="flex flex-col gap-10 p-5 md:gap-14">
-              <Categories />
+              <Suspense fallback={<CategoriesSkeleton />}>
+                <Categories />
+              </Suspense>
               <Suspense fallback={<PopularRestaurantsSkeleton />}>
                 <PopularRestaurants />
               </Suspense>
