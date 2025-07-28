@@ -42,7 +42,7 @@ const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
           }}
           value={filters.category}
           maxCount={3}
-          className="bg-secondary w-full"
+          className="dark:bg-secondary w-full"
           placeholder="Select categories "
         />
       </>

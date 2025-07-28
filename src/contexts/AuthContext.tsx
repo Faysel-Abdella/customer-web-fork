@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
       localStorage.removeItem("user");
       await clearTokenCookie();
-      router.push("/login");
+      router.refresh();
     }
     if (error) {
       toast.error("Logout failed, Please try again");
@@ -69,6 +69,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (!authStatus) {
         setIsLoading(false);
+        setUser(null);
+        localStorage.clear();
+
         return;
       }
       const storedUserJSON = localStorage.getItem("user");
@@ -81,7 +84,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           console.error("Failed to parse user data from localStorage.", error);
           setUser(null);
           localStorage.clear();
-          logout();
         }
       }
 
