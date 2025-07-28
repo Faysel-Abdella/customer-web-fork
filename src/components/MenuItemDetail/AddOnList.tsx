@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { AddOn } from "@/types/restaurant.types";
+
+import CustomImage from "../CustomImage";
 
 interface AddOnListProps {
   addOns: AddOn[];
@@ -12,6 +13,7 @@ interface AddOnListProps {
   setSelectedAddonIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
+const add_on_placeholder = "add_on_placeholder.webp";
 const AddOnListItem = ({
   addOn,
   selectedAddonIds,
@@ -42,13 +44,10 @@ const AddOnListItem = ({
     >
       <div className="flex gap-4">
         <div className="relative size-14 overflow-hidden rounded-xl">
-          <Image
-            src={
-              addOn.add_on_category_id.image ||
-              "/assets/images/add_on_placeholder.jpg"
-            }
-            alt="add on image"
-            fill
+          <CustomImage
+            imgUrl={addOn.add_on_category_id.image}
+            title={addOn.title}
+            placeholderImage={add_on_placeholder}
           />
         </div>
         <div className="flex flex-col justify-center">
