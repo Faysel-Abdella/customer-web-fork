@@ -111,9 +111,7 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
     const responseData: FavoritesListResponse =
       await fetchWithAuth<FavoritesListResponse>(
         `/api/state/favourite-list?id=1`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
+        { cache: "no-store", retry: { retries: 3, delay: 1000 } },
       );
 
     return { success: true, data: responseData.list };
