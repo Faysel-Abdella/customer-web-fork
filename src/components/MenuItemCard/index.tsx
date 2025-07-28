@@ -8,6 +8,7 @@ import { MenuItem } from "@/types/restaurant.types";
 import CustomImage from "../CustomImage";
 import FavoriteButton from "../FavoriteButton";
 import MenuItemDetail from "../MenuItemDetail";
+import { Badge } from "../ui/badge";
 
 interface MenuItemCardProps {
   menuItem: MenuItem;
@@ -63,6 +64,11 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             type="menu_item"
             className="bg-card absolute top-2.5 left-2.5 z-10 size-7 rounded-full"
           />
+        )}
+        {menuItem.is_available && (
+          <Badge className="absolute bottom-2.5 left-2.5 z-10 border-green-700 bg-green-500">
+            Available
+          </Badge>
         )}
       </div>
     </div>

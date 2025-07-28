@@ -13,8 +13,8 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 
-import LocationSelector from "../LocationSelector";
-import LocationContainer from "../LocationSelector/LocationContainer";
+import LocationContainer from "../LocationContainer";
+import LoggedInLocation from "../LoggedInLocation";
 import LogoutButton from "../LogoutButton";
 
 import LanguageDropDown from "./LanguageDropdown";
@@ -76,7 +76,7 @@ const UserDropdown = ({ className }: React.ComponentProps<"button">) => {
           </div>
 
           <div className="px-2 py-1">
-            <LocationSelector
+            <LoggedInLocation
               className="bg-popover hover:bg-secondary h-12 w-full rounded-sm"
               skeletonClassName="w-full h-12"
             />
