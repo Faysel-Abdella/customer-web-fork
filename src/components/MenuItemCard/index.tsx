@@ -2,7 +2,7 @@
 import { Clock } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { getCookTime, getMenuItemPrice } from "@/lib/utils";
+import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
@@ -40,7 +40,7 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
               {menuItem.cook_time.trim() && (
                 <div className="flex items-center gap-2">
                   <Clock size={14} />
-                  <span>{getCookTime(menuItem.cook_time)} min</span>
+                  <span>{menuItem.cook_time} min</span>
                 </div>
               )}
             </div>

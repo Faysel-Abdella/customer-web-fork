@@ -32,7 +32,6 @@ const MobileSheet = () => {
     setIsOpen(false);
   }, [pathname]);
 
-  console.log("MobileSheet pathname:", pathname);
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger className="lg:hidden">

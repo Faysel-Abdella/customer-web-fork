@@ -87,7 +87,6 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
         },
       };
 
-      console.log(rawData);
       const results = await placeOrder(JSON.stringify(rawData));
 
       if (results.error) {

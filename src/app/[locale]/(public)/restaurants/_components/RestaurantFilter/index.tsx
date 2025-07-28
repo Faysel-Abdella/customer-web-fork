@@ -140,7 +140,6 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
           value={filters.rating}
           defaultValue={filters.rating}
           onValueChange={(value) => {
-            console.log(value, filters.rating);
             if (value == filters.rating) {
               setFilter((prev) => ({ ...prev, rating: "" }));
             } else {
