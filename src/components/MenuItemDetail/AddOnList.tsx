@@ -13,7 +13,7 @@ interface AddOnListProps {
   setSelectedAddonIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const add_on_placeholder = "add_on_placeholder.webp";
+const add_on_placeholder = "/assets/images/add_on_placeholder.webp";
 const AddOnListItem = ({
   addOn,
   selectedAddonIds,
@@ -52,7 +52,7 @@ const AddOnListItem = ({
         </div>
         <div className="flex flex-col justify-center">
           <p className="text-lg font-semibold">{addOn.title}</p>
-          <p className="text-primary font-semibold">{addOn.price}$</p>
+          <p className="text-muted-foreground text-sm">{addOn.price}$</p>
         </div>
       </div>
       <Checkbox checked={isSelected} />
