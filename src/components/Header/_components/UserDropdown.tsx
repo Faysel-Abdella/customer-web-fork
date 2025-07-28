@@ -1,8 +1,7 @@
 // src/components/layout/account-menu.tsx
 "use client";
 
-import { Heart, LogOut, ShoppingBag, User2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Heart, ShoppingBag, User2 } from "lucide-react";
 
 import CustomLink from "@/components/CustomLink";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -25,7 +24,6 @@ import LogoutButton from "./LogoutButton";
 
 export function UserDropdown({ className }: React.ComponentProps<"button">) {
   const { user } = useAuth();
-  const t = useTranslations("header");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -89,12 +87,7 @@ export function UserDropdown({ className }: React.ComponentProps<"button">) {
 
         <DropdownMenuSeparator />
 
-        <LogoutButton>
-          <Button className="hover:bg-secondary hover:text-secondary-foreground bg-background text-foreground w-full shadow-none">
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>{t("logout")}</span>
-          </Button>
-        </LogoutButton>
+        <LogoutButton />
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -7,7 +7,6 @@ import {
   Gift,
   Heart,
   HelpCircle,
-  LogOut,
   Shield,
   ShoppingBag,
   User,
@@ -15,7 +14,6 @@ import {
 
 import CustomLink from "@/components/CustomLink";
 import LogoutButton from "@/components/Header/_components/LogoutButton";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -112,12 +110,7 @@ const ProfileSidebar = () => {
         </ul>
         <Separator />
         <div className="w-full">
-          <LogoutButton>
-            <Button variant={"ghost"} className="w-full cursor-pointer">
-              <LogOut />
-              Logout
-            </Button>
-          </LogoutButton>
+          <LogoutButton />
         </div>
       </nav>
       <div className="flex w-full justify-center border-b p-5 lg:hidden">
