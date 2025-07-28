@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 
 import { toast } from "sonner";
 
+import { MultiAsyncSelect } from "@/components/multi-async-select";
 import { Label } from "@/components/ui/label";
-import { MultiSelect } from "@/components/ui/multi-select";
 import { Skeleton } from "@/components/ui/skeleton";
 import useCategories from "@/hooks/useCategories";
 import { Category } from "@/types/restaurant.types";
@@ -34,16 +34,16 @@ const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
     return (
       <>
         <Label className="mb-2">Category</Label>
-        <MultiSelect
+        <MultiAsyncSelect
           options={mapCategories(categories)}
-          onValueChange={(e) => {
-            setFilters((prev) => ({ ...prev, category: e }));
+          onValueChange={(value) => {
+            console.log(value);
+            setFilters((prev) => ({ ...prev, category: value }));
           }}
-          defaultValue={filters.category}
           value={filters.category}
-          placeholder="Select categories"
-          variant="inverted"
           maxCount={3}
+          className="bg-secondary w-full"
+          placeholder="Select categories "
         />
       </>
     );
