@@ -152,7 +152,7 @@ export async function getCategoryItems(
 export async function getCategiesList(): Promise<getCategoriesList> {
   try {
     const responseData: CategoriesListResponse =
-      await fetchWithAuth<CategoriesListResponse>(
+      await fetchOnCondition<CategoriesListResponse>(
         `/api/restaurant/category-list`,
         {
           retry: { retries: 3, delay: 1000 },
