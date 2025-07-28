@@ -18,9 +18,8 @@ const SearchBar = ({ className }: React.ComponentProps<"div">) => {
   const router = useRouter();
 
   const handleSearch = () => {
-    if (search.trim() == "") return;
     const params = new URLSearchParams(searchParams);
-    if (search === "") {
+    if (search.trim() === "") {
       params.delete("search");
     } else {
       params.set("search", search);

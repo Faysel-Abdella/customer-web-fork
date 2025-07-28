@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
 
 import { BellIcon, CircleX, Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { getNotificationList } from "@/actions/profile.actions";
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -113,7 +113,9 @@ export function NotificationPopover({
           <Separator />
           <div className="p-2">
             <Button variant="ghost" className="hover:bg-primary w-full" asChild>
-              <Link href="/profile/notifications">{t("view_all")}</Link>
+              <CustomLink href="/profile/notifications">
+                {t("view_all")}
+              </CustomLink>
             </Button>
           </div>
         </div>

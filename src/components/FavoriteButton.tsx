@@ -64,7 +64,7 @@ const FavoriteButton = ({
       onClick={() => setIsFavorite((prev) => !prev)}
     >
       <Heart
-        className={`h-5 w-5 ${
+        className={` ${
           isFavorite
             ? "fill-red-500 text-red-500"
             : "text-muted-foreground hover:text-red-500"

@@ -1,11 +1,11 @@
 "use client";
 import { Edit } from "lucide-react";
 
+import CustomLink from "@/components/CustomLink";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "@/i18n/navigation";
 
 const gender = ["male", "female", "other"];
 const PersonalInfo = () => {
@@ -30,10 +30,10 @@ const PersonalInfo = () => {
                 </AvatarFallback>
               </Avatar>
               <Button variant="outline" size="lg" asChild>
-                <Link href={"/profile-update?source=edit"}>
+                <CustomLink href={"/profile-update?source=edit"}>
                   <Edit className="mr-2 h-4 w-4" />
                   Edit
-                </Link>
+                </CustomLink>
               </Button>
             </CardContent>
           </Card>

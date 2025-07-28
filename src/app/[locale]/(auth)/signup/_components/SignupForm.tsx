@@ -12,13 +12,13 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import CustomLink from "@/components/CustomLink";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useSignup } from "@/hooks/authHooks/useSignup";
-import { Link } from "@/i18n/navigation";
 import { signupSchema } from "@/lib/schemas/auth.schema";
 import { cn } from "@/lib/utils";
 
@@ -55,12 +55,14 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     const country_code = country ? getCountryCallingCode(country) : "";
 
     signup({
-      "User[contact_no]": contact_no,
-      "User[country_code]": "+" + country_code,
-      "User[first_name]": values.first_name,
-      "User[last_name]": values.first_name,
-      "User[password]": values.password,
-      "User[role_id]": "2",
+      User: {
+        contact_no: contact_no,
+        country_code: "+" + country_code,
+        first_name: values.first_name,
+        last_name: values.last_name,
+        password: values.password,
+        role_id: "2",
+      },
       confirm_password: values.confirm_password,
     });
   }
@@ -116,12 +118,12 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
               </Button>
               <div className="text-center text-sm">
                 {t("already_have_account")}{" "}
-                <Link
+                <CustomLink
                   href="/login"
                   className="text-primary font-semibold underline-offset-4 hover:underline"
                 >
                   {t("login_link")}
-                </Link>
+                </CustomLink>
               </div>
             </div>
             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

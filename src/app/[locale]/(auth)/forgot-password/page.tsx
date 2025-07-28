@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 import { ArrowLeft } from "lucide-react";
 
-import { Link } from "@/i18n/navigation";
+import CustomLink from "@/components/CustomLink";
 
 import { ForgotPasswordForm } from "./_components/ForgotPasswordForm";
 
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 const ForgotPasswordPage = () => {
   return (
     <div className="bg-background relative flex w-fit justify-center rounded-xl max-md:h-dvh max-md:rounded-none">
-      <Link href={"/login"}>
+      <CustomLink href={"/login"}>
         <ArrowLeft className="text-primary absolute m-5" />
-      </Link>
+      </CustomLink>
 
       <div className="flex h-full w-full items-center justify-center p-10">
         <ForgotPasswordForm className="max-w-sm" />

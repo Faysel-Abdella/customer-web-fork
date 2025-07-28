@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { fetchOnCondition, fetchWithAuth } from "@/lib/fetchWrappers";
 import {
   ForgotPasswordPayload,
@@ -23,14 +25,16 @@ import {
 } from "@/types/restaurant.types";
 import { ActionResult, GeocodingResponse } from "@/types/shared.types";
 
-export async function updateProfileAction(data: FormData) {
+export async function updateProfileAction(body: string) {
   try {
     const responseData = await fetchWithAuth<LoginResponse>(
       "/api/user/profile-update",
       {
         method: "POST",
-
-        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
       },
     );
 
@@ -89,7 +93,7 @@ export async function getPopularDishes(): Promise<GetPopularDishesResult> {
     return { success: true, data: responseData.items.list };
   } catch (error) {
     console.error(error);
-    return { success: true, error: "Failed to fetch popular dishes list." };
+    return { success: false, error: "Failed to fetch popular dishes list." };
   }
 }
 
@@ -106,7 +110,7 @@ export async function getOffersList(id?: string): Promise<GetOffersListResult> {
     return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { success: true, error: "Failed to fetch offers list." };
+    return { success: false, error: "Failed to fetch offers list." };
   }
 }
 
@@ -116,6 +120,8 @@ export async function addToFavorites(
 ): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/state/favourite?id=${id}&type=${typeId}`);
+
+    revalidatePath("/profile/favourites");
     return { success: true };
   } catch (error) {
     console.error(error);
@@ -184,8 +190,8 @@ export async function forgotPassword(
     };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { error: error };
-    else return { error: "Failed to add item to favorites" };
+    if (typeof error === "string") return { success: false, error: error };
+    else return { success: false, error: "Failed to initiate forgot password" };
   }
 }
 

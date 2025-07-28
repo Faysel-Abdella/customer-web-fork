@@ -1,6 +1,6 @@
-import React from "react";
 import { Metadata } from "next";
 
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
   title: "Help & Support | Time delivery",
@@ -35,7 +34,7 @@ const HelpAndSupportPage = () => {
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full bg-transparent" asChild>
-              <Link href={"/profile/help/faq"}>Browse FAQ</Link>
+              <CustomLink href={"/profile/help/faq"}>Browse FAQ</CustomLink>
             </Button>
           </CardContent>
         </Card>
@@ -47,7 +46,7 @@ const HelpAndSupportPage = () => {
           </CardHeader>
           <CardContent>
             <Button variant="outline" className="w-full bg-transparent" asChild>
-              <Link href={"/profile/help/chat"}>Start Chat</Link>
+              <CustomLink href={"/profile/help/chat"}>Start Chat</CustomLink>
             </Button>
           </CardContent>
         </Card>

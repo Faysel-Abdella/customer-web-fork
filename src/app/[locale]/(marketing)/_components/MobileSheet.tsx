@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import CustomLink from "@/components/CustomLink";
 import LanguageSelector from "@/components/LanguageSelector";
 import Logo from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -15,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link, usePathname } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 
 const navigationItems = [
   { href: "/restaurants", label: "restaurants" },
@@ -60,7 +61,7 @@ const MobileSheet = () => {
 
         <div className="flex flex-col gap-5 px-5 font-medium">
           {navigationItems.map((item) => (
-            <Link
+            <CustomLink
               key={item.href}
               href={item.href}
               className={`hover:text-primary ${
@@ -68,15 +69,15 @@ const MobileSheet = () => {
               }`}
             >
               {t(item.label)}
-            </Link>
+            </CustomLink>
           ))}
 
           <div className="flex w-full flex-col space-y-2">
             <Button asChild>
-              <Link href={"/login"}>{t("login")}</Link>
+              <CustomLink href={"/login"}>{t("login")}</CustomLink>
             </Button>
             <Button variant={"outline"} className="border-primary" asChild>
-              <Link href={"/signup"}>{t("signup")}</Link>
+              <CustomLink href={"/signup"}>{t("signup")}</CustomLink>
             </Button>
           </div>
         </div>

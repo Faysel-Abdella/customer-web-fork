@@ -10,8 +10,12 @@ interface RestaurantListProps {
   params: {
     [key: string]: string | string[] | undefined;
   };
+  searchString?: string;
 }
-const RestaurantsList = async ({ params }: RestaurantListProps) => {
+const RestaurantsList = async ({
+  params,
+  searchString,
+}: RestaurantListProps) => {
   const queryParams = buildUrlSearchParams(params).toString();
 
   const {
@@ -39,8 +43,16 @@ const RestaurantsList = async ({ params }: RestaurantListProps) => {
 
   if (restaurants && restaurants?.length > 0)
     return (
-      <div className="w-full space-y-4">
-        <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="flex w-full flex-col gap-5">
+        {searchString && (
+          <div className="font-semibold">
+            Results for &apos; {searchString} &apos;{" "}
+            <span className="text-muted-foreground">
+              ({pageData?.totalCount})
+            </span>
+          </div>
+        )}
+        <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {restaurants.map((restaurant) => (
             <RestaurantCard key={restaurant.id} restaurant={restaurant} />
           ))}

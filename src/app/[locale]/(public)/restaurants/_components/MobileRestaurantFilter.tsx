@@ -12,15 +12,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
-import RestaurantsFilters from "./RestaurantsFilters";
+import RestaurantFilters from "./RestaurantFilter";
 
-const MobileRestaurantFilter = () => {
+interface MobileRestaurantFilterProps {
+  className?: string;
+}
+const MobileRestaurantFilter = ({ className }: MobileRestaurantFilterProps) => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"secondary"} className="border lg:hidden">
+        <Button
+          variant={"secondary"}
+          className={cn("border lg:hidden", className)}
+        >
           <SlidersHorizontal /> Filters
         </Button>
       </DialogTrigger>
@@ -31,7 +38,10 @@ const MobileRestaurantFilter = () => {
             mobile restaurant filters
           </DialogDescription>
         </DialogHeader>
-        <RestaurantsFilters isMobile className="flex flex-col" />
+        <RestaurantFilters
+          className="r flex w-full flex-col gap-5 px-5"
+          setOpen={setOpen}
+        />
       </DialogContent>
     </Dialog>
   );

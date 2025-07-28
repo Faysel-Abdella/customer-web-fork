@@ -2,17 +2,17 @@ import Image from "next/image";
 
 import { ArrowRight } from "lucide-react";
 
-import { Link } from "@/i18n/navigation";
 import { Category } from "@/types/restaurant.types";
 
 import { Card, CardContent } from "./ui/card";
+import CustomLink from "./CustomLink";
 
 interface CategoryCard {
   category: Category;
 }
 const CategoryCard = ({ category }: CategoryCard) => {
   return (
-    <Link href={`/categories/${category.id}?title=${category.title}`}>
+    <CustomLink href={`/categories/${category.id}?title=${category.title}`}>
       <Card className="group h-full w-full overflow-hidden p-0 shadow-none">
         <CardContent className="px-0 py-0">
           <div className="relative h-32">
@@ -42,7 +42,7 @@ const CategoryCard = ({ category }: CategoryCard) => {
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </CustomLink>
   );
 };
 

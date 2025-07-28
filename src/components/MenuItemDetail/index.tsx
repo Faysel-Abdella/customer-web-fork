@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/dialog";
 import { useCart } from "@/contexts/CartContext";
 import { usePathname } from "@/i18n/navigation";
-import { objectToFormData } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import AddToCartForm from "./AddToCartForm";
@@ -90,14 +89,18 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
         }));
     };
 
-    const data = objectToFormData({
-      "Cart[store_id]": menuItem.restaurant_id.toString(),
-      "Cart[type_id]": menuItem.type_id.toString(),
-      "CartItem[price_id]": menuItem.itemPrice[0].id.toString(),
-      "CartItem[product_id]": menuItem.id.toString(),
-      "CartItem[quantity]": itemQuantity.toString(),
-      "Cart[addones]": getSelectedAddons(),
-    });
+    const data = {
+      Cart: {
+        store_id: menuItem.restaurant_id.toString(),
+        type_id: menuItem.type_id.toString(),
+        addones: getSelectedAddons(),
+      },
+      CartItem: {
+        price_id: menuItem.itemPrice[0].id.toString(),
+        product_id: menuItem.id.toString(),
+        quantity: itemQuantity.toString(),
+      },
+    };
 
     startTransition(async () => {
       const results = await addToCartAction(data, clearCart);

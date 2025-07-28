@@ -1,14 +1,14 @@
 "use client";
 
-import { Dot, Star, Truck } from "lucide-react";
+import { Dot, Star } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
 
 interface RestaurantCardProps {
@@ -28,44 +28,47 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
     >
       <CardContent className="space-y-2 px-0">
         <div className="relative h-40 w-full overflow-hidden rounded-2xl">
-          <Link href={`/restaurants/${restaurant.id}`}>
+          <CustomLink href={`/restaurants/${restaurant.id}`}>
             <CustomImage
               imgUrl={restaurant.image_file}
               title={restaurant.title}
               placeholderImage={restaurantImagePlaceHolder}
             />
-          </Link>
+          </CustomLink>
           {user && (
             <FavoriteButton
               is_favorite={restaurant.is_favourite === 1}
               itemId={restaurant.id.toString()}
               type="restaurant"
-              className="bg-card/50 absolute top-4 left-4 z-10 rounded-full"
+              className="bg-card absolute top-4 left-4 z-10 rounded-full"
             />
           )}
-          {restaurant.fee && (
-            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-2 py-1 pr-3">
-              <Truck size={16} className="text-foreground" />
-              <div className="bg-foreground h-4 w-px" />
+          {restaurant.price_per_person && (
+            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
               <span className="text-foreground font-semibold">
-                ${restaurant.fee}
+                ${parseFloat(restaurant.price_per_person).toFixed(2) || "N/A"}
               </span>
             </div>
           )}
         </div>
-        <Link href={`/restaurants/${restaurant.id}`}>
+        <CustomLink href={`/restaurants/${restaurant.id}`}>
           <div className="space-y-1 p-2">
             <p className="group-hover:text-primary truncate text-lg">
               {restaurant.title}
             </p>
-            <div className="text-muted-foreground flex items-center gap-1">
-              <Star size={16} className="fill-primary text-primary" />
-              <p>{restaurant.average_rating}</p>
-              <Dot />
-              <p>{restaurant.estimated_delivery_time}</p>
+            <div className="text-muted-foreground flex items-center gap-1 text-sm">
+              <div className="flex items-center gap-1">
+                <Star size={16} className="fill-primary text-primary" />
+                <p>{restaurant.average_rating}</p>
+                <p>({restaurant.rating_info.totalReviews})</p>
+              </div>
+              <div className="flex items-center">
+                <Dot />
+                <p>{restaurant.estimated_delivery_time}</p>
+              </div>
             </div>
           </div>
-        </Link>
+        </CustomLink>
       </CardContent>
     </Card>
   );

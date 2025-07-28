@@ -35,7 +35,7 @@ export async function addAddress(data: object): Promise<ActionResult> {
         "Content-Type": "application/json",
       },
     });
-    revalidatePath("/profile/addresses");
+    revalidatePath("/profile");
 
     return { success: true };
   } catch (error) {
@@ -85,7 +85,7 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
   } catch (error) {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
-    else return { success: false, error: "Failed to delete address" };
+    else return { success: false, error: "Failed to set default address" };
   }
 }
 
@@ -111,9 +111,7 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
     const responseData: FavoritesListResponse =
       await fetchWithAuth<FavoritesListResponse>(
         `/api/state/favourite-list?id=1`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
+        { cache: "no-store", retry: { retries: 3, delay: 1000 } },
       );
 
     return { success: true, data: responseData.list };
@@ -197,8 +195,8 @@ export async function changePassword(data: {
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: false, error: "Failed to fetch messages." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to change password." };
   }
 }
 

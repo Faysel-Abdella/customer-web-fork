@@ -3,7 +3,7 @@ import { useState, useTransition } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
+import { processError } from "@/lib/utils";
 import {
   LoginResponse,
   UserDetail,
@@ -20,12 +20,14 @@ export const useVerifyOtp = () => {
 
   const verifyOtp = async (data: VerifyOtpPayload) => {
     setError(null);
-    try {
-      startTransition(async () => {
-        const body = objectToUrlEncoded(data);
+    startTransition(async () => {
+      try {
+        const body = JSON.stringify(data);
 
         const response = await fetch("/api/user/verify-otp", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           method: "POST",
           body,
         });
@@ -52,12 +54,12 @@ export const useVerifyOtp = () => {
         } else {
           router.push("/profile-update");
         }
-      });
-    } catch (error) {
-      const errorMessage = await processError(error);
-      setError(errorMessage);
-      setIsSuccess(false);
-    }
+      } catch (error) {
+        const errorMessage = await processError(error);
+        setError(errorMessage);
+        setIsSuccess(false);
+      }
+    });
   };
 
   return {

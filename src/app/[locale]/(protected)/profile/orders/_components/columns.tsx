@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MoveUpRight } from "lucide-react";
 
+import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "@/i18n/navigation";
 import { Order } from "@/types/profile.types";
 
 export const orderColumns: ColumnDef<Order>[] = [
@@ -67,12 +67,12 @@ export const orderColumns: ColumnDef<Order>[] = [
     header: "Detail",
     cell: ({ row }) => {
       return (
-        <Link
+        <CustomLink
           href={`/profile/orders/${row.original.id}`}
           className="text-secondary-foreground flex items-center underline"
         >
           View Details <MoveUpRight size={12} />
-        </Link>
+        </CustomLink>
       );
     },
   },

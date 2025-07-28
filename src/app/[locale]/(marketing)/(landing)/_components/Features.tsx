@@ -1,9 +1,8 @@
-import React from "react";
 import Image from "next/image";
 
 import { useTranslations } from "next-intl";
 
-import { Link } from "@/i18n/navigation";
+import CustomLink from "@/components/CustomLink";
 import { cn } from "@/lib/utils";
 
 export const features = [
@@ -77,7 +76,7 @@ const Features = () => {
               {t("app_promo")}
             </div>
             <div className="flex gap-5">
-              <Link href={"#"}>
+              <CustomLink href={"#"}>
                 <Image
                   width={180}
                   height={100}
@@ -85,8 +84,8 @@ const Features = () => {
                   alt="playstore icon"
                   className="cursor-pointer"
                 />
-              </Link>
-              <Link href={"#"}>
+              </CustomLink>
+              <CustomLink href={"#"}>
                 <Image
                   width={180}
                   height={100}
@@ -94,7 +93,7 @@ const Features = () => {
                   alt="playstore icon"
                   className="cursor-pointer"
                 />
-              </Link>
+              </CustomLink>
             </div>
           </div>
           <div className="relative h-full w-1/2 justify-center">

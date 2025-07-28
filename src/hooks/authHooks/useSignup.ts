@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
+import { processError } from "@/lib/utils";
 import { LoginResponse, SignupPayload } from "@/types/auth.types";
 
 export const useSignup = () => {
@@ -14,10 +14,12 @@ export const useSignup = () => {
   const signup = async (data: SignupPayload) => {
     setIsLoading(true);
     setError(null);
-    const body = objectToUrlEncoded(data);
+    const body = JSON.stringify(data);
     try {
       const response = await fetch("/api/user/signup", {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
         body,
       });

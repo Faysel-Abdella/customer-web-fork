@@ -1,4 +1,5 @@
 import { getPopularDishes } from "@/actions/actions";
+import CustomLink from "@/components/CustomLink";
 import MenuItemCard from "@/components/MenuItemCard";
 import {
   Carousel,
@@ -7,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Link } from "@/i18n/navigation";
 
 export async function TrendingDishes() {
   const { data: dishes } = await getPopularDishes();
@@ -26,12 +26,12 @@ export async function TrendingDishes() {
           </h2>
 
           <div className="flex items-center gap-4">
-            <Link
+            <CustomLink
               href="#"
               className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"
             >
               See All
-            </Link>
+            </CustomLink>
             <div className="flex gap-2">
               <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
               <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />

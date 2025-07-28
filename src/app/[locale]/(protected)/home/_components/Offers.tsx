@@ -1,4 +1,5 @@
 import { getOffersList } from "@/actions/actions";
+import CustomLink from "@/components/CustomLink";
 import {
   Carousel,
   CarouselContent,
@@ -6,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Link } from "@/i18n/navigation";
 
 import OffersCard from "./OffersCard";
 
@@ -26,12 +26,12 @@ const Offers = async () => {
           <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">Offers</h2>
 
           <div className="flex items-center gap-4">
-            <Link
+            <CustomLink
               href="#"
               className="group text-muted-foreground flex items-center font-semibold hover:text-orange-600"
             >
               See All
-            </Link>
+            </CustomLink>
             <div className="flex gap-2">
               <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
               <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />

@@ -52,7 +52,7 @@ export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
     return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    return { success: false, error: "Failed to fetch restaurants." };
+    return { success: false, error: "Failed to fetch top restaurants." };
   }
 }
 
@@ -145,6 +145,6 @@ export async function getRestaurantReviews(
     return { success: true, data: responseData };
   } catch (error) {
     console.error(error);
-    return { success: false, error: "Failed to fetch restaurant offers." };
+    return { success: false, error: "Failed to fetch restaurant reviews." };
   }
 }

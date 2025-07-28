@@ -9,12 +9,18 @@ interface CustomImageProps {
   title: string;
   placeholderImage: string;
   className?: string;
+  quality?: number;
+  priority?: boolean;
+  fill?: boolean;
 }
 const CustomImage = ({
   imgUrl,
   title,
   className,
   placeholderImage,
+  fill = true,
+  priority,
+  quality,
 }: CustomImageProps) => {
   const [imgSrc, setImgSrc] = useState(imgUrl || placeholderImage);
 
@@ -25,7 +31,9 @@ const CustomImage = ({
     <Image
       src={imgSrc}
       alt={`${title} image`}
-      fill
+      fill={fill}
+      priority={priority}
+      quality={quality}
       className={cn(
         "object-cover transition-transform duration-300 group-hover:scale-105",
         className,

@@ -2,9 +2,9 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
 import { Order } from "@/types/profile.types";
 
 interface OrderCardProps {
@@ -48,7 +48,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
             ${order.total_price}
           </div>
           <Button asChild>
-            <Link href={`/profile/orders/${order.id}`}>View Details</Link>
+            <CustomLink href={`/profile/orders/${order.id}`}>
+              View Details
+            </CustomLink>
           </Button>
         </div>
       </CardContent>
