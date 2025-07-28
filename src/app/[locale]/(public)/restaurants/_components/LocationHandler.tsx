@@ -19,7 +19,7 @@ export function LocationHandler() {
   console.log("location in handler:", location);
 
   useEffect(() => {
-    console.log("1");
+    console.log("started url location update");
     if (!location) {
       return;
     }

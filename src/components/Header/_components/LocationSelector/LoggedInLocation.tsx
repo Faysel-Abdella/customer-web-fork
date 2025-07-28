@@ -16,9 +16,17 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLocation } from "@/contexts/LocationContext";
+import { cn } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 
-const LoggedInLocation = () => {
+interface LoggedInLocationProps {
+  className?: string;
+  skeletonClassName?: string;
+}
+const LoggedInLocation = ({
+  className,
+  skeletonClassName,
+}: LoggedInLocationProps) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [addressList, setAddressList] = useState<Address[] | null>(null);
   const [isUpdating, startUpdate] = useTransition();
@@ -47,6 +55,7 @@ const LoggedInLocation = () => {
         latitude: parseFloat(defaultAddress.latitude),
         longitude: parseFloat(defaultAddress.longitude),
       });
+      console.log("set the default address as location");
     }
   }, [addressList, setSelectedAddress, setLocation]);
 
@@ -90,11 +99,16 @@ const LoggedInLocation = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       {isUpdating ? (
-        <Skeleton className="h-10 w-32" />
+        <Skeleton className={cn("h-10 w-32", skeletonClassName)} />
       ) : (
         <DialogTrigger asChild>
           {selectedAddress ? (
-            <button className="bg-secondary flex h-10 w-32 cursor-pointer items-center gap-2 overflow-hidden rounded-lg px-2 text-sm font-semibold">
+            <button
+              className={cn(
+                "bg-secondary flex h-10 w-32 cursor-pointer items-center gap-2 overflow-hidden rounded-lg px-2 text-sm font-semibold",
+                className,
+              )}
+            >
               <MapPin className="h-4 w-4 min-w-4" />
               <div className="flex flex-col items-start">
                 <span className="truncate text-sm font-medium text-nowrap">
@@ -106,7 +120,12 @@ const LoggedInLocation = () => {
               </div>
             </button>
           ) : (
-            <button className="bg-secondary flex h-10 w-32 cursor-pointer items-center gap-2 overflow-hidden rounded-lg px-2 text-sm font-semibold">
+            <button
+              className={cn(
+                "bg-secondary flex h-10 w-32 cursor-pointer items-center gap-2 overflow-hidden rounded-lg px-2 text-sm font-semibold",
+                className,
+              )}
+            >
               <MapPin className="h-4 w-4 min-w-4" />
               <div className="flex flex-col items-start">
                 <span className="truncate text-sm font-medium text-nowrap">

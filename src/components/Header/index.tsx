@@ -9,17 +9,16 @@ import { useAuth } from "@/contexts/AuthContext";
 import CustomLink from "../CustomLink";
 
 import AccountMenu from "./_components/AccountMenu";
-import LocationSelector from "./_components/LocationSelector";
 import MobileMenu from "./_components/MobileMenu";
 import SearchBar from "./_components/SearchBar";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { isLoading, isAuthenticated } = useAuth();
   const t = useTranslations("header");
   return (
     <div className="bg-background fixed top-0 z-50 flex w-full items-center justify-center gap-5 overflow-hidden border-b px-5 py-4 shadow-sm max-lg:flex-col md:px-5 lg:px-10 xl:px-20">
       <div className="flex items-center justify-between gap-2 max-lg:w-full lg:gap-10">
-        <Logo href={user ? "/home" : "/"} />
+        <Logo href={isAuthenticated ? "/home" : "/"} />
 
         <CustomLink
           href="/restaurants"
@@ -28,8 +27,7 @@ const Header = () => {
           {t("restaurants")}
           <MoveUpRight size={10} className="lg:hidden" />
         </CustomLink>
-        <LocationSelector />
-        <MobileMenu user={user!} />
+        <MobileMenu isAuthenticated={isAuthenticated} isLoading={isLoading} />
       </div>
       <div className="flex w-full items-center gap-2">
         <SearchBar />
