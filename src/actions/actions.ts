@@ -23,7 +23,7 @@ import {
   PlaceOrderResults,
   PopularDishesResponse,
 } from "@/types/restaurant.types";
-import { ActionResult, GeocodingResponse } from "@/types/shared.types";
+import { ActionResult } from "@/types/shared.types";
 
 export async function updateProfileAction(body: string) {
   try {
@@ -152,7 +152,7 @@ export async function getCategoryItems(
 export async function getCategiesList(): Promise<getCategoriesList> {
   try {
     const responseData: CategoriesListResponse =
-      await fetchWithAuth<CategoriesListResponse>(
+      await fetchOnCondition<CategoriesListResponse>(
         `/api/restaurant/category-list`,
         {
           retry: { retries: 3, delay: 1000 },
@@ -192,38 +192,5 @@ export async function forgotPassword(
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
     else return { success: false, error: "Failed to initiate forgot password" };
-  }
-}
-
-export async function reverseGeocode(
-  latitude: number,
-  longitude: number,
-): Promise<string | null> {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_API;
-
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data: GeocodingResponse = await response.json();
-    if (data.status === "OK") {
-      const bestResult = data.results[0];
-      if (bestResult) {
-        const address = bestResult.formatted_address;
-        return address;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
   }
 }

@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import { Clock, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { getCookTime, getMenuItemPrice } from "@/lib/utils";
+import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomLink from "../CustomLink";
@@ -58,7 +58,7 @@ const MenuItemDisplay = ({
         </div>
 
         <div className="text-muted-foreground flex items-center gap-1">
-          <Clock size={16} /> {getCookTime(menuItem.cook_time)}
+          <Clock size={16} /> {menuItem.cook_time}
           <span> min</span>
         </div>
       </div>

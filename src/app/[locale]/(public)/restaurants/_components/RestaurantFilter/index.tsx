@@ -56,14 +56,17 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
     const params = new URLSearchParams(searchParams);
 
     params.delete("page");
+
     if (filters.category.length == 0) {
       params.delete("category");
     } else {
+      params.delete("category");
       filters.category.forEach((category) =>
         params.append("category", category),
       );
     }
 
+    console.log(params.toString());
     if (filters.min == "0") {
       params.delete("min");
     } else {
@@ -92,10 +95,8 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
     } else {
       params.set("sort_by", filters.sort_by);
     }
-    router.replace({
-      pathname: "/restaurants",
-      query: Object.fromEntries(params),
-    });
+
+    router.replace(`/restaurants?${params.toString()}`);
 
     if (setOpen) {
       setOpen((prev) => !prev);
@@ -140,7 +141,6 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
           value={filters.rating}
           defaultValue={filters.rating}
           onValueChange={(value) => {
-            console.log(value, filters.rating);
             if (value == filters.rating) {
               setFilter((prev) => ({ ...prev, rating: "" }));
             } else {
