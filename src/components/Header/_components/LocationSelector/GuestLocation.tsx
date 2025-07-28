@@ -7,14 +7,20 @@ import useGeolocation from "@/hooks/useGeolocation";
 
 const GuestLocation = () => {
   const { location } = useGeolocation();
-  const { setLocation } = useLocation();
-  console.log("i");
+  const { setLocation, location: globalLocations } = useLocation();
+  console.log(location);
+  console.log("Global location:", globalLocations);
 
   useEffect(() => {
-    if (location) {
+    if (location != null) {
       setLocation({
         latitude: location.latitude,
         longitude: location.longitude,
+      });
+    } else {
+      setLocation({
+        latitude: 0,
+        longitude: 0,
       });
     }
   }, [location, setLocation]);

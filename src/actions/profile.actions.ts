@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWrappers";
 import {
@@ -35,7 +35,7 @@ export async function addAddress(data: object): Promise<ActionResult> {
         "Content-Type": "application/json",
       },
     });
-    revalidatePath("/profile");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {
@@ -50,7 +50,11 @@ export async function getAddressList(): Promise<GetAddressListResult> {
     const responseData: AddressListResponse =
       await fetchWithAuth<AddressListResponse>(
         `/api/address-management/address-list`,
-        { method: "POST", retry: { retries: 3, delay: 1000 } },
+        {
+          method: "POST",
+          retry: { retries: 3, delay: 1000 },
+          next: { revalidate: 200, tags: ["user-address-list"] },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -64,7 +68,7 @@ export async function getAddressList(): Promise<GetAddressListResult> {
 export async function deleteAddress(id: string): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/address-management/delete-address?id=${id}`);
-    revalidatePath("/profile/addresses");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {
@@ -79,7 +83,7 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
     await fetchWithAuth(
       `/api/address-management/default-address?address_id=${id}`,
     );
-    revalidatePath("/profile/addresses");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {

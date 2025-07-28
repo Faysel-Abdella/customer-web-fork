@@ -40,7 +40,7 @@ const RestaurantHeader = ({ restaurant }: RestaurantHeaderProps) => {
               Delivery fee
             </p>
             <p className="font-medium max-md:text-sm">
-              ${restaurant.fee || "N/A"}
+              ${restaurant.delivery_info.delivery_fee || "N/A"}
             </p>
           </div>
         </div>

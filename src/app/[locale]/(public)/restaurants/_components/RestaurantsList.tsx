@@ -4,6 +4,7 @@ import { getRestaurants } from "@/actions/restaurants.actions";
 import RestaurantCard from "@/components/RestaurantCard";
 import { buildUrlSearchParams } from "@/lib/utils";
 
+import RestaurantListSkeleton from "./RestaurantListSkeleton";
 import RestaurantPagination from "./RestaurantPagination";
 
 interface RestaurantListProps {
@@ -16,6 +17,14 @@ const RestaurantsList = async ({
   params,
   searchString,
 }: RestaurantListProps) => {
+  const lat = params["lat"];
+  const lon = params["lon"];
+
+  console.log("type of lat:", typeof lat);
+  if (lat === undefined || lon === undefined) {
+    return <RestaurantListSkeleton />;
+  }
+
   const queryParams = buildUrlSearchParams(params).toString();
 
   const {

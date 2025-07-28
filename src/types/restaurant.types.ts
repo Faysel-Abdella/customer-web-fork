@@ -29,6 +29,12 @@ interface RatingInfo {
   averageRating: string;
 }
 
+export interface DeliveryInfo {
+  distance_km: number;
+  distance_formatted: number;
+  delivery_time_minutes: string;
+  delivery_fee: number;
+}
 export interface Restaurant {
   id: number;
   title: string;
@@ -54,6 +60,7 @@ export interface Restaurant {
   estimated_delivery_fees: number;
   estimated_delivery_distance: string;
   estimated_delivery_time: string;
+  delivery_info: DeliveryInfo;
   price_per_person: string;
   is_favourite: number;
   availability: Availability[];

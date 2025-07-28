@@ -1,6 +1,6 @@
 "use client";
 
-import { Dot, Star } from "lucide-react";
+import { Bike, Star, User } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
@@ -44,10 +44,13 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
             />
           )}
           {restaurant.price_per_person && (
-            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-2 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
+            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-1 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
               <span className="text-foreground font-semibold">
                 ${parseFloat(restaurant.price_per_person).toFixed(2) || "N/A"}
               </span>
+              <div className="flex items-end text-xs">
+                /<User size={14} />
+              </div>
             </div>
           )}
         </div>
@@ -56,16 +59,18 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
             <p className="group-hover:text-primary truncate text-lg">
               {restaurant.title}
             </p>
-            <div className="text-muted-foreground flex items-center gap-1 text-sm">
+            <div className="text-muted-foreground flex items-center justify-between gap-2 text-sm">
               <div className="flex items-center gap-1">
                 <Star size={16} className="fill-primary text-primary" />
                 <p>{restaurant.average_rating}</p>
                 <p>({restaurant.rating_info.totalReviews})</p>
               </div>
-              <div className="flex items-center">
-                <Dot />
-                <p>{restaurant.estimated_delivery_time}</p>
-              </div>
+              {restaurant.delivery_info && (
+                <div className="flex items-center gap-2">
+                  <Bike size={20} />
+                  <p>{restaurant.delivery_info.delivery_time_minutes} Min</p>
+                </div>
+              )}
             </div>
           </div>
         </CustomLink>

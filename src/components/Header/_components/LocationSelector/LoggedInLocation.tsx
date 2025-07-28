@@ -36,6 +36,10 @@ const LoggedInLocation = () => {
     const defaultAddress = addressList.find((item) => item.is_default == 1);
 
     if (!defaultAddress) {
+      setLocation({
+        latitude: 0,
+        longitude: 0,
+      });
       return;
     } else {
       setSelectedAddress(defaultAddress);
