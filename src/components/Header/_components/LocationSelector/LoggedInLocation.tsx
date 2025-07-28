@@ -1,9 +1,5 @@
-import { useCallback, useEffect, useState, useTransition } from "react";
-
 import { MapPin } from "lucide-react";
-import { toast } from "sonner";
 
-import { getAddressList, setDefaultAddress } from "@/actions/profile.actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +11,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useLocation } from "@/contexts/LocationContext";
 import { cn } from "@/lib/utils";
-import { Address } from "@/types/profile.types";
+
+import { useLoggedLocationContext } from "./LocationContainer";
 
 interface LoggedInLocationProps {
   className?: string;
@@ -27,82 +23,24 @@ const LoggedInLocation = ({
   className,
   skeletonClassName,
 }: LoggedInLocationProps) => {
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  const [addressList, setAddressList] = useState<Address[] | null>(null);
-  const [isUpdating, startUpdate] = useTransition();
-  const [isOpen, setOpen] = useState(false);
-  const { setLocation } = useLocation();
-
-  const [error, setError] = useState("");
-
-  const [isPending, startTransition] = useTransition();
-
-  const selectDefaultAddress = useCallback(() => {
-    if (!addressList) {
-      return;
-    }
-    const defaultAddress = addressList.find((item) => item.is_default == 1);
-
-    if (!defaultAddress) {
-      setLocation({
-        latitude: 0,
-        longitude: 0,
-      });
-      return;
-    } else {
-      setSelectedAddress(defaultAddress);
-      setLocation({
-        latitude: parseFloat(defaultAddress.latitude),
-        longitude: parseFloat(defaultAddress.longitude),
-      });
-      console.log("set the default address as location");
-    }
-  }, [addressList, setSelectedAddress, setLocation]);
-
-  const handleSetDefaultAddress = (address: Address) => {
-    startUpdate(async () => {
-      const results = await setDefaultAddress(address.id.toString());
-      if (results.success) {
-        fetchAddressList();
-        setOpen(false);
-      }
-      if (results.error) {
-        toast.error("Failed at setting default address");
-      }
-    });
-  };
-
-  const fetchAddressList = useCallback(async () => {
-    startTransition(async () => {
-      // console.log("Fetching locations");
-      const result = await getAddressList();
-      if (result.data) {
-        setAddressList(result.data);
-      } else if (result.error) {
-        setError(result.error);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!addressList && !isPending) {
-      fetchAddressList();
-    }
-  }, [isPending, addressList, fetchAddressList]);
-
-  useEffect(() => {
-    if (addressList != null) {
-      selectDefaultAddress();
-    }
-  }, [addressList, selectDefaultAddress]);
+  const {
+    isLoading,
+    isError,
+    defaultAddress,
+    addressList,
+    handleSetDefaultAddress,
+    isOpen,
+    isUpdating,
+    setOpen,
+  } = useLoggedLocationContext();
 
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
-      {isUpdating ? (
+      {isUpdating || isLoading ? (
         <Skeleton className={cn("h-10 w-32", skeletonClassName)} />
       ) : (
         <DialogTrigger asChild>
-          {selectedAddress ? (
+          {defaultAddress ? (
             <button
               className={cn(
                 "bg-secondary flex h-10 w-32 cursor-pointer items-center gap-2 overflow-hidden rounded-lg px-2 text-sm font-semibold",
@@ -112,10 +50,10 @@ const LoggedInLocation = ({
               <MapPin className="h-4 w-4 min-w-4" />
               <div className="flex flex-col items-start">
                 <span className="truncate text-sm font-medium text-nowrap">
-                  {selectedAddress.title}
+                  {defaultAddress.title}
                 </span>
                 <p className="text-muted-foreground truncate text-xs text-nowrap">
-                  {selectedAddress.address}
+                  {defaultAddress.address}
                 </p>
               </div>
             </button>
@@ -137,22 +75,22 @@ const LoggedInLocation = ({
         </DialogTrigger>
       )}
 
-      <DialogContent>
+      <DialogContent className="max-sm:min-w-screen">
         <DialogHeader>
           <DialogTitle>Select Default Addresss</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        {error ? (
+        {isError ? (
           <p>Couldnt fetch addresses</p>
         ) : (
-          <div>
+          <div className="flex w-full flex-col overflow-hidden">
             {addressList &&
               addressList?.length > 0 &&
               addressList.map((address) => (
                 <Button
                   key={address.id}
                   variant="ghost"
-                  className="h-auto w-full cursor-pointer justify-between rounded-xl p-2"
+                  className="h-auto cursor-pointer justify-between rounded-xl p-2"
                   onClick={() => handleSetDefaultAddress(address)}
                 >
                   <div className="flex items-center gap-3">
@@ -169,7 +107,9 @@ const LoggedInLocation = ({
                           </Badge>
                         )}
                       </div>
-                      <p className="text-muted-foreground">{address.address}</p>
+                      <p className="text-muted-foreground truncate text-start text-wrap">
+                        {address.address}
+                      </p>
                     </div>
                   </div>
                 </Button>
