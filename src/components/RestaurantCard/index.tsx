@@ -4,7 +4,7 @@ import { Bike, Star, User } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
+import { cn, formatTimeHM } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
@@ -17,6 +17,7 @@ interface RestaurantCardProps {
 }
 
 const restaurantImagePlaceHolder = "/assets/images/restaurant_placeholder.webp";
+
 const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
   const { user } = useAuth();
   return (
@@ -65,10 +66,14 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
                 <p>{restaurant.average_rating}</p>
                 <p>({restaurant.rating_info.totalReviews})</p>
               </div>
-              {restaurant.delivery_info && (
+              {restaurant.delivery_info.delivery_time_minutes && (
                 <div className="flex items-center gap-2">
                   <Bike size={20} />
-                  <p>{restaurant.delivery_info.delivery_time_minutes} Min</p>
+                  <p>
+                    {formatTimeHM(
+                      restaurant.delivery_info.delivery_time_minutes,
+                    )}
+                  </p>
                 </div>
               )}
             </div>

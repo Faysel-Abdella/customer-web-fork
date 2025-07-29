@@ -31,8 +31,8 @@ interface RatingInfo {
 
 export interface DeliveryInfo {
   distance_km: number;
-  distance_formatted: number;
-  delivery_time_minutes: string;
+  distance_formatted: string;
+  delivery_time_minutes: number;
   delivery_fee: number;
 }
 export interface Restaurant {

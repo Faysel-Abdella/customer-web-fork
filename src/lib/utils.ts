@@ -117,3 +117,17 @@ export const getMenuItemPrice = (menuItem: MenuItem): number => {
   const value = parseFloat(price);
   return value;
 };
+
+export const formatTimeHM = (totalMinutes: number) => {
+  if (
+    totalMinutes < 0 ||
+    totalMinutes === null ||
+    typeof totalMinutes !== "number"
+  ) {
+    return "0m";
+  }
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  return `${hours}h ${minutes}m`;
+};
