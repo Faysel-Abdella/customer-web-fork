@@ -10,16 +10,23 @@ import { Restaurant } from "@/types/restaurant.types";
 import CustomImage from "../CustomImage";
 import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
+import { Badge } from "../ui/badge";
 
 interface RestaurantCardProps {
+  isOpen: boolean;
   restaurant: Restaurant;
   className?: string;
 }
 
 const restaurantImagePlaceHolder = "/assets/images/restaurant_placeholder.webp";
 
-const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
+const RestaurantCard = ({
+  restaurant,
+  className,
+  isOpen,
+}: RestaurantCardProps) => {
   const { user } = useAuth();
+
   return (
     <Card
       className={cn(
@@ -44,8 +51,13 @@ const RestaurantCard = ({ restaurant, className }: RestaurantCardProps) => {
               className="bg-card absolute top-4 left-4 z-10 rounded-full"
             />
           )}
+          {!isOpen && (
+            <Badge className="absolute top-4 right-4 z-10 border-red-700 bg-red-500/80">
+              Closed
+            </Badge>
+          )}
           {restaurant.price_per_person && (
-            <div className="bg-card absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-1 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
+            <div className="bg-background absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-1 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
               <span className="text-foreground font-semibold">
                 ${parseFloat(restaurant.price_per_person).toFixed(2) || "N/A"}
               </span>

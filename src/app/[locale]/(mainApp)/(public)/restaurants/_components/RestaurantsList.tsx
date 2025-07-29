@@ -2,7 +2,7 @@ import { SearchX } from "lucide-react";
 
 import { getRestaurants } from "@/actions/restaurants.actions";
 import RestaurantCard from "@/components/RestaurantCard";
-import { buildUrlSearchParams } from "@/lib/utils";
+import { buildUrlSearchParams, isRestaurantOpenNow } from "@/lib/utils";
 
 import RestaurantListSkeleton from "./RestaurantListSkeleton";
 import RestaurantPagination from "./RestaurantPagination";
@@ -65,9 +65,17 @@ const RestaurantsList = async ({
           </div>
         )}
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {restaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-          ))}
+          {restaurants.map((restaurant) => {
+            const isOpen = isRestaurantOpenNow(restaurant.availability);
+
+            return (
+              <RestaurantCard
+                key={restaurant.id}
+                restaurant={restaurant}
+                isOpen={isOpen}
+              />
+            );
+          })}
         </div>
         {pageData && <RestaurantPagination pageData={pageData} />}
       </div>
