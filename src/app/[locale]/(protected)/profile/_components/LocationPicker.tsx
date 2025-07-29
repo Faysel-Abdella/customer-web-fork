@@ -38,6 +38,7 @@ export function LocationPicker({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
     libraries,
   });
+
   const [markerPosition, setMarkerPosition] = useState(defaultCenter);
   const [selectedAddress, setSelectedAddress] = useState("");
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
@@ -50,7 +51,6 @@ export function LocationPicker({
         setSelectedAddress(results[0].formatted_address);
       } else {
         setSelectedAddress("Address not found.");
-        // console.error("Geocoder failed due to: " + status);
       }
     });
   };

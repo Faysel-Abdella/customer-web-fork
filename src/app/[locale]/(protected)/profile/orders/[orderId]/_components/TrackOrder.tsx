@@ -15,8 +15,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import OrderMap from "./OrderMap";
-
 const orderStates: {
   stage: number;
   label: string;
@@ -102,7 +100,6 @@ export function TrackOrder({ order_id }: TrackOrderProps) {
       <DialogContent className="flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto p-6">
         <DialogTitle />
         <DialogDescription />
-        <OrderMap />
         <div className="flex w-full flex-col">
           <h2 className="mb-4 text-xl font-semibold">Trip</h2>
           <div className="flex w-full items-center justify-center">
