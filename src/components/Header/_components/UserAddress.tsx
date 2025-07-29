@@ -4,6 +4,7 @@ import { MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 import { setDefaultAddress } from "@/actions/profile.actions";
+import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +40,7 @@ const UserAddress = ({ className, skeletonClassName }: UserAddressProps) => {
     startUpdate(async () => {
       const results = await setDefaultAddress(address.id.toString());
       if (results.success) {
+        localStorage.removeItem("defaultAddress");
         refreshAddress();
         setIsOpen(false);
       }
@@ -98,8 +100,7 @@ const UserAddress = ({ className, skeletonClassName }: UserAddressProps) => {
           <p>Couldnt fetch addresses</p>
         ) : (
           <div className="flex w-full flex-col overflow-hidden">
-            {addressList &&
-              addressList?.length > 0 &&
+            {addressList && addressList?.length > 0 ? (
               addressList.map((address) => (
                 <Button
                   key={address.id}
@@ -127,9 +128,20 @@ const UserAddress = ({ className, skeletonClassName }: UserAddressProps) => {
                     </div>
                   </div>
                 </Button>
-              ))}
-
-            <Button className="mt-2 w-full">Edit addresses</Button>
+              ))
+            ) : (
+              <div className="flex h-40 w-full items-center justify-center">
+                No addresses found.
+              </div>
+            )}
+            {}
+            <Button className="mt-2 w-full" asChild>
+              <CustomLink href="/profile">
+                {addressList && addressList.length == 0
+                  ? "Add an address"
+                  : "Edit addresses"}
+              </CustomLink>
+            </Button>
           </div>
         )}
       </DialogContent>
