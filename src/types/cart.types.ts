@@ -1,4 +1,5 @@
 import { AdditionalItem, ItemPrice, MenuItem } from "./restaurant.types";
+import { ActionResult } from "./shared.types";
 
 export interface CartItem {
   id: number;
@@ -18,4 +19,30 @@ export interface CartItem {
   cart_type: number;
   restaurant_items: MenuItem[];
   additional_items: AdditionalItem[];
+}
+export interface GetCartItemsResult extends ActionResult {
+  data?: CartItem[];
+}
+export interface CartItemResponse {
+  list: CartItem[];
+}
+export interface GetTotalCartPriceResult extends ActionResult {
+  data?: number;
+}
+export interface TotalCartPriceResponse {
+  total_price: number;
+}
+
+export interface DeliveryFeeResponse {
+  data: {
+    fee: number;
+  };
+}
+
+export interface DeliveryFeePayload {
+  address_id: number;
+  restaurant_id: number;
+}
+export interface GetDeliveryFeeResults extends ActionResult {
+  data?: number;
 }

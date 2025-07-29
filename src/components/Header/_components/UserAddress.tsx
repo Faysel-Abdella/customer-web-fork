@@ -91,7 +91,7 @@ const UserAddress = ({ className, skeletonClassName }: UserAddressProps) => {
         </DialogTrigger>
       )}
 
-      <DialogContent className="max-sm:min-w-screen">
+      <DialogContent className="max-h-dvh overflow-y-auto max-sm:min-w-screen">
         <DialogHeader>
           <DialogTitle>Select Default Addresss</DialogTitle>
           <DialogDescription />

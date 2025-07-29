@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
 
 interface SelectAddressProps {
@@ -26,6 +27,7 @@ const SelectAddress = ({
 }: SelectAddressProps) => {
   const [addressList, setAddressList] = useState<Address[] | null>();
   const [error, setError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const [isPending, startTransition] = useTransition();
 
@@ -63,12 +65,12 @@ const SelectAddress = ({
   return (
     <div className="">
       <h3 className="mb-3 font-medium">Delivery Address</h3>
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           {selectedAddress ? (
             <Button
               variant="ghost"
-              className="bg-secondary h-auto w-full justify-between rounded-xl border p-2"
+              className="bg-secondary h-auto w-full justify-between overflow-hidden rounded-xl border p-2"
             >
               <div className="flex items-center gap-3">
                 <div className="rounded-full bg-orange-500 p-2">
@@ -103,7 +105,7 @@ const SelectAddress = ({
             </Button>
           )}
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-h-dvh overflow-y-auto max-sm:min-w-screen">
           <DialogHeader>
             <DialogTitle>Select an Addresss</DialogTitle>
             <DialogDescription>
@@ -116,8 +118,14 @@ const SelectAddress = ({
                 <Button
                   key={address.id}
                   variant="ghost"
-                  className="h-auto w-full justify-between rounded-xl p-2"
-                  onClick={() => setSelectedAddress(address)}
+                  className={cn(
+                    "h-auto w-full justify-between rounded-xl p-2",
+                    selectedAddress?.id === address.id && "bg-card",
+                  )}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setSelectedAddress(address);
+                  }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="rounded-full bg-orange-500 p-2">
@@ -125,7 +133,9 @@ const SelectAddress = ({
                     </div>
                     <div className="flex flex-col items-start">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">{address.title}</span>
+                        <span className="text-start font-medium text-wrap">
+                          {address.title}
+                        </span>
 
                         {address.is_default == 1 && (
                           <Badge className="h-4 text-xs" variant={"secondary"}>
@@ -133,7 +143,9 @@ const SelectAddress = ({
                           </Badge>
                         )}
                       </div>
-                      <p className="text-muted-foreground">{address.address}</p>
+                      <p className="text-muted-foreground text-start text-wrap">
+                        {address.address}
+                      </p>
                     </div>
                   </div>
                 </Button>

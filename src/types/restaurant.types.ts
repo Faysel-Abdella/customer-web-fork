@@ -1,4 +1,3 @@
-import { CartItem } from "./cart.types";
 import { ActionResult, PageData } from "./shared.types";
 
 export interface Availability {
@@ -331,18 +330,6 @@ export interface CategoriesListResponse {
 }
 export interface getCategoriesList extends ActionResult {
   data?: Category[];
-}
-export interface GetCartItemsResult extends ActionResult {
-  data?: CartItem[];
-}
-export interface CartItemResponse {
-  list: CartItem[];
-}
-export interface GetTotalCartPriceResult extends ActionResult {
-  data?: number;
-}
-export interface TotalCartPriceResponse {
-  total_price: number;
 }
 export interface RestaurantResponce {
   list: Restaurant[];
