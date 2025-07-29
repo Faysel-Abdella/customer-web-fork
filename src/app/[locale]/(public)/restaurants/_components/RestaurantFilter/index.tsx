@@ -66,7 +66,6 @@ const RestaurantFilter = ({ className, setOpen }: RestaurantFilterProps) => {
       );
     }
 
-    console.log(params.toString());
     if (filters.min == "0") {
       params.delete("min");
     } else {

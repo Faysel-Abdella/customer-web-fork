@@ -75,7 +75,6 @@ const LocationContainer = ({ children }: { children: React.ReactNode }) => {
         latitude: parseFloat(defaultAddress.latitude),
         longitude: parseFloat(defaultAddress.longitude),
       });
-      console.log("set the default address as location");
     }
   }, [addressList, setLocation]);
 
@@ -95,7 +94,6 @@ const LocationContainer = ({ children }: { children: React.ReactNode }) => {
   const fetchAddressList = useCallback(async () => {
     setIsError(false);
     startTransition(async () => {
-      // console.log("Fetching locations");
       const result = await getAddressList();
       if (result.data) {
         setAddressList(result.data);

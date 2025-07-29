@@ -20,7 +20,6 @@ const RestaurantsList = async ({
   const lat = params["lat"];
   const lon = params["lon"];
 
-  console.log("type of lat:", typeof lat);
   if (lat === undefined || lon === undefined) {
     return <RestaurantListSkeleton />;
   }

@@ -37,7 +37,6 @@ const CategoryFilter = ({ filters, setFilters }: CategoryFilterProps) => {
         <MultiAsyncSelect
           options={mapCategories(categories)}
           onValueChange={(value) => {
-            console.log(value);
             setFilters((prev) => ({ ...prev, category: value }));
           }}
           value={filters.category}
