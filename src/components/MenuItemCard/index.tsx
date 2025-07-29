@@ -1,5 +1,5 @@
 "use client";
-import { Clock } from "lucide-react";
+import { CookingPot } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { getMenuItemPrice } from "@/lib/utils";
@@ -12,10 +12,12 @@ import { Badge } from "../ui/badge";
 
 interface MenuItemCardProps {
   menuItem: MenuItem;
+  isOpen: boolean;
 }
+
 const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
-const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
+const MenuItemCard = ({ menuItem, isOpen }: MenuItemCardProps) => {
   const { user } = useAuth();
   const currentPrice = getMenuItemPrice(menuItem);
   const minPercent = 10;
@@ -40,12 +42,12 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             <div className="text-muted-foreground flex items-center gap-1">
               {menuItem.cook_time.trim() && (
                 <div className="flex items-center gap-2">
-                  <Clock size={14} />
+                  <CookingPot size={14} />
                   <span>{menuItem.cook_time} min</span>
                 </div>
               )}
             </div>
-            <MenuItemDetail menuItemId={menuItem.id.toString()} />
+            {isOpen && <MenuItemDetail menuItemId={menuItem.id.toString()} />}
           </div>
         </div>
       </div>
@@ -65,9 +67,9 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             className="bg-card absolute top-2.5 left-2.5 z-10 size-7 rounded-full"
           />
         )}
-        {menuItem.is_available && (
-          <Badge className="absolute bottom-2.5 left-2.5 z-10 border-green-700 bg-green-500">
-            Available
+        {!isOpen && (
+          <Badge className="absolute bottom-2.5 left-2.5 z-10 border-red-700 bg-red-500/80">
+            Not available
           </Badge>
         )}
       </div>

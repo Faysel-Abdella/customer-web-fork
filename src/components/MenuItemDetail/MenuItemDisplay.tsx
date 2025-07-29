@@ -1,7 +1,7 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { Clock, Dot } from "lucide-react";
+import { CookingPot, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { getMenuItemPrice } from "@/lib/utils";
@@ -58,7 +58,7 @@ const MenuItemDisplay = ({
         </div>
 
         <div className="text-muted-foreground flex items-center gap-1">
-          <Clock size={16} /> {menuItem.cook_time}
+          <CookingPot size={16} /> {menuItem.cook_time}
           <span> min</span>
         </div>
       </div>

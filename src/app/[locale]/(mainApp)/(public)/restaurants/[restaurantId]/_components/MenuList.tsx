@@ -3,8 +3,9 @@ import MenuItemCard from "@/components/MenuItemCard";
 
 interface MenuListProps {
   restaurantId: string;
+  isOpen: boolean;
 }
-const MenuList = async ({ restaurantId }: MenuListProps) => {
+const MenuList = async ({ restaurantId, isOpen }: MenuListProps) => {
   const { data: menuList, error } = await getRestaurantMenuList(restaurantId);
 
   if (error) {
@@ -22,7 +23,7 @@ const MenuList = async ({ restaurantId }: MenuListProps) => {
     return (
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {menuList.map((menuItem) => (
-          <MenuItemCard key={menuItem.id} menuItem={menuItem} />
+          <MenuItemCard key={menuItem.id} menuItem={menuItem} isOpen={isOpen} />
         ))}
       </div>
     );

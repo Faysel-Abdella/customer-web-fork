@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getRestaurantDetails } from "@/actions/restaurants.actions";
 import FadingDivider from "@/components/FadingDivider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { isRestaurantOpenNow } from "@/lib/utils";
 
 import MenuList from "./MenuList";
 import { MenuListSkeleton } from "./MenuListSkeleton";
@@ -45,12 +46,14 @@ const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
   const { data: restaurant, error } = await getRestaurantDetails(restaurantId);
 
   if (error) return <RestaurantDetailError />;
-  if (restaurant)
+  if (restaurant) {
+    const isOpen = isRestaurantOpenNow(restaurant.availability);
+
     return (
       <div>
         <RestaurantBanner restaurant={restaurant} />
         <div className="px-4 md:px-12">
-          <RestaurantHeader restaurant={restaurant} />
+          <RestaurantHeader restaurant={restaurant} isOpen={isOpen} />
           <Tabs
             defaultValue={"menu"}
             className="bg-red flex w-full py-5 lg:flex-row lg:gap-10"
@@ -70,7 +73,7 @@ const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
 
             <TabsContent value="menu" className="space-y-6 lg:w-4/5">
               <Suspense fallback={<MenuListSkeleton />}>
-                <MenuList restaurantId={restaurantId} />
+                <MenuList restaurantId={restaurantId} isOpen={isOpen} />
               </Suspense>
             </TabsContent>
 
@@ -94,6 +97,7 @@ const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
         </div>
       </div>
     );
+  }
 };
 
 export default RestaurantDetail;

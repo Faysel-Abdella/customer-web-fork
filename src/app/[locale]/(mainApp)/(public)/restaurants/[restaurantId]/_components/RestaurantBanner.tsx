@@ -11,8 +11,8 @@ const restaurantPlaceHolder = "/assets/images/restaurant_placeholder.webp";
 const RestaurantBanner = ({ restaurant }: RestaurantBannerProps) => {
   return (
     <div className="mb-12 w-full">
-      <div className="dark:bg-card relative h-72 w-full border shadow-xl md:rounded-3xl md:p-2">
-        <div className="relative h-full w-full overflow-hidden md:rounded-2xl">
+      <div className="dark:bg-card relative h-72 w-full border shadow-xl lg:rounded-3xl lg:p-2">
+        <div className="relative h-full w-full overflow-hidden lg:rounded-2xl">
           <CustomImage
             title={restaurant.title + " banner"}
             imgUrl={restaurant.image_file}
@@ -23,7 +23,7 @@ const RestaurantBanner = ({ restaurant }: RestaurantBannerProps) => {
           />
         </div>
 
-        <div className="absolute -bottom-12 max-md:flex max-md:w-full max-md:justify-center md:left-12">
+        <div className="absolute -bottom-12 max-lg:flex max-lg:w-full max-lg:justify-center lg:left-12">
           <div className="border-card relative size-24 overflow-hidden rounded-full border-4 shadow-xl">
             <Image
               src={restaurant.image_file}
