@@ -37,6 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (userData: UserDetail) => {
     setUser(userData);
+    setIsAuthenticated(true);
+
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
@@ -84,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } catch (error) {
           console.error("Failed to parse user data from localStorage.", error);
           setUser(null);
-          localStorage.clear();
+          localStorage.removeItem("user");
         }
       }
 
@@ -92,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     initializeAuth();
-  }, [logout, isAuthenticated]);
+  }, []);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
