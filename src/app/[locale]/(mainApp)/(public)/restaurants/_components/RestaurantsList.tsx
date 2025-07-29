@@ -24,6 +24,10 @@ const RestaurantsList = async ({
     return <RestaurantListSkeleton />;
   }
 
+  if (lat == "none" && lon === "none") {
+    delete params.lat;
+    delete params.lon;
+  }
   const queryParams = buildUrlSearchParams(params).toString();
 
   const {

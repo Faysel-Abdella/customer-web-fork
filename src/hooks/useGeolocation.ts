@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
+import { Location } from "@/types/shared.types";
 
 export default function useGeolocation() {
-  const [location, setLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
+  const [guestLocation, setGuestLocation] = useState<Location | null>(null);
 
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const getGuestUserLocation = useCallback(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLocation({
+          setGuestLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           });
@@ -20,7 +19,10 @@ export default function useGeolocation() {
         },
         (err) => {
           setError(err.message);
-          setLocation(null);
+          setGuestLocation({
+            latitude: 0,
+            longitude: 0,
+          });
         },
       );
     } else {
@@ -28,5 +30,5 @@ export default function useGeolocation() {
     }
   }, []);
 
-  return { location, error };
+  return { guestLocation, error, getGuestUserLocation };
 }

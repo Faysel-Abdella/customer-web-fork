@@ -1,12 +1,28 @@
 "use client";
 
-import React, { PropsWithChildren } from "react";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useTransition,
+} from "react";
+import { useSearchParams } from "next/navigation";
 
+import useAddress from "@/hooks/useAddress";
+import useGeolocation from "@/hooks/useGeolocation";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { Address } from "@/types/profile.types";
 import { Location } from "@/types/shared.types";
+
+import { useAuth } from "./AuthContext";
 
 interface LocationContextType {
   location: Location | null;
-  setLocation: (location: Location) => void;
+  isPending: boolean;
+  addressList: Address[] | null;
+  defaultAddress: Address | null;
+  addressError: string | null;
+  refreshAddress: () => void;
 }
 
 const LocationContext = React.createContext<LocationContextType | undefined>(
@@ -14,10 +30,99 @@ const LocationContext = React.createContext<LocationContextType | undefined>(
 );
 
 const LocationProvider = ({ children }: PropsWithChildren) => {
+  console.log("location provider running");
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [location, setLocation] = React.useState<Location | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { getGuestUserLocation, guestLocation } = useGeolocation();
+  const { defaultAddress, addressError, addressList, fetchLocations } =
+    useAddress();
 
+  const refreshAddress = useCallback(() => {
+    startTransition(() => {
+      fetchLocations();
+    });
+  }, [fetchLocations]);
+
+  useEffect(() => {
+    console.log("updating with auth state");
+
+    if (!isLoading && !isAuthenticated) {
+      console.log("unauthenticated running");
+      getGuestUserLocation();
+    }
+
+    if (!isLoading && isAuthenticated) {
+      console.log("authenticated running");
+
+      refreshAddress();
+    }
+  }, [getGuestUserLocation, isLoading, isAuthenticated, refreshAddress]);
+
+  useEffect(() => {
+    console.log("updating with guestlocation and default");
+    if (guestLocation) {
+      const newLoc = {
+        latitude: guestLocation.latitude,
+        longitude: guestLocation.longitude,
+      };
+      setLocation((prev) =>
+        prev?.latitude === newLoc.latitude &&
+        prev?.longitude === newLoc.longitude
+          ? prev
+          : newLoc,
+      );
+    }
+
+    if (defaultAddress) {
+      const newLoc = {
+        latitude: parseFloat(defaultAddress.latitude),
+        longitude: parseFloat(defaultAddress.longitude),
+      };
+      setLocation((prev) =>
+        prev?.latitude === newLoc.latitude &&
+        prev?.longitude === newLoc.longitude
+          ? prev
+          : newLoc,
+      );
+    }
+  }, [guestLocation, defaultAddress]);
+
+  useEffect(() => {
+    if (pathname !== "/restaurants" || !location) return;
+
+    const latInUrl = searchParams.get("lat");
+    const lonInUrl = searchParams.get("lon");
+
+    const newLat =
+      location.latitude === 0 ? "none" : location.latitude.toString();
+    const newLon =
+      location.longitude === 0 ? "none" : location.longitude.toString();
+
+    if (latInUrl === newLat && lonInUrl === newLon) {
+      return;
+    }
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("lat", newLat);
+    params.set("lon", newLon);
+
+    router.replace(`${pathname}?${params.toString()}`);
+  }, [location, pathname, router, searchParams]);
+
+  const value = {
+    location,
+    isPending,
+    addressList,
+    defaultAddress,
+    addressError,
+    refreshAddress,
+  };
   return (
-    <LocationContext.Provider value={{ location, setLocation }}>
+    <LocationContext.Provider value={value}>
       {children}
     </LocationContext.Provider>
   );

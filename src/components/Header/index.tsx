@@ -9,7 +9,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import CustomLink from "../CustomLink";
 
 import AccountMenu from "./_components/AccountMenu";
-import GuestLocation from "./_components/GuestLocation";
 import MobileMenu from "./_components/MobileMenu";
 import SearchBar from "./_components/SearchBar";
 
@@ -28,7 +27,6 @@ const Header = () => {
           {t("restaurants")}
           <MoveUpRight size={10} className="lg:hidden" />
         </CustomLink>
-        {!isLoading && !isAuthenticated && <GuestLocation />}
         <MobileMenu isAuthenticated={isAuthenticated} isLoading={isLoading} />
       </div>
       <div className="flex w-full items-center gap-2">

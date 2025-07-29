@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 
-import { LocationHandler } from "./_components/LocationHandler";
 import MobileRestaurantFilter from "./_components/MobileRestaurantFilter";
 import RestaurantFilter from "./_components/RestaurantFilter";
 import RestaurantListSkeleton from "./_components/RestaurantListSkeleton";
@@ -21,7 +20,6 @@ const RestaurantsPage = async ({ searchParams }: RestaurantPageProps) => {
     typeof param["search"] == "string" ? param["search"] : undefined;
   return (
     <div className="flex min-h-dvh flex-col gap-8 px-3 pt-36 pb-20 sm:px-4 md:px-10 lg:px-20 lg:pt-32 xl:px-32">
-      <LocationHandler />
       <div className="flex gap-10 max-lg:flex-col">
         <div className="flex w-full max-lg:justify-between lg:w-1/4 lg:flex-col lg:gap-5">
           <h2 className="text-3xl font-semibold">Restaurants</h2>

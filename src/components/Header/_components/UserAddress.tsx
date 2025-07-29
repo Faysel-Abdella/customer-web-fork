@@ -1,5 +1,9 @@
-import { MapPin } from "lucide-react";
+import { useState, useTransition } from "react";
 
+import { MapPin } from "lucide-react";
+import { toast } from "sonner";
+
+import { setDefaultAddress } from "@/actions/profile.actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,32 +15,42 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLocation } from "@/contexts/LocationContext";
 import { cn } from "@/lib/utils";
+import { Address } from "@/types/profile.types";
 
-import { useLoggedLocationContext } from "./LocationContainer";
-
-interface LoggedInLocationProps {
+interface UserAddressProps {
   className?: string;
   skeletonClassName?: string;
 }
-const LoggedInLocation = ({
-  className,
-  skeletonClassName,
-}: LoggedInLocationProps) => {
+const UserAddress = ({ className, skeletonClassName }: UserAddressProps) => {
   const {
-    isLoading,
-    isError,
-    defaultAddress,
+    addressError,
     addressList,
-    handleSetDefaultAddress,
-    isOpen,
-    isUpdating,
-    setOpen,
-  } = useLoggedLocationContext();
+    defaultAddress,
+    isPending,
+    refreshAddress,
+  } = useLocation();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isUpdating, startUpdate] = useTransition();
+
+  const handleSetDefaultAddress = (address: Address) => {
+    startUpdate(async () => {
+      const results = await setDefaultAddress(address.id.toString());
+      if (results.success) {
+        refreshAddress();
+        setIsOpen(false);
+      }
+      if (results.error) {
+        toast.error("Failed at setting default address");
+      }
+    });
+  };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setOpen}>
-      {isUpdating || isLoading ? (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      {isUpdating || isPending ? (
         <Skeleton className={cn("h-10 w-32", skeletonClassName)} />
       ) : (
         <DialogTrigger asChild>
@@ -80,7 +94,7 @@ const LoggedInLocation = ({
           <DialogTitle>Select Default Addresss</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        {isError ? (
+        {addressError ? (
           <p>Couldnt fetch addresses</p>
         ) : (
           <div className="flex w-full flex-col overflow-hidden">
@@ -123,4 +137,4 @@ const LoggedInLocation = ({
   );
 };
 
-export default LoggedInLocation;
+export default UserAddress;
