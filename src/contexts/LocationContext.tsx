@@ -30,7 +30,6 @@ const LocationContext = React.createContext<LocationContextType | undefined>(
 );
 
 const LocationProvider = ({ children }: PropsWithChildren) => {
-  console.log("location provider running");
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -48,22 +47,16 @@ const LocationProvider = ({ children }: PropsWithChildren) => {
   }, [fetchLocations]);
 
   useEffect(() => {
-    console.log("updating with auth state");
-
     if (!isLoading && !isAuthenticated) {
-      console.log("unauthenticated running");
       getGuestUserLocation();
     }
 
     if (!isLoading && isAuthenticated) {
-      console.log("authenticated running");
-
       refreshAddress();
     }
   }, [getGuestUserLocation, isLoading, isAuthenticated, refreshAddress]);
 
   useEffect(() => {
-    console.log("updating with guestlocation and default");
     if (guestLocation) {
       const newLoc = {
         latitude: guestLocation.latitude,
