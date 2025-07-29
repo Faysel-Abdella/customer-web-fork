@@ -13,7 +13,7 @@ import OffersCard from "./OffersCard";
 const Offers = async () => {
   const { data } = await getOffersList();
 
-  if (data)
+  if (data && data.length > 0)
     return (
       <Carousel
         opts={{

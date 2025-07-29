@@ -12,7 +12,7 @@ import {
 export async function Categories() {
   const { data: categories } = await getCategiesList();
 
-  if (categories)
+  if (categories && categories.length > 0)
     return (
       <Carousel
         opts={{

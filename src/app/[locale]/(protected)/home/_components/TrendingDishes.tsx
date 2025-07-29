@@ -11,7 +11,7 @@ import {
 
 export async function TrendingDishes() {
   const { data: dishes } = await getPopularDishes();
-  if (dishes)
+  if (dishes && dishes.length > 0)
     return (
       <Carousel
         opts={{

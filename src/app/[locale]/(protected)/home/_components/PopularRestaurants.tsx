@@ -12,7 +12,7 @@ import {
 const PopularRestaurants = async () => {
   const { data: restaurants } = await getTopRestaurants();
 
-  if (restaurants)
+  if (restaurants && restaurants.length > 0)
     return (
       <Carousel
         opts={{
