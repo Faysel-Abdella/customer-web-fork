@@ -45,7 +45,7 @@ export async function TrendingDishes() {
               key={dish.id}
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <MenuItemCard menuItem={dish} />
+              <MenuItemCard menuItem={dish} isInRestaurant={false} isOpen />
             </CarouselItem>
           ))}
         </CarouselContent>

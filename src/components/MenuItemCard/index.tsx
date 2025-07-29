@@ -1,23 +1,30 @@
 "use client";
-import { CookingPot } from "lucide-react";
+import { CookingPot, Eye } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
 import MenuItemDetail from "../MenuItemDetail";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 interface MenuItemCardProps {
   menuItem: MenuItem;
   isOpen: boolean;
+  isInRestaurant: boolean;
 }
 
 const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
-const MenuItemCard = ({ menuItem, isOpen }: MenuItemCardProps) => {
+const MenuItemCard = ({
+  menuItem,
+  isOpen,
+  isInRestaurant = true,
+}: MenuItemCardProps) => {
   const { user } = useAuth();
   const currentPrice = getMenuItemPrice(menuItem);
   const minPercent = 10;
@@ -47,7 +54,16 @@ const MenuItemCard = ({ menuItem, isOpen }: MenuItemCardProps) => {
                 </div>
               )}
             </div>
-            {isOpen && <MenuItemDetail menuItemId={menuItem.id.toString()} />}
+
+            {isInRestaurant ? (
+              isOpen && <MenuItemDetail menuItemId={menuItem.id.toString()} />
+            ) : (
+              <Button size={"icon"} asChild>
+                <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
+                  <Eye />
+                </CustomLink>
+              </Button>
+            )}
           </div>
         </div>
       </div>
