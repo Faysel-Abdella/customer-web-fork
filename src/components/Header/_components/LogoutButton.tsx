@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 interface LogoutButtonProps {
@@ -22,6 +23,7 @@ interface LogoutButtonProps {
 }
 const LogoutButton = ({ className }: LogoutButtonProps) => {
   const { logout, isLoading } = useAuth();
+  const pathname = usePathname();
   const t = useTranslations("header");
   return (
     <AlertDialog>
@@ -49,7 +51,7 @@ const LogoutButton = ({ className }: LogoutButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={logout}>
+          <AlertDialogAction onClick={() => logout(pathname)}>
             {t("continue")}
           </AlertDialogAction>
         </AlertDialogFooter>
