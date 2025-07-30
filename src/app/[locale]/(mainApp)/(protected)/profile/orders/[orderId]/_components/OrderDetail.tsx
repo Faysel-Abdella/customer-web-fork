@@ -81,7 +81,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
         <div className="bg-card flex w-full items-center justify-between gap-5 rounded-2xl border px-4 py-3">
           <div className="flex flex-col gap-2">
             <p className="text-muted-foreground text-sm">Payment Method</p>
-            <p className="text-lg font-medium">
+            <p className="font-medium sm:text-lg">
               {order.payment_type == 1 && "Cash on Delivery"}
               {order.payment_type == 4 && "HesabPay"}
             </p>

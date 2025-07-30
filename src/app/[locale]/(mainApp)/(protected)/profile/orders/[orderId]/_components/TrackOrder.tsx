@@ -86,12 +86,14 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
   );
 
   const fetchOrderStatus = useCallback(async () => {
+    console.log("fetching order status");
     const { status, success } = await getOrderStatus(order_id);
     if (!success) {
       toast.error("Failed to get order status");
       setIsOpen(false);
     }
     if (status) {
+      console.log(status);
       setOrderStatus(status);
       checkCurrentStage(status.status_history.delivery_status);
     }
@@ -128,7 +130,7 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
 
       <DialogContent
         showCloseButton={false}
-        className="bg-secondary dark:bg-card flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto rounded-3xl p-2 sm:p-6"
+        className="bg-secondary dark:bg-card flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto rounded-3xl p-2 transition-all sm:p-6"
       >
         <DialogHeader className="w-full">
           <div className="group flex w-full items-center justify-between">

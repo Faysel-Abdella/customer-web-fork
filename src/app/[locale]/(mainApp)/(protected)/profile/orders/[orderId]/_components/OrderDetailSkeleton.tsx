@@ -13,7 +13,6 @@ const OrderDetailSkeleton = () => {
           <Skeleton className="h-4 w-16" />
           <Skeleton className="h-6 w-24" />
         </div>
-        <Skeleton className="h-10 w-28 rounded-md" />
       </div>
 
       {/* Delivery Address Section */}
