@@ -6,10 +6,9 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
-
-import { usePathname } from "@/i18n/navigation";
 
 import { toast } from "sonner";
 
@@ -20,12 +19,11 @@ import {
 } from "@/actions/auth.actions";
 import { useRouter } from "@/i18n/navigation";
 import { UserDetail } from "@/types/auth.types";
-import { constructNow } from "date-fns";
 
 interface AuthContextType {
   user: UserDetail | null;
   login: (userData: UserDetail) => void;
-  logout: () => void;
+  logout: (pathname: string) => void;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -37,41 +35,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const router = useRouter();
-  const pathname = usePathname();
 
-  const login = (userData: UserDetail) => {
+  const login = useCallback((userData: UserDetail) => {
     setUser(userData);
     setIsAuthenticated(true);
 
     localStorage.setItem("user", JSON.stringify(userData));
-  };
+  }, []);
 
-  const logout = useCallback(async () => {
-    const { success, error } = await logoutAction();
-    if (success) {
-      setIsAuthenticated(false);
-      setUser(null);
-      localStorage.removeItem("user");
-      await clearTokenCookie();
-      // If the user is in the restaurant page refresh the same page, otherwise redirect to the restaurants page
-      if (pathname.includes("/restaurants")) {
-        router.refresh();
-      } else {
-        router.push("/restaurants");
+  const logout = useCallback(
+    async (pathname: string) => {
+      const { success, error } = await logoutAction();
+      if (success) {
+        setIsAuthenticated(false);
+        setUser(null);
+        localStorage.removeItem("user");
+        await clearTokenCookie();
+        // If the user is in the restaurant page refresh the same page, otherwise redirect to the restaurants page
+        if (pathname.includes("/restaurants")) {
+          router.refresh();
+        } else {
+          router.push("/restaurants");
+        }
       }
-    }
-    if (error) {
-      toast.error("Logout failed, Please try again");
-    }
-  }, [router]);
+      if (error) {
+        toast.error("Logout failed, Please try again");
+      }
+    },
+    [router],
+  );
 
-  const value = {
-    user,
-    login,
-    logout,
-    isLoading,
-    isAuthenticated,
-  };
+  const value = useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+      isLoading,
+      isAuthenticated,
+    }),
+    [user, login, logout, isLoading, isAuthenticated],
+  );
+
   useEffect(() => {
     setIsLoading(true);
     const initializeAuth = async () => {
@@ -90,11 +94,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (storedUserJSON) {
         try {
-          const userFromStorage = JSON.parse(storedUserJSON);
+          const userFromStorage: UserDetail = JSON.parse(storedUserJSON);
           setUser(userFromStorage);
         } catch (error) {
           console.error("Failed to parse user data from localStorage.", error);
           setUser(null);
+          await clearTokenCookie();
           localStorage.removeItem("user");
         }
       }
