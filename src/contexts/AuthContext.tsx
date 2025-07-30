@@ -9,6 +9,8 @@ import {
   useState,
 } from "react";
 
+import { usePathname } from "@/i18n/navigation";
+
 import { toast } from "sonner";
 
 import {
@@ -18,6 +20,7 @@ import {
 } from "@/actions/auth.actions";
 import { useRouter } from "@/i18n/navigation";
 import { UserDetail } from "@/types/auth.types";
+import { constructNow } from "date-fns";
 
 interface AuthContextType {
   user: UserDetail | null;
@@ -34,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const login = (userData: UserDetail) => {
     setUser(userData);
@@ -49,7 +53,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
       localStorage.removeItem("user");
       await clearTokenCookie();
-      router.refresh();
+      // If the user is in the restaurant page refresh the same page, otherwise redirect to the restaurants page
+      if (pathname.includes("/restaurants")) {
+        router.refresh();
+      } else {
+        router.push("/restaurants");
+      }
     }
     if (error) {
       toast.error("Logout failed, Please try again");
