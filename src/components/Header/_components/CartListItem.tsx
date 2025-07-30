@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import Image from "next/image";
 
 import { Dot, Loader2, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import { deleteCartItem, updateCartItem } from "@/actions/cart.actions";
+import CustomImage from "@/components/CustomImage";
 import FadingDivider from "@/components/FadingDivider";
 import QuantityControl from "@/components/QuantityControl";
 import {
@@ -74,10 +74,10 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
       <div className="flex w-full items-center justify-between gap-4">
         <div className="flex h-full w-full items-center gap-2 md:gap-4">
           <div className="relative h-14 w-16 min-w-16 overflow-hidden rounded-lg">
-            <Image
-              fill
-              src={cartItem.restaurant_items[0].image_file}
-              alt={`${cartItem.restaurant_items[0].title}`}
+            <CustomImage
+              imgUrl={cartItem.restaurant_items[0].image_file}
+              title={cartItem.restaurant_items[0].title}
+              placeholderImage={"/assets/images/foodPlaceholder.jpg"}
             />
           </div>
           <div className="flex h-16 w-full flex-col justify-between">

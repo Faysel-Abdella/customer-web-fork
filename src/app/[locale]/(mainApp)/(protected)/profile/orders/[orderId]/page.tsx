@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { ArrowLeft } from "lucide-react";
 
 import BackButton from "@/components/BackButton";
 
 import OrderDetail from "./_components/OrderDetail";
+import OrderDetailSkeleton from "./_components/OrderDetailSkeleton";
 
 interface OrderDetailPageProps {
   params: Promise<{ orderId: string }>;
@@ -17,9 +18,17 @@ const OrderDetailPage = async ({ params }: OrderDetailPageProps) => {
         <BackButton>
           <ArrowLeft />
         </BackButton>
-        <h2 className="text-3xl font-bold">Order Detail</h2>
+        <div>
+          <h2 className="text-3xl font-bold">Order History</h2>
+          <p className="text-muted-foreground mt-2">
+            View and track your recent orders.
+          </p>
+        </div>
       </div>
-      <OrderDetail orderId={orderId} />
+
+      <Suspense fallback={<OrderDetailSkeleton />}>
+        <OrderDetail orderId={orderId} />
+      </Suspense>
     </div>
   );
 };

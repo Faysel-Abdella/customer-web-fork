@@ -93,7 +93,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
       Cart: {
         store_id: menuItem.restaurant_id.toString(),
         type_id: menuItem.type_id.toString(),
-        addones: getSelectedAddons(),
+        addones: JSON.stringify(getSelectedAddons()),
       },
       CartItem: {
         price_id: menuItem.itemPrice[0].id.toString(),

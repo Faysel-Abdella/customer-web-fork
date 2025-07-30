@@ -2,18 +2,25 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { MapPin } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import { toast } from "sonner";
 
 import { getOrderStatus } from "@/actions/profile.actions";
+import CustomImage from "@/components/CustomImage";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { OrderStatus } from "@/types/profile.types";
+import { Restaurant } from "@/types/restaurant.types";
 
 const orderStates: {
   stage: number;
@@ -59,35 +66,56 @@ const orderStates: {
   },
 ];
 
+const restaurant_placeholder = "/assets/images/restaurant_placeholder.webp";
+
 interface TrackOrderProps {
   order_id: string;
+  restaurant: Restaurant;
 }
-export function TrackOrder({ order_id }: TrackOrderProps) {
+export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStage, setCurrentStage] = useState<number>(1);
+  const [orderStatus, setOrderStatus] = useState<OrderStatus | null>(null);
 
-  const skeletonItems = Array(5).fill(0);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const checkCurrentStage = useCallback(
+    (statusId: string) => {
+      const stage = orderStates.find((status) => status.status == statusId);
+      if (stage) setCurrentStage(stage.stage);
+    },
+    [setCurrentStage],
+  );
 
   const fetchOrderStatus = useCallback(async () => {
-    setIsLoading(true);
     const { status, success } = await getOrderStatus(order_id);
     if (!success) {
       toast.error("Failed to get order status");
       setIsOpen(false);
     }
     if (status) {
-      const currentStatus = orderStates.find((item) => item.status == status);
-      if (currentStatus) setCurrentStage(currentStatus.stage);
+      setOrderStatus(status);
+      checkCurrentStage(status.status_history.delivery_status);
     }
-
-    setIsLoading(false);
-  }, [order_id]);
+  }, [order_id, checkCurrentStage]);
 
   useEffect(() => {
+    if (!isOpen) return;
     fetchOrderStatus();
-  }, [fetchOrderStatus]);
+  }, [fetchOrderStatus, isOpen]);
+
+  const getCurrentBarHeight = () => {
+    switch (currentStage) {
+      case 1:
+        return "h-0";
+      case 2:
+        return "h-1/4";
+      case 3:
+        return "h-2/4";
+      case 4:
+        return "h-3/4";
+      case 5:
+        return "h-full";
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -97,59 +125,108 @@ export function TrackOrder({ order_id }: TrackOrderProps) {
           Track Order
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto p-6">
-        <DialogTitle />
-        <DialogDescription />
-        <div className="flex w-full flex-col">
-          <h2 className="mb-4 text-xl font-semibold">Trip</h2>
-          <div className="flex w-full items-center justify-center">
-            <div className="flex w-fit flex-col">
-              {isLoading
-                ? skeletonItems.map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex animate-pulse items-start gap-4"
-                    >
-                      <div className="flex flex-col items-center">
-                        <div className="h-3 w-3 rounded-full bg-gray-200 dark:bg-gray-700" />
-                        {index < skeletonItems.length - 1 && (
-                          <div className="h-8 w-0.5 bg-gray-200 dark:bg-gray-700" />
-                        )}
-                      </div>
-                      <div className="-mt-1.5 h-5 w-28 rounded-md bg-gray-200 dark:bg-gray-700" />
-                    </div>
-                  ))
-                : orderStates.map((item, index) => (
-                    <div key={item.stage} className="flex items-start gap-4">
-                      <div className="flex flex-col items-center">
-                        <div
-                          className={`h-3 w-3 rounded-full ${
-                            item.stage <= currentStage
-                              ? item.bgColor
-                              : "bg-secondary border"
-                          } ${item.stage == currentStage ? "ring-2 ring-orange-300 dark:ring-orange-500/50" : ""}`}
-                        />
-                        {index < orderStates.length - 1 && (
-                          <div className="h-8 w-0.5 bg-gray-200" />
-                        )}
-                      </div>
-                      <div className="-mt-1.5">
-                        <span className="text-sm text-gray-500">Status: </span>
-                        <span
-                          className={
-                            item.stage <= currentStage
-                              ? item.color
-                              : "text-muted-foreground"
-                          }
-                        >
-                          {item.label}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+
+      <DialogContent
+        showCloseButton={false}
+        className="bg-secondary dark:bg-card flex max-h-dvh max-w-md flex-col items-center overflow-hidden overflow-y-auto rounded-3xl p-2 sm:p-6"
+      >
+        <DialogHeader className="w-full">
+          <div className="group flex w-full items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="relative size-10 overflow-hidden rounded-full">
+                <CustomImage
+                  imgUrl={restaurant.image_file}
+                  title={restaurant.title}
+                  placeholderImage={restaurant_placeholder}
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex h-full flex-col justify-between gap-2">
+                <p className="text-lg font-medium">{restaurant.title}</p>
+                {orderStatus?.restaurant.phone_number && (
+                  <p className="text-muted-foreground text-sm">
+                    {orderStatus?.restaurant.phone_number}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="bg-background dark:bg-secondary rounded-full border p-3">
+              <Phone size={18} />
             </div>
           </div>
+        </DialogHeader>
+        <DialogTitle />
+        <DialogDescription />
+
+        <div
+          className="relative flex w-full flex-col justify-between"
+          style={{ height: "22rem" }}
+        >
+          <div className="absolute top-0 left-1/2 h-full w-1 -translate-x-1/2 bg-gray-200">
+            <div
+              className={cn(
+                "bg-primary h-1/2 w-full transition-all",
+                getCurrentBarHeight(),
+              )}
+            />
+          </div>
+
+          {orderStates.map((state) => (
+            <div
+              key={state.stage}
+              className={cn(
+                "z-10 flex items-center justify-center",
+                state.stage == 1 && "items-start",
+                state.stage == 5 && "items-end",
+              )}
+            >
+              {state.stage % 2 === 1 ? (
+                <div className={cn("-ml-px w-1/2 pr-6 text-right")}>
+                  <p className="text-muted-foreground text-sm">Status</p>
+                  <p
+                    className={cn(
+                      "font-medium",
+                      currentStage < state.stage && "text-muted-foreground",
+                      currentStage == state.stage && "text-primary",
+                      currentStage > state.stage && "text-foreground",
+                    )}
+                  >
+                    {state.label}
+                  </p>
+                </div>
+              ) : (
+                <div className="w-1/2" />
+              )}
+
+              <div className="border-secondary bg-primary dark:border-card flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2">
+                <div className="bg-secondary dark:bg-card size-2 rounded-full" />
+              </div>
+
+              {state.stage % 2 === 0 ? (
+                <div className="-mr-px w-1/2 pl-5 text-left">
+                  <p className="text-muted-foreground text-sm">Status</p>
+                  <p
+                    className={cn(
+                      "font-medium",
+                      currentStage < state.stage && "text-muted-foreground",
+                      currentStage == state.stage && "text-primary",
+                      currentStage > state.stage && "text-foreground",
+                    )}
+                  >
+                    {state.label}
+                  </p>
+                </div>
+              ) : (
+                <div className="w-1/2" />
+              )}
+            </div>
+          ))}
         </div>
+        <DialogFooter className="mt-5 flex w-full justify-center">
+          <DialogClose className="w-full">
+            <Button className="w-full">Close</Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

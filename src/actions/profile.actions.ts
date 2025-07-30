@@ -14,13 +14,13 @@ import {
   GetOrderDetailResponse,
   GetOrderDetailResult,
   GetOrdersListResults,
-  GetOrderStatusResponse,
   GetOrderStatusResult,
   GetTransactionsListResponse,
   GetTransactionsListResult,
   MessagesResponse,
   NotificationListResponse,
   OrdersListResponse,
+  OrderStatus,
   SentMessageRequestType as SendMessageRequestType,
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
@@ -278,17 +278,16 @@ export async function getOrderStatus(
   order_id: string,
 ): Promise<GetOrderStatusResult> {
   try {
-    const responseData: GetOrderStatusResponse =
-      await fetchWithAuth<GetOrderStatusResponse>(
-        `/api/user/order-track?order_id=${order_id}`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
-      );
+    const responseData: OrderStatus = await fetchWithAuth<OrderStatus>(
+      `/api/user/order-track?order_id=${order_id}`,
+      {
+        retry: { retries: 3, delay: 1000 },
+      },
+    );
 
     return {
       success: true,
-      status: responseData.status_history.delivery_status,
+      status: responseData,
     };
   } catch (error) {
     console.error(error);

@@ -1,141 +1,117 @@
-import Image from "next/image";
+import { ChevronRight, Layers2 } from "lucide-react";
 
 import { getOrderDetail } from "@/actions/profile.actions";
+import CustomImage from "@/components/CustomImage";
+import CustomLink from "@/components/CustomLink";
+import FadingDivider from "@/components/FadingDivider";
 import { Button } from "@/components/ui/button";
 
+import OrderedItems from "./OrderedItems";
+import PaymentStatusBadge from "./PaymentStatusBadge";
 import { TrackOrder } from "./TrackOrder";
 
 interface OrderDetailProps {
   orderId: string;
 }
 
-const addressTypes = [
-  {
-    icon: "🏠",
-    title: "Home",
-    value: "1",
-  },
-  {
-    icon: "🏢",
-    title: "Office",
-    value: "2",
-  },
-  {
-    icon: "🏨",
-    title: "Hotel",
-    value: "3",
-  },
-  {
-    title: "Other",
-    value: "4",
-  },
-];
-
-const getAddressType = (value: string) => {
-  if (!value) return null;
-  return addressTypes.find((item) => item.value == value);
-};
+const restaurant_placeholder = "/assets/images/restaurant_placeholder.webp";
 
 const OrderDetail = async ({ orderId }: OrderDetailProps) => {
   const { data: order } = await getOrderDetail(orderId);
 
   if (!order) return;
 
-  const addresType = order.customer_address_deatil.type_id
-    ? getAddressType(order.customer_address_deatil.type_id.toString())
-    : addressTypes[3];
-
   return (
-    <div className="max flex flex-col">
-      <div className="py-5">
-        <div className="flex items-center justify-between">
-          <span className="font-medium">Estimated Arrival</span>
-          <span className="text-primary font-medium">Order Placed</span>
+    <div className="flex max-w-2xl flex-col gap-7">
+      <FadingDivider />
+
+      <div className="bg-card flex items-center rounded-2xl border px-4 py-3">
+        <div className="flex h-full flex-col justify-between">
+          <p className="text-muted-foreground text-sm">Order No.</p>
+          <p className="text-lg font-medium">#{order.order_no}</p>
         </div>
       </div>
-
-      <div className="bg-secondary mb-6 rounded-lg px-6 py-6">
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            <p className="mb-4 font-medium">
-              Order is being prepared and delivered by {order.store_title}
+      <div>
+        <p className="mb-4 font-medium">Delivery Address</p>
+        <div className="bg-card flex w-full items-center gap-5 rounded-2xl border px-4 py-3">
+          <Layers2 className="text-primary" />
+          <div>
+            <p className="text-lg font-medium">
+              {order.customer_address_deatil.title}
             </p>
-            <TrackOrder order_id={order.id.toString()} />
+            <p className="text-muted-foreground text-sm">
+              {order.customer_address_deatil.address}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="py-4">
-        <h3 className="mb-4 font-semibold">Delivering to</h3>
-        <div className="mb-2 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
-            {addresType?.icon}
+      <div className="flex flex-col gap-7">
+        <CustomLink href={`/restaurants/${order.store_id}`}>
+          <div className="group flex w-full items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="relative size-14 overflow-hidden rounded-full">
+                <CustomImage
+                  imgUrl={order.storeDetail.image_file}
+                  title={order.store_title}
+                  placeholderImage={restaurant_placeholder}
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex h-full flex-col justify-between gap-2">
+                <p className="text-lg font-medium">{order.storeDetail.title}</p>
+                <p className="text-muted-foreground text-sm">
+                  {order.storeDetail.location}
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="transition-all group-hover:translate-x-4" />
           </div>
-          <span className="text-xl font-bold">{addresType?.title}</span>
-        </div>
-        <p className="text-muted-foreground ml-13">
-          {order.customer_address_deatil.title}
-        </p>
+        </CustomLink>
+        <FadingDivider />
+        <TrackOrder
+          order_id={order.id.toString()}
+          restaurant={order.storeDetail}
+        />
       </div>
+      <OrderedItems items={order.item_detail} />
 
-      <div className="bg-secondary mb-6 rounded-lg border px-4 py-4">
-        <p className="text-muted-foreground mb-2 text-sm">Your Ordered From</p>
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold">{order.store_title}</h3>
-          <div className="relative size-24 rounded-lg">
-            <Image
-              src={order.store_image}
-              alt="Haile restaurant"
-              fill
-              className="rounded-lg"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="py-4">
-        <h3 className="mb-6 text-xl font-bold">Payment Details</h3>
-
-        <div className="mb-6 space-y-4">
-          <div className="flex justify-between">
-            <span className="">Item Total</span>
-            <span className="font-medium">${order.total_price}</span>
-          </div>
-
-          <div className="flex justify-between">
-            <span className="">Delivery fees</span>
-            <span className="text-primary font-medium">Free</span>
-          </div>
-
-          <div className="flex justify-between text-lg font-bold">
-            <span className="">Total</span>
-            <span className="">${order.total_price}</span>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <span className="">Payment Method</span>
-            <span className="font-medium">
+      <div>
+        <p className="mb-4 font-medium">Payment</p>
+        <div className="bg-card flex w-full items-center justify-between gap-5 rounded-2xl border px-4 py-3">
+          <div className="flex flex-col gap-2">
+            <p className="text-muted-foreground text-sm">Payment Method</p>
+            <p className="text-lg font-medium">
               {order.payment_type == 1 && "Cash on Delivery"}
               {order.payment_type == 4 && "HesabPay"}
-            </span>
+            </p>
           </div>
-
-          <div className="flex justify-between">
-            <span className="">Status</span>
-            <span className="font-medium text-green-500">Paid</span>
-          </div>
+          {(order.payment_status === 1 || order.payment_status == 0) && (
+            <PaymentStatusBadge status={order.payment_status} />
+          )}
         </div>
       </div>
 
-      <div className="space-y-2 py-4">
-        <h3 className="text-muted-foreground text-xl font-bold">Support</h3>
-        <p className="text-muted-foreground">Order ID: {order.order_no}</p>
+      <div className="mb-6 space-y-4">
+        <FadingDivider />
+        <div className="flex justify-between">
+          <span className="text-secondary-foreground">Item Total</span>
+          <span className="font-medium">${order.total_price}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-secondary-foreground">Delivery Charges</span>
+          <span className="font-medium">${order.delivery_charge}</span>
+        </div>
+        <FadingDivider />
+        <div className="flex justify-between text-lg font-bold">
+          <span className="">Total</span>
+          <span className="">${order.payable_amount}</span>
+        </div>
       </div>
 
       <div className="pb-6">
-        <Button className="bg-primary w-full rounded-full py-3 text-lg font-semibold text-white hover:bg-orange-600">
+        <Button className="bg-primary w-full py-3 text-lg font-semibold text-white hover:bg-orange-600">
           Cancel Order
         </Button>
       </div>
