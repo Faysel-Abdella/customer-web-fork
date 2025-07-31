@@ -1,6 +1,4 @@
-"use client";
-
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { CookingPot, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
