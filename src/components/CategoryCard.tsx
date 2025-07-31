@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { ArrowRight } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { Category } from "@/types/restaurant.types";
 
 import { Card, CardContent } from "./ui/card";
@@ -9,11 +10,17 @@ import CustomLink from "./CustomLink";
 
 interface CategoryCard {
   category: Category;
+  className?: string;
 }
-const CategoryCard = ({ category }: CategoryCard) => {
+const CategoryCard = ({ category, className }: CategoryCard) => {
   return (
     <CustomLink href={`/categories/${category.id}?title=${category.title}`}>
-      <Card className="group h-full w-full overflow-hidden p-0 shadow-none">
+      <Card
+        className={cn(
+          "group h-full w-full overflow-hidden p-0 shadow-none",
+          className,
+        )}
+      >
         <CardContent className="px-0 py-0">
           <div className="relative h-32">
             <Image

@@ -69,10 +69,12 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
     });
   };
 
+  console.log(cartItem);
+
   return (
-    <div key={cartItem.id} className="flex flex-col items-center gap-4">
+    <div key={cartItem.id} className="flex w-full flex-col items-center gap-4">
       <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex h-full w-full items-center gap-2 md:gap-4">
+        <div className="flex h-full w-1/2 items-center gap-2 md:gap-4">
           <div className="relative h-14 w-16 min-w-16 overflow-hidden rounded-lg">
             <CustomImage
               imgUrl={cartItem.restaurant_items[0].image_file}
@@ -80,8 +82,8 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               placeholderImage={"/assets/images/foodPlaceholder.jpg"}
             />
           </div>
-          <div className="flex h-16 w-full flex-col justify-between">
-            <p className="line-clamp-2 font-medium">
+          <div className="flex h-16 flex-col justify-between">
+            <p className="line-clamp-2 leading-tight">
               {cartItem.restaurant_items[0].title}
             </p>
             <p className="text-muted-foreground font-medium">
@@ -89,7 +91,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
             </p>
           </div>
         </div>
-        <div className="flex w-full flex-col items-end md:w-min md:flex-row-reverse md:items-center md:gap-3">
+        <div className="flex w-1/2 flex-col items-end pl-2 md:w-min md:flex-row-reverse md:items-center md:gap-1">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
