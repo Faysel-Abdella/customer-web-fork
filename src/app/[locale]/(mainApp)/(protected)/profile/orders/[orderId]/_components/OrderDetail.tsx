@@ -8,6 +8,7 @@ import FadingDivider from "@/components/FadingDivider";
 import OrderCancelModal from "./OrderCancelModal";
 import OrderedItems from "./OrderedItems";
 import PaymentStatusBadge from "./PaymentStatusBadge";
+import ReviewModal from "./ReviewModal";
 import { TrackOrder } from "./TrackOrder";
 
 interface OrderDetailProps {
@@ -111,7 +112,11 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
       </div>
 
       <div className="pb-6">
-        <OrderCancelModal orderId={order.id} />
+        {order.state_id === 5 ? (
+          <ReviewModal order={order} />
+        ) : (
+          <OrderCancelModal orderId={order.id} />
+        )}
       </div>
     </div>
   );

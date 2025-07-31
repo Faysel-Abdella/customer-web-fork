@@ -8,8 +8,6 @@ import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
 import { Order } from "@/types/profile.types";
 
-import OrderStatusBadge from "./OrderStatusBadge";
-
 export const orderColumns: ColumnDef<Order>[] = [
   {
     accessorKey: "store_title",
@@ -31,14 +29,7 @@ export const orderColumns: ColumnDef<Order>[] = [
       );
     },
   },
-  {
-    accessorKey: "orderState",
-    header: "Status",
-    cell: ({ row }) => {
-      const orderState = row.original.state_id;
-      return <OrderStatusBadge stateId={orderState} />;
-    },
-  },
+
   {
     accessorKey: "created_on",
     header: "Placed on",
