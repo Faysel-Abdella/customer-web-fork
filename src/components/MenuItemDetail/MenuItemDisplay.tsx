@@ -1,13 +1,13 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { Clock, Dot } from "lucide-react";
+import { CookingPot, Dot } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Link } from "@/i18n/navigation";
-import { getCookTime, getMenuItemPrice } from "@/lib/utils";
+import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
+import CustomLink from "../CustomLink";
 import FadingDivider from "../FadingDivider";
 import QuantityControl from "../QuantityControl";
 
@@ -44,13 +44,13 @@ const MenuItemDisplay = ({
               {menuItem.cuisine_type_name}
             </Badge>
             <p className="text-lg font-medium">{menuItem.title}</p>
-            <Link
+            <CustomLink
               href={`/restaurants/${menuItem.restaurant_id}`}
               className="text-muted-foreground flex items-center justify-center gap-1 text-sm hover:underline"
             >
               <Dot />
               <span>See restaurant</span>
-            </Link>
+            </CustomLink>
           </div>
           <p className="text-xl font-semibold">
             ${getMenuItemPrice(menuItem).toFixed(2)}
@@ -58,7 +58,7 @@ const MenuItemDisplay = ({
         </div>
 
         <div className="text-muted-foreground flex items-center gap-1">
-          <Clock size={16} /> {getCookTime(menuItem.cook_time)}
+          <CookingPot size={16} /> {menuItem.cook_time}
           <span> min</span>
         </div>
       </div>

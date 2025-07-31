@@ -3,7 +3,7 @@ import { useState, useTransition } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "@/i18n/navigation";
 import { HttpError } from "@/lib/HttpError";
-import { objectToUrlEncoded, processError } from "@/lib/utils";
+import { processError } from "@/lib/utils";
 import {
   LoginResponse,
   UserDetail,
@@ -22,10 +22,12 @@ export const useVerifyOtp = () => {
     setError(null);
     startTransition(async () => {
       try {
-        const body = objectToUrlEncoded(data);
+        const body = JSON.stringify(data);
 
         const response = await fetch("/api/user/verify-otp", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           method: "POST",
           body,
         });

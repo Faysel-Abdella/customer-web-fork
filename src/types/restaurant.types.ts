@@ -1,4 +1,3 @@
-import { CartItem } from "./cart.types";
 import { ActionResult, PageData } from "./shared.types";
 
 export interface Availability {
@@ -29,6 +28,12 @@ interface RatingInfo {
   averageRating: string;
 }
 
+export interface DeliveryInfo {
+  distance_km: number;
+  distance_formatted: string;
+  delivery_time_minutes: number;
+  delivery_fee: number;
+}
 export interface Restaurant {
   id: number;
   title: string;
@@ -54,6 +59,7 @@ export interface Restaurant {
   estimated_delivery_fees: number;
   estimated_delivery_distance: string;
   estimated_delivery_time: string;
+  delivery_info: DeliveryInfo;
   price_per_person: string;
   is_favourite: number;
   availability: Availability[];
@@ -324,18 +330,6 @@ export interface CategoriesListResponse {
 }
 export interface getCategoriesList extends ActionResult {
   data?: Category[];
-}
-export interface GetCartItemsResult extends ActionResult {
-  data?: CartItem[];
-}
-export interface CartItemResponse {
-  list: CartItem[];
-}
-export interface GetTotalCartPriceResult extends ActionResult {
-  data?: number;
-}
-export interface TotalCartPriceResponse {
-  total_price: number;
 }
 export interface RestaurantResponce {
   list: Restaurant[];

@@ -1,20 +1,30 @@
 "use client";
-import { Clock } from "lucide-react";
+import { CookingPot, Eye } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { getCookTime, getMenuItemPrice } from "@/lib/utils";
+import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
 import MenuItemDetail from "../MenuItemDetail";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 interface MenuItemCardProps {
   menuItem: MenuItem;
+  isOpen: boolean;
+  isInRestaurant: boolean;
 }
+
 const foodPlaceholder = "/assets/images/foodPlaceholder.jpg";
 
-const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
+const MenuItemCard = ({
+  menuItem,
+  isOpen,
+  isInRestaurant = true,
+}: MenuItemCardProps) => {
   const { user } = useAuth();
   const currentPrice = getMenuItemPrice(menuItem);
   const minPercent = 10;
@@ -39,12 +49,21 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             <div className="text-muted-foreground flex items-center gap-1">
               {menuItem.cook_time.trim() && (
                 <div className="flex items-center gap-2">
-                  <Clock size={14} />
-                  <span>{getCookTime(menuItem.cook_time)} min</span>
+                  <CookingPot size={14} />
+                  <span>{menuItem.cook_time} min</span>
                 </div>
               )}
             </div>
-            <MenuItemDetail menuItemId={menuItem.id.toString()} />
+
+            {isInRestaurant ? (
+              isOpen && <MenuItemDetail menuItemId={menuItem.id.toString()} />
+            ) : (
+              <Button size={"icon"} asChild>
+                <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
+                  <Eye />
+                </CustomLink>
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -63,6 +82,11 @@ const MenuItemCard = ({ menuItem }: MenuItemCardProps) => {
             type="menu_item"
             className="bg-card absolute top-2.5 left-2.5 z-10 size-7 rounded-full"
           />
+        )}
+        {!isOpen && (
+          <Badge className="absolute bottom-2.5 left-2.5 z-10 border-red-700 bg-red-500/80">
+            Not available
+          </Badge>
         )}
       </div>
     </div>

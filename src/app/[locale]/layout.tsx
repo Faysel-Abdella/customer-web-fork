@@ -7,7 +7,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { CartProvider } from "@/contexts/CartContext";
 import { routing } from "@/i18n/routing";
 
 import "./globals.css";
@@ -39,17 +38,15 @@ export default async function RootLayout({
       <body className={` ${poppins.className} antialiased`}>
         <NextIntlClientProvider>
           <AuthProvider>
-            <CartProvider>
-              <ThemeProvider
-                attribute={"class"}
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                {children}
-                <Toaster richColors />
-              </ThemeProvider>
-            </CartProvider>
+            <ThemeProvider
+              attribute={"class"}
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster richColors position="top-center" />
+            </ThemeProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

@@ -3,16 +3,20 @@
 import { fetchWithAuth } from "@/lib/fetchWrappers";
 import {
   CartItemResponse,
+  DeliveryFeePayload,
+  DeliveryFeeResponse,
   GetCartItemsResult,
+  GetDeliveryFeeResults,
   GetTotalCartPriceResult,
   TotalCartPriceResponse,
-} from "@/types/restaurant.types";
+} from "@/types/cart.types";
 import { ActionResult } from "@/types/shared.types";
 
 export async function addToCartAction(
-  data: FormData,
+  data: object,
   clearCart: boolean = false,
 ): Promise<ActionResult> {
+  const body = JSON.stringify(data);
   try {
     if (clearCart) {
       await fetchWithAuth("/api/cart/delete-cart");
@@ -20,7 +24,10 @@ export async function addToCartAction(
 
     await fetchWithAuth(`/api/cart/add-to-cart`, {
       method: "POST",
-      body: data,
+      body,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     return { success: true };
@@ -64,8 +71,8 @@ export async function getCartItems(): Promise<GetCartItemsResult> {
     return { success: true, data: responseData.list };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: true, error: "Failed to fetch cart items." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch cart items." };
   }
 }
 
@@ -79,7 +86,30 @@ export async function getTotalCartPrice(): Promise<GetTotalCartPriceResult> {
     return { success: true, data: responseData.total_price };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: true, error: "Failed to fetch total price" };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch total price" };
+  }
+}
+
+export async function getDeliveryFee(
+  data: DeliveryFeePayload,
+): Promise<GetDeliveryFeeResults> {
+  const body = new FormData();
+  body.append("address_id", data.address_id.toString());
+  body.append("restaurant_id", data.restaurant_id.toString());
+
+  try {
+    const responseData: DeliveryFeeResponse =
+      await fetchWithAuth<DeliveryFeeResponse>(`/api/delivery/estimate-fee`, {
+        retry: { retries: 3, delay: 1000 },
+        method: "POST",
+        body,
+      });
+
+    return { success: true, data: responseData.data.fee };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch delivery fee" };
   }
 }

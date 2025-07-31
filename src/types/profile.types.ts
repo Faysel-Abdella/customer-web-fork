@@ -136,11 +136,11 @@ export interface OrderDetail {
   is_self_order: boolean;
   item_detail: ItemDetail[];
   orderState: OrderState[];
-  storeDetail: StoreDetail;
+  storeDetail: Restaurant;
   transactions: Transaction[];
 }
 
-interface ItemDetail {
+export interface ItemDetail {
   id: number;
   order_id: number;
   store_id: number;
@@ -157,59 +157,6 @@ interface ItemDetail {
   created_on: string;
   created_by_id: number;
   addOn: AddOn[];
-}
-
-interface StoreDetail {
-  id: number;
-  title: string;
-  created_by_owner_name: string;
-  created_by_first_name: string;
-  created_by_last_name: string;
-  created_by_email: string;
-  fee: string;
-  location: string;
-  latitude: string;
-  longitude: string;
-  description: string;
-  image_file: string;
-  is_default: number; // 0 or 1, can be boolean
-  state_id: number;
-  type_id: number;
-  created_on: string;
-  contact_no: string;
-  created_by_id: number;
-  created_by_number: string;
-  average_rating: number;
-  estimated_delivery_fees: number;
-  estimated_delivery_distance: string;
-  estimated_delivery_time: string;
-  price_per_person: string;
-  is_favourite: number; // 0 or 1, can be boolean
-  availability: Availability[];
-  files: File[];
-}
-
-interface Availability {
-  id: number;
-  day_id: number;
-  resturant_id: number;
-  start_time: null | string;
-  end_time: null | string;
-  is_default: number; // 0 or 1, can be boolean
-}
-
-interface File {
-  id: number;
-  name: string;
-  size: number;
-  key: string;
-  url: string;
-  model_type: string;
-  model_id: number;
-  project_id: number;
-  type_id: number;
-  created_on: string;
-  created_by_id: number;
 }
 
 type gateway = "cash_on_delivery" | "hesabpay";
@@ -340,14 +287,22 @@ export interface GetOrderDetailResult extends ActionResult {
 export interface GetOrderDetailResponse {
   detail: OrderDetail;
 }
-export interface GetOrderStatusResult extends ActionResult {
-  status?: string;
-}
 
-export interface GetOrderStatusResponse {
+export interface OrderStatus {
   status_history: {
     delivery_status: string;
+    order_id: number;
   };
+
+  restaurant: {
+    name: string;
+    phone_number: string;
+    image: string;
+  };
+}
+
+export interface GetOrderStatusResult extends ActionResult {
+  status?: OrderStatus;
 }
 
 export interface GetTransactionsListResult extends ActionResult {

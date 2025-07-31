@@ -1,41 +1,54 @@
 import { ActionResult } from "next/dist/server/app-render/types";
 
 export interface LoginPayload {
-  "LoginForm[username]": string;
-  "LoginForm[country_code]": string;
-  "LoginForm[password]": string;
-  "LoginForm[role]": number;
-  "LoginForm[device_type]": string;
-  "LoginForm[device_token]": string;
-  "LoginForm[device_udid]": string;
+  LoginForm: {
+    username: string;
+    country_code: string;
+    password: string;
+    role: number;
+    device_type: string;
+    device_token: string;
+    device_udid: string;
+  };
 }
 
 export interface SignupPayload {
-  "User[first_name]": string;
-  "User[last_name]": string;
-  "User[password]": string;
-  "User[country_code]": string;
-  "User[contact_no]": string;
-  "User[role_id]": string;
+  User: {
+    first_name: string;
+    last_name: string;
+    password: string;
+    country_code: string;
+    contact_no: string;
+    role_id: string;
+  };
   confirm_password: string;
 }
+
 export interface UpdateProfilePayload {
-  "User[first_name]"?: string;
-  "User[last_name]"?: string;
-  "User[country_code]"?: string;
-  "User[contact_no]"?: string;
-  "User[date_of_birth]"?: string;
-  "User[gender]"?: string;
+  User: {
+    first_name?: string;
+    last_name?: string;
+    country_code?: string;
+    contact_no?: string;
+    date_of_birth?: string;
+    gender?: string;
+  };
 }
+
 export interface VerifyOtpPayload {
-  "User[otp]": string;
-  "User[contact_no]": string;
-  "User[country_code]": string;
+  User: {
+    otp: string;
+    contact_no: string;
+    country_code: string;
+  };
   device_type: string;
 }
+
 export interface ResendOtpPayload {
-  "User[contact_no]": string;
-  "User[country_code]": string;
+  User: {
+    contact_no: string;
+    country_code: string;
+  };
 }
 
 type numericBool = 0 | 1;

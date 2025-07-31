@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 import { CartItem } from "@/types/cart.types";
-import { AddOn, MenuItem } from "@/types/restaurant.types";
+import { AddOn, Availability, MenuItem } from "@/types/restaurant.types";
 
 import { HttpError } from "./HttpError";
 
@@ -118,10 +118,46 @@ export const getMenuItemPrice = (menuItem: MenuItem): number => {
   return value;
 };
 
-export const getCookTime = (baseCooktime: string) => {
-  const cookTime = baseCooktime.toLowerCase();
-  const startOfM = cookTime.indexOf("m");
-  if (!startOfM) return cookTime;
+export const formatTimeHM = (totalMinutes: number) => {
+  if (
+    totalMinutes < 0 ||
+    totalMinutes === null ||
+    typeof totalMinutes !== "number"
+  ) {
+    return "0m";
+  }
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
-  return cookTime.slice(0, startOfM).trim();
+  return `${hours}h ${minutes}m`;
 };
+
+function extractMinutesFromTime(time: string): number {
+  const hours = +(time[11] + time[12]);
+  const minutes = +(time[14] + time[15]);
+  return hours * 60 + minutes;
+}
+
+/**
+ * Returns true if the restaurant is currently open.
+ */
+export function isRestaurantOpenNow(
+  availability: Availability[],
+  now: Date = new Date(),
+): boolean {
+  const today = now.getDay(); // Sunday = 0
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  for (const slot of availability) {
+    if (slot.day_id !== today) continue;
+
+    const startMinutes = extractMinutesFromTime(slot.start_time);
+    const endMinutes = extractMinutesFromTime(slot.end_time);
+
+    const isOpen =
+      currentMinutes >= startMinutes && currentMinutes <= endMinutes;
+    if (isOpen) return true;
+  }
+
+  return false;
+}

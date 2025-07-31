@@ -1,15 +1,15 @@
 import { getTranslations } from "next-intl/server";
 
 import { getTopRestaurants } from "@/actions/restaurants.actions";
+import CustomLink from "@/components/CustomLink";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
 
 import PopularRestaurantCard from "./PopularRestaurantCard";
 
 const PopularRestaurants = async () => {
   const t = await getTranslations("landing.popular_restaurants");
   const { data: popularRestaurants } = await getTopRestaurants();
-  if (popularRestaurants)
+  if (popularRestaurants && popularRestaurants.length > 0)
     return (
       <section className="relative w-full bg-[url('/assets/images/landing/popular-resturent-bg.jpg')] bg-cover bg-center">
         <div className="parent-container flex w-full justify-center bg-black/60 py-20">
@@ -29,7 +29,7 @@ const PopularRestaurants = async () => {
             </div>
             <div className="flex w-full justify-center">
               <Button className="w-fit">
-                <Link href={"/restaurants"}>{t("view_all")}</Link>
+                <CustomLink href={"/restaurants"}>{t("view_all")}</CustomLink>
               </Button>
             </div>
           </div>

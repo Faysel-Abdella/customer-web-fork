@@ -11,6 +11,8 @@ interface OrderButtonProps {
   isOrdering: boolean;
   emptyCart: boolean;
   selectedOffer: Offer | null;
+  deliveryFee: number | null;
+  isPendingDeliveryFee: boolean;
 }
 const OrderButton = ({
   selectedPaymentMethod,
@@ -18,11 +20,11 @@ const OrderButton = ({
   isOrdering,
   emptyCart,
   selectedOffer,
+  deliveryFee,
+  isPendingDeliveryFee,
 }: OrderButtonProps) => {
   const { isLoadingTotalPrice, totalPrice } = useCart();
-
   const discount: number = selectedOffer ? parseInt(selectedOffer.discount) : 0;
-
   return (
     <div>
       <div className="space-y-2">
@@ -33,7 +35,13 @@ const OrderButton = ({
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Delivery fees</span>
-          <span className="font-semibold text-orange-500">$0</span>
+          {isPendingDeliveryFee ? (
+            <Loader2 size={14} className="animate-spin" />
+          ) : (
+            <span className="font-semibold text-orange-500">
+              {deliveryFee ? `$${deliveryFee}` : "Select an address"}
+            </span>
+          )}
         </div>
         {selectedOffer && (
           <div className="flex justify-between text-sm">
@@ -50,7 +58,8 @@ const OrderButton = ({
             <Loader2 className="size-5 animate-spin" />
           ) : (
             <span className="font-bold text-orange-500">
-              ${totalPrice - discount}
+              $
+              {(deliveryFee ? totalPrice + deliveryFee : totalPrice) - discount}
             </span>
           )}
         </div>

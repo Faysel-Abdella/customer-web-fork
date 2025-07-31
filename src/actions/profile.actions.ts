@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetchWrappers";
 import {
@@ -14,13 +14,13 @@ import {
   GetOrderDetailResponse,
   GetOrderDetailResult,
   GetOrdersListResults,
-  GetOrderStatusResponse,
   GetOrderStatusResult,
   GetTransactionsListResponse,
   GetTransactionsListResult,
   MessagesResponse,
   NotificationListResponse,
   OrdersListResponse,
+  OrderStatus,
   SentMessageRequestType as SendMessageRequestType,
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
@@ -35,7 +35,7 @@ export async function addAddress(data: object): Promise<ActionResult> {
         "Content-Type": "application/json",
       },
     });
-    revalidatePath("/profile/addresses");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {
@@ -50,7 +50,11 @@ export async function getAddressList(): Promise<GetAddressListResult> {
     const responseData: AddressListResponse =
       await fetchWithAuth<AddressListResponse>(
         `/api/address-management/address-list`,
-        { method: "POST", retry: { retries: 3, delay: 1000 } },
+        {
+          method: "POST",
+          retry: { retries: 3, delay: 1000 },
+          next: { revalidate: 200, tags: ["user-address-list"] },
+        },
       );
 
     return { success: true, data: responseData.list };
@@ -64,7 +68,7 @@ export async function getAddressList(): Promise<GetAddressListResult> {
 export async function deleteAddress(id: string): Promise<ActionResult> {
   try {
     await fetchWithAuth(`/api/address-management/delete-address?id=${id}`);
-    revalidatePath("/profile/addresses");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {
@@ -79,13 +83,13 @@ export async function setDefaultAddress(id: string): Promise<ActionResult> {
     await fetchWithAuth(
       `/api/address-management/default-address?address_id=${id}`,
     );
-    revalidatePath("/profile/addresses");
+    revalidateTag("user-address-list");
 
     return { success: true };
   } catch (error) {
     console.error(error);
     if (typeof error === "string") return { success: false, error: error };
-    else return { success: false, error: "Failed to delete address" };
+    else return { success: false, error: "Failed to set default address" };
   }
 }
 
@@ -112,7 +116,11 @@ export async function getFavoritesList(): Promise<GetFavoritesListResult> {
       await fetchWithAuth<FavoritesListResponse>(
         `/api/state/favourite-list?id=1`,
         {
+          cache: "no-store",
           retry: { retries: 3, delay: 1000 },
+          next: {
+            tags: [`user-favourite`],
+          },
         },
       );
 
@@ -197,8 +205,8 @@ export async function changePassword(data: {
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (typeof error === "string") return { success: true, error };
-    else return { success: false, error: "Failed to fetch messages." };
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to change password." };
   }
 }
 
@@ -270,17 +278,16 @@ export async function getOrderStatus(
   order_id: string,
 ): Promise<GetOrderStatusResult> {
   try {
-    const responseData: GetOrderStatusResponse =
-      await fetchWithAuth<GetOrderStatusResponse>(
-        `/api/user/order-track?order_id=${order_id}`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
-      );
+    const responseData: OrderStatus = await fetchWithAuth<OrderStatus>(
+      `/api/user/order-track?order_id=${order_id}`,
+      {
+        retry: { retries: 3, delay: 1000 },
+      },
+    );
 
     return {
       success: true,
-      status: responseData.status_history.delivery_status,
+      status: responseData,
     };
   } catch (error) {
     console.error(error);
@@ -313,5 +320,26 @@ export async function addRating(data: RatingPayload): Promise<ActionResult> {
     console.error(error);
     if (typeof error === "string") return { success: true, error };
     else return { success: false, error: "Rating added." };
+  }
+}
+
+export async function cancelOrder(
+  orderId: number,
+  reason: string,
+): Promise<ActionResult> {
+  const body = JSON.stringify({ reason });
+  try {
+    await fetchWithAuth(`/api/cart-item/cancel-order?id=${orderId}`, {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to cancel order." };
   }
 }

@@ -1,9 +1,10 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { toast } from "sonner";
 
 import { placeOrder } from "@/actions/actions";
+import { getDeliveryFee } from "@/actions/cart.actions";
 import Instructions from "@/components/CheckoutSheet/_components/Instructions";
 import Offers from "@/components/CheckoutSheet/_components/Offers";
 import OrderButton from "@/components/CheckoutSheet/_components/OrderButton";
@@ -42,12 +43,15 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | null
   >(null);
 
   const router = useRouter();
   const [isOrdering, startOrdering] = useTransition();
+  const [deliveryFee, setDeliveryFee] = useState<number | null>(null);
+  const [isPendingDeliveryFee, startDeliveryFee] = useTransition();
 
   const discount: number = selectedOffer ? parseInt(selectedOffer.discount) : 0;
 
@@ -105,6 +109,22 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
     });
   };
 
+  useEffect(() => {
+    startDeliveryFee(async () => {
+      if (!selectedAddress?.id || !currentRestaurantId) return;
+      const { data, error } = await getDeliveryFee({
+        address_id: selectedAddress?.id,
+        restaurant_id: currentRestaurantId,
+      });
+
+      if (data) {
+        setDeliveryFee(data);
+      }
+      if (error) {
+        toast.error("Error", { description: error });
+      }
+    });
+  }, [selectedAddress, currentRestaurantId]);
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -135,6 +155,8 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
         </div>
         <SheetFooter>
           <OrderButton
+            deliveryFee={deliveryFee}
+            isPendingDeliveryFee={isPendingDeliveryFee}
             selectedOffer={selectedOffer}
             selectedPaymentMethod={selectedPaymentMethod}
             handlePayment={handleOrder}
