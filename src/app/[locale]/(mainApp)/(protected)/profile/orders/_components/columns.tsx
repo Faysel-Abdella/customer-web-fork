@@ -8,6 +8,8 @@ import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
 import { Order } from "@/types/profile.types";
 
+import OrderStatusBadge from "./OrderStatusBadge";
+
 export const orderColumns: ColumnDef<Order>[] = [
   {
     accessorKey: "store_title",
@@ -33,16 +35,8 @@ export const orderColumns: ColumnDef<Order>[] = [
     accessorKey: "orderState",
     header: "Status",
     cell: ({ row }) => {
-      const orderState = row.original.orderState;
-      return (
-        <Badge variant="outline">
-          {orderState[0]
-            ? orderState[0].state_id == 1
-              ? "Active"
-              : "InActive"
-            : "Unavailable"}
-        </Badge>
-      );
+      const orderState = row.original.state_id;
+      return <OrderStatusBadge stateId={orderState} />;
     },
   },
   {

@@ -86,7 +86,6 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
   );
 
   const fetchOrderStatus = useCallback(async () => {
-    console.log("fetching order status");
     const { status, success } = await getOrderStatus(order_id);
     if (!success) {
       toast.error("Failed to get order status");
