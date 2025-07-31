@@ -19,9 +19,9 @@ const OrderDetailPage = async ({ params }: OrderDetailPageProps) => {
           <ArrowLeft />
         </BackButton>
         <div>
-          <h2 className="text-3xl font-bold">Order History</h2>
+          <h2 className="text-3xl font-bold">Order Detail</h2>
           <p className="text-muted-foreground mt-2">
-            View and track your recent orders.
+            Track your order detail.{" "}
           </p>
         </div>
       </div>

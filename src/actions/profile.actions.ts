@@ -295,3 +295,24 @@ export async function getOrderStatus(
     else return { success: false, error: "Failed to fetch order status" };
   }
 }
+
+export async function cancelOrder(
+  orderId: number,
+  reason: string,
+): Promise<ActionResult> {
+  const body = JSON.stringify({ reason });
+  try {
+    await fetchWithAuth(`/api/cart-item/cancel-order?id=${orderId}`, {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to cancel order." };
+  }
+}

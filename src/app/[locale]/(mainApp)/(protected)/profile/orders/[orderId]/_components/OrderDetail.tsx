@@ -4,8 +4,8 @@ import { getOrderDetail } from "@/actions/profile.actions";
 import CustomImage from "@/components/CustomImage";
 import CustomLink from "@/components/CustomLink";
 import FadingDivider from "@/components/FadingDivider";
-import { Button } from "@/components/ui/button";
 
+import OrderCancelModal from "./OrderCancelModal";
 import OrderedItems from "./OrderedItems";
 import PaymentStatusBadge from "./PaymentStatusBadge";
 import { TrackOrder } from "./TrackOrder";
@@ -111,9 +111,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
       </div>
 
       <div className="pb-6">
-        <Button className="bg-primary w-full py-3 text-lg font-semibold text-white hover:bg-orange-600">
-          Cancel Order
-        </Button>
+        <OrderCancelModal orderId={order.id} />
       </div>
     </div>
   );
