@@ -135,6 +135,22 @@ const SignupFormFields = ({ form, setCountry }: SignupFormFieldsProps) => {
           </FormItem>
         )}
       />
+      <FormField
+        control={form.control}
+        name="referral_code"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {"Referral code"}{" "}
+              <span className="text-muted-foreground text-sm">(optional)</span>
+            </FormLabel>
+            <FormControl>
+              <Input id="referral_code" {...field} className="font-semibold" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 };

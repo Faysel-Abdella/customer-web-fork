@@ -21,6 +21,7 @@ export interface SignupPayload {
     contact_no: string;
     role_id: string;
   };
+  referral_code?: string;
   confirm_password: string;
 }
 

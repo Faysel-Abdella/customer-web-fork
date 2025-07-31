@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import parsePhoneNumberFromString, {
@@ -36,6 +37,9 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
 
   const { error, isLoading, signup, Otp } = useSignup();
 
+  const searchParams = useSearchParams();
+  const currentReferralCode = searchParams.get("referral_code") || undefined;
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -44,6 +48,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
       contact_no: "",
       password: "",
       confirm_password: "",
+      referral_code: currentReferralCode,
     },
   });
 
@@ -54,7 +59,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
 
-    signup({
+    const data = {
       User: {
         contact_no: contact_no,
         country_code: "+" + country_code,
@@ -63,8 +68,11 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
         password: values.password,
         role_id: "2",
       },
+      referral_code: values.referral_code,
       confirm_password: values.confirm_password,
-    });
+    };
+
+    signup(data);
   }
 
   useEffect(() => {

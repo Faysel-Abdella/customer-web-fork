@@ -37,6 +37,7 @@ export const signupSchema = z
         "Password must contain at least one special character (e.g., !@#$%^&*)",
       ),
     confirm_password: z.string(),
+    referral_code: z.string().max(12, "Referral code too long").optional(),
   })
   .refine((data) => data.password === data.confirm_password, {
     path: ["confirm_password"],
