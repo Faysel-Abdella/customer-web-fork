@@ -22,7 +22,7 @@ export async function Categories() {
         className="space-y-5 overflow-visible"
       >
         <div className="flex w-full items-center justify-between">
-          <h2 className="text-2xl font-bold md:mb-2 md:text-4xl">Categories</h2>
+          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">Categories</h2>
 
           <div className="flex items-center gap-4">
             <CustomLink
@@ -31,9 +31,9 @@ export async function Categories() {
             >
               See All
             </CustomLink>
-            <div className="flex gap-2">
-              <CarouselPrevious className="bg-secondary text-foreground static -top-0 size-8 -translate-y-0 border-0 opacity-100" />
-              <CarouselNext className="bg-secondary text-foreground static size-8 -translate-y-0 border-0 opacity-100" />
+            <div className="flex gap-4">
+              <CarouselPrevious className="bg-primary dark:bg-primary static -top-0 size-14 -translate-y-0 border-0 text-white opacity-100" />
+              <CarouselNext className="bg-primary dark:bg-primary static size-14 -translate-y-0 border-0 text-white opacity-100" />
             </div>
           </div>
         </div>
