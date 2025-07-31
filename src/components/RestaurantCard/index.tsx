@@ -52,7 +52,7 @@ const RestaurantCard = ({
             />
           )}
           {!isOpen && (
-            <Badge className="absolute top-4 right-4 z-10 border-red-700 bg-red-500/80">
+            <Badge className="absolute top-4 right-4 z-10 border-red-700 bg-red-500/90 text-white">
               Closed
             </Badge>
           )}
