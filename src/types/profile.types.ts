@@ -312,11 +312,17 @@ export interface GetTransactionsListResult extends ActionResult {
 export interface GetTransactionsListResponse {
   transactions: Transaction[];
 }
+
+type modelType = "Detail" | "Driver";
 export interface RatingPayload {
   Rating: {
     model_id: string;
-    orderId: string;
     rating: string;
-    comment: string;
+    comment?: string;
+    model_type: modelType;
+    type_id: string;
+    driver_comment?: string;
+    rider_rating?: string;
+    driver_id?: string;
   };
 }
