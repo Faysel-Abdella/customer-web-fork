@@ -313,21 +313,7 @@ export interface GetTransactionsListResponse {
   transactions: Transaction[];
 }
 
-type modelType = "Detail" | "Driver";
-export interface RatingPayload {
-  Rating: {
-    model_id: string;
-    rating: string;
-    comment?: string;
-    model_type: modelType;
-    type_id: string;
-    driver_comment?: string;
-    rider_rating?: string;
-    driver_id?: string;
-  };
-}
-
-export interface PointsHistoryEntry {
+interface PointsHistoryEntry {
   id: number;
   points: number;
   reason: string;
@@ -357,32 +343,10 @@ export interface ReferralStats {
   total_discount_earned: number;
 }
 
-export interface UsageHistoryEntry {
-  id: number | null;
-  order_number: string | null;
-  discount_amount: number | null;
-  used_at: string | null;
-  status: string | null;
-}
-
-export interface ReferredUserEntry {
-  id: number | null;
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  joined_at: string | null;
-  status: string | null;
-  total_spent: number | null;
-}
 export interface UserPointsProfileResponse {
   user_info: UserInfo;
   points_summary: PointsSummary;
   points_history: PointsHistoryEntry[];
-  usage_history: UsageHistoryEntry[];
-  referred_users: ReferredUserEntry[];
-  referral_stats: ReferralStats;
-}
 
-export interface GetReferralInfoResults extends ActionResult {
-  data?: UserPointsProfileResponse;
+  referral_stats: ReferralStats;
 }
