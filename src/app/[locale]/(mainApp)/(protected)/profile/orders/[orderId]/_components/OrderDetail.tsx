@@ -157,7 +157,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
         </div>
       </div>
 
-      <div className="pb-6">{renderOrderDetailFooter(10)}</div>
+      <div className="pb-6">{renderOrderDetailFooter(order.state_id)}</div>
     </div>
   );
 };

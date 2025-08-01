@@ -29,7 +29,6 @@ export const orderColumns: ColumnDef<Order>[] = [
       );
     },
   },
-
   {
     accessorKey: "created_on",
     header: "Placed on",

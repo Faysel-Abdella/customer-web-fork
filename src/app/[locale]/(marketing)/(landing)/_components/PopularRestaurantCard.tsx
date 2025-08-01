@@ -1,7 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
 
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { MapPin } from "lucide-react";
 
 import CustomImage from "@/components/CustomImage";
@@ -14,7 +13,6 @@ interface PopularRestaurantCardProps {
 }
 const restaurantPlaceHolder = "/assets/images/restaurant_placeholder.webp";
 const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
-  const [isMounted, setIsMounted] = useState(false);
   const formatPrice = (price: string) => {
     const numPrice = Number.parseFloat(price);
     return isNaN(numPrice) ? price : `${numPrice.toFixed(0)}`;
@@ -22,10 +20,6 @@ const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
 
   const descriptionHtml = restaurant.description;
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) return;
   const sanitizedDescription = DOMPurify.sanitize(descriptionHtml, {
     USE_PROFILES: { html: true },
   });

@@ -21,6 +21,7 @@ import {
   NotificationListResponse,
   OrdersListResponse,
   OrderStatus,
+  RatingPayload,
   SentMessageRequestType as SendMessageRequestType,
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
@@ -294,15 +295,6 @@ export async function getOrderStatus(
     if (typeof error === "string") return { success: false, error };
     else return { success: false, error: "Failed to fetch order status" };
   }
-}
-
-interface RatingPayload {
-  Rating: {
-    model_id: string;
-    orderId: string;
-    rating: string;
-    comment: string;
-  };
 }
 
 export async function addRating(data: RatingPayload): Promise<ActionResult> {

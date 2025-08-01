@@ -1,68 +1,79 @@
-import { Star } from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
+import { Eye, Star } from "lucide-react";
 
+import CustomImage from "@/components/CustomImage";
 import CustomLink from "@/components/CustomLink";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
-
-import PopularItemImage from "./PopularItemImage";
 
 interface PopularItemCardProps {
   menuItem: MenuItem;
 }
+const placeholderImage = "/assets/images/foodPlaceholder.jpg";
 const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
-  const formatPrice = (price: string) => {
-    const numPrice = Number.parseFloat(price);
-    return isNaN(numPrice) ? price : `$${numPrice.toFixed(2)}`;
+  const description = menuItem.description;
+  const sanitizedDesc = DOMPurify.sanitize(description, {
+    USE_PROFILES: { html: true },
+  });
+  const formatPrice = (price: number) => {
+    return isNaN(price) ? price : `$${price.toFixed(2)}`;
   };
   return (
-    <Card className="group h-64 overflow-hidden border p-0 shadow-none transition-all duration-300 hover:shadow-lg">
-      <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
-        <CardContent className="p-0">
-          <div className="relative">
-            <div className="relative h-40 w-full overflow-hidden rounded-t-lg">
-              <PopularItemImage
-                imgTitle={menuItem.title}
-                imgUrl={menuItem.image_file}
-              />
+    <Card className="group overflow-hidden border p-0 shadow-none transition-all duration-300 hover:shadow-lg">
+      <CardContent className="p-0">
+        <div className="relative">
+          <div className="relative h-40 w-full overflow-hidden rounded-t-lg">
+            <CustomImage
+              title={menuItem.title}
+              imgUrl={menuItem.image_file}
+              placeholderImage={placeholderImage}
+            />
 
-              <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/30 px-2 py-1">
-                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs font-medium">
-                  {menuItem.avg_rating.toFixed(1)}
+            <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/30 px-2 py-1">
+              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+              <span className="text-xs font-medium">
+                {menuItem.avg_rating.toFixed(1)}
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-3 px-4 py-2 text-center">
+            <div className="mb-1 flex w-full items-center justify-between">
+              <h3 className="group-hover:text-primary truncate text-start text-lg font-semibold text-nowrap transition-colors">
+                {menuItem.title}
+              </h3>
+
+              {menuItem.cuisine_type_name && (
+                <Badge variant="outline" className="h-min text-xs">
+                  {menuItem.cuisine_type_name}
+                </Badge>
+              )}
+            </div>
+            <p
+              className="text-muted-foreground line-clamp-2 w-full text-start text-sm"
+              dangerouslySetInnerHTML={{ __html: sanitizedDesc }}
+            />
+
+            <div className="w-ful flex items-center justify-between">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-primary text-xl font-semibold">
+                  {formatPrice(getMenuItemPrice(menuItem))}
                 </span>
               </div>
-            </div>
-
-            <div className="space-y-1 px-4 py-1 text-center">
-              <div className="flex w-full items-center justify-between">
-                <h3 className="group-hover:text-primary truncate text-start text-lg font-semibold text-nowrap transition-colors">
-                  {menuItem.title}
-                </h3>
-
-                <Badge variant="outline" className="h-min text-xs">
-                  Healthy
-                </Badge>
-              </div>
-
-              <div className="text-center">
-                <p className="text-muted-foreground text-sm">Start from</p>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-primary text-2xl font-bold">
-                    {formatPrice((35).toString())}
-                  </span>
-                  {menuItem.customized_price &&
-                    menuItem.customized_price !== menuItem.price && (
-                      <span className="text-muted-foreground text-sm line-through">
-                        {formatPrice(menuItem.price)}
-                      </span>
-                    )}
-                </div>
+              <div>
+                <Button asChild>
+                  <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
+                    <Eye />
+                  </CustomLink>
+                </Button>
               </div>
             </div>
           </div>
-        </CardContent>
-      </CustomLink>
+        </div>
+      </CardContent>
     </Card>
   );
 };

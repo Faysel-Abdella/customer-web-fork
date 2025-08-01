@@ -14,7 +14,7 @@ const OrderFilter = () => {
   const handleFilterChange = (value: string) => {
     if (!value) return;
 
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
 
     if (value === "5") {
       params.set("state_id", "5");

@@ -16,7 +16,7 @@ const RestaurantHeader = ({ restaurant, isOpen }: RestaurantHeaderProps) => {
             {restaurant.title}
           </p>
           {!isOpen && (
-            <Badge className="h-fit rounded-full border-red-500 bg-red-500/20">
+            <Badge className="h-fit rounded-full border-red-700 bg-red-500/90 text-white">
               Closed
             </Badge>
           )}

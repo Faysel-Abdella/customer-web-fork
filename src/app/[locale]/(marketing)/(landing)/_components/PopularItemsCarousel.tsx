@@ -39,7 +39,7 @@ const PopularItemsCarousel = async () => {
           {dishes.map((item) => (
             <CarouselItem
               key={item.title}
-              className="md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+              className="md:basis-1/3 lg:basis-1/4 xl:basis-1/4"
             >
               <PopularItemCard menuItem={item} />
             </CarouselItem>

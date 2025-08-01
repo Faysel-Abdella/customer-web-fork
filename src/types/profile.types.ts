@@ -312,3 +312,11 @@ export interface GetTransactionsListResult extends ActionResult {
 export interface GetTransactionsListResponse {
   transactions: Transaction[];
 }
+export interface RatingPayload {
+  Rating: {
+    model_id: string;
+    orderId: string;
+    rating: string;
+    comment: string;
+  };
+}

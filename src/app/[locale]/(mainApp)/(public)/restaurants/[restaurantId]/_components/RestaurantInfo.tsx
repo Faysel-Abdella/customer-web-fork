@@ -1,5 +1,4 @@
-"use client";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import { MapPin, Phone } from "lucide-react";
 
 import { Restaurant } from "@/types/restaurant.types";
