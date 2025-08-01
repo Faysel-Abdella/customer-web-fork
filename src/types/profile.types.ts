@@ -312,11 +312,41 @@ export interface GetTransactionsListResult extends ActionResult {
 export interface GetTransactionsListResponse {
   transactions: Transaction[];
 }
-export interface RatingPayload {
-  Rating: {
-    model_id: string;
-    orderId: string;
-    rating: string;
-    comment: string;
-  };
+
+interface PointsHistoryEntry {
+  id: number;
+  points: number;
+  reason: string;
+  created_at: string; // ISO 8601 date-time string
+  type: "used" | "earned";
+}
+
+export interface UserInfo {
+  id: number;
+  name: string;
+  referral_code: string;
+  referred_by: string | null;
+}
+
+export interface PointsSummary {
+  total_earned: number;
+  total_used: number;
+  current_available: number;
+  min_points_to_redeem: number;
+  points_per_percent_discount: number;
+  max_percent_discount_per_order: string;
+}
+
+export interface ReferralStats {
+  total_referred_users: number;
+  total_orders_with_referral_discount: number;
+  total_discount_earned: number;
+}
+
+export interface UserPointsProfileResponse {
+  user_info: UserInfo;
+  points_summary: PointsSummary;
+  points_history: PointsHistoryEntry[];
+
+  referral_stats: ReferralStats;
 }
