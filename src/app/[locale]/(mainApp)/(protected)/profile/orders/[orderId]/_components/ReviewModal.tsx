@@ -50,7 +50,8 @@ const ReviewModal = ({ order, className }: ReviewModalProps) => {
                 rating: restaurantRating.toString(),
                 comment: restaurantComment,
                 model_id: order.store_id.toString(),
-                orderId: order.id.toString(),
+                type_id: order.id.toString(),
+                model_type: "Detail",
               },
             }),
           );
@@ -63,7 +64,11 @@ const ReviewModal = ({ order, className }: ReviewModalProps) => {
                 rating: riderRating.toString(),
                 comment: riderComment,
                 model_id: order.driver_id.toString(),
-                orderId: order.id.toString(),
+                type_id: order.id.toString(),
+                model_type: "Driver",
+                driver_comment: riderComment,
+                driver_id: order.driver_id.toString(),
+                rider_rating: riderRating.toString(),
               },
             }),
           );
