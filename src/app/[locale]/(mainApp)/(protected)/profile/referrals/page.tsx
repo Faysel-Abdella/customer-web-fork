@@ -1,42 +1,120 @@
 "use client";
 
-import { useState } from "react";
+import { UserPointsProfileResponse } from "@/types/profile.types";
 
-import { Check, Copy } from "lucide-react";
-import { toast } from "sonner";
+import { HistoryTabs } from "./_components/HistoryTabs";
+import { PointsOverview } from "./_components/PointsOverview";
+import { RedemptionRules } from "./_components/RedemptionRules";
+import { ReferralSharing } from "./_components/ReferralSharing";
+import { ReferralStatsCard } from "./_components/ReferralStatsCard";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+export const mockData: UserPointsProfileResponse = {
+  user_info: {
+    id: 1,
+    name: "John Doe",
+    referral_code: "REF2024XYZ123",
+    referred_by: null,
+  },
+  points_summary: {
+    total_earned: 2500,
+    total_used: 800,
+    current_available: 1700,
+    min_points_to_redeem: 100,
+    points_per_percent_discount: 50,
+    max_percent_discount_per_order: "20.00",
+  },
+  points_history: [
+    {
+      id: 1,
+      points: 200,
+      reason: "Friend signed up using your referral code",
+      created_at: "2024-01-15T10:30:00Z",
+      type: "earned",
+    },
+    {
+      id: 2,
+      points: -150,
+      reason: "Redeemed 3% discount on order #12345",
+      created_at: "2024-01-10T14:20:00Z",
+      type: "used",
+    },
+    {
+      id: 3,
+      points: 300,
+      reason: "Welcome bonus for joining referral program",
+      created_at: "2024-01-05T09:15:00Z",
+      type: "earned",
+    },
+    {
+      id: 4,
+      points: -100,
+      reason: "Redeemed 2% discount on order #12340",
+      created_at: "2024-01-02T16:45:00Z",
+      type: "used",
+    },
+  ],
+  usage_history: [
+    {
+      id: 1,
+      order_id: "ORD-12345",
+      points_used: 150,
+      discount_percent: 3,
+      discount_amount: 12.5,
+      created_at: "2024-01-10T14:20:00Z",
+    },
+    {
+      id: 2,
+      order_id: "ORD-12340",
+      points_used: 100,
+      discount_percent: 2,
+      discount_amount: 8.75,
+      created_at: "2024-01-02T16:45:00Z",
+    },
+  ],
+  referred_users: [
+    {
+      id: 1,
+      name: "Alice Johnson",
+      email: "alice@example.com",
+      joined_at: "2024-01-15T10:30:00Z",
+      points_earned: 200,
+      status: "active",
+    },
+    {
+      id: 2,
+      name: "Bob Smith",
+      email: "bob@example.com",
+      joined_at: "2024-01-08T09:15:00Z",
+      points_earned: 200,
+      status: "active",
+    },
+    {
+      id: 3,
+      name: "Carol Davis",
+      email: "carol@example.com",
+      joined_at: "2023-12-20T11:45:00Z",
+      points_earned: 200,
+      status: "inactive",
+    },
+  ],
+  referral_stats: {
+    total_referred_users: 12,
+    total_orders_with_referral_discount: 8,
+    total_discount_earned: 2400,
+  },
+};
 
 const RefarralsPage = () => {
-  const [codeCopied, setCodeCopied] = useState(false);
-  const [linkCopied, setLinkCopied] = useState(false);
-  const referralCode = "REF2024XYZ123";
-  const referralLink = `https://time-delivery.com/signup?ref=${referralCode}`;
-
-  const copyToClipboard = async (text: string, type: "code" | "link") => {
-    try {
-      await navigator.clipboard.writeText(text);
-      if (type == "code") {
-        setCodeCopied(true);
-      } else {
-        setLinkCopied(true);
-      }
-      toast("Copied!", {
-        description: `Referral ${type} copied to clipboard`,
-      });
-      setTimeout(() => setCodeCopied(false), 2000);
-    } catch (err) {
-      console.log(err);
-      toast("Failed to copy");
-    }
-  };
+  const maxDiscount = Number.parseFloat(
+    mockData.points_summary.max_percent_discount_per_order,
+  );
+  const currentDiscountPotential = Math.min(
+    Math.floor(
+      mockData.points_summary.current_available /
+        mockData.points_summary.points_per_percent_discount,
+    ),
+    maxDiscount,
+  );
 
   return (
     <div className="w-full space-y-6 px-1 py-5 md:px-10">
@@ -48,59 +126,27 @@ const RefarralsPage = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="shadow-none">
-          <CardHeader>
-            <CardTitle>Referral Code</CardTitle>
-            <CardDescription className="text-muted-foreground">
-              Share this code with your friends
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-secondary flex items-center gap-3 rounded-lg border p-4">
-              <code className="flex-1 font-mono text-lg tracking-wider">
-                {referralCode}
-              </code>
-              <Button
-                onClick={() => copyToClipboard(referralCode, "code")}
-                className="bg-orange-500 hover:bg-orange-600"
-                size="sm"
-              >
-                {codeCopied ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border shadow-none">
-          <CardHeader>
-            <CardTitle>Referral Link</CardTitle>
-            <CardDescription className="text-muted-foreground">
-              Or share this direct link
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-secondary flex items-center gap-3 rounded-lg border p-4">
-              <code className="flex-1 font-mono text-sm break-all">
-                {referralLink}
-              </code>
-              <Button
-                onClick={() => copyToClipboard(referralLink, "link")}
-                className="bg-orange-500 hover:bg-orange-600"
-                size="sm"
-              >
-                {linkCopied ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="">
+        <PointsOverview
+          currentDiscountPotential={mockData.points_summary.current_available}
+          pointsSummary={mockData.points_summary}
+          referralStats={mockData.referral_stats}
+        />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="space-y-6 lg:col-span-2">
+            <ReferralSharing referralCode={mockData.user_info.referral_code} />
+            <HistoryTabs pointsHistory={mockData.points_history} />
+          </div>
+          <div className="space-y-6">
+            <RedemptionRules
+              pointsSummary={mockData.points_summary}
+              currentDiscountPotential={currentDiscountPotential}
+              maxDiscount={maxDiscount}
+            />
+
+            <ReferralStatsCard stats={mockData.referral_stats} />
+          </div>
+        </div>
       </div>
     </div>
   );

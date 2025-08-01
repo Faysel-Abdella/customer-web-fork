@@ -327,7 +327,7 @@ export interface RatingPayload {
   };
 }
 
-interface PointsHistoryEntry {
+export interface PointsHistoryEntry {
   id: number;
   points: number;
   reason: string;
@@ -361,6 +361,7 @@ export interface UserPointsProfileResponse {
   user_info: UserInfo;
   points_summary: PointsSummary;
   points_history: PointsHistoryEntry[];
-
+  usage_history: unknown[];
+  referred_users: unknown[];
   referral_stats: ReferralStats;
 }
