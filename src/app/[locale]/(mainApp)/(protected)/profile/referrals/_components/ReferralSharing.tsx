@@ -165,5 +165,9 @@ export function ReferralSharing({ referralCode }: ReferralSharingProps) {
       </CardContent>
     </Card>
   );
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
 }

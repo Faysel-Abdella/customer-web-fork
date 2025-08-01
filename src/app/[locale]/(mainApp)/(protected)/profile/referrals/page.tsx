@@ -122,7 +122,11 @@ const RefarralsPage = () => {
     maxDiscount,
   );
 
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
   return (
     <div className="w-full space-y-6 px-1 py-5 md:px-10">
       <div>
@@ -160,7 +164,11 @@ const RefarralsPage = () => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
     </div>
   );
 };

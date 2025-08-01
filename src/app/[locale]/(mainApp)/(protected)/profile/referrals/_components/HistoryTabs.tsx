@@ -48,7 +48,11 @@ export interface ReferredUser {
   joined_at: string;
   points_earned: number;
   status: "active" | "inactive";
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
 }
 
 export function HistoryTabs({
@@ -68,7 +72,11 @@ export function HistoryTabs({
     });
   };
 
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
   return (
     <Card className="border shadow-none">
       <CardHeader>
@@ -203,7 +211,11 @@ export function HistoryTabs({
                   </div>
                 ))}
             </div>
+<<<<<<< HEAD
 >>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
+=======
+>>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
+>>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
           </TabsContent>
         </Tabs>
       </CardContent>
