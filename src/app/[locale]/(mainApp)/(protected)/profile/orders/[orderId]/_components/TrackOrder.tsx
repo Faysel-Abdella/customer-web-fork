@@ -98,7 +98,6 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
       setFetchFailed(true);
     }
     if (status) {
-      console.log(status);
       setOrderStatus(status);
       checkCurrentStage(status.status_history.delivery_status);
     }

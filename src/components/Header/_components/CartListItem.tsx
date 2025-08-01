@@ -69,8 +69,6 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
     });
   };
 
-  console.log(cartItem);
-
   return (
     <div key={cartItem.id} className="flex w-full flex-col items-center gap-4">
       <div className="flex w-full items-center justify-between gap-4">

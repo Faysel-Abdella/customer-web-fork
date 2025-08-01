@@ -60,9 +60,11 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
     return cartItems.map((item: CartItem) => ({
       item_price: item.selected_rest_price.price,
       price_id: item.price_id,
-      product_id: item.id,
+      product_id: item.product_id,
       quantity: item.quantity,
       add_on: item.additional_items,
+      type_id: item.type_id,
+      store_type: item.store_type,
     }));
   };
 
@@ -91,7 +93,6 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
         },
       };
 
-      console.log(rawData);
       const results = await placeOrder(JSON.stringify(rawData));
 
       if (results.error) {
