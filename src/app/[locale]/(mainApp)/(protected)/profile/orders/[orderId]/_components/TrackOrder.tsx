@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { getOrderStatus } from "@/actions/profile.actions";
@@ -21,6 +21,8 @@ import {
 import { cn } from "@/lib/utils";
 import { OrderStatus } from "@/types/profile.types";
 import { Restaurant } from "@/types/restaurant.types";
+
+import OrderStatusSkeleton from "./OrderStatusSkeleton";
 
 const orderStates: {
   stage: number;
@@ -73,9 +75,11 @@ interface TrackOrderProps {
   restaurant: Restaurant;
 }
 export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
+  const [isLoading, setisLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [currentStage, setCurrentStage] = useState<number>(1);
   const [orderStatus, setOrderStatus] = useState<OrderStatus | null>(null);
+  const [fetchFailed, setFetchFailed] = useState(false);
 
   const checkCurrentStage = useCallback(
     (statusId: string) => {
@@ -86,18 +90,24 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
   );
 
   const fetchOrderStatus = useCallback(async () => {
+    setisLoading(true);
+    setFetchFailed(false);
     const { status, success } = await getOrderStatus(order_id);
     if (!success) {
       toast.error("Failed to get order status");
-      setIsOpen(false);
+      setFetchFailed(true);
     }
     if (status) {
       console.log(status);
       setOrderStatus(status);
       checkCurrentStage(status.status_history.delivery_status);
     }
+    setisLoading(false);
   }, [order_id, checkCurrentStage]);
 
+  const handleRefresh = () => {
+    fetchOrderStatus();
+  };
   useEffect(() => {
     if (!isOpen) return;
     fetchOrderStatus();
@@ -158,71 +168,90 @@ export function TrackOrder({ order_id, restaurant }: TrackOrderProps) {
         </DialogHeader>
         <DialogTitle />
         <DialogDescription />
-
-        <div
-          className="relative flex w-full flex-col justify-between"
-          style={{ height: "22rem" }}
-        >
-          <div className="absolute top-0 left-1/2 h-full w-1 -translate-x-1/2 bg-gray-200">
-            <div
-              className={cn(
-                "bg-primary h-1/2 w-full transition-all",
-                getCurrentBarHeight(),
-              )}
-            />
-          </div>
-
-          {orderStates.map((state) => (
-            <div
-              key={state.stage}
-              className={cn(
-                "z-10 flex items-center justify-center",
-                state.stage == 1 && "items-start",
-                state.stage == 5 && "items-end",
-              )}
-            >
-              {state.stage % 2 === 1 ? (
-                <div className={cn("-ml-px w-1/2 pr-6 text-right")}>
-                  <p className="text-muted-foreground text-sm">Status</p>
-                  <p
-                    className={cn(
-                      "font-medium",
-                      currentStage < state.stage && "text-muted-foreground",
-                      currentStage == state.stage && "text-primary",
-                      currentStage > state.stage && "text-foreground",
-                    )}
-                  >
-                    {state.label}
-                  </p>
-                </div>
-              ) : (
-                <div className="w-1/2" />
-              )}
-
-              <div className="border-secondary bg-primary dark:border-card flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2">
-                <div className="bg-secondary dark:bg-card size-2 rounded-full" />
-              </div>
-
-              {state.stage % 2 === 0 ? (
-                <div className="-mr-px w-1/2 pl-5 text-left">
-                  <p className="text-muted-foreground text-sm">Status</p>
-                  <p
-                    className={cn(
-                      "font-medium",
-                      currentStage < state.stage && "text-muted-foreground",
-                      currentStage == state.stage && "text-primary",
-                      currentStage > state.stage && "text-foreground",
-                    )}
-                  >
-                    {state.label}
-                  </p>
-                </div>
-              ) : (
-                <div className="w-1/2" />
-              )}
+        {isLoading ? (
+          <OrderStatusSkeleton />
+        ) : fetchFailed ? (
+          <div className="py-4">
+            <div className="flex h-80 w-full flex-col items-center justify-center gap-4">
+              <p>Failed to get order status</p>
+              <Button
+                variant={"outline"}
+                size={"lg"}
+                onClick={handleRefresh}
+                aria-label="referesh button"
+                className="py-0 text-base"
+              >
+                <RefreshCcw />
+                Try again
+              </Button>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div
+            className="relative flex w-full flex-col justify-between"
+            style={{ height: "22rem" }}
+          >
+            <div className="absolute top-0 left-1/2 h-full w-1 -translate-x-1/2 rounded-full bg-gray-200">
+              <div
+                className={cn(
+                  "bg-primary h-0 w-full rounded-full transition-all",
+                  getCurrentBarHeight(),
+                )}
+              />
+            </div>
+
+            {orderStates.map((state) => (
+              <div
+                key={state.stage}
+                className={cn(
+                  "z-10 flex items-center justify-center",
+                  state.stage == 1 && "items-start",
+                  state.stage == 5 && "items-end",
+                )}
+              >
+                {state.stage % 2 === 1 ? (
+                  <div className={cn("-ml-px w-1/2 pr-6 text-right")}>
+                    <p className="text-muted-foreground text-sm">Status</p>
+                    <p
+                      className={cn(
+                        "font-medium",
+                        currentStage < state.stage && "text-muted-foreground",
+                        currentStage == state.stage && "text-primary",
+                        currentStage > state.stage && "text-foreground",
+                      )}
+                    >
+                      {state.label}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="w-1/2" />
+                )}
+
+                <div className="border-secondary bg-primary dark:border-card flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2">
+                  <div className="bg-secondary dark:bg-card size-2 rounded-full" />
+                </div>
+
+                {state.stage % 2 === 0 ? (
+                  <div className="-mr-px w-1/2 pl-5 text-left">
+                    <p className="text-muted-foreground text-sm">Status</p>
+                    <p
+                      className={cn(
+                        "font-medium",
+                        currentStage < state.stage && "text-muted-foreground",
+                        currentStage == state.stage && "text-primary",
+                        currentStage > state.stage && "text-foreground",
+                      )}
+                    >
+                      {state.label}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="w-1/2" />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
         <DialogFooter className="mt-5 flex w-full justify-center">
           <DialogClose className="w-full">
             <Button className="w-full">Close</Button>

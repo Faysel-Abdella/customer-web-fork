@@ -1,7 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 
-import { Home, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import { toast } from "sonner";
 
 import { addRating } from "@/actions/profile.actions";
@@ -22,115 +22,93 @@ interface ReviewModalProps {
   order: OrderDetail;
   className?: string;
 }
+
 const ReviewModal = ({ order, className }: ReviewModalProps) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const [restaurantRating, setRestaurantRating] = useState(0);
   const [restaurantComment, setRestaurantComment] = useState("");
 
   const [riderRating, setRiderRating] = useState(0);
   const [riderComment, setRiderComment] = useState("");
-  const [isRating, startRating] = useTransition();
 
   const handleSaveReview = () => {
-    startRating(async () => {
-      let ratingRestaurant = null;
-      let ratingDriver = null;
-      if (restaurantComment.trim() != "" || restaurantRating != 0) {
-        const { success } = await addRating({
-          Rating: {
-            rating: restaurantRating.toString(),
-            comment: restaurantComment,
-            model_id: order.store_id.toString(),
-            orderId: order.id.toString(),
-          },
-        });
-        ratingRestaurant = success;
-      }
-      if (riderComment.trim() != "" || riderRating != 0) {
-        if (order.driver_id) {
-          const { success } = await addRating({
-            Rating: {
-              rating: riderRating.toString(),
-              comment: riderComment,
-              model_id: order.driver_id.toString(),
-              orderId: order.id.toString(),
-            },
-          });
+    if (restaurantRating === 0 && riderRating === 0) {
+      toast.error("Please provide a rating for the restaurant or the rider.");
+      return;
+    }
 
-          ratingDriver = success;
+    startTransition(async () => {
+      try {
+        const ratingPromises = [];
+
+        if (restaurantRating > 0) {
+          ratingPromises.push(
+            addRating({
+              Rating: {
+                rating: restaurantRating.toString(),
+                comment: restaurantComment,
+                model_id: order.store_id.toString(),
+                orderId: order.id.toString(),
+              },
+            }),
+          );
         }
-      }
 
-      if (ratingDriver && ratingRestaurant) {
-        setRestaurantComment("");
-        setRestaurantRating(0);
-        setRiderComment("");
-        setRiderRating(0);
-        toast.success("Rated both restaurant and driver");
-      }
-      if (ratingDriver && !ratingRestaurant) {
-        setRiderComment("");
-        setRiderRating(0);
-        toast.message("Rated both driver but failed at rating restaurant");
-      }
-      if (!ratingDriver && ratingRestaurant) {
-        setRestaurantComment("");
-        setRestaurantRating(0);
+        if (riderRating > 0 && order.driver_id) {
+          ratingPromises.push(
+            addRating({
+              Rating: {
+                rating: riderRating.toString(),
+                comment: riderComment,
+                model_id: order.driver_id.toString(),
+                orderId: order.id.toString(),
+              },
+            }),
+          );
+        }
 
-        toast.message("Rated restaurant but failed at rating driver");
-      }
-      if (!ratingDriver && !ratingRestaurant) {
-        setRestaurantComment("");
-        setRestaurantRating(0);
-        setRiderComment("");
-        setRiderRating(0);
-        toast.error("Failed at rating both restaurant and driver");
+        await Promise.all(ratingPromises);
+
+        toast.success("Thank you for your review!");
+        setIsReviewModalOpen(false); // Close modal on success
+      } catch (error) {
+        console.error("Failed to submit review:", error);
+        toast.error("Sorry, we couldn't submit your review. Please try again.");
       }
     });
-    console.log({
-      order,
-      restaurantRating,
-      riderRating,
-      restaurantComment,
-      riderComment,
-    });
-    setIsReviewModalOpen(false);
   };
 
   return (
     <Dialog open={isReviewModalOpen} onOpenChange={setIsReviewModalOpen}>
       <DialogTrigger asChild>
-        <Button className={className} disabled={isRating}>
-          {isRating ? <Loader className="animate-spin" /> : "Leave a review"}
+        <Button className={className} disabled={isPending}>
+          {isPending ? <Loader className="animate-spin" /> : "Leave a Review"}
         </Button>
       </DialogTrigger>
       <DialogContent className="mx-auto max-h-screen max-w-md overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center gap-3 space-y-0">
-          <DialogTitle className="text-lg font-medium text-orange-500">
-            Rate Us
+        <DialogHeader>
+          <DialogTitle className="text-primary text-lg font-medium">
+            How was your experience?
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-6 pt-4">
           <div className="bg-secondary flex items-center gap-3 rounded-lg p-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500/20">
-              <Home className="h-4 w-4 text-orange-500" />
-            </div>
-            <div>
-              <p className="font-medium">Delivered at Home</p>
-              <p className="text-sm">Your order was delivered at 10:04 AM</p>
-            </div>
+            <p className="font-medium">
+              Order delivered to {order.customer_address_deatil.title}
+            </p>
           </div>
 
-          <div>
-            <h3 className="mb-3 font-medium">Rate Restaurant</h3>
+          <div className="space-y-3">
+            <h3 className="font-medium">Rate the Restaurant</h3>
             <StarRating
               rating={restaurantRating}
               onRatingChange={setRestaurantRating}
             />
             <Textarea
-              placeholder="Your word makes us a better place"
+              placeholder="How was the food and service?"
               value={restaurantComment}
               onChange={(e) => setRestaurantComment(e.target.value)}
               className="bg-secondary mt-3 resize-none border"
@@ -138,24 +116,29 @@ const ReviewModal = ({ order, className }: ReviewModalProps) => {
             />
           </div>
 
-          <div>
-            <h3 className="mb-3 font-medium">Rate Your Rider</h3>
-            <StarRating rating={riderRating} onRatingChange={setRiderRating} />
-          </div>
+          {order.driver_id && (
+            <div className="space-y-3">
+              <h3 className="font-medium">Rate Your Rider</h3>
+              <StarRating
+                rating={riderRating}
+                onRatingChange={setRiderRating}
+              />
+              <Textarea
+                placeholder="How was the delivery experience?"
+                value={riderComment}
+                onChange={(e) => setRiderComment(e.target.value)}
+                className="bg-secondary mt-3 resize-none border"
+                rows={3}
+              />
+            </div>
+          )}
 
-          <div>
-            <h3 className="mb-3 font-medium">Write a comment</h3>
-            <Textarea
-              placeholder="Your word makes us a better place"
-              value={riderComment}
-              onChange={(e) => setRiderComment(e.target.value)}
-              className="bg-secondary resize-none border"
-              rows={5}
-            />
-          </div>
-
-          <Button onClick={handleSaveReview} className="w-full">
-            {isRating ? <Loader className="animate-spin" /> : "Save"}
+          <Button
+            onClick={handleSaveReview}
+            disabled={isPending}
+            className="w-full"
+          >
+            {isPending ? <Loader className="animate-spin" /> : "Submit Review"}
           </Button>
         </div>
       </DialogContent>
