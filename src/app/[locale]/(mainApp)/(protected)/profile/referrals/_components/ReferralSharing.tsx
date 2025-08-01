@@ -41,6 +41,7 @@ export function ReferralSharing({ referralCode }: ReferralSharingProps) {
       toast("Failed to copy");
     }
   };
+<<<<<<< HEAD
 
   if (referralCode)
     return (
@@ -103,4 +104,66 @@ export function ReferralSharing({ referralCode }: ReferralSharingProps) {
         </CardContent>
       </Card>
     );
+=======
+  return (
+    <Card className="border shadow-none">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Share2 className="h-5 w-5" />
+          Share & Earn
+        </CardTitle>
+        <CardDescription>
+          Share your referral code or link with friends to earn points
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <label className="text-secondary-foreground mb-2 block text-sm font-medium">
+            Referral Code
+          </label>
+          <div className="flex items-center gap-2">
+            <div className="bg-secondary flex-1 rounded-lg border px-4 py-3 font-mono text-lg">
+              {referralCode}
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => copyToClipboard(referralCode, "code")}
+              className="bg-secondary"
+            >
+              {codeCopied ? (
+                <Check className="size-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-secondary-foreground mb-2 block text-sm font-medium">
+            Referral Link
+          </label>
+          <div className="flex items-center gap-2">
+            <div className="bg-secondary flex-1 rounded-lg border px-4 py-3 text-sm break-all">
+              {referralLink}
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => copyToClipboard(referralLink, "link")}
+              className="bg-secondary"
+            >
+              {linkCopied ? (
+                <Check className="size-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+>>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
 }
