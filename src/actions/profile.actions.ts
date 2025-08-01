@@ -21,6 +21,7 @@ import {
   NotificationListResponse,
   OrdersListResponse,
   OrderStatus,
+  RatingPayload,
   SentMessageRequestType as SendMessageRequestType,
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
@@ -293,6 +294,24 @@ export async function getOrderStatus(
     console.error(error);
     if (typeof error === "string") return { success: false, error };
     else return { success: false, error: "Failed to fetch order status" };
+  }
+}
+
+export async function addRating(data: RatingPayload): Promise<ActionResult> {
+  const body = JSON.stringify(data);
+  try {
+    await fetchWithAuth("/api/rating/add-rating", {
+      body,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: true, error };
+    else return { success: false, error: "Rating added." };
   }
 }
 

@@ -1,4 +1,4 @@
-import { ChevronRight, Layers2 } from "lucide-react";
+import { ChevronRight, Layers2, ServerCrash, Stars } from "lucide-react";
 
 import { getOrderDetail } from "@/actions/profile.actions";
 import CustomImage from "@/components/CustomImage";
@@ -7,7 +7,9 @@ import FadingDivider from "@/components/FadingDivider";
 
 import OrderCancelModal from "./OrderCancelModal";
 import OrderedItems from "./OrderedItems";
+import OrderStatusBadge from "./OrderStatusBadge";
 import PaymentStatusBadge from "./PaymentStatusBadge";
+import ReviewModal from "./ReviewModal";
 import { TrackOrder } from "./TrackOrder";
 
 interface OrderDetailProps {
@@ -19,17 +21,60 @@ const restaurant_placeholder = "/assets/images/restaurant_placeholder.webp";
 const OrderDetail = async ({ orderId }: OrderDetailProps) => {
   const { data: order } = await getOrderDetail(orderId);
 
-  if (!order) return;
+  if (!order)
+    return (
+      <div className="border-destructive/20 bg-card flex max-w-2xl flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-8 text-center">
+        <div className="bg-destructive/10 flex size-16 items-center justify-center rounded-full">
+          <ServerCrash className="text-destructive size-8" />
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-foreground text-xl font-semibold">
+            Could Not Load Order Details
+          </h2>
+          <p className="text-muted-foreground">
+            It looks like there was a problem fetching the order information.
+          </p>
+        </div>
+      </div>
+    );
+
+  const renderOrderDetailFooter = (stateId: number) => {
+    if (stateId < 5) {
+      return <OrderCancelModal orderId={order.id} />;
+    }
+    if (stateId > 5) return;
+
+    if (stateId == 5 && order.is_rating)
+      return (
+        <div className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl border">
+          <Stars className="fill-yellow-500 stroke-1 text-yellow-500" />
+          Thank you for your feedback.
+        </div>
+      );
+
+    if (stateId == 5)
+      return (
+        <ReviewModal
+          order={order}
+          className="bg-primary w-full py-3 text-lg font-semibold text-white hover:bg-orange-600"
+        />
+      );
+  };
 
   return (
     <div className="flex max-w-2xl flex-col gap-7">
       <FadingDivider />
 
       <div className="bg-card flex items-center rounded-2xl border px-4 py-3">
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex h-full min-w-fit flex-col justify-between">
           <p className="text-muted-foreground text-sm">Order No.</p>
           <p className="text-lg font-medium">#{order.order_no}</p>
         </div>
+        {order.state_id > 5 && (
+          <div className="flex w-full justify-end">
+            <OrderStatusBadge stateId={order.state_id} />
+          </div>
+        )}
       </div>
       <div>
         <p className="mb-4 font-medium">Delivery Address</p>
@@ -69,10 +114,12 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
           </div>
         </CustomLink>
         <FadingDivider />
-        <TrackOrder
-          order_id={order.id.toString()}
-          restaurant={order.storeDetail}
-        />
+        {order.state_id <= 5 && (
+          <TrackOrder
+            order_id={order.id.toString()}
+            restaurant={order.storeDetail}
+          />
+        )}
       </div>
       <OrderedItems items={order.item_detail} />
 
@@ -110,9 +157,7 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
         </div>
       </div>
 
-      <div className="pb-6">
-        <OrderCancelModal orderId={order.id} />
-      </div>
+      <div className="pb-6">{renderOrderDetailFooter(order.state_id)}</div>
     </div>
   );
 };
