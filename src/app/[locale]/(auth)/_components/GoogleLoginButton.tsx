@@ -10,9 +10,13 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useSocialSSO } from "@/hooks/authHooks/useSocialSSO";
 
-export function GoogleLoginButton() {
+interface GoogleLoginButtonProps {
+  referral_code?: string;
+}
+export function GoogleLoginButton({ referral_code }: GoogleLoginButtonProps) {
   const { error, isLoading, isSuccess, login, user } = useSocialSSO({
     providerName: "google",
+    referral_code,
   });
 
   useEffect(() => {

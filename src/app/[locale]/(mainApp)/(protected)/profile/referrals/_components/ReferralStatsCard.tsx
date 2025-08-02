@@ -1,13 +1,14 @@
-import { Award, Gift, TrendingUp, Users } from "lucide-react";
+import { Award, Gift, TrendingUp, User, Users } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReferralStats } from "@/types/profile.types";
 
 interface ReferralStatsProps {
   stats: ReferralStats;
+  referred_by?: string;
 }
 
-export function ReferralStatsCard({ stats }: ReferralStatsProps) {
+export function ReferralStatsCard({ stats, referred_by }: ReferralStatsProps) {
   return (
     <Card className="border shadow-none">
       <CardHeader>
@@ -50,6 +51,17 @@ export function ReferralStatsCard({ stats }: ReferralStatsProps) {
             ${(stats.total_discount_earned / 100).toFixed(2)}
           </span>
         </div>
+        {referred_by && (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <User className="h-4 w-4 text-orange-400" />
+              <span className="text-secondary-foreground text-sm">
+                Referred by
+              </span>
+            </div>
+            <span className="font-medium">{referred_by}</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
