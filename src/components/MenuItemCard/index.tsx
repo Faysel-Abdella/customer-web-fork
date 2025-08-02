@@ -27,6 +27,7 @@ const MenuItemCard = ({
   isInRestaurant = true,
 }: MenuItemCardProps) => {
   const { user } = useAuth();
+
   const currentPrice = getMenuItemPrice(menuItem);
   const minPercent = 10;
   const maxPercent = 30;
@@ -34,6 +35,7 @@ const MenuItemCard = ({
     Math.floor(Math.random() * (maxPercent - minPercent + 1)) + minPercent;
   const canceledPrice = currentPrice * (1 + randomPercent / 100);
 
+  const isAvailable = menuItem.is_available == 1 && isOpen;
   return (
     <div className="relative flex h-56 w-full items-end">
       <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-3 pt-4 max-sm:p-5 sm:min-w-72">
@@ -59,7 +61,9 @@ const MenuItemCard = ({
             </div>
 
             {isInRestaurant ? (
-              isOpen && <MenuItemDetail menuItemId={menuItem.id.toString()} />
+              isAvailable && (
+                <MenuItemDetail menuItemId={menuItem.id.toString()} />
+              )
             ) : (
               <Button size={"icon"} asChild>
                 <CustomLink href={`/restaurants/${menuItem.restaurant_id}`}>
@@ -86,7 +90,7 @@ const MenuItemCard = ({
             className="bg-card absolute top-2.5 left-2.5 z-10 size-7 rounded-full"
           />
         )}
-        {!isOpen && (
+        {!isAvailable && (
           <Badge className="absolute bottom-2.5 left-2.5 z-10 border-red-700 bg-red-500/80">
             Not available
           </Badge>
