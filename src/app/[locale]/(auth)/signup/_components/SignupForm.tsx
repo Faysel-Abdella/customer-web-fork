@@ -140,7 +140,9 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
               </span>
             </div>
             <div className="">
-              <GoogleLoginButton />
+              <GoogleLoginButton
+                referral_code={form.getValues("referral_code")}
+              />
             </div>
           </div>
         </form>

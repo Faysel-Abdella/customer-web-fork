@@ -16,8 +16,10 @@ import { LoginResponse, UserDetail } from "@/types/auth.types";
 
 export function useSocialSSO({
   providerName,
+  referral_code,
 }: {
   providerName: "google" | "facebook";
+  referral_code?: string;
 }) {
   const [error, setError] = useState<null | string>();
   const [isSuccess, setIsSuccess] = useState(false);
@@ -52,6 +54,7 @@ export function useSocialSSO({
             email: user.email || "",
             full_name: user.displayName || "",
             image_url: user.photoURL || "",
+            referral_code,
             device_type: "WEB",
             device_token: uuid,
             device_udid: uuid,
