@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Award,
   Bell,
   CreditCard,
   Gift,
@@ -64,12 +63,7 @@ const navigationItems = [
     id: "referrals",
     href: "/profile/referrals",
   },
-  {
-    title: "Loyalty Points",
-    icon: Award,
-    id: "loyalty",
-    href: "/profile/loyalty",
-  },
+
   {
     title: "Security",
     icon: Shield,

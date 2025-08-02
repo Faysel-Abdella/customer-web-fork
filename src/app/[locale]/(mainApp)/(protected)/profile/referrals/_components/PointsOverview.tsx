@@ -13,7 +13,7 @@ export function PointsOverview({
   currentDiscountPotential,
 }: PointsOverviewProps) {
   return (
-    <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
       <Card className="border shadow-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-secondary-foreground text-sm font-medium">
