@@ -96,8 +96,8 @@ const LocationProvider = ({ children }: PropsWithChildren) => {
       (guestLocation && addressList && !defaultAddress)
     ) {
       const newLoc = {
-        latitude: guestLocation.latitude,
-        longitude: guestLocation.longitude,
+        latitude: guestLocation?.latitude,
+        longitude: guestLocation?.longitude,
       };
       updateParams({ latitude: newLoc.latitude, longitude: newLoc.longitude });
       setLocation((prev) =>

@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 
-import {
-  Autocomplete,
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+// import {
+//   Autocomplete,
+//   GoogleMap,
+//   Marker,
+//   useJsApiLoader,
+// } from "@react-google-maps/api";
+
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import useGeolocation from "@/hooks/useGeolocation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,16 +31,65 @@ interface LocationPickerProps {
   }) => void;
   noAddressError: boolean;
 }
+
 export function LocationPicker({
   onLocationSelect,
   className,
   noAddressError,
 }: LocationPickerProps) {
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-    libraries,
-  });
+  const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAP_API!;
+
+  const { getGuestUserLocation, guestLocation } = useGeolocation();
+  const [currentLocation, setCurrentLocation] =
+    useState<google.maps.LatLngLiteral>({
+      lat: guestLocation?.latitude as number,
+      lng: guestLocation?.longitude as number,
+    });
+
+  // Sometimes the guestLocation is not available immediately, so we need check in 2sec and if re-assign the currentLocation
+  // 25.348766
+  // 55.405403
+  useEffect(() => {
+    // Only do this is the currentLocation is empty
+    if (!currentLocation.lat && !currentLocation.lng) {
+      const timer = setTimeout(() => {
+        setCurrentLocation({
+          lat: guestLocation?.latitude as number,
+          lng: guestLocation?.longitude as number,
+        });
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [guestLocation]);
+
+  // const { isLoaded, loadError } = useJsApiLoader({
+  //   id: "google-map-script",
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
+  //   libraries,
+  // });
+
+  useEffect(() => {
+    console.log("THI IS MY LOCATION", guestLocation);
+
+    // Only get location once when component mounts
+    if (!guestLocation) {
+      getGuestUserLocation();
+    }
+
+    if (guestLocation) {
+      const newLocation = {
+        lat: guestLocation.latitude,
+        lng: guestLocation.longitude,
+      };
+      // Only update if the location actually changed
+      if (
+        currentLocation.lat !== newLocation.lat ||
+        currentLocation.lng !== newLocation.lng
+      ) {
+        setCurrentLocation(newLocation);
+      }
+    }
+  }, [guestLocation]);
 
   const [markerPosition, setMarkerPosition] = useState(defaultCenter);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -83,29 +135,29 @@ export function LocationPicker({
     },
     [],
   );
-  if (loadError) {
-    return <div className="h-[400px]">Error loading maps.</div>;
-  }
+  // if (loadError) {
+  //   return <div className="h-[400px]">Error loading maps.</div>;
+  // }
 
-  if (!isLoaded) {
-    return (
-      <div
-        className={cn(
-          "bg-muted-foreground flex h-96 w-full animate-pulse items-center justify-center rounded-lg",
-          className,
-        )}
-      >
-        Loading Map...
-      </div>
-    );
-  }
+  // if (!isLoaded) {
+  //   return (
+  //     <div
+  //       className={cn(
+  //         "bg-muted-foreground flex h-96 w-full animate-pulse items-center justify-center rounded-lg",
+  //         className,
+  //       )}
+  //     >
+  //       Loading Map...
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={cn("w-full", className)}>
       <p className="text-muted-foreground mb-2 text-sm">
         Drag the pin or search for a location to select an address.
       </p>
-      <Autocomplete
+      {/* <Autocomplete
         onLoad={(ref) => (autocompleteRef.current = ref)}
         onPlaceChanged={handlePlaceSelect}
       >
@@ -114,10 +166,33 @@ export function LocationPicker({
           placeholder="Search for a location or address"
           className="mb-4"
         />
-      </Autocomplete>
+      </Autocomplete> */}
 
       <div className="h-96 w-full overflow-hidden rounded-lg">
-        <GoogleMap
+        {/* Only show tha map when the currentLocation is available */}
+        {/* check the currentLocation object is not empty */}
+        {currentLocation.lat && currentLocation.lng && (
+          <APIProvider apiKey={API_KEY} libraries={["places", "marker"]}>
+            <Map
+              style={{ width: "full", height: "100vh" }}
+              defaultCenter={{
+                lat: currentLocation.lat,
+                lng: currentLocation.lng,
+              }}
+              defaultZoom={15}
+              gestureHandling={"greedy"}
+              disableDefaultUI={false}
+            />
+            <Marker
+              position={{
+                lat: currentLocation.lat,
+                lng: currentLocation.lng,
+              }}
+              clickable
+            />
+          </APIProvider>
+        )}
+        {/* <GoogleMap
           mapContainerClassName="w-full h-full"
           center={markerPosition}
           zoom={15}
@@ -134,7 +209,7 @@ export function LocationPicker({
             draggable={true}
             onDragEnd={handleMarkerDragEnd}
           />
-        </GoogleMap>
+        </GoogleMap> */}
       </div>
 
       <div
