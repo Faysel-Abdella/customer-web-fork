@@ -64,10 +64,7 @@ const ReferralDetails = async () => {
             maxDiscount={maxDiscount}
           />
 
-          <ReferralStatsCard
-            stats={data.referral_stats}
-            referred_by={data.user_info.referred_by!}
-          />
+          <ReferralStatsCard stats={data.referral_stats} />
         </div>
       </div>
     </div>

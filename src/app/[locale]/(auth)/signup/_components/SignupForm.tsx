@@ -58,6 +58,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
     );
     const contact_no = phoneNumberObj?.nationalNumber || "";
     const country_code = country ? getCountryCallingCode(country) : "";
+    const uuid = crypto.randomUUID();
 
     const data = {
       User: {
@@ -67,6 +68,15 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
         last_name: values.last_name,
         password: values.password,
         role_id: "2",
+        device_type: "WEB",
+        device_token: uuid,
+        device_udid: uuid,
+      },
+      SIgnupForm: {
+        device_name: "Chrome on macOS",
+        device_type: "WEB",
+        device_token: uuid,
+        device_udid: uuid,
       },
       referral_code: values.referral_code,
       confirm_password: values.confirm_password,
