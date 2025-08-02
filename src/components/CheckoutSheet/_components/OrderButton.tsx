@@ -1,6 +1,7 @@
 import { Loader2 } from "lucide-react";
 
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { Offer } from "@/types/restaurant.types";
@@ -31,7 +32,9 @@ const OrderButton = ({
         <FadingDivider />
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground text-sm">Item total</span>
-          <span className="font-semibold text-orange-500">${totalPrice}</span>
+          <span className="font-semibold text-orange-500">
+            <FormattedAfghani amount={totalPrice} />
+          </span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Delivery fees</span>
@@ -39,7 +42,11 @@ const OrderButton = ({
             <Loader2 size={14} className="animate-spin" />
           ) : (
             <span className="font-semibold text-orange-500">
-              {deliveryFee ? `$${deliveryFee}` : "Select an address"}
+              {deliveryFee ? (
+                <FormattedAfghani amount={deliveryFee} />
+              ) : (
+                "Select an address"
+              )}
             </span>
           )}
         </div>
@@ -47,7 +54,7 @@ const OrderButton = ({
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Discount</span>
             <span className="font-semibold text-orange-500">
-              - ${selectedOffer?.discount}
+              - <FormattedAfghani amount={selectedOffer?.discount} />
             </span>
           </div>
         )}
@@ -58,8 +65,12 @@ const OrderButton = ({
             <Loader2 className="size-5 animate-spin" />
           ) : (
             <span className="font-bold text-orange-500">
-              $
-              {(deliveryFee ? totalPrice + deliveryFee : totalPrice) - discount}
+              <FormattedAfghani
+                amount={
+                  (deliveryFee ? totalPrice + deliveryFee : totalPrice) -
+                  discount
+                }
+              />
             </span>
           )}
         </div>

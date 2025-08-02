@@ -1,5 +1,6 @@
 import { Award, Gift, TrendingUp, Users } from "lucide-react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReferralStats } from "@/types/profile.types";
 
@@ -47,7 +48,7 @@ export function ReferralStatsCard({ stats }: ReferralStatsProps) {
             </span>
           </div>
           <span className="font-medium">
-            ${(stats.total_discount_earned / 100).toFixed(2)}
+            <FormattedAfghani amount={stats.total_discount_earned / 100} />
           </span>
         </div>
       </CardContent>

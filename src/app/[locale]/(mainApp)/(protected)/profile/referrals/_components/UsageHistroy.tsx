@@ -1,4 +1,5 @@
 "use client";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
@@ -62,21 +63,25 @@ function UsageHistroy({ usageHistory }: UsageHistroyProps) {
                 <span className="capitalize">{usage.status || "Unknown"}</span>
               </p>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-green-600">
-                ${usage.discount_amount} saved
-              </p>
-              <Badge
-                variant={usage.status === "completed" ? "default" : "secondary"}
-                className={
-                  usage.status === "completed"
-                    ? "bg-green-500/10 text-green-800 hover:bg-green-500/10"
-                    : "bg-yellow-500/10 text-yellow-800 hover:bg-yellow-500/10"
-                }
-              >
-                {usage.status || "pending"}
-              </Badge>
-            </div>
+            {usage.discount_amount && (
+              <div className="text-right">
+                <p className="text-sm font-medium text-green-600">
+                  <FormattedAfghani amount={usage.discount_amount} />
+                </p>
+                <Badge
+                  variant={
+                    usage.status === "completed" ? "default" : "secondary"
+                  }
+                  className={
+                    usage.status === "completed"
+                      ? "bg-green-500/10 text-green-800 hover:bg-green-500/10"
+                      : "bg-yellow-500/10 text-yellow-800 hover:bg-yellow-500/10"
+                  }
+                >
+                  {usage.status || "pending"}
+                </Badge>
+              </div>
+            )}
           </div>
         ))}{" "}
       {totalPages > 1 && (

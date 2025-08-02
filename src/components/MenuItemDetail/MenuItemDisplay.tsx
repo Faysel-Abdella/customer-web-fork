@@ -7,6 +7,7 @@ import { MenuItem } from "@/types/restaurant.types";
 
 import CustomLink from "../CustomLink";
 import FadingDivider from "../FadingDivider";
+import FormattedAfghani from "../FormattedAfghani";
 import QuantityControl from "../QuantityControl";
 
 import AddOnList from "./AddOnList";
@@ -51,7 +52,7 @@ const MenuItemDisplay = ({
             </CustomLink>
           </div>
           <p className="text-xl font-semibold">
-            ${getMenuItemPrice(menuItem).toFixed(2)}
+            <FormattedAfghani amount={getMenuItemPrice(menuItem)} />
           </p>
         </div>
 

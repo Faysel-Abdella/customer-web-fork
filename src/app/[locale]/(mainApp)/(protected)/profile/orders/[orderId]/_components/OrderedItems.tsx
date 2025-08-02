@@ -2,6 +2,7 @@ import { Dot } from "lucide-react";
 
 import CustomImage from "@/components/CustomImage";
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { ItemDetail } from "@/types/profile.types";
 
 interface OrderedItemsProps {
@@ -30,7 +31,7 @@ const OrderedItems = ({ items }: OrderedItemsProps) => {
               </div>
             </div>
             <div className="text-muted-foreground font-medium">
-              ${item.item_price}
+              <FormattedAfghani amount={parseFloat(item.item_price)} />
             </div>
           </div>
           {item.addOn.length > 0 && (
@@ -53,7 +54,7 @@ const OrderedItems = ({ items }: OrderedItemsProps) => {
                           {addOn.title}
                         </p>
                         <p className="text-muted-foreground text-sm">
-                          ${addOn.price}
+                          <FormattedAfghani amount={parseFloat(addOn.price)} />
                         </p>
                       </div>
                     </div>

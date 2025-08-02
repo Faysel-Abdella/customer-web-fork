@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import {
   Pagination,
@@ -70,7 +71,7 @@ const ReferredUsers = ({ referredUsers }: ReferredUsers) => {
               </Badge>
               {user.total_spent && (
                 <p className="mt-1 text-xs text-blue-600">
-                  Total spent: ${user.total_spent.toFixed(2)}
+                  Total spent: <FormattedAfghani amount={user.total_spent} />
                 </p>
               )}
             </div>

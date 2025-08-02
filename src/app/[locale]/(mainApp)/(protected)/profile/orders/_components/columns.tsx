@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { MoveUpRight } from "lucide-react";
 
 import CustomLink from "@/components/CustomLink";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import { Order } from "@/types/profile.types";
 
@@ -44,7 +45,9 @@ export const orderColumns: ColumnDef<Order>[] = [
     accessorKey: "total_price",
     header: "Amount",
     cell: ({ row }) => (
-      <span className="font-medium">${row.original.total_price}</span>
+      <span className="font-medium">
+        <FormattedAfghani amount={row.original.total_price} />
+      </span>
     ),
   },
   {

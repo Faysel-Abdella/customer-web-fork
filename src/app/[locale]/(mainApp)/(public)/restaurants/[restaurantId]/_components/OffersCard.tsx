@@ -1,5 +1,6 @@
 import { Clock, Store, Tag } from "lucide-react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Card, CardContent } from "@/components/ui/card";
 import { Offer } from "@/types/restaurant.types";
 
@@ -89,7 +90,7 @@ const OffersCard = ({ offer }: OffersCardProps) => {
                 <div className="text-muted-foreground text-xs">
                   <span>Min. Order: </span>
                   <span className="font-medium text-orange-600 dark:text-orange-400">
-                    ${offer.minimum_amount}
+                    <FormattedAfghani amount={offer.minimum_amount} />
                   </span>
                 </div>
               </div>

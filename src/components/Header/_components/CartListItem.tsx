@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { deleteCartItem, updateCartItem } from "@/actions/cart.actions";
 import CustomImage from "@/components/CustomImage";
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import QuantityControl from "@/components/QuantityControl";
 import {
   AlertDialog,
@@ -85,7 +86,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               {cartItem.restaurant_items[0].title}
             </p>
             <p className="text-muted-foreground font-medium">
-              ${cartItem.selected_rest_price.price}
+              <FormattedAfghani amount={cartItem.selected_rest_price.price} />
             </p>
           </div>
         </div>
@@ -143,7 +144,7 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
                 <div className="flex flex-col gap-3">
                   <p className="line-he leading-1 font-medium">{addOn.title}</p>
                   <p className="text-muted-foreground text-sm">
-                    ${addOn.price}
+                    <FormattedAfghani amount={addOn.price} />
                   </p>
                 </div>
               </div>

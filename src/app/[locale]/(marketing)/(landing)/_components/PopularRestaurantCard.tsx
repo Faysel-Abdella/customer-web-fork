@@ -5,6 +5,7 @@ import { MapPin } from "lucide-react";
 
 import CustomImage from "@/components/CustomImage";
 import CustomLink from "@/components/CustomLink";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Card, CardContent } from "@/components/ui/card";
 import { Restaurant } from "@/types/restaurant.types";
 
@@ -13,11 +14,6 @@ interface PopularRestaurantCardProps {
 }
 const restaurantPlaceHolder = "/assets/images/restaurant_placeholder.webp";
 const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
-  const formatPrice = (price: string) => {
-    const numPrice = Number.parseFloat(price);
-    return isNaN(numPrice) ? price : `${numPrice.toFixed(0)}`;
-  };
-
   const descriptionHtml = restaurant.description;
 
   const sanitizedDescription = DOMPurify.sanitize(descriptionHtml, {
@@ -54,7 +50,7 @@ const PopularRestaurantCard = ({ restaurant }: PopularRestaurantCardProps) => {
                 restaurant.price_per_person != "0" && (
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold text-orange-600">
-                      ${formatPrice(restaurant.price_per_person)}
+                      <FormattedAfghani amount={restaurant.price_per_person} />
                     </span>
                     <span className="text-sm text-gray-400">per person</span>
                   </div>

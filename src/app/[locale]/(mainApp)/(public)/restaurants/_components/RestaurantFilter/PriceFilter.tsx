@@ -1,5 +1,6 @@
 import React from "react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { DualRangeSlider } from "@/components/ui/dual-range-slider";
 import { Label } from "@/components/ui/label";
 
@@ -15,7 +16,13 @@ const PriceFilter = ({ filters, setFilters }: PriceFilterProps) => {
       <Label className="mb-10">Price per person</Label>
       <div className="flex w-full items-center gap-4">
         <DualRangeSlider
-          label={(value) => <span>{value}$</span>}
+          label={(value) => (
+            <span>
+              {value && (
+                <FormattedAfghani amount={value} minimumFractionDigits={0} />
+              )}
+            </span>
+          )}
           value={[parseInt(filters.min), parseInt(filters.max)]}
           onValueChange={(e: number[]) =>
             setFilters((prev) => ({

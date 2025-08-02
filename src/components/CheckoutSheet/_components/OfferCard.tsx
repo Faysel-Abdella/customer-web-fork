@@ -1,5 +1,6 @@
 import { Tag } from "lucide-react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/contexts/CartContext";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ const OfferCard = ({
             <div className="flex w-16 flex-col items-center justify-center border-r-2 border-dashed border-orange-300 bg-gradient-to-b from-orange-500 to-amber-500 text-white dark:border-orange-700 dark:from-orange-600 dark:to-amber-600">
               <div className="py-4 text-center">
                 <div className="text-lg leading-none font-bold">
-                  - {offer.discount}$
+                  - <FormattedAfghani amount={offer.discount} />
                 </div>
               </div>
             </div>
@@ -78,7 +79,7 @@ const OfferCard = ({
                   <div className="text-xs text-gray-500 dark:text-gray-400">
                     <span>Min. Order: </span>
                     <span className="font-medium text-orange-600 dark:text-orange-400">
-                      ${offer.minimum_amount}
+                      <FormattedAfghani amount={offer.minimum_amount} />
                     </span>
                   </div>
                 </div>

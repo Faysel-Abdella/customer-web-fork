@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 
 import CopiableText from "@/components/CopiableText";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import { Transaction } from "@/types/profile.types";
 
@@ -82,7 +83,10 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Amount",
     cell: ({ row }) => (
-      <span className="font-medium">${row.original.amount}</span>
+      <span className="font-medium">
+        {" "}
+        <FormattedAfghani amount={parseFloat(row.original.amount)} />
+      </span>
     ),
   },
 ];
