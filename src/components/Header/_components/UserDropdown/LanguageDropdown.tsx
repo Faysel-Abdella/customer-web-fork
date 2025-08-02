@@ -30,7 +30,7 @@ const languages: Language[] = [
     nativeName: "پښتو",
   },
   {
-    code: "prs",
+    code: "fa",
     name: "Dari",
     nativeName: "دری",
   },

@@ -8,6 +8,7 @@ import { MenuItem } from "@/types/restaurant.types";
 import CustomImage from "../CustomImage";
 import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
+import FormattedAfghani from "../FormattedAfghani";
 import MenuItemDetail from "../MenuItemDetail";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -35,11 +36,13 @@ const MenuItemCard = ({
 
   return (
     <div className="relative flex h-56 w-full items-end">
-      <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-4 max-sm:p-5 sm:min-w-72">
+      <div className="bg-card flex h-48 w-full flex-col justify-between rounded-3xl border p-3 pt-4 max-sm:p-5 sm:min-w-72">
         <div className="flex w-full flex-col items-end justify-end">
-          <p className="text-lg font-semibold">${currentPrice.toFixed(2)}</p>
-          <p className="text-muted-foreground text-sm line-through">
-            ${canceledPrice.toFixed(2)}
+          <p className="text-base font-semibold">
+            <FormattedAfghani amount={currentPrice} />
+          </p>
+          <p className="text-muted-foreground text-xs line-through">
+            <FormattedAfghani amount={canceledPrice} />
           </p>
         </div>
         <div className="space-y-4">
@@ -67,7 +70,7 @@ const MenuItemCard = ({
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-5 h-28 w-36 overflow-hidden rounded-2xl shadow-lg sm:w-44">
+      <div className="lg:w- absolute top-0 left-5 h-28 w-36 overflow-hidden rounded-2xl shadow-lg sm:w-[155px]">
         <div className="relative h-full w-full">
           <CustomImage
             placeholderImage={foodPlaceholder}
