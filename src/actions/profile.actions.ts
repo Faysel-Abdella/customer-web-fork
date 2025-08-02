@@ -15,6 +15,7 @@ import {
   GetOrderDetailResult,
   GetOrdersListResults,
   GetOrderStatusResult,
+  GetReferralInfoResults,
   GetTransactionsListResponse,
   GetTransactionsListResult,
   MessagesResponse,
@@ -23,6 +24,7 @@ import {
   OrderStatus,
   RatingPayload,
   SentMessageRequestType as SendMessageRequestType,
+  UserPointsProfileResponse,
 } from "@/types/profile.types";
 import { ActionResult } from "@/types/shared.types";
 
@@ -333,5 +335,23 @@ export async function cancelOrder(
     console.error(error);
     if (typeof error === "string") return { success: false, error };
     else return { success: false, error: "Failed to cancel order." };
+  }
+}
+
+export async function getReferralInfo(): Promise<GetReferralInfoResults> {
+  try {
+    const responseData: UserPointsProfileResponse =
+      await fetchWithAuth<UserPointsProfileResponse>(
+        `/api/user/referral-info`,
+        {
+          retry: { retries: 3, delay: 1000 },
+        },
+      );
+
+    return { success: true, data: responseData };
+  } catch (error) {
+    console.error(error);
+    if (typeof error === "string") return { success: false, error };
+    else return { success: false, error: "Failed to fetch transactions list" };
   }
 }
