@@ -14,7 +14,7 @@ export function PointsOverview({
 }: PointsOverviewProps) {
   return (
     <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-      <Card className="border shadow-none">
+      <Card className="justify-between border shadow-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-secondary-foreground text-sm font-medium">
             Available Points
@@ -30,13 +30,13 @@ export function PointsOverview({
         </CardContent>
       </Card>
 
-      <Card className="border shadow-none">
+      <Card className="justify-between border shadow-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-secondary-foreground text-sm font-medium">
             Total Earned
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="">
           <div className="text-2xl font-bold text-blue-400">
             {pointsSummary.total_earned.toLocaleString()}
           </div>
@@ -46,7 +46,7 @@ export function PointsOverview({
         </CardContent>
       </Card>
 
-      <Card className="border shadow-none">
+      <Card className="justify-between border shadow-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-secondary-foreground text-sm font-medium">
             Referrals
@@ -60,7 +60,7 @@ export function PointsOverview({
         </CardContent>
       </Card>
 
-      <Card className="border shadow-none">
+      <Card className="justify-between border shadow-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-secondary-foreground text-sm font-medium">
             Discount Earned
