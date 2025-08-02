@@ -3,6 +3,7 @@ import React, { useEffect, useState, useTransition } from "react";
 import { BadgePercent, Edit, Plus, TicketPercent } from "lucide-react";
 
 import { getOffersList } from "@/actions/actions";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -61,7 +62,7 @@ const Offers = ({ selectedOffer, setSelectedOffer }: OffersProps) => {
                     <span className="font-medium">{selectedOffer.title}</span>
                   </div>
                   <p className="text-muted-foreground">
-                    - {selectedOffer.discount}$
+                    - <FormattedAfghani amount={selectedOffer.discount} />
                   </p>
                 </div>
               </div>

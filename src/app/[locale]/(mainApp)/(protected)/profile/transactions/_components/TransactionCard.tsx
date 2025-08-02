@@ -3,6 +3,7 @@
 import { format } from "date-fns";
 import { Calendar, Coins, CreditCard, Gift, Store } from "lucide-react";
 
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Transaction } from "@/types/profile.types";
@@ -66,10 +67,6 @@ const getGatewayLabel = (gateway: string) => {
 };
 
 export function TransactionCard({ transaction }: TransactionCardProps) {
-  const formatAmount = (amount: string) => {
-    return `$${Number.parseFloat(amount).toFixed(2)}`;
-  };
-
   const hasDiscounts =
     Number.parseFloat(transaction.discount_amount) > 0 ||
     transaction.referral_points_used > 0;
@@ -97,7 +94,7 @@ export function TransactionCard({ transaction }: TransactionCardProps) {
           </div>
           <div className="text-right">
             <div className="mb-1 text-lg font-bold md:text-2xl">
-              {formatAmount(transaction.amount)}
+              <FormattedAfghani amount={parseFloat(transaction.amount)} />
             </div>
             <div className="text-muted-foreground flex items-center gap-1 text-sm">
               <Calendar className="h-3 w-3" />
@@ -133,7 +130,12 @@ export function TransactionCard({ transaction }: TransactionCardProps) {
               {Number.parseFloat(transaction.discount_amount) > 0 && (
                 <div className="flex items-center gap-1 text-green-400">
                   <Gift className="h-3 w-3" />
-                  <span>-{formatAmount(transaction.discount_amount)}</span>
+                  <span>
+                    -{" "}
+                    <FormattedAfghani
+                      amount={parseFloat(transaction.discount_amount)}
+                    />
+                  </span>
                 </div>
               )}
               {transaction.referral_points_used > 0 && (

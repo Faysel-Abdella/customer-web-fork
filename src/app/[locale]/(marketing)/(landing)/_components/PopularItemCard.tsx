@@ -3,6 +3,7 @@ import { Eye, Star } from "lucide-react";
 
 import CustomImage from "@/components/CustomImage";
 import CustomLink from "@/components/CustomLink";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,9 +19,7 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
   const sanitizedDesc = DOMPurify.sanitize(description, {
     USE_PROFILES: { html: true },
   });
-  const formatPrice = (price: number) => {
-    return isNaN(price) ? price : `$${price.toFixed(2)}`;
-  };
+
   return (
     <Card className="group overflow-hidden border p-0 shadow-none transition-all duration-300 hover:shadow-lg">
       <CardContent className="p-0">
@@ -60,7 +59,7 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
             <div className="w-ful flex items-center justify-between">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-primary text-xl font-semibold">
-                  {formatPrice(getMenuItemPrice(menuItem))}
+                  <FormattedAfghani amount={getMenuItemPrice(menuItem)} />
                 </span>
               </div>
               <div>

@@ -4,6 +4,7 @@ import { Loader, ShoppingCart } from "lucide-react";
 
 import CheckoutSheet from "@/components/CheckoutSheet";
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -67,7 +68,7 @@ export function CartSheet() {
                     {isLoadingTotalPrice ? (
                       <Loader className="size-3.5 animate-spin" />
                     ) : (
-                      "$" + totalPrice
+                      <FormattedAfghani amount={totalPrice} />
                     )}
                   </span>
                 </div>

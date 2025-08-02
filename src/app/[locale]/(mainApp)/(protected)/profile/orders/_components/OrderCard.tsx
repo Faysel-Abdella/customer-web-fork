@@ -3,6 +3,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 import CustomLink from "@/components/CustomLink";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Order } from "@/types/profile.types";
@@ -45,7 +46,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
         <div className="flex flex-col items-end justify-between">
           <div className="text-primary text-lg font-bold">
-            ${order.total_price}
+            <FormattedAfghani amount={parseFloat(order.total_price)} />
           </div>
           <Button asChild>
             <CustomLink href={`/profile/orders/${order.id}`}>

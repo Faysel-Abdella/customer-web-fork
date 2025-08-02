@@ -1,3 +1,4 @@
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PointsSummary, ReferralStats } from "@/types/profile.types";
 
@@ -68,7 +69,9 @@ export function PointsOverview({
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-orange-400">
-            ${(referralStats.total_discount_earned / 100).toFixed(2)}
+            <FormattedAfghani
+              amount={referralStats.total_discount_earned / 100}
+            />
           </div>
           <p className="text-muted-foreground mt-1 text-xs">Total savings</p>
         </CardContent>

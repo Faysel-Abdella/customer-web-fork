@@ -4,15 +4,20 @@ import React from "react";
 import { useFormatter } from "next-intl";
 
 interface FormattedAfghaniProps {
-  amount: number;
+  amount: string | number;
+  minimumFractionDigits?: number;
 }
-const FormattedAfghani = ({ amount }: FormattedAfghaniProps) => {
+const FormattedAfghani = ({
+  amount,
+  minimumFractionDigits = 2,
+}: FormattedAfghaniProps) => {
   const format = useFormatter();
-
-  const formattedPrice = format.number(amount, {
+  const finalAmount = typeof amount == "string" ? parseFloat(amount) : amount;
+  if (!finalAmount) return;
+  const formattedPrice = format.number(finalAmount, {
     style: "currency",
     currency: "AFN",
-    minimumFractionDigits: 2,
+    minimumFractionDigits: minimumFractionDigits,
   });
   return <span>{formattedPrice}</span>;
 };

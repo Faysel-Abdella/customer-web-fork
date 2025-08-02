@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { AddOn } from "@/types/restaurant.types";
 
 import CustomImage from "../CustomImage";
+import FormattedAfghani from "../FormattedAfghani";
 
 interface AddOnListProps {
   addOns: AddOn[];
@@ -52,7 +53,9 @@ const AddOnListItem = ({
         </div>
         <div className="flex flex-col justify-center">
           <p className="text-lg font-semibold">{addOn.title}</p>
-          <p className="text-muted-foreground text-sm">{addOn.price}$</p>
+          <p className="text-muted-foreground text-sm">
+            <FormattedAfghani amount={addOn.price} />
+          </p>
         </div>
       </div>
       <Checkbox checked={isSelected} />

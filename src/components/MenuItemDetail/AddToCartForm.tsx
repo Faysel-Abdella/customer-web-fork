@@ -10,6 +10,7 @@ import { MenuItem } from "@/types/restaurant.types";
 
 import CustomLink from "../CustomLink";
 import FadingDivider from "../FadingDivider";
+import FormattedAfghani from "../FormattedAfghani";
 
 interface AddToCartFormProps {
   menuItem: MenuItem;
@@ -54,14 +55,20 @@ const AddToCartForm = ({
                 <p>Add-on price</p>
               </div>
               <div className="text-right">
-                <p>{basePrice}$</p>
-                <p>{addOnPrice}$</p>
+                <p>
+                  <FormattedAfghani amount={basePrice} />
+                </p>
+                <p>
+                  <FormattedAfghani amount={addOnPrice} />
+                </p>
               </div>
             </div>
             <FadingDivider />
             <div className="mb-6 flex w-full justify-between">
               <p className="font-bold">Total price</p>
-              <p className="text-primary font-bold">{totalPrice}$</p>
+              <p className="text-primary font-bold">
+                <FormattedAfghani amount={totalPrice} />
+              </p>
             </div>
             <Button
               disabled={isPending || itemQuantity <= 0}

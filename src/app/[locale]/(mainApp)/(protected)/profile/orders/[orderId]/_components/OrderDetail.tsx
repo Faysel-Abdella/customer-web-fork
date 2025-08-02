@@ -4,6 +4,7 @@ import { getOrderDetail } from "@/actions/profile.actions";
 import CustomImage from "@/components/CustomImage";
 import CustomLink from "@/components/CustomLink";
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 
 import OrderCancelModal from "./OrderCancelModal";
 import OrderedItems from "./OrderedItems";
@@ -143,17 +144,23 @@ const OrderDetail = async ({ orderId }: OrderDetailProps) => {
         <FadingDivider />
         <div className="flex justify-between">
           <span className="text-secondary-foreground">Item Total</span>
-          <span className="font-medium">${order.total_price}</span>
+          <span className="font-medium">
+            <FormattedAfghani amount={parseFloat(order.total_price)} />
+          </span>
         </div>
 
         <div className="flex justify-between">
           <span className="text-secondary-foreground">Delivery Charges</span>
-          <span className="font-medium">${order.delivery_charge}</span>
+          <span className="font-medium">
+            <FormattedAfghani amount={parseFloat(order.delivery_charge)} />
+          </span>
         </div>
         <FadingDivider />
         <div className="flex justify-between text-lg font-bold">
           <span className="">Total</span>
-          <span className="">${order.payable_amount}</span>
+          <span className="">
+            <FormattedAfghani amount={parseFloat(order.payable_amount)} />
+          </span>
         </div>
       </div>
 

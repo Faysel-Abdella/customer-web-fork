@@ -1,4 +1,5 @@
 import FadingDivider from "@/components/FadingDivider";
+import FormattedAfghani from "@/components/FormattedAfghani";
 import { Badge } from "@/components/ui/badge";
 import { formatTimeHM } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
@@ -61,7 +62,9 @@ const RestaurantHeader = ({ restaurant, isOpen }: RestaurantHeaderProps) => {
                 Delivery fee
               </p>
               <p className="font-medium max-lg:text-sm">
-                ${restaurant.delivery_info.delivery_fee}
+                <FormattedAfghani
+                  amount={restaurant.delivery_info.delivery_fee}
+                />
               </p>
             </div>
           )}
