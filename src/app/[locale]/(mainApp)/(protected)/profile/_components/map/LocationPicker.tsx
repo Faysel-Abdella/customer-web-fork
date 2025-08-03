@@ -1,13 +1,6 @@
 "use client";
 
-import React, { useCallback, useRef, useState, useEffect } from "react";
-
-// import {
-//   Autocomplete,
-//   GoogleMap,
-//   Marker,
-//   useJsApiLoader,
-// } from "@react-google-maps/api";
+import React, { useCallback, useState, useEffect } from "react";
 
 import {
   APIProvider,
@@ -17,9 +10,8 @@ import {
 } from "@vis.gl/react-google-maps";
 import useGeolocation from "@/hooks/useGeolocation";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import AutocompleteControl from "./AutocompleteControl";
 import AutocompleteResult from "./AutocompleteResult";
 
@@ -27,11 +19,6 @@ const defaultCenter = {
   lat: 25.348766,
   lng: 55.405403,
 };
-
-const libraries: "places"[] = ["places"];
-
-type AutocompleteMode = { id: string; label: string };
-
 interface LocationPickerProps {
   className?: string;
   onLocationSelect: (location: {
@@ -59,8 +46,11 @@ export function LocationPicker({
   const [selectedMapLocation, setSelectedMapLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
 
+  // For the autocomplete result
   const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.Place | null>(null);
+
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   // Sometimes the guestLocation is not available immediately, so we need check in 2sec and if re-assign the currentLocation
   useEffect(() => {
@@ -76,12 +66,6 @@ export function LocationPicker({
       return () => clearTimeout(timer);
     }
   }, [guestLocation]);
-
-  // const { isLoaded, loadError } = useJsApiLoader({
-  //   id: "google-map-script",
-  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-  //   libraries,
-  // });
 
   useEffect(() => {
     // Only get location once when component mounts
@@ -104,14 +88,10 @@ export function LocationPicker({
     }
   }, [guestLocation]);
 
-  const [markerPosition, setMarkerPosition] = useState(defaultCenter);
-  const [selectedAddress, setSelectedAddress] = useState("");
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const mapRef = useRef<google.maps.Map | null>(null);
-
   const geocodePosition = (pos: google.maps.LatLngLiteral) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: pos }, (results, status) => {
+      console.log("results", results);
       if (status === "OK" && results?.[0]) {
         setSelectedAddress(results[0].formatted_address);
       } else {
@@ -132,63 +112,18 @@ export function LocationPicker({
         lng: latLng.lng,
       };
       setSelectedMapLocation(newPosition);
-      setMarkerPosition(newPosition);
       geocodePosition(newPosition);
     }
   }, []);
 
-  const handlePlaceSelect = useCallback(() => {
-    if (autocompleteRef.current) {
-      const place = autocompleteRef.current.getPlace();
-      if (place && place.geometry && place.geometry.location) {
-        const newPosition = {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-        };
-        mapRef.current?.panTo(newPosition);
-        setSelectedMapLocation(newPosition);
-        setMarkerPosition(newPosition);
-        geocodePosition(newPosition);
-      }
-    }
-  }, []);
-
-  // if (loadError) {
-  //   return <div className="h-[400px]">Error loading maps.</div>;
-  // }
-
-  // if (!isLoaded) {
-  //   return (
-  //     <div
-  //       className={cn(
-  //         "bg-muted-foreground flex h-96 w-full animate-pulse items-center justify-center rounded-lg",
-  //         className,
-  //       )}
-  //     >
-  //       Loading Map...
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className={cn("w-full", className)}>
       <p className="text-muted-foreground mb-2 text-sm">
-        Click on the map or drag the pin to select a location.
+        Click on the map or search to select a location.
       </p>
-      {/* <Autocomplete
-        onLoad={(ref) => (autocompleteRef.current = ref)}
-        onPlaceChanged={handlePlaceSelect}
-      >
-        <Input
-          type="text"
-          placeholder="Search for a location or address"
-          className="mb-4"
-        />
-      </Autocomplete> */}
 
       <div className="h-96 w-full overflow-hidden rounded-lg">
         {/* Only show tha map when the currentLocation is available */}
-        {/* check the currentLocation object is not empty */}
         {currentLocation.lat && currentLocation.lng && (
           <>
             <APIProvider apiKey={API_KEY} libraries={["places", "marker"]}>
@@ -221,24 +156,6 @@ export function LocationPicker({
             </APIProvider>
           </>
         )}
-        {/* <GoogleMap
-          mapContainerClassName="w-full h-full"
-          center={markerPosition}
-          zoom={15}
-          onLoad={(map) => {
-            mapRef.current = map;
-          }}
-          options={{
-            streetViewControl: false,
-            mapTypeControl: false,
-          }}
-        >
-          <Marker
-            position={markerPosition}
-            draggable={true}
-            onDragEnd={handleMarkerDragEnd}
-          />
-        </GoogleMap> */}
       </div>
 
       <div
@@ -252,8 +169,8 @@ export function LocationPicker({
           <div>
             <p className="">{selectedAddress}</p>
             <p className="text-muted-foreground mt-1 text-xs">
-              Lat: {markerPosition.lat.toFixed(6)}, Lng:{" "}
-              {markerPosition.lng.toFixed(6)}
+              Lat: {selectedMapLocation?.lat.toFixed(6)}, Lng:{" "}
+              {selectedMapLocation?.lng.toFixed(6)}
             </p>
           </div>
         ) : (
@@ -263,7 +180,7 @@ export function LocationPicker({
           onClick={() =>
             onLocationSelect({
               address: selectedAddress,
-              position: selectedMapLocation || markerPosition,
+              position: selectedMapLocation as google.maps.LatLngLiteral,
             })
           }
           disabled={
