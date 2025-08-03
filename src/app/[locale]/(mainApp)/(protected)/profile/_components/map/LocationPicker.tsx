@@ -112,7 +112,6 @@ export function LocationPicker({
 
   // Handle map click to select location
   const handleMapClick = useCallback((event: any) => {
-    console.log("Map click event:", event); // For debugging
     // Access the latLng from the event
     const latLng = event.detail?.latLng || event.latLng;
 
@@ -138,7 +137,7 @@ export function LocationPicker({
           <>
             <APIProvider apiKey={API_KEY} libraries={["places", "marker"]}>
               <Map
-                style={{ width: "full", height: "100vh" }}
+                style={{ width: "full" }}
                 defaultCenter={{
                   lat: currentLocation.lat,
                   lng: currentLocation.lng,
@@ -159,7 +158,9 @@ export function LocationPicker({
               />
               <AutocompleteControl
                 controlPosition={ControlPosition.LEFT_TOP}
-                onPlaceSelect={setSelectedPlace}
+                onPlaceSelect={(value) => {
+                  setSelectedPlace(value);
+                }}
               />
 
               <AutocompleteResult place={selectedPlace} />
