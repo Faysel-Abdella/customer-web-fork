@@ -17,7 +17,7 @@ export const addressSchema = z.object({
   longitude: z.string({ required_error: "Please select location" }),
   floor: z.string().optional(),
   landmark: z.string().optional(),
-  pinCode: z.string().min(1, { message: "Please enter pin code" }).optional(),
+  pinCode: z.string().optional(),
   contact_no: z.string().refine(isValidPhoneNumber, {
     message: "Invalid phone number",
   }),
