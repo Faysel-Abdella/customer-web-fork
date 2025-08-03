@@ -50,8 +50,6 @@ export function LocationPicker({
   const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.Place | null>(null);
 
-  const [selectedAddress, setSelectedAddress] = useState("");
-
   // Sometimes the guestLocation is not available immediately, so we need check in 2sec and if re-assign the currentLocation
   useEffect(() => {
     // Only do this is the currentLocation is empty
@@ -87,32 +85,7 @@ export function LocationPicker({
     }
   }, [guestLocation]);
 
-  const geocodePosition = async (pos: google.maps.LatLngLiteral) => {
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.lat}&lon=${pos.lng}&zoom=18&addressdetails=1`,
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch address");
-      }
-
-      const data = await response.json();
-
-      if (data.display_name) {
-        setSelectedAddress(data.display_name);
-      } else {
-        setSelectedAddress("Address not found.");
-      }
-    } catch (error) {
-      console.error("Error geocoding position:", error);
-      setSelectedAddress("Address not found.");
-    }
-  };
-
-  // Handle map click to select location
   const handleMapClick = useCallback((event: any) => {
-    // Access the latLng from the event
     const latLng = event.detail?.latLng || event.latLng;
 
     if (latLng) {
@@ -120,8 +93,9 @@ export function LocationPicker({
         lat: latLng.lat,
         lng: latLng.lng,
       };
+      console.log("newPosition FROM MAP CLICK", newPosition);
+
       setSelectedMapLocation(newPosition);
-      geocodePosition(newPosition);
     }
   }, []);
 
@@ -160,6 +134,15 @@ export function LocationPicker({
                 controlPosition={ControlPosition.LEFT_TOP}
                 onPlaceSelect={(value) => {
                   setSelectedPlace(value);
+                  const newPosition = JSON.parse(JSON.stringify(value));
+                  console.log(
+                    "newLocation FROM SELECTED PLACE",
+                    newPosition.location,
+                  );
+                  setSelectedMapLocation({
+                    lat: newPosition?.location?.lat as number,
+                    lng: newPosition?.location?.lng as number,
+                  });
                 }}
               />
 
@@ -175,7 +158,7 @@ export function LocationPicker({
           noAddressError && "ring-2 ring-red-400",
         )}
       >
-        <h3 className="text-lg font-bold">Selected Location:</h3>
+        {/* <h3 className="text-lg font-bold">Selected Location:</h3>
         {selectedAddress ? (
           <div>
             <p className="">{selectedAddress}</p>
@@ -186,17 +169,15 @@ export function LocationPicker({
           </div>
         ) : (
           <p className="text-muted-foreground">No location selected yet.</p>
-        )}
+        )} */}
         <Button
           onClick={() =>
             onLocationSelect({
-              address: selectedAddress,
+              address: selectedPlace?.displayName || "",
               position: selectedMapLocation as google.maps.LatLngLiteral,
             })
           }
-          disabled={
-            !selectedAddress || selectedAddress === "Address not found."
-          }
+          disabled={!selectedMapLocation}
         >
           Confirm Location
         </Button>
