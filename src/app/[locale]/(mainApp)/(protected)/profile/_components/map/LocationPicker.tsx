@@ -54,7 +54,6 @@ export function LocationPicker({
 
   // Sometimes the guestLocation is not available immediately, so we need check in 2sec and if re-assign the currentLocation
   useEffect(() => {
-    console.log("guestLocation", guestLocation);
     // Only do this is the currentLocation is empty
     if (!currentLocation.lat && !currentLocation.lng) {
       const timer = setTimeout(() => {

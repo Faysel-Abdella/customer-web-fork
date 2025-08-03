@@ -1,8 +1,9 @@
 import React, { FormEvent, useCallback, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useAutocompleteSuggestions } from "@/hooks/use-autocomplete-suggestions";
+import useDebounce from "@/hooks/useDebounce";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -14,7 +15,11 @@ export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
   const places = useMapsLibrary("places");
 
   const [inputValue, setInputValue] = useState<string>("");
-  const { suggestions, resetSession } = useAutocompleteSuggestions(inputValue);
+  const debouncedInputValue = useDebounce(inputValue, 1000);
+
+  // Get loading state from the hook
+  const { suggestions, resetSession, isLoading } =
+    useAutocompleteSuggestions(debouncedInputValue);
 
   const handleInput = useCallback((event: FormEvent<HTMLInputElement>) => {
     setInputValue((event.target as HTMLInputElement).value);
@@ -28,12 +33,7 @@ export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
       const place = suggestion.placePrediction.toPlace();
 
       await place.fetchFields({
-        fields: [
-          "viewport",
-          "location",
-          "svgIconMaskURI",
-          "iconBackgroundColor",
-        ],
+        fields: ["viewport", "location"],
       });
 
       setInputValue("");
@@ -47,6 +47,9 @@ export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
     [places, onPlaceSelect, resetSession],
   );
 
+  // Show loading indicator when there's input but no suggestions yet
+  const showLoading = inputValue && isLoading && suggestions.length === 0;
+
   return (
     <div className={cn("relative w-full", className)}>
       <div className="relative">
@@ -57,6 +60,9 @@ export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
           placeholder="Search for a place"
           className="h-10 bg-white pr-4 pl-10 text-sm"
         />
+        {showLoading && (
+          <Loader2 className="text-muted-foreground absolute top-1/2 right-3 z-10 h-4 w-4 -translate-y-1/2 animate-spin" />
+        )}
       </div>
 
       {suggestions.length > 0 && (
