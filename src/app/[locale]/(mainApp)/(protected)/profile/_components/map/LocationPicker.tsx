@@ -93,7 +93,6 @@ export function LocationPicker({
         lat: latLng.lat,
         lng: latLng.lng,
       };
-      console.log("newPosition FROM MAP CLICK", newPosition);
 
       setSelectedMapLocation(newPosition);
     }
@@ -135,10 +134,6 @@ export function LocationPicker({
                 onPlaceSelect={(value) => {
                   setSelectedPlace(value);
                   const newPosition = JSON.parse(JSON.stringify(value));
-                  console.log(
-                    "newLocation FROM SELECTED PLACE",
-                    newPosition.location,
-                  );
                   setSelectedMapLocation({
                     lat: newPosition?.location?.lat as number,
                     lng: newPosition?.location?.lng as number,
