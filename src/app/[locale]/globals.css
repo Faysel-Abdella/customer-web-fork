@@ -138,8 +138,7 @@ button {
 }
 
 .autocomplete-control {
-  margin: 24px;
-  background: #fff;
+  margin: 10px;
 }
 .autocomplete-container {
   width: 300px;

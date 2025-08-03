@@ -213,7 +213,7 @@ export function LocationPicker({
                 clickable
               />
               <AutocompleteControl
-                controlPosition={ControlPosition.TOP_LEFT}
+                controlPosition={ControlPosition.LEFT_TOP}
                 onPlaceSelect={setSelectedPlace}
               />
 

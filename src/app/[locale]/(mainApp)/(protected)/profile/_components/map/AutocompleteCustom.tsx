@@ -2,12 +2,15 @@ import React, { FormEvent, useCallback, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useAutocompleteSuggestions } from "@/hooks/use-autocomplete-suggestions";
 import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   onPlaceSelect: (place: google.maps.places.Place | null) => void;
+  className?: string;
 }
 
-export const AutocompleteCustom = ({ onPlaceSelect }: Props) => {
+export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
   const places = useMapsLibrary("places");
 
   const [inputValue, setInputValue] = useState<string>("");
@@ -41,31 +44,37 @@ export const AutocompleteCustom = ({ onPlaceSelect }: Props) => {
 
       onPlaceSelect(place);
     },
-    [places, onPlaceSelect],
+    [places, onPlaceSelect, resetSession],
   );
 
   return (
-    <div className="autocomplete-container mt-10">
-      <Input
-        value={inputValue}
-        onInput={(event) => handleInput(event)}
-        placeholder="Search for a place"
-      />
+    <div className={cn("relative w-full", className)}>
+      <div className="relative">
+        <Search className="text-muted-foreground absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2" />
+        <Input
+          value={inputValue}
+          onInput={(event) => handleInput(event)}
+          placeholder="Search for a place"
+          className="h-10 bg-white pr-4 pl-10 text-sm"
+        />
+      </div>
 
       {suggestions.length > 0 && (
-        <ul className="custom-list">
-          {suggestions.map((suggestion, index) => {
-            return (
-              <li
-                key={index}
-                className="custom-list-item"
-                onClick={() => handleSuggestionClick(suggestion)}
-              >
-                {suggestion.placePrediction?.text.text}
-              </li>
-            );
-          })}
-        </ul>
+        <div className="bg-popover text-popover-foreground absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-hidden rounded-md border shadow-md">
+          <ul className="max-h-60 overflow-y-auto">
+            {suggestions.map((suggestion, index) => {
+              return (
+                <li
+                  key={index}
+                  className="hover:bg-accent hover:text-accent-foreground border-border cursor-pointer border-b px-4 py-3 text-sm transition-colors last:border-b-0"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion.placePrediction?.text.text}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       )}
     </div>
   );
