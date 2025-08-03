@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import AutocompleteControl from "./AutocompleteControl";
 import AutocompleteResult from "./AutocompleteResult";
+import { CheckCircle2 } from "lucide-react";
 
 const defaultCenter = {
   lat: 25.348766,
@@ -42,7 +43,6 @@ export function LocationPicker({
       lng: guestLocation?.longitude as number,
     });
 
-  // New state to track the selected map location
   const [selectedMapLocation, setSelectedMapLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
 
@@ -65,7 +65,6 @@ export function LocationPicker({
   }, [guestLocation]);
 
   useEffect(() => {
-    // Only get location once when component mounts
     if (!guestLocation) {
       getGuestUserLocation();
     }
@@ -93,10 +92,22 @@ export function LocationPicker({
         lat: latLng.lat,
         lng: latLng.lng,
       };
-
+      setLocationSelected(false);
       setSelectedMapLocation(newPosition);
     }
   }, []);
+
+  const [locationSelected, setLocationSelected] = useState(false);
+
+  const handleConfirmLocation = () => {
+    if (selectedMapLocation) {
+      setLocationSelected(true);
+      onLocationSelect({
+        address: selectedPlace?.displayName || "",
+        position: selectedMapLocation as google.maps.LatLngLiteral,
+      });
+    }
+  };
 
   return (
     <div className={cn("w-full", className)}>
@@ -134,6 +145,7 @@ export function LocationPicker({
                 onPlaceSelect={(value) => {
                   setSelectedPlace(value);
                   const newPosition = JSON.parse(JSON.stringify(value));
+                  setLocationSelected(false);
                   setSelectedMapLocation({
                     lat: newPosition?.location?.lat as number,
                     lng: newPosition?.location?.lng as number,
@@ -151,32 +163,31 @@ export function LocationPicker({
         className={cn(
           "bg-secondary mt-4 rounded-lg border p-4",
           noAddressError && "ring-2 ring-red-400",
+          locationSelected && "bg-green-50 ring-2 ring-green-400",
         )}
       >
-        {/* <h3 className="text-lg font-bold">Selected Location:</h3>
-        {selectedAddress ? (
-          <div>
-            <p className="">{selectedAddress}</p>
-            <p className="text-muted-foreground mt-1 text-xs">
-              Lat: {selectedMapLocation?.lat.toFixed(6)}, Lng:{" "}
-              {selectedMapLocation?.lng.toFixed(6)}
-            </p>
-          </div>
-        ) : (
-          <p className="text-muted-foreground">No location selected yet.</p>
-        )} */}
         <Button
-          onClick={() =>
-            onLocationSelect({
-              address: selectedPlace?.displayName || "",
-              position: selectedMapLocation as google.maps.LatLngLiteral,
-            })
-          }
+          onClick={handleConfirmLocation}
           disabled={!selectedMapLocation}
+          className={locationSelected ? "bg-green-600 hover:bg-green-700" : ""}
         >
-          Confirm Location
+          {locationSelected ? (
+            <>
+              <CheckCircle2 className="mr-2 h-4 w-4" />
+              Location Confirmed
+            </>
+          ) : (
+            "Confirm Location"
+          )}
         </Button>
       </div>
+
+      {locationSelected && (
+        <div className="mt-2 text-sm text-green-600">
+          ✓ Location confirmed! Now fill in your address details on the right.
+        </div>
+      )}
+
       {noAddressError && (
         <div className="text-red-400">Please select a location on the map.</div>
       )}
