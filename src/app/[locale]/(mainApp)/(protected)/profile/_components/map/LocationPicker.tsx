@@ -9,19 +9,28 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 //   useJsApiLoader,
 // } from "@react-google-maps/api";
 
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import {
+  APIProvider,
+  Map,
+  Marker,
+  ControlPosition,
+} from "@vis.gl/react-google-maps";
 import useGeolocation from "@/hooks/useGeolocation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import AutocompleteControl from "./AutocompleteControl";
+import AutocompleteResult from "./AutocompleteResult";
 
 const defaultCenter = {
-  lat: 8.5413,
-  lng: 39.2689,
+  lat: 25.348766,
+  lng: 55.405403,
 };
 
 const libraries: "places"[] = ["places"];
+
+type AutocompleteMode = { id: string; label: string };
 
 interface LocationPickerProps {
   className?: string;
@@ -46,10 +55,16 @@ export function LocationPicker({
       lng: guestLocation?.longitude as number,
     });
 
+  // New state to track the selected map location
+  const [selectedMapLocation, setSelectedMapLocation] =
+    useState<google.maps.LatLngLiteral | null>(null);
+
+  const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.Place | null>(null);
+
   // Sometimes the guestLocation is not available immediately, so we need check in 2sec and if re-assign the currentLocation
-  // 25.348766
-  // 55.405403
   useEffect(() => {
+    console.log("guestLocation", guestLocation);
     // Only do this is the currentLocation is empty
     if (!currentLocation.lat && !currentLocation.lng) {
       const timer = setTimeout(() => {
@@ -69,8 +84,6 @@ export function LocationPicker({
   // });
 
   useEffect(() => {
-    console.log("THI IS MY LOCATION", guestLocation);
-
     // Only get location once when component mounts
     if (!guestLocation) {
       getGuestUserLocation();
@@ -107,6 +120,23 @@ export function LocationPicker({
     });
   };
 
+  // Handle map click to select location
+  const handleMapClick = useCallback((event: any) => {
+    console.log("Map click event:", event); // For debugging
+    // Access the latLng from the event
+    const latLng = event.detail?.latLng || event.latLng;
+
+    if (latLng) {
+      const newPosition = {
+        lat: latLng.lat,
+        lng: latLng.lng,
+      };
+      setSelectedMapLocation(newPosition);
+      setMarkerPosition(newPosition);
+      geocodePosition(newPosition);
+    }
+  }, []);
+
   const handlePlaceSelect = useCallback(() => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
@@ -116,25 +146,13 @@ export function LocationPicker({
           lng: place.geometry.location.lng(),
         };
         mapRef.current?.panTo(newPosition);
+        setSelectedMapLocation(newPosition);
         setMarkerPosition(newPosition);
         geocodePosition(newPosition);
       }
     }
   }, []);
 
-  const handleMarkerDragEnd = useCallback(
-    (event: google.maps.MapMouseEvent) => {
-      if (event.latLng) {
-        const newPosition = {
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng(),
-        };
-        setMarkerPosition(newPosition);
-        geocodePosition(newPosition);
-      }
-    },
-    [],
-  );
   // if (loadError) {
   //   return <div className="h-[400px]">Error loading maps.</div>;
   // }
@@ -155,7 +173,7 @@ export function LocationPicker({
   return (
     <div className={cn("w-full", className)}>
       <p className="text-muted-foreground mb-2 text-sm">
-        Drag the pin or search for a location to select an address.
+        Click on the map or drag the pin to select a location.
       </p>
       {/* <Autocomplete
         onLoad={(ref) => (autocompleteRef.current = ref)}
@@ -172,25 +190,36 @@ export function LocationPicker({
         {/* Only show tha map when the currentLocation is available */}
         {/* check the currentLocation object is not empty */}
         {currentLocation.lat && currentLocation.lng && (
-          <APIProvider apiKey={API_KEY} libraries={["places", "marker"]}>
-            <Map
-              style={{ width: "full", height: "100vh" }}
-              defaultCenter={{
-                lat: currentLocation.lat,
-                lng: currentLocation.lng,
-              }}
-              defaultZoom={15}
-              gestureHandling={"greedy"}
-              disableDefaultUI={false}
-            />
-            <Marker
-              position={{
-                lat: currentLocation.lat,
-                lng: currentLocation.lng,
-              }}
-              clickable
-            />
-          </APIProvider>
+          <>
+            <APIProvider apiKey={API_KEY} libraries={["places", "marker"]}>
+              <Map
+                style={{ width: "full", height: "100vh" }}
+                defaultCenter={{
+                  lat: currentLocation.lat,
+                  lng: currentLocation.lng,
+                }}
+                defaultZoom={15}
+                gestureHandling={"greedy"}
+                disableDefaultUI={false}
+                onClick={handleMapClick}
+              />
+              <Marker
+                position={
+                  selectedMapLocation || {
+                    lat: currentLocation.lat,
+                    lng: currentLocation.lng,
+                  }
+                }
+                clickable
+              />
+              <AutocompleteControl
+                controlPosition={ControlPosition.TOP_LEFT}
+                onPlaceSelect={setSelectedPlace}
+              />
+
+              <AutocompleteResult place={selectedPlace} />
+            </APIProvider>
+          </>
         )}
         {/* <GoogleMap
           mapContainerClassName="w-full h-full"
@@ -234,7 +263,7 @@ export function LocationPicker({
           onClick={() =>
             onLocationSelect({
               address: selectedAddress,
-              position: markerPosition,
+              position: selectedMapLocation || markerPosition,
             })
           }
           disabled={

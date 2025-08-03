@@ -25,7 +25,7 @@ import { Form } from "@/components/ui/form";
 import { addressSchema } from "@/lib/schemas/address.schema";
 
 import AddressFormFields from "./AddressFormFields";
-import { LocationPicker } from "./LocationPicker";
+import { LocationPicker } from "./map/LocationPicker";
 
 const AddAddressModal = () => {
   const [country, setCountry] = useState<CountryCode | undefined>("ET");

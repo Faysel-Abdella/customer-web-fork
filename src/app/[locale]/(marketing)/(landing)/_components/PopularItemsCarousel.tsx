@@ -36,9 +36,9 @@ const PopularItemsCarousel = async () => {
         </div>
 
         <CarouselContent className="overflow-visible">
-          {dishes.map((item) => (
+          {dishes.map((item, index) => (
             <CarouselItem
-              key={item.title}
+              key={index}
               className="md:basis-1/3 lg:basis-1/4 xl:basis-1/4"
             >
               <PopularItemCard menuItem={item} />
