@@ -188,7 +188,7 @@ export function LocationPicker({
         </div>
       )}
 
-      {noAddressError && (
+      {noAddressError && !locationSelected && (
         <div className="text-red-400">Please select a location on the map.</div>
       )}
     </div>
