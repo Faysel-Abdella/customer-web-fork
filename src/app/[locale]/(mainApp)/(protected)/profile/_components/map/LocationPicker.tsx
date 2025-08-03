@@ -87,16 +87,27 @@ export function LocationPicker({
     }
   }, [guestLocation]);
 
-  const geocodePosition = (pos: google.maps.LatLngLiteral) => {
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: pos }, (results, status) => {
-      console.log("results", results);
-      if (status === "OK" && results?.[0]) {
-        setSelectedAddress(results[0].formatted_address);
+  const geocodePosition = async (pos: google.maps.LatLngLiteral) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.lat}&lon=${pos.lng}&zoom=18&addressdetails=1`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch address");
+      }
+
+      const data = await response.json();
+
+      if (data.display_name) {
+        setSelectedAddress(data.display_name);
       } else {
         setSelectedAddress("Address not found.");
       }
-    });
+    } catch (error) {
+      console.error("Error geocoding position:", error);
+      setSelectedAddress("Address not found.");
+    }
   };
 
   // Handle map click to select location
