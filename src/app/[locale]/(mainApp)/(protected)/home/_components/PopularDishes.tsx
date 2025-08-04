@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export async function TrendingDishes() {
+export async function PopularDishes() {
   const { data: dishes } = await getPopularDishes();
   if (dishes && dishes.length > 0)
     return (
@@ -21,11 +21,11 @@ export async function TrendingDishes() {
         className="space-y-5 overflow-visible"
       >
         <div className="flex w-full items-center justify-between gap-5">
-          <h2 className="text-2xl font-bold md:mb-2 md:text-3xl">
-            Trending Dishes
+          <h2 className="text-lg font-bold md:mb-2 md:text-3xl">
+            Popular Dishes
           </h2>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 max-sm:flex-col">
             <CustomLink
               href="#"
               className="group text-muted-foreground flex items-center font-semibold text-nowrap hover:text-orange-600"

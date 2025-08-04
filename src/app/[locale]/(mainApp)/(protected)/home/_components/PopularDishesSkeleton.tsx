@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const TrendingDishesSkeleton = () => {
+export const PopularDishesSkeleton = () => {
   return (
     <div className="space-y-5">
       <div className="flex w-full items-center justify-between gap-5">
