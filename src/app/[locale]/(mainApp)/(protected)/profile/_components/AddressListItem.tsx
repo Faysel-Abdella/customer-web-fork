@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLocation } from "@/contexts/LocationContext";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Address } from "@/types/profile.types";
@@ -27,6 +28,7 @@ interface AddressListItemProps {
 const AddressListItem = ({ address }: AddressListItemProps) => {
   const [isDeleting, startDelete] = useTransition();
   const [isUpdating, startUpdate] = useTransition();
+  const { refreshAddress } = useLocation();
   const router = useRouter();
 
   const handleDeleteAddress = () => {
@@ -46,6 +48,8 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
     startUpdate(async () => {
       const results = await setDefaultAddress(address.id.toString());
       if (results.success) {
+        localStorage.removeItem("defaultAddress");
+        refreshAddress();
         router.refresh();
       }
       if (results.error) {
