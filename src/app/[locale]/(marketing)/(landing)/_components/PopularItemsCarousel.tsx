@@ -38,11 +38,7 @@ const PopularItemsCarousel = async () => {
               key={index}
               className="md:basis-1/3 lg:basis-1/4 xl:basis-1/4"
             >
-              <MenuItemCard
-                menuItem={item}
-                isInRestaurant={false}
-                isOpen={false}
-              />
+              <MenuItemCard menuItem={item} isInRestaurant={false} isOpen />
             </CarouselItem>
           ))}
         </CarouselContent>
