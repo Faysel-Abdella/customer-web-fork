@@ -2,6 +2,8 @@ import { Metadata } from "next";
 
 import OrderFilter from "./_components/OrderFilter";
 import OrdersList from "./_components/OrdersList";
+import { Suspense } from "react";
+import OrdersListSkeleton from "./_components/OrdersListSkeleton";
 
 export const metadata: Metadata = {
   title: "Your Orders | Time delivery",
@@ -29,7 +31,10 @@ const OrdersPage = async ({ searchParams }: OrdersPageProps) => {
       </div>
 
       <div className="space-y-4">
+        <Suspense fallback={<OrdersListSkeleton/>}>
+
         <OrdersList params={params} />
+        </Suspense>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import AddAddressModal from "./AddAddressModal";
 import AddressList from "./AddressList";
+import AddressListSkeleton from "./AddressListSkeleton";
 
 const DeliveryInfo = () => {
   return (
@@ -16,7 +17,11 @@ const DeliveryInfo = () => {
           <div className="text-muted-foreground">
             Select default address or add other Delivery location
           </div>
+<Suspense fallback={<AddressListSkeleton/>}
+>
+
           <AddAddressModal />
+</Suspense>
         </div>
         <AddressList />
       </CardContent>

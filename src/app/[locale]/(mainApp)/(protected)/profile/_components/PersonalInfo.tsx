@@ -6,10 +6,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
+import PersonalInfoSkeleton from "./PersonalInfoSkeleton";
 
 const gender = ["male", "female", "other"];
 const PersonalInfo = () => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
   if (user)
     return (
@@ -80,6 +81,7 @@ const PersonalInfo = () => {
         </div>
       </div>
     );
+  return <PersonalInfoSkeleton />;
 };
 
 export default PersonalInfo;

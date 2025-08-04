@@ -57,7 +57,7 @@ const AddressListItem = ({ address }: AddressListItemProps) => {
     <Card
       className={cn(
         "gap-0 px-4 py-2 shadow-none",
-        address.is_default == 1 && "bg-secondary",
+        address.is_default === 1 && "bg-secondary",
       )}
     >
       <CardHeader className="p-0">
