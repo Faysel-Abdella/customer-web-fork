@@ -11,6 +11,7 @@ import {
 } from "@/types/auth.types";
 import {
   BannerDataResponse,
+  BestSellingDishesResponse,
   CategoriesListResponse,
   CategoryItemsResponse,
   CategoryItemsResult,
@@ -80,20 +81,39 @@ export async function placeOrder(data: string): Promise<PlaceOrderResults> {
   }
 }
 
-export async function getPopularDishes(): Promise<GetPopularDishesResult> {
+export async function getPopularDishes(
+  lat?: string,
+  lon?: string,
+): Promise<GetPopularDishesResult> {
+  const url = `/api/cart-item/popular-dish?lat=${lat}&lon=${lon}`;
   try {
     const responseData: PopularDishesResponse =
-      await fetchOnCondition<PopularDishesResponse>(
-        `/api/cart-item/popular-dish`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
-      );
+      await fetchOnCondition<PopularDishesResponse>(url, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.items.list };
   } catch (error) {
     console.error(error);
-    return { success: false, error: "Failed to fetch popular dishes list." };
+    return { success: false, error: "Failed to fetch popular dishes." };
+  }
+}
+
+export async function getBestSellingDishes(
+  lat?: string,
+  lon?: string,
+): Promise<GetPopularDishesResult> {
+  const url = `/api/restaurant/best-selling-dishes?lat=${lat}&lon=${lon}`;
+  try {
+    const responseData: BestSellingDishesResponse =
+      await fetchOnCondition<BestSellingDishesResponse>(url, {
+        retry: { retries: 3, delay: 1000 },
+      });
+
+    return { success: true, data: responseData.list };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to fetch best selling dishes." };
   }
 }
 

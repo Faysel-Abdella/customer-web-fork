@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import BestSellingItemsCarousel from "./BestSellingItemsCarousel";
 import { Categories } from "./Categories";
 import { CategoriesSkeleton } from "./CategoriesSkeleton";
 import PopularItemsCarousel from "./PopularItemsCarousel";
@@ -11,6 +12,9 @@ const PopularItems = async () => {
       <div className="container flex flex-col gap-20">
         <Suspense fallback={<PopularItemsCarouselSkeleton />}>
           <PopularItemsCarousel />
+        </Suspense>
+        <Suspense fallback={<PopularItemsCarouselSkeleton />}>
+          <BestSellingItemsCarousel />
         </Suspense>
         <Suspense fallback={<CategoriesSkeleton />}>
           <Categories />

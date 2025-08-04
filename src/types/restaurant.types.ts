@@ -308,6 +308,10 @@ export interface PopularDishesResponse {
   };
 }
 
+export interface BestSellingDishesResponse {
+  list: MenuItem[];
+}
+
 export interface GetPopularDishesResult extends ActionResult {
   data?: MenuItem[];
 }

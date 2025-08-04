@@ -10,11 +10,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getMenuItemPrice } from "@/lib/utils";
 import { MenuItem } from "@/types/restaurant.types";
 
-interface PopularItemCardProps {
+interface LandingDishCardCardProps {
   menuItem: MenuItem;
 }
 const placeholderImage = "/assets/images/foodPlaceholder.jpg";
-const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
+const LandingDishCard = ({ menuItem }: LandingDishCardCardProps) => {
   const description = menuItem.description;
   const sanitizedDesc = DOMPurify.sanitize(description, {
     USE_PROFILES: { html: true },
@@ -31,7 +31,7 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
               placeholderImage={placeholderImage}
             />
 
-            <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/30 px-2 py-1">
+            <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white px-2 py-1 text-black">
               <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
               <span className="text-xs font-medium">
                 {menuItem.avg_rating.toFixed(1)}
@@ -77,4 +77,4 @@ const PopularItemCard = ({ menuItem }: PopularItemCardProps) => {
   );
 };
 
-export default PopularItemCard;
+export default LandingDishCard;

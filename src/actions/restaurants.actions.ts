@@ -64,7 +64,6 @@ export async function getRestaurantDetails(
     ? `/api/restaurant/restaurant-detail?id=${restaurantId}&lat=${lat}&lon=${lon}`
     : `/api/restaurant/restaurant-detail?id=${restaurantId}`;
 
-  console.log(url);
   try {
     const responseData: RestaurantDetailResponce =
       await fetchOnCondition<RestaurantDetailResponce>(url, {
