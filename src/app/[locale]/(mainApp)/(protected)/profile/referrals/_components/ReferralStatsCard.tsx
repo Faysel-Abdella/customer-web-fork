@@ -1,13 +1,6 @@
 import { Award, Gift, TrendingUp, Users } from "lucide-react";
 
-<<<<<<< HEAD
 import FormattedAfghani from "@/components/FormattedAfghani";
-=======
-<<<<<<< HEAD
->>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
-=======
->>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
->>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReferralStats } from "@/types/profile.types";
 
@@ -55,15 +48,7 @@ export function ReferralStatsCard({ stats }: ReferralStatsProps) {
             </span>
           </div>
           <span className="font-medium">
-<<<<<<< HEAD
             <FormattedAfghani amount={stats.total_discount_earned / 100} />
-=======
-            ${(stats.total_discount_earned / 100).toFixed(2)}
-<<<<<<< HEAD
->>>>>>> 3b055c3 (feat: add first draft of referral section ui with mock data)
-=======
->>>>>>> 0614aa4 (feat: add first draft of referral section ui with mock data)
->>>>>>> e941fce (feat: add first draft of referral section ui with mock data)
           </span>
         </div>
       </CardContent>

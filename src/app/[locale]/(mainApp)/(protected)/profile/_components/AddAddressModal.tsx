@@ -25,7 +25,7 @@ import { Form } from "@/components/ui/form";
 import { addressSchema } from "@/lib/schemas/address.schema";
 
 import AddressFormFields from "./AddressFormFields";
-import { LocationPicker } from "./map/LocationPicker";
+import { LocationPicker } from "./LocationPicker";
 
 const AddAddressModal = () => {
   const [country, setCountry] = useState<CountryCode | undefined>("ET");
@@ -95,13 +95,7 @@ const AddAddressModal = () => {
     });
   }
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(open) => {
-        form.reset();
-        setOpen(open);
-      }}
-    >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <Plus />
