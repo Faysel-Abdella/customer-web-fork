@@ -86,7 +86,11 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
               {cartItem.restaurant_items[0].title}
             </p>
             <p className="text-muted-foreground font-medium">
-              <FormattedAfghani amount={cartItem.selected_rest_price.price} />
+              {cartItem.selected_rest_price.price ? (
+                <FormattedAfghani amount={cartItem.selected_rest_price.price} />
+              ) : (
+                <span> </span>
+              )}
             </p>
           </div>
         </div>

@@ -73,7 +73,7 @@ export function CartSheet() {
                   </span>
                 </div>
 
-                <CheckoutSheet className="w-full" />
+                <CheckoutSheet className="w-full" disabled={!totalPrice} />
               </div>
             </SheetFooter>
           </>

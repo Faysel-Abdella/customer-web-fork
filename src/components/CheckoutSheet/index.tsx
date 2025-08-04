@@ -31,8 +31,9 @@ import PaymentMethods from "./_components/PaymentMethods";
 
 interface CheckoutSheetProps {
   className?: string;
+  disabled?: boolean;
 }
-const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
+const CheckoutSheet = ({ className, disabled = false }: CheckoutSheetProps) => {
   const {
     cartItems,
     totalPrice,
@@ -129,7 +130,9 @@ const CheckoutSheet = ({ className }: CheckoutSheetProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className={cn(className)}>Checkout</Button>
+        <Button className={cn(className)} disabled={disabled}>
+          Checkout
+        </Button>
       </SheetTrigger>
       <SheetContent className="h-dvh gap-0 overflow-y-auto rounded-l-2xl max-sm:w-dvw">
         <SheetHeader>
