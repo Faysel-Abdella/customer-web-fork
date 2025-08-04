@@ -38,14 +38,14 @@ export const features = [
 const Features = () => {
   const t = useTranslations("landing.features");
   return (
-    <div className="parent-container flex w-full flex-col items-center justify-center py-28 pb-32">
+    <div className="parent-container bg-secondary flex w-full flex-col items-center justify-center overflow-hidden py-28 pb-32">
       <div className="0 container flex flex-col items-center justify-center gap-48">
         <div className="flex w-full justify-evenly gap-8 max-lg:flex-col max-lg:justify-center">
           {features.map((feature, index) => (
             <div
               key={index}
               className={cn(
-                "dark:bg-secondary dark:border-border bg-secondary relative flex h-fit flex-col items-center justify-center gap-5 rounded-tr-4xl rounded-bl-4xl border p-4 xl:p-8",
+                "bg-card dark:border-border relative flex h-fit flex-col items-center justify-center gap-5 rounded-tr-4xl rounded-bl-4xl border p-4 xl:p-8",
                 index == 1 && "mt-10 flex-col-reverse",
                 index == 3 && "mt-10 flex-col-reverse",
               )}
@@ -65,7 +65,7 @@ const Features = () => {
                 </p>
               </div>
               <div className="absolute -top-4 flex w-full justify-center">
-                <div className="border-background before:conten-[' '] before:bg-border dark:before:bg-secondary size-8 rounded-full border-8 bg-gray-800 before:absolute before:-z-10 before:h-40 before:w-1 before:translate-x-1.5 before:-translate-y-full" />
+                <div className="before:conten-[' '] border-card before:bg-card z-10 size-8 rounded-full border-8 bg-gray-800 before:absolute before:h-40 before:w-1 before:translate-x-1.5 before:-translate-y-full" />
               </div>
             </div>
           ))}
