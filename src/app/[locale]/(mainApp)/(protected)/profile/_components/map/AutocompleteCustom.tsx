@@ -60,7 +60,7 @@ export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
           value={inputValue}
           onInput={(event) => handleInput(event)}
           placeholder="Search for a place"
-          className="h-10 bg-white pr-4 pl-10 text-sm"
+          className="h-10 bg-white pr-4 pl-10 text-sm dark:bg-white"
         />
         {showLoading && (
           <Loader2 className="text-muted-foreground absolute top-1/2 right-3 z-10 h-4 w-4 -translate-y-1/2 animate-spin" />
