@@ -78,7 +78,12 @@ const OrderButton = ({
       <Button
         className="mt-6 w-full rounded-xl bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600"
         onClick={handlePayment}
-        disabled={selectedPaymentMethod == null || isOrdering || emptyCart}
+        disabled={
+          selectedPaymentMethod == null ||
+          isOrdering ||
+          emptyCart ||
+          !totalPrice
+        }
       >
         Order Now
       </Button>
