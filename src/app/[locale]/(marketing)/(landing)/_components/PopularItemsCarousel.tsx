@@ -1,8 +1,7 @@
-import React from "react";
-
 import { getTranslations } from "next-intl/server";
 
 import { getPopularDishes } from "@/actions/actions";
+import MenuItemCard from "@/components/MenuItemCard";
 import {
   Carousel,
   CarouselContent,
@@ -10,8 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
-import LandingDishCard from "./LandingDishCard";
 
 const PopularItemsCarousel = async () => {
   const t = await getTranslations("landing.popular_food_items");
@@ -41,7 +38,11 @@ const PopularItemsCarousel = async () => {
               key={index}
               className="md:basis-1/3 lg:basis-1/4 xl:basis-1/4"
             >
-              <LandingDishCard menuItem={item} />
+              <MenuItemCard
+                menuItem={item}
+                isInRestaurant={false}
+                isOpen={false}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>

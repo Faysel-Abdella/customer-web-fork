@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import BestSellingItemsCarousel from "./BestSellingItemsCarousel";
+import BestSellingItemsSkeleton from "./BestSellingItemsSkeleton";
 import { Categories } from "./Categories";
 import { CategoriesSkeleton } from "./CategoriesSkeleton";
 import PopularItemsCarousel from "./PopularItemsCarousel";
@@ -13,7 +14,7 @@ const PopularItems = async () => {
         <Suspense fallback={<PopularItemsCarouselSkeleton />}>
           <PopularItemsCarousel />
         </Suspense>
-        <Suspense fallback={<PopularItemsCarouselSkeleton />}>
+        <Suspense fallback={<BestSellingItemsSkeleton />}>
           <BestSellingItemsCarousel />
         </Suspense>
         <Suspense fallback={<CategoriesSkeleton />}>

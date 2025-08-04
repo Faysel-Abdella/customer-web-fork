@@ -1,5 +1,6 @@
 import { getBestSellingDishes } from "@/actions/actions";
 import CustomLink from "@/components/CustomLink";
+import LandingDishCard from "@/components/LandingDishCard";
 import MenuItemCard from "@/components/MenuItemCard";
 import {
   Carousel,
@@ -45,7 +46,7 @@ export async function BestSellingDishes() {
               key={dish.id}
               className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <MenuItemCard menuItem={dish} isInRestaurant={false} isOpen />
+              <LandingDishCard menuItem={dish} />
             </CarouselItem>
           ))}
         </CarouselContent>

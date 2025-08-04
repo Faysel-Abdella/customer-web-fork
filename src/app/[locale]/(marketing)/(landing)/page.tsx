@@ -15,7 +15,7 @@ export default function HomePage() {
       <PopularItems />
       <Suspense fallback={<PopularRestaurantsSkeleton />}>
         <PopularRestaurants />
-      </Suspense>{" "}
+      </Suspense>
       <Features />
       <SpecialFood />
       <Testimonials />

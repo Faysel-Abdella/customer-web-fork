@@ -1,11 +1,11 @@
-import MenuItemCardSkeleton from "@/components/MenuItemCard/MenuItemCardSkeleton";
+import { LandingDishCardSkeleton } from "@/components/LandingDishCardSkeleton";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 
-const PopularItemsCarouselSkeleton = () => {
+const BestSellingItemsSkeleton = () => {
   return (
     <Carousel
       opts={{
@@ -27,7 +27,7 @@ const PopularItemsCarouselSkeleton = () => {
             key={index}
             className="md:basis-1/3 lg:basis-1/4 xl:basis-1/4"
           >
-            <MenuItemCardSkeleton />
+            <LandingDishCardSkeleton />
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -35,4 +35,4 @@ const PopularItemsCarouselSkeleton = () => {
   );
 };
 
-export default PopularItemsCarouselSkeleton;
+export default BestSellingItemsSkeleton;

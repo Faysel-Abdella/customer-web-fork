@@ -7,7 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import LandingDishCard from "./LandingDishCard";
+import LandingDishCard from "../../../../../components/LandingDishCard";
 
 const BestSellingItemsCarousel = async () => {
   const { data: dishes } = await getBestSellingDishes();

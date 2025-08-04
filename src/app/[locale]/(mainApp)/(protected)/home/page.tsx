@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 
 import Banner from "./_components/Banner";
 import { BestSellingDishes } from "./_components/BestSellingDishes";
+import { BestSellingDishesSkeleton } from "./_components/BestSellingDishesSkeleton";
 import { Categories } from "./_components/Categories";
 import { CategoriesSkeleton } from "./_components/CategoriesSkeleton";
 import Offers from "./_components/Offers";
@@ -38,7 +39,7 @@ const HomePage = () => {
               <Suspense fallback={<PopularDishesSkeleton />}>
                 <PopularDishes />
               </Suspense>
-              <Suspense fallback={<PopularDishesSkeleton />}>
+              <Suspense fallback={<BestSellingDishesSkeleton />}>
                 <BestSellingDishes />
               </Suspense>
               <Suspense fallback={<OffersSkeleton />}>
