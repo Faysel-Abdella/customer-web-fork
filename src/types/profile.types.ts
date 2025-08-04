@@ -357,32 +357,11 @@ export interface ReferralStats {
   total_discount_earned: number;
 }
 
-export interface UsageHistoryEntry {
-  id: number | null;
-  order_number: string | null;
-  discount_amount: number | null;
-  used_at: string | null;
-  status: string | null;
-}
-
-export interface ReferredUserEntry {
-  id: number | null;
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  joined_at: string | null;
-  status: string | null;
-  total_spent: number | null;
-}
 export interface UserPointsProfileResponse {
   user_info: UserInfo;
   points_summary: PointsSummary;
   points_history: PointsHistoryEntry[];
-  usage_history: UsageHistoryEntry[];
-  referred_users: ReferredUserEntry[];
+  usage_history: unknown[];
+  referred_users: unknown[];
   referral_stats: ReferralStats;
-}
-
-export interface GetReferralInfoResults extends ActionResult {
-  data?: UserPointsProfileResponse;
 }

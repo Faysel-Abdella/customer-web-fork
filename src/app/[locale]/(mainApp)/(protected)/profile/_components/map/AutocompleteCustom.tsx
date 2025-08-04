@@ -1,0 +1,87 @@
+import React, { FormEvent, useCallback, useState } from "react";
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useAutocompleteSuggestions } from "@/hooks/use-autocomplete-suggestions";
+import useDebounce from "@/hooks/useDebounce";
+import { Input } from "@/components/ui/input";
+import { Search, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  onPlaceSelect: (place: google.maps.places.Place | null) => void;
+  className?: string;
+}
+
+export const AutocompleteCustom = ({ onPlaceSelect, className }: Props) => {
+  const places = useMapsLibrary("places");
+
+  const [inputValue, setInputValue] = useState<string>("");
+  const debouncedInputValue = useDebounce(inputValue, 1000);
+
+  // Get loading state from the hook
+  const { suggestions, resetSession, isLoading } =
+    useAutocompleteSuggestions(debouncedInputValue);
+
+  const handleInput = useCallback((event: FormEvent<HTMLInputElement>) => {
+    setInputValue((event.target as HTMLInputElement).value);
+  }, []);
+
+  const handleSuggestionClick = useCallback(
+    async (suggestion: google.maps.places.AutocompleteSuggestion) => {
+      if (!places) return;
+      if (!suggestion.placePrediction) return;
+
+      const place = suggestion.placePrediction.toPlace();
+
+      await place.fetchFields({
+        fields: ["viewport", "location"],
+      });
+
+      setInputValue("");
+
+      // calling fetchFields invalidates the session-token, so we now have to call
+      // resetSession() so a new one gets created for further search
+      resetSession();
+
+      onPlaceSelect(place);
+    },
+    [places, onPlaceSelect, resetSession],
+  );
+
+  // Show loading indicator when there's input but no suggestions yet
+  const showLoading = inputValue && isLoading && suggestions.length === 0;
+
+  return (
+    <div className={cn("relative w-full", className)}>
+      <div className="relative">
+        <Search className="text-muted-foreground absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2" />
+        <Input
+          value={inputValue}
+          onInput={(event) => handleInput(event)}
+          placeholder="Search for a place"
+          className="h-10 bg-white pr-4 pl-10 text-sm"
+        />
+        {showLoading && (
+          <Loader2 className="text-muted-foreground absolute top-1/2 right-3 z-10 h-4 w-4 -translate-y-1/2 animate-spin" />
+        )}
+      </div>
+
+      {suggestions.length > 0 && (
+        <div className="bg-popover text-popover-foreground absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-hidden rounded-md border shadow-md">
+          <ul className="max-h-60 overflow-y-auto">
+            {suggestions.map((suggestion, index) => {
+              return (
+                <li
+                  key={index}
+                  className="hover:bg-accent hover:text-accent-foreground border-border cursor-pointer border-b px-4 py-3 text-sm transition-colors last:border-b-0"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion.placePrediction?.text.text}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
