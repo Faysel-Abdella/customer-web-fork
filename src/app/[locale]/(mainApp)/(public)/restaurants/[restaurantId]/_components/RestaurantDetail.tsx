@@ -18,6 +18,8 @@ import RestaurantReviewsSkeleton from "./RestaurantReviewsSkeleton";
 
 interface RestaurantDetailProps {
   restaurantId: string;
+  lat: string;
+  lon: string;
 }
 
 const tabs = [
@@ -42,8 +44,16 @@ const tabs = [
     value: "offers",
   },
 ];
-const RestaurantDetail = async ({ restaurantId }: RestaurantDetailProps) => {
-  const { data: restaurant, error } = await getRestaurantDetails(restaurantId);
+const RestaurantDetail = async ({
+  restaurantId,
+  lat,
+  lon,
+}: RestaurantDetailProps) => {
+  const { data: restaurant, error } = await getRestaurantDetails(
+    restaurantId,
+    lat,
+    lon,
+  );
 
   if (error) return <RestaurantDetailError />;
   if (restaurant) {

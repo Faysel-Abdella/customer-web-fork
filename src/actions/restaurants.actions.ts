@@ -57,15 +57,19 @@ export async function getTopRestaurants(): Promise<GetRestaurantsResult> {
 
 export async function getRestaurantDetails(
   restaurantId: string,
+  lat?: string,
+  lon?: string,
 ): Promise<GetRestaurantDetailsResult> {
+  const url = lat
+    ? `/api/restaurant/restaurant-detail?id=${restaurantId}&lat=${lat}&lon=${lon}`
+    : `/api/restaurant/restaurant-detail?id=${restaurantId}`;
+
+  console.log(url);
   try {
     const responseData: RestaurantDetailResponce =
-      await fetchOnCondition<RestaurantDetailResponce>(
-        `/api/restaurant/restaurant-detail?id=${restaurantId}`,
-        {
-          retry: { retries: 3, delay: 1000 },
-        },
-      );
+      await fetchOnCondition<RestaurantDetailResponce>(url, {
+        retry: { retries: 3, delay: 1000 },
+      });
 
     return { success: true, data: responseData.detail };
   } catch (error) {

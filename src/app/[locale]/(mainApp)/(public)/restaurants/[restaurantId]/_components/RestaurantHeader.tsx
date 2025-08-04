@@ -23,7 +23,7 @@ const RestaurantHeader = ({ restaurant, isOpen }: RestaurantHeaderProps) => {
           )}
         </div>
         <div className="flex items-stretch gap-3 lg:items-center lg:gap-7">
-          {restaurant.estimated_delivery_time && (
+          {restaurant.delivery_info.delivery_time_minutes && (
             <>
               <div className="flex h-full flex-col items-center justify-start max-lg:gap-2 lg:items-end">
                 <p className="text-muted-foreground text-sm max-lg:text-center max-lg:text-xs">

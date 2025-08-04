@@ -4,6 +4,7 @@ import { Bike, Star, User } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLocation } from "@/contexts/LocationContext";
 import { cn, formatTimeHM } from "@/lib/utils";
 import { Restaurant } from "@/types/restaurant.types";
 
@@ -27,6 +28,12 @@ const RestaurantCard = ({
   isOpen,
 }: RestaurantCardProps) => {
   const { user } = useAuth();
+  const { location } = useLocation();
+  const restaurantLink = location
+    ? `/restaurants/${restaurant.id}?lat=${location?.latitude}&lon=${location?.longitude}`
+    : `/restaurants/${restaurant.id}`;
+
+  console.log(restaurantLink);
 
   return (
     <Card
@@ -37,7 +44,7 @@ const RestaurantCard = ({
     >
       <CardContent className="space-y-2 px-0">
         <div className="relative h-40 w-full overflow-hidden rounded-2xl">
-          <CustomLink href={`/restaurants/${restaurant.id}`}>
+          <CustomLink href={restaurantLink}>
             <CustomImage
               imgUrl={restaurant.image_file}
               title={restaurant.title}
@@ -68,7 +75,7 @@ const RestaurantCard = ({
             </div>
           )}
         </div>
-        <CustomLink href={`/restaurants/${restaurant.id}`}>
+        <CustomLink href={restaurantLink}>
           <div className="space-y-1 p-2">
             <p className="group-hover:text-primary truncate text-lg">
               {restaurant.title}

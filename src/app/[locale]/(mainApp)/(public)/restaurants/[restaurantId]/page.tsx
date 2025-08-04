@@ -36,14 +36,19 @@ export async function generateMetadata({
 
 interface RestaurantDetailPageProps {
   params: Promise<{ restaurantId: string }>;
+  searchParams: Promise<{ lat: string; lon: string }>;
 }
-const RestaurantDetailPage = async ({ params }: RestaurantDetailPageProps) => {
+const RestaurantDetailPage = async ({
+  params,
+  searchParams,
+}: RestaurantDetailPageProps) => {
   const { restaurantId } = await params;
+  const { lat, lon } = await searchParams;
 
   return (
     <div className="min-h-dvh py-16 pt-32 lg:px-14 xl:px-16">
       <Suspense fallback={<RestaurantDetailSkeleton />}>
-        <RestaurantDetail restaurantId={restaurantId} />
+        <RestaurantDetail restaurantId={restaurantId} lat={lat} lon={lon} />
       </Suspense>
     </div>
   );
