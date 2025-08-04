@@ -176,6 +176,7 @@ const MenuItemDetail = ({ menuItemId, className }: MenuItemDetailProps) => {
                   setSelectedAddonIds={setSelectedAddonIds}
                   itemQuantity={itemQuantity}
                   setItemQuantity={setItemQuantity}
+                  setIsOpen={setIsOpen}
                 />
                 <AddToCartForm
                   menuItem={menuItem}
