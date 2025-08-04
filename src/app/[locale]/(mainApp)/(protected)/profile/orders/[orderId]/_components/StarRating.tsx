@@ -13,13 +13,17 @@ export default function StarRating({
     <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((star) => (
         <button
-          ={star}
+          key={star} // FIX: Added the required 'key' prop here
           type="button"
           onClick={() => onRatingChange(star)}
           className="p-1"
         >
           <Star
-            className={`h-6 w-6 ${star <= rating ? "fill-yellow-400 text-yellow-400" : "fill-gray-200 text-gray-200"}`}
+            className={`h-6 w-6 ${
+              star <= rating
+                ? "fill-yellow-400 text-yellow-400"
+                : "fill-gray-200 text-gray-200"
+            }`}
           />
         </button>
       ))}

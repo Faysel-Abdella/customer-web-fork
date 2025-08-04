@@ -1,9 +1,11 @@
 import React, { FormEvent, useCallback, useState } from "react";
+
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import { Loader2, Search } from "lucide-react";
+
+import { Input } from "@/components/ui/input";
 import { useAutocompleteSuggestions } from "@/hooks/use-autocomplete-suggestions";
 import useDebounce from "@/hooks/useDebounce";
-import { Input } from "@/components/ui/input";
-import { Search, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {

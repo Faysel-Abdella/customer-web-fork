@@ -1,5 +1,6 @@
-import { Marker, Pin, useMap } from "@vis.gl/react-google-maps";
 import React, { useEffect } from "react";
+
+import { Marker, useMap } from "@vis.gl/react-google-maps";
 
 interface Props {
   place: google.maps.places.Place | null;

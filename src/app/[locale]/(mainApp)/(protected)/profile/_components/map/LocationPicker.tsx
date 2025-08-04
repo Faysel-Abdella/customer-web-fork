@@ -1,25 +1,23 @@
 "use client";
 
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   APIProvider,
-  Map,
-  Marker,
   ControlPosition,
+  Map,
+  MapMouseEvent,
+  Marker,
 } from "@vis.gl/react-google-maps";
-import useGeolocation from "@/hooks/useGeolocation";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import AutocompleteControl from "./AutocompleteControl";
-import AutocompleteResult from "./AutocompleteResult";
 import { CheckCircle2 } from "lucide-react";
 
-const defaultCenter = {
-  lat: 25.348766,
-  lng: 55.405403,
-};
+import { Button } from "@/components/ui/button";
+import useGeolocation from "@/hooks/useGeolocation";
+import { cn } from "@/lib/utils";
+
+import AutocompleteControl from "./AutocompleteControl";
+import AutocompleteResult from "./AutocompleteResult";
+
 interface LocationPickerProps {
   className?: string;
   onLocationSelect: (location: {
@@ -62,7 +60,7 @@ export function LocationPicker({
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [guestLocation]);
+  }, [guestLocation, currentLocation.lat, currentLocation.lng]);
 
   useEffect(() => {
     if (!guestLocation) {
@@ -82,10 +80,15 @@ export function LocationPicker({
         setCurrentLocation(newLocation);
       }
     }
-  }, [guestLocation]);
+  }, [
+    guestLocation,
+    getGuestUserLocation,
+    currentLocation.lat,
+    currentLocation.lng,
+  ]);
 
-  const handleMapClick = useCallback((event: any) => {
-    const latLng = event.detail?.latLng || event.latLng;
+  const handleMapClick = useCallback((event: MapMouseEvent) => {
+    const latLng = event.detail?.latLng;
 
     if (latLng) {
       const newPosition = {

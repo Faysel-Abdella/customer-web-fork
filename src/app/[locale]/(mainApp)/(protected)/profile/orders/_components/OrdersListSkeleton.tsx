@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -6,12 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const OrdersListSkeleton = () => {
-  const columnCount = 5; 
+  const columnCount = 5;
 
-  const rowCount = 10; 
+  const rowCount = 10;
 
   return (
     <div className="flex flex-col gap-4">
