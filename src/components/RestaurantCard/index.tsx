@@ -10,6 +10,7 @@ import { Restaurant } from "@/types/restaurant.types";
 import CustomImage from "../CustomImage";
 import CustomLink from "../CustomLink";
 import FavoriteButton from "../FavoriteButton";
+import FormattedAfghani from "../FormattedAfghani";
 import { Badge } from "../ui/badge";
 
 interface RestaurantCardProps {
@@ -59,7 +60,7 @@ const RestaurantCard = ({
           {restaurant.price_per_person && (
             <div className="bg-background absolute -right-1 -bottom-1 z-10 flex w-fit items-center justify-center gap-1 rounded-tl-2xl px-4 py-1 pr-4 pb-2">
               <span className="text-foreground font-semibold">
-                ${parseFloat(restaurant.price_per_person).toFixed(2) || "N/A"}
+                <FormattedAfghani amount={restaurant.price_per_person} />
               </span>
               <div className="flex items-end text-xs">
                 /<User size={14} />

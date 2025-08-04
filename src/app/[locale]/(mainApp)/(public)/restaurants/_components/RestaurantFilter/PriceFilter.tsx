@@ -17,7 +17,7 @@ const PriceFilter = ({ filters, setFilters }: PriceFilterProps) => {
       <div className="flex w-full items-center gap-4">
         <DualRangeSlider
           label={(value) => (
-            <span className="-mr-1">
+            <span className="-ml-5">
               {value && (
                 <FormattedAfghani amount={value} minimumFractionDigits={0} />
               )}

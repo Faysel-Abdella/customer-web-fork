@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import FavoritesList from "./_components/FavoritesList";
+import FavoritesListSkeleton from "./_components/FavoritesListSkeleton";
 
 const FavouritesPage = () => {
   return (
@@ -10,7 +11,7 @@ const FavouritesPage = () => {
           <h2 className="text-3xl font-bold">Favorites</h2>
         </div>
       </div>
-      <Suspense>
+      <Suspense fallback={<FavoritesListSkeleton />}>
         <FavoritesList />
       </Suspense>
     </div>
